@@ -1,0 +1,69 @@
+import { bitmapRows, hasPixel } from "./raster.js";
+import { CELL_HEIGHT, CELL_WIDTH, PRIVATE_USE_START, } from "./types.js";
+import { formatPort } from "./ports.js";
+function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = filename;
+    anchor.click();
+    URL.revokeObjectURL(url);
+}
+export function exportJson(result) {
+    const payload = {
+        format: "geometric-glyph-lab",
+        version: 1,
+        cell: { width: CELL_WIDTH, height: CELL_HEIGHT },
+        codepointStart: `U+${PRIVATE_USE_START.toString(16).toUpperCase()}`,
+        candidateCount: result.candidates.length,
+        uniqueGlyphCount: result.glyphs.length,
+        duplicateCandidateCount: result.duplicateCandidates,
+        glyphs: result.glyphs.map((glyph) => ({
+            id: glyph.glyphId,
+            hexId: glyph.glyphId.toString(16).toUpperCase().padStart(3, "0"),
+            codepoint: `U+${glyph.codepoint.toString(16).toUpperCase()}`,
+            bitmapRowsHex: bitmapRows(glyph.bitmap),
+            bitmapKey: glyph.bitmapKey,
+            aliases: glyph.aliases.map((alias) => ({
+                family: alias.family,
+                start: formatPort(alias.start),
+                end: formatPort(alias.end),
+            })),
+        })),
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    downloadBlob(blob, "geometric-glyphs.json");
+}
+export function exportAtlasPng(result, scale = 4) {
+    const columns = 16;
+    const rows = Math.max(1, Math.ceil(result.glyphs.length / columns));
+    const canvas = document.createElement("canvas");
+    canvas.width = columns * CELL_WIDTH * scale;
+    canvas.height = rows * CELL_HEIGHT * scale;
+    const context = canvas.getContext("2d");
+    if (!context) {
+        throw new Error("Canvas 2D context is not available.");
+    }
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "#ffffff";
+    context.imageSmoothingEnabled = false;
+    result.glyphs.forEach((glyph, index) => {
+        const column = index % columns;
+        const row = Math.floor(index / columns);
+        const originX = column * CELL_WIDTH * scale;
+        const originY = row * CELL_HEIGHT * scale;
+        for (let y = 0; y < CELL_HEIGHT; y += 1) {
+            for (let x = 0; x < CELL_WIDTH; x += 1) {
+                if (hasPixel(glyph.bitmap, x, y)) {
+                    context.fillRect(originX + x * scale, originY + y * scale, scale, scale);
+                }
+            }
+        }
+    });
+    canvas.toBlob((blob) => {
+        if (!blob) {
+            throw new Error("PNG export failed.");
+        }
+        downloadBlob(blob, "geometric-glyph-atlas.png");
+    }, "image/png");
+}
