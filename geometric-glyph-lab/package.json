@@ -8,7 +8,10 @@
     "build": "tsc --noEmit && vite build",
     "check": "tsc --noEmit",
     "preview": "vite preview",
-    "verify:prebuilt": "node scripts/verify-prebuilt.mjs"
+    "verify:prebuilt": "node scripts/verify-prebuilt.mjs",
+    "generate": "node scripts/generate-artifacts.mjs",
+    "verify:artifacts": "node scripts/verify-artifacts.mjs",
+    "verify": "npm run verify:prebuilt && npm run verify:artifacts"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
