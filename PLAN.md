@@ -158,6 +158,26 @@ A provisional reserve remains desirable:
 
 This partition is not frozen.
 
+### Current straight-line allocation — PROVISIONAL
+
+The first 746 unique straight-line glyphs currently occupy:
+
+```text
+glyph IDs    0..745
+Unicode      U+00E000..U+00E2E9
+assignment   codepoint = U+E000 + glyphId
+```
+
+The allocation is explicitly defined by `spec/straight-allocation.json`.
+
+It remains provisional until the GraphSCII v1 codepoint freeze. Generation order is currently:
+
+```text
+LR → TB → LT → LB → RT → RB
+```
+
+The first raster-unique candidate receives the next glyph ID; later raster-identical candidates become aliases of that visual glyph.
+
 ---
 
 ## 5. Current empirical baseline
@@ -191,7 +211,71 @@ Several mathematical definitions may rasterize to the same bitmap. Those definit
 
 ---
 
-## 6. Planned shape classes
+## 6. Straight semantic registry — CURRENT
+
+Milestone 2A adds explicit geometry semantics without changing canonical pixels.
+
+Every straight alias now has:
+
+```text
+candidate ID
+alias key
+family
+start port
+end port
+exact endpoint records
+```
+
+Example alias key:
+
+```text
+straight:L13>R4
+```
+
+A visual glyph with multiple aliases uses:
+
+```text
+alternative-alias-pairs
+```
+
+semantics. Ports belonging to different aliases are alternatives, **not simultaneous junction branches**.
+
+Straight lookup is direction-independent for querying, so both:
+
+```text
+L13>R4
+R4>L13
+```
+
+are materialized and resolve to the same glyph/candidate alias.
+
+Generated lookup indexes:
+
+```text
+artifacts/manifest/indexes/
+├── by-codepoint.json
+├── by-bitmap.json
+├── by-port.json
+└── by-connection-pair.json
+```
+
+Current verified semantic counts:
+
+```text
+visual glyphs               746
+mathematical aliases        832
+boundary ports               48
+codepoint lookups           746
+bitmap lookups              746
+port index entries         1664
+connection-pair lookups    1664
+```
+
+See [`docs/connectivity.md`](docs/connectivity.md) and [`docs/milestone-2a-semantic-registry.md`](docs/milestone-2a-semantic-registry.md).
+
+---
+
+## 7. Planned shape classes
 
 Each major class should ultimately receive generator source, metadata, exact ASCII artifacts, canonical PNGs, statistics, generated Markdown documentation, tests, and provisional then stable codepoint allocation.
 
@@ -233,20 +317,24 @@ Keep space for primitives discovered through actual use rather than attempting t
 
 ---
 
-## 7. Repository and artifact structure
+## 8. Repository and artifact structure
 
 ```text
 graphscii/
-├── PLAN.md                         # current living plan
-├── README.md                       # user/programmer overview
-├── geometric-glyph-lab/            # active generator/browser
+├── PLAN.md
+├── README.md
+├── geometric-glyph-lab/
 │   ├── src/core/
 │   ├── scripts/
 │   ├── dist/
 │   └── package.json
-├── spec/                           # future hand-maintained vocabulary inputs
+├── spec/
+│   └── straight-allocation.json
 ├── artifacts/
 │   ├── manifest/
+│   │   ├── glyphs.json
+│   │   ├── stats.json
+│   │   └── indexes/
 │   ├── glyphs/
 │   │   ├── ascii/
 │   │   └── png/
@@ -255,10 +343,11 @@ graphscii/
 │   └── font/
 └── docs/
     ├── format.md
+    ├── connectivity.md
     ├── PLAN-v0.md
     ├── milestone-1-artifacts.md
+    ├── milestone-2a-semantic-registry.md
     ├── drawing-api.md              # future
-    ├── connectivity.md             # future
     └── examples/                   # future
 ```
 
@@ -266,7 +355,7 @@ Do not reorganize working code merely for aesthetics. Refactor when architecture
 
 ---
 
-## 8. Per-glyph artifact contract
+## 9. Per-glyph artifact contract
 
 Every assigned glyph should be independently inspectable without opening a font.
 
@@ -276,7 +365,7 @@ Every assigned glyph should be independently inspectable without opening a font.
 artifacts/glyphs/png/U+00E000.png
 ```
 
-Canonical PNGs are native 8×16 RGBA images. Filled pixels are opaque black; empty pixels are transparent. Human-scale previews may be generated separately with nearest-neighbor enlargement.
+Canonical PNGs are native 8×16 RGBA images. Filled pixels are opaque black; empty pixels are transparent.
 
 ### ASCII
 
@@ -288,7 +377,7 @@ Exactly 16 rows × 8 characters using only `#` and `-`.
 
 ### JSON
 
-The manifest must be sufficient for software to use GraphSCII without reverse-engineering the font. Records should include glyph ID, codepoint, family membership, bitmap rows/key, aliases, connectivity, and artifact paths.
+The manifest must be sufficient for software to use GraphSCII without reverse-engineering the font. Records include glyph ID, codepoint, family membership, bitmap rows/key, aliases, connectivity, allocation, and artifact paths.
 
 ### Class Markdown
 
@@ -296,7 +385,7 @@ Each shape class eventually gets a large generated catalog containing generation
 
 ---
 
-## 9. Rendering model
+## 10. Rendering model
 
 GraphSCII should support two equivalent paths.
 
@@ -320,68 +409,88 @@ findClosestGeometry(segmentOrCurve)
 
 ---
 
-## 10. Artifact generation and verification
+## 11. Generation and verification
 
 Current commands from `geometric-glyph-lab/`:
 
 ```powershell
 npm run generate
-npm run verify:artifacts
 npm run verify
 ```
 
-The artifact generator is independent of the browser UI. It writes only managed subtrees under `artifacts/` so hand-maintained files in the artifact root survive regeneration.
-
-The verifier checks the straight-line regression fixture, manifest counts, exact ASCII output, native PNG dimensions, byte-for-byte deterministic PNG regeneration, and atlas dimensions.
-
-Current generated straight-line snapshot:
+Generation now has two stages:
 
 ```text
-832 candidates
-746 unique glyphs
-746 ASCII files
-746 native 8×16 PNG files
-1 complete atlas: 128×752
-3 page atlases: 256 slots each
+Milestone 1 base artifact generation
+              ↓
+Milestone 2A semantic registry enrichment
 ```
 
-Reference atlases and statistics are committed in the repository. The full expanded per-glyph tree is reproducibly generated on demand and can be committed as a deliberate snapshot when useful.
+Specific commands remain available:
 
-Detailed Milestone 1 notes: [`docs/milestone-1-artifacts.md`](docs/milestone-1-artifacts.md).
+```powershell
+npm run generate:base
+npm run generate:semantic
+npm run verify:prebuilt
+npm run verify:artifacts
+npm run verify:semantic
+```
+
+The base generator writes canonical bitmaps, PNGs, ASCII, manifest data, and atlases. The semantic stage enriches the manifest and generates compact lookup indexes.
+
+The full verifier checks:
+
+- frozen 8×16 format contract
+- `832 → 746 → 86` raster regression
+- exact ASCII artifacts
+- deterministic PNG bytes
+- atlas dimensions
+- provisional allocation bounds
+- all 832 alias records
+- all endpoint ports
+- all forward/reverse connection-pair lookups
+- all codepoint/bitmap lookups
+- all port-index entries
+
+Reference atlases and statistics are committed. Larger generated manifest/index/per-glyph snapshots may be committed deliberately when useful rather than making every source change carry the complete generated tree.
 
 ---
 
-## 11. Testing requirements
+## 12. Testing requirements
 
 ### Raster
 
-- deterministic output,
-- exact 8×16 dimensions,
-- binary canonical pixels,
-- known regression fixtures.
+- deterministic output
+- exact 8×16 dimensions
+- binary canonical pixels
+- known regression fixtures
 
 ### Deduplication
 
-- identical bitmaps merge,
-- aliases survive,
-- non-identical bitmaps never merge,
-- bitmap-key serialization remains stable.
+- identical bitmaps merge
+- aliases survive
+- non-identical bitmaps never merge
+- bitmap-key serialization remains stable
 
-### Registry
+### Registry/allocation
 
-- unique glyph IDs,
-- unique codepoints,
-- valid ranges,
-- reserved regions respected,
-- frozen allocations preserved after release.
+- unique glyph IDs
+- unique codepoints
+- allocation spec agrees with generation order and count
+- provisional/stable status is explicit
+- frozen allocations are preserved after release
+
+### Connectivity
+
+- port indexes are valid
+- every straight alias has exactly two endpoint records
+- aliases remain alternative interpretations
+- both straight query orientations resolve to the same candidate
+- port and pair indexes agree with manifest provenance
 
 ### Artifacts
 
 For every assigned glyph: PNG exists and is 8×16; ASCII exists and is 8×16; ASCII, PNG, and manifest agree; artifact paths resolve.
-
-### Connectivity
-
-Port indexes must be valid, seams must land at expected boundary pixels, smooth joins must satisfy tangent rules, and intentional corners must not be mislabeled smooth.
 
 ### Reproducibility
 
@@ -389,7 +498,7 @@ A clean run from the same source should produce byte-identical canonical artifac
 
 ---
 
-## 12. Codepoint stability policy
+## 13. Codepoint stability policy
 
 During research, provisional glyph IDs/codepoints may move.
 
@@ -402,7 +511,7 @@ After the first stable vocabulary release, codepoints become API:
 
 ---
 
-## 13. Milestone sequence
+## 14. Milestone sequence
 
 ### Milestone 0 — lock fundamentals — **COMPLETE**
 
@@ -424,16 +533,34 @@ After the first stable vocabulary release, codepoints become API:
 - [x] Generate full and page atlases.
 - [x] Add artifact consistency/reproducibility verification.
 - [x] Commit reference full/page atlases and statistics.
-- [x] Document the slice in `docs/milestone-1-artifacts.md`.
+- [x] Document `docs/milestone-1-artifacts.md`.
 
-### Milestone 2 — straight-line class publication — **NEXT**
+### Milestone 2A — straight semantic registry — **COMPLETE**
 
-- [ ] Define provisional straight-line codepoint allocation explicitly.
-- [ ] Add connectivity metadata derived from aliases/ports.
-- [ ] Generate `artifacts/classes/straight-lines.md` containing every straight glyph and exact ASCII form.
-- [ ] Preserve all mathematical aliases in manifest/catalog output.
-- [ ] Add machine lookup indexes for straight geometry.
-- [ ] Add tests for class counts, catalog coverage, and connectivity.
+- [x] Define provisional straight-line allocation explicitly in `spec/straight-allocation.json`.
+- [x] Enrich aliases with stable keys and endpoint connectivity metadata.
+- [x] Preserve all 832 mathematical aliases.
+- [x] Define alternative-alias connectivity semantics.
+- [x] Generate by-codepoint lookup index.
+- [x] Generate by-bitmap lookup index.
+- [x] Generate by-port lookup index.
+- [x] Generate direction-independent connection-pair lookup index.
+- [x] Add semantic verification across all aliases/lookups.
+- [x] Document `docs/connectivity.md` and the 2A slice.
+
+### Milestone 2B — straight-line class catalog — **NEXT**
+
+- [ ] Generate `artifacts/classes/straight-lines.md`.
+- [ ] Include all 746 exact ASCII forms.
+- [ ] Include codepoint, glyph ID, bitmap key, families, aliases, and connectivity.
+- [ ] Link every entry to its canonical PNG/ASCII artifact.
+- [ ] Add class-count/catalog coverage tests.
+
+### Milestone 2C — straight vocabulary publication snapshot
+
+- [ ] Commit a deliberate complete straight-line artifact snapshot.
+- [ ] Include semantic manifest/indexes, per-glyph ASCII/PNG, catalog, atlases, and stats.
+- [ ] Record snapshot provenance and regeneration command.
 
 ### Milestone 3 — curve research engine
 
@@ -515,13 +642,13 @@ After the first stable vocabulary release, codepoints become API:
 
 ---
 
-## 14. Definition of done for v1
+## 15. Definition of done for v1
 
 GraphSCII v1 is ready when the canonical 8×16 format is frozen; every assigned glyph reproduces from source; codepoints are stable; every glyph has PNG and ASCII artifacts; major shape classes have generated catalogs; JSON describes identity/connectivity; atlases cover the vocabulary; a fixed-cell font exists; programs can render via font or canonical bitmap data; neighbor compatibility is mechanically queryable; generation is deterministic; and codepoint meanings are ready to be treated as stable API.
 
 ---
 
-## 15. Guiding rule
+## 16. Guiding rule
 
 Prefer designs that make GraphSCII more **systematic, reproducible, queryable, composable, inspectable, programmable, and geometrically expressive per codepoint**.
 
