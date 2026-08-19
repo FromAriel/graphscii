@@ -1,4 +1,5 @@
 import { CELL_HEIGHT, CELL_WIDTH } from "./types.js";
+import { ASCII_EMPTY_PIXEL, ASCII_FILLED_PIXEL } from "./format.js";
 import { portToPixel } from "./ports.js";
 export function emptyBitmap() {
     return new Uint8Array(CELL_HEIGHT);
@@ -57,7 +58,7 @@ export function bitmapAscii(bitmap) {
     for (let y = 0; y < CELL_HEIGHT; y += 1) {
         let line = "";
         for (let x = 0; x < CELL_WIDTH; x += 1) {
-            line += hasPixel(bitmap, x, y) ? "#" : ".";
+            line += hasPixel(bitmap, x, y) ? ASCII_FILLED_PIXEL : ASCII_EMPTY_PIXEL;
         }
         lines.push(line);
     }

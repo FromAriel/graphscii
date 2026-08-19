@@ -6,6 +6,14 @@ import {
   type GenerationResult,
 } from "./types.js";
 import { formatPort } from "./ports.js";
+import {
+  BITMAP_SERIALIZATION,
+  CELL_ORIENTATION,
+  GRAPHSCII_FORMAT,
+  GRAPHSCII_FORMAT_VERSION,
+  formatCodepoint,
+  glyphArtifactStem,
+} from "./format.js";
 
 function downloadBlob(blob: Blob, filename: string): void {
   const url = URL.createObjectURL(blob);
@@ -18,17 +26,19 @@ function downloadBlob(blob: Blob, filename: string): void {
 
 export function exportJson(result: GenerationResult): void {
   const payload = {
-    format: "geometric-glyph-lab",
-    version: 1,
-    cell: { width: CELL_WIDTH, height: CELL_HEIGHT },
-    codepointStart: `U+${PRIVATE_USE_START.toString(16).toUpperCase()}`,
+    format: GRAPHSCII_FORMAT,
+    formatVersion: GRAPHSCII_FORMAT_VERSION,
+    cell: { width: CELL_WIDTH, height: CELL_HEIGHT, orientation: CELL_ORIENTATION },
+    bitmapSerialization: BITMAP_SERIALIZATION,
+    codepointStart: formatCodepoint(PRIVATE_USE_START),
     candidateCount: result.candidates.length,
     uniqueGlyphCount: result.glyphs.length,
     duplicateCandidateCount: result.duplicateCandidates,
     glyphs: result.glyphs.map((glyph) => ({
       id: glyph.glyphId,
       hexId: glyph.glyphId.toString(16).toUpperCase().padStart(3, "0"),
-      codepoint: `U+${glyph.codepoint.toString(16).toUpperCase()}`,
+      codepoint: formatCodepoint(glyph.codepoint),
+      artifactStem: glyphArtifactStem(glyph.codepoint),
       bitmapRowsHex: bitmapRows(glyph.bitmap),
       bitmapKey: glyph.bitmapKey,
       aliases: glyph.aliases.map((alias) => ({

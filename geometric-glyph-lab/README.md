@@ -25,6 +25,22 @@ All six families together generate exactly 832 mathematical candidates before de
 
 The bitmap is the source of truth. A later font compiler should derive outlines from these exact pixels rather than treating arbitrary vector outlines as canonical.
 
+
+## GraphSCII Milestone 0 format lock
+
+The working baseline is now frozen as the GraphSCII v1 canonical cell contract:
+
+- 8 columns × 16 rows
+- rows serialize top-to-bottom
+- one byte per row
+- `x = 0` is the least-significant bit
+- bitmap keys are 32 lowercase hexadecimal characters
+- ASCII uses `#` for filled pixels and `-` for empty pixels
+- artifact stems use six-digit Unicode names such as `U+00E000`
+- the 832 → 746 straight-line result is a permanent regression fixture
+
+The normative format description lives at [`../docs/format.md`](../docs/format.md).
+
 ## Run
 
 ```powershell
