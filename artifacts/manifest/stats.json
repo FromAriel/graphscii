@@ -1,0 +1,14 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "cell": {
+    "width": 8,
+    "height": 16,
+    "orientation": "8-columns-by-16-rows"
+  },
+  "candidateCount": 832,
+  "glyphCount": 746,
+  "duplicateCandidateCount": 86,
+  "maxAliases": 4,
+  "compressionRatio": 0.103365
+}
