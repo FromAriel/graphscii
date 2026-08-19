@@ -1,0 +1,87 @@
+name: Publish straight vocabulary snapshot
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/publish-straight-snapshot.yml
+      - geometric-glyph-lab/scripts/**
+      - geometric-glyph-lab/dist/core/**
+      - spec/straight-allocation.json
+
+permissions:
+  contents: write
+
+concurrency:
+  group: graphscii-straight-snapshot
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Generate complete straight vocabulary
+        working-directory: geometric-glyph-lab
+        run: npm run generate
+
+      - name: Verify generated vocabulary
+        working-directory: geometric-glyph-lab
+        run: npm run verify
+
+      - name: Record snapshot provenance
+        shell: bash
+        run: |
+          mkdir -p artifacts/publications
+          cat > artifacts/publications/straight-v0.json <<EOF
+          {
+            "schema": "graphscii-publication",
+            "schemaVersion": 1,
+            "publication": "straight-v0",
+            "status": "provisional",
+            "sourceCommit": "${GITHUB_SHA}",
+            "generator": "cd geometric-glyph-lab && npm run generate",
+            "verification": "cd geometric-glyph-lab && npm run verify",
+            "glyphCount": 746,
+            "aliasCount": 832,
+            "unicodeStart": "U+00E000",
+            "unicodeEnd": "U+00E2E9",
+            "canonicalCell": "8x16"
+          }
+          EOF
+
+      - name: Validate publication file counts
+        shell: bash
+        run: |
+          test "$(find artifacts/glyphs/ascii -maxdepth 1 -type f | wc -l)" -eq 746
+          test "$(find artifacts/glyphs/png -maxdepth 1 -type f | wc -l)" -eq 746
+          test "$(find artifacts/manifest/indexes -maxdepth 1 -type f | wc -l)" -eq 4
+          test -f artifacts/classes/straight-lines.md
+          test -f artifacts/atlases/all.png
+          test -f artifacts/atlases/page-0.png
+          test -f artifacts/atlases/page-1.png
+          test -f artifacts/atlases/page-2.png
+
+      - name: Commit publication snapshot
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add artifacts
+          if git diff --cached --quiet; then
+            echo "Snapshot already matches generated output."
+            exit 0
+          fi
+          git commit -m "Publish straight vocabulary snapshot"
+          git push origin HEAD:main
