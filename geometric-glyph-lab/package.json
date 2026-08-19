@@ -9,9 +9,12 @@
     "check": "tsc --noEmit",
     "preview": "vite preview",
     "verify:prebuilt": "node scripts/verify-prebuilt.mjs",
-    "generate": "node scripts/generate-artifacts.mjs",
+    "generate:base": "node scripts/generate-artifacts.mjs",
+    "generate:semantic": "node scripts/generate-semantic-registry.mjs",
+    "generate": "npm run generate:base && npm run generate:semantic",
     "verify:artifacts": "node scripts/verify-artifacts.mjs",
-    "verify": "npm run verify:prebuilt && npm run verify:artifacts"
+    "verify:semantic": "node scripts/verify-semantic-registry.mjs",
+    "verify": "npm run verify:prebuilt && npm run verify:artifacts && npm run verify:semantic"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
