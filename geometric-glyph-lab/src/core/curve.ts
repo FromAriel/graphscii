@@ -156,8 +156,8 @@ export function deriveCurveControlPoints(spec: CurveSpec): CurveControlPoints {
     y: p0.y + roundedDivide(startDirection.y * handleLength, DIRECTION_SCALE),
   };
 
-  // P2 lies inward from P3. As t approaches 1, the derivative points from
-  // P2 to P3 and therefore exits through the end port.
+  // The end control point lies inward from P3. As t approaches 1, the cubic
+  // derivative points from P2 to P3 and therefore exits through the end port.
   const p2 = {
     x: p3.x + roundedDivide(endDirection.x * handleLength, DIRECTION_SCALE),
     y: p3.y + roundedDivide(endDirection.y * handleLength, DIRECTION_SCALE),
@@ -170,6 +170,7 @@ function evaluateCubicFixed(control: CurveControlPoints, step: number): FixedPoi
   const t = step;
   const u = CURVE_SAMPLE_STEPS - step;
   const denominator = CURVE_SAMPLE_STEPS ** 3;
+
   const weight0 = u ** 3;
   const weight1 = 3 * u * u * t;
   const weight2 = 3 * u * t * t;
@@ -177,11 +178,17 @@ function evaluateCubicFixed(control: CurveControlPoints, step: number): FixedPoi
 
   return {
     x: roundedDivide(
-      control.p0.x * weight0 + control.p1.x * weight1 + control.p2.x * weight2 + control.p3.x * weight3,
+      control.p0.x * weight0 +
+        control.p1.x * weight1 +
+        control.p2.x * weight2 +
+        control.p3.x * weight3,
       denominator,
     ),
     y: roundedDivide(
-      control.p0.y * weight0 + control.p1.y * weight1 + control.p2.y * weight2 + control.p3.y * weight3,
+      control.p0.y * weight0 +
+        control.p1.y * weight1 +
+        control.p2.y * weight2 +
+        control.p3.y * weight3,
       denominator,
     ),
   };
@@ -226,14 +233,21 @@ function pointKey(point: PixelPoint): string {
 }
 
 function validateBoundaryPixels(bitmap: Uint8Array, spec: CurveSpec): string[] {
-  const allowed = new Set([pointKey(portToPixel(spec.start)), pointKey(portToPixel(spec.end))]);
+  const allowed = new Set([
+    pointKey(portToPixel(spec.start)),
+    pointKey(portToPixel(spec.end)),
+  ]);
   const unexpected: string[] = [];
 
   for (let y = 0; y < CELL_HEIGHT; y += 1) {
     for (let x = 0; x < CELL_WIDTH; x += 1) {
-      if (!hasPixel(bitmap, x, y)) continue;
+      if (!hasPixel(bitmap, x, y)) {
+        continue;
+      }
       const onBoundary = x === 0 || y === 0 || x === CELL_WIDTH - 1 || y === CELL_HEIGHT - 1;
-      if (onBoundary && !allowed.has(pointKey({ x, y }))) unexpected.push(`${x},${y}`);
+      if (onBoundary && !allowed.has(pointKey({ x, y }))) {
+        unexpected.push(`${x},${y}`);
+      }
     }
   }
 
@@ -244,11 +258,15 @@ function isBitmapConnected(bitmap: Uint8Array): boolean {
   const pixels: PixelPoint[] = [];
   for (let y = 0; y < CELL_HEIGHT; y += 1) {
     for (let x = 0; x < CELL_WIDTH; x += 1) {
-      if (hasPixel(bitmap, x, y)) pixels.push({ x, y });
+      if (hasPixel(bitmap, x, y)) {
+        pixels.push({ x, y });
+      }
     }
   }
 
-  if (pixels.length === 0) return false;
+  if (pixels.length === 0) {
+    return false;
+  }
 
   const visited = new Set<string>();
   const queue: PixelPoint[] = [pixels[0]];
@@ -256,16 +274,24 @@ function isBitmapConnected(bitmap: Uint8Array): boolean {
 
   while (queue.length > 0) {
     const current = queue.shift();
-    if (!current) break;
-
+    if (!current) {
+      break;
+    }
     for (let dy = -1; dy <= 1; dy += 1) {
       for (let dx = -1; dx <= 1; dx += 1) {
-        if (dx === 0 && dy === 0) continue;
+        if (dx === 0 && dy === 0) {
+          continue;
+        }
         const next = { x: current.x + dx, y: current.y + dy };
         if (
-          next.x < 0 || next.x >= CELL_WIDTH || next.y < 0 || next.y >= CELL_HEIGHT ||
+          next.x < 0 ||
+          next.x >= CELL_WIDTH ||
+          next.y < 0 ||
+          next.y >= CELL_HEIGHT ||
           !hasPixel(bitmap, next.x, next.y)
-        ) continue;
+        ) {
+          continue;
+        }
         const key = pointKey(next);
         if (!visited.has(key)) {
           visited.add(key);
@@ -283,15 +309,23 @@ function orientation(a: FixedPoint, b: FixedPoint, c: FixedPoint): number {
 }
 
 function rangesOverlap(a0: number, a1: number, b0: number, b1: number): boolean {
-  return Math.max(Math.min(a0, a1), Math.min(b0, b1)) <= Math.min(Math.max(a0, a1), Math.max(b0, b1));
+  const aMin = Math.min(a0, a1);
+  const aMax = Math.max(a0, a1);
+  const bMin = Math.min(b0, b1);
+  const bMax = Math.max(b0, b1);
+  return aMax >= bMin && bMax >= aMin;
 }
 
 function segmentsIntersect(a: FixedPoint, b: FixedPoint, c: FixedPoint, d: FixedPoint): boolean {
-  if (!rangesOverlap(a.x, b.x, c.x, d.x) || !rangesOverlap(a.y, b.y, c.y, d.y)) return false;
+  if (!rangesOverlap(a.x, b.x, c.x, d.x) || !rangesOverlap(a.y, b.y, c.y, d.y)) {
+    return false;
+  }
+
   const abC = orientation(a, b, c);
   const abD = orientation(a, b, d);
   const cdA = orientation(c, d, a);
   const cdB = orientation(c, d, b);
+
   return (
     ((abC > 0 && abD < 0) || (abC < 0 && abD > 0)) &&
     ((cdA > 0 && cdB < 0) || (cdA < 0 && cdB > 0))
@@ -302,24 +336,41 @@ function polylineSelfIntersects(samples: readonly FixedPoint[]): boolean {
   for (let first = 0; first < samples.length - 1; first += 1) {
     const a = samples[first];
     const b = samples[first + 1];
-    if (a.x === b.x && a.y === b.y) continue;
+    if (a.x === b.x && a.y === b.y) {
+      continue;
+    }
 
     for (let second = first + 2; second < samples.length - 1; second += 1) {
+      // Neighboring segments share a vertex by construction.
+      if (second === first + 1) {
+        continue;
+      }
       const c = samples[second];
       const d = samples[second + 1];
-      if (c.x === d.x && c.y === d.y) continue;
-      if (segmentsIntersect(a, b, c, d)) return true;
+      if (c.x === d.x && c.y === d.y) {
+        continue;
+      }
+      if (segmentsIntersect(a, b, c, d)) {
+        return true;
+      }
     }
   }
   return false;
 }
 
-function validateCurve(spec: CurveSpec, samples: readonly FixedPoint[], bitmap: Uint8Array): CurveValidation {
+function validateCurve(
+  spec: CurveSpec,
+  control: CurveControlPoints,
+  samples: readonly FixedPoint[],
+  bitmap: Uint8Array,
+): CurveValidation {
   const reasons: string[] = [];
   const startPixel = portToPixel(spec.start);
   const endPixel = portToPixel(spec.end);
 
-  if (startPixel.x === endPixel.x && startPixel.y === endPixel.y) reasons.push("zero-length endpoint geometry");
+  if (startPixel.x === endPixel.x && startPixel.y === endPixel.y) {
+    reasons.push("zero-length endpoint geometry");
+  }
 
   const maxX = (CELL_WIDTH - 1) * CURVE_FIXED_SCALE;
   const maxY = (CELL_HEIGHT - 1) * CURVE_FIXED_SCALE;
@@ -327,16 +378,31 @@ function validateCurve(spec: CurveSpec, samples: readonly FixedPoint[], bitmap: 
     reasons.push("curve escapes the canonical cell");
   }
 
-  if (!hasPixel(bitmap, startPixel.x, startPixel.y)) reasons.push(`raster misses start port ${formatPort(spec.start)}`);
-  if (!hasPixel(bitmap, endPixel.x, endPixel.y)) reasons.push(`raster misses end port ${formatPort(spec.end)}`);
+  if (!hasPixel(bitmap, startPixel.x, startPixel.y)) {
+    reasons.push(`raster misses start port ${formatPort(spec.start)}`);
+  }
+  if (!hasPixel(bitmap, endPixel.x, endPixel.y)) {
+    reasons.push(`raster misses end port ${formatPort(spec.end)}`);
+  }
 
   const unexpectedBoundaryPixels = validateBoundaryPixels(bitmap, spec);
   if (unexpectedBoundaryPixels.length > 0) {
-    reasons.push(`raster touches unintended boundary pixel${unexpectedBoundaryPixels.length === 1 ? "" : "s"}: ${unexpectedBoundaryPixels.join(" ")}`);
+    reasons.push(
+      `raster touches unintended boundary pixel${unexpectedBoundaryPixels.length === 1 ? "" : "s"}: ${unexpectedBoundaryPixels.join(" ")}`,
+    );
   }
 
-  if (!isBitmapConnected(bitmap)) reasons.push("raster is disconnected");
-  if (polylineSelfIntersects(samples)) reasons.push("sampled curve self-intersects");
+  if (!isBitmapConnected(bitmap)) {
+    reasons.push("raster is disconnected");
+  }
+
+  if (polylineSelfIntersects(samples)) {
+    reasons.push("sampled curve self-intersects");
+  }
+
+  // Control points may lie outside the cell while the curve itself remains inside;
+  // that is allowed. The sampled curve is the validity authority.
+  void control;
 
   return { valid: reasons.length === 0, reasons };
 }
@@ -356,7 +422,7 @@ export function rasterizeCurve(spec: CurveSpec): CurveRasterResult {
     controlPoints,
     bitmap,
     bitmapKey: bitmapKey(bitmap),
-    validation: validateCurve(spec, samples, bitmap),
+    validation: validateCurve(spec, controlPoints, samples, bitmap),
   };
 }
 

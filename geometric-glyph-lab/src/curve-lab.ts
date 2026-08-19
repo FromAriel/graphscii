@@ -54,29 +54,33 @@ function parsePort(value: string): Port {
 }
 
 function ensureStyles(): void {
-  if (document.getElementById(STYLE_ID)) return;
+  if (document.getElementById(STYLE_ID)) {
+    return;
+  }
+
   const style = document.createElement("style");
   style.id = STYLE_ID;
   style.textContent = `
     .curve-research-panel .panel-heading { align-items: flex-end; }
-    .curve-lab-body { display: grid; grid-template-columns: minmax(260px, .9fr) 170px minmax(260px, 1fr) 250px; gap: 22px; padding: 22px; }
+    .curve-lab-body { display: grid; grid-template-columns: minmax(260px, 0.9fr) 170px minmax(260px, 1fr) 250px; gap: 22px; padding: 22px; }
     .curve-control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .curve-field { display: grid; gap: 5px; }
-    .curve-field span { color: #718695; font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
-    .curve-field select { width: 100%; padding: 8px 9px; border: 1px solid #2b4251; border-radius: 7px; outline: none; background: #08131a; color: #d9edf8; font-family: "Cascadia Code", Consolas, monospace; font-size: .72rem; }
+    .curve-field span { color: #718695; font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+    .curve-field select { width: 100%; padding: 8px 9px; border: 1px solid #2b4251; border-radius: 7px; outline: none; background: #08131a; color: #d9edf8; font-family: "Cascadia Code", Consolas, monospace; font-size: 0.72rem; }
     .curve-field select:focus { border-color: #74bde9; }
-    .curve-help { margin: 14px 0 0; color: #718695; font-size: .72rem; line-height: 1.55; }
+    .curve-help { margin: 14px 0 0; color: #718695; font-size: 0.72rem; line-height: 1.55; }
     .curve-preview-frame { width: 130px; height: 258px; margin: 0 auto; border: 1px solid #243947; border-radius: 10px; background: #060d12; overflow: hidden; }
     #curve-preview { display: block; width: 128px; height: 256px; image-rendering: pixelated; }
-    .curve-status { display: inline-flex; align-items: center; min-height: 30px; padding: 6px 9px; margin-bottom: 10px; border: 1px solid #2d4658; border-radius: 7px; background: #0a151d; color: #9ad6f7; font-family: "Cascadia Code", Consolas, monospace; font-size: .7rem; }
+    .curve-status { display: inline-flex; align-items: center; min-height: 30px; padding: 6px 9px; margin-bottom: 10px; border: 1px solid #2d4658; border-radius: 7px; background: #0a151d; color: #9ad6f7; font-family: "Cascadia Code", Consolas, monospace; font-size: 0.7rem; }
     .curve-status.invalid { border-color: #75444c; color: #ef9ca7; background: #1b0e12; }
     .curve-status.reuse { border-color: #486744; color: #b9e8ad; background: #0e190d; }
     .curve-mini-data { display: grid; gap: 0; margin: 0; }
     .curve-mini-data div { display: grid; grid-template-columns: 105px minmax(0, 1fr); gap: 10px; padding: 7px 0; border-bottom: 1px solid #162630; }
-    .curve-mini-data dt { color: #718695; font-size: .69rem; font-weight: 700; }
-    .curve-mini-data dd { margin: 0; color: #d6e4ed; font-family: "Cascadia Code", Consolas, monospace; font-size: .69rem; word-break: break-word; }
-    .curve-errors { margin-top: 10px; padding: 9px 11px; border-left: 2px solid #8a535c; background: #150d11; color: #d89ba4; font-size: .69rem; line-height: 1.45; }
-    #curve-ascii { margin: 0; padding: 12px 14px; border: 1px solid #1d313d; border-radius: 8px; background: #061017; color: #dff4ff; font-family: "Cascadia Code", Consolas, monospace; font-size: .76rem; line-height: 1.08; letter-spacing: .08em; overflow: auto; }
+    .curve-mini-data dt { color: #718695; font-size: 0.69rem; font-weight: 700; }
+    .curve-mini-data dd { margin: 0; color: #d6e4ed; font-family: "Cascadia Code", Consolas, monospace; font-size: 0.69rem; word-break: break-word; }
+    .curve-errors { margin-top: 10px; padding: 9px 11px; border-left: 2px solid #8a535c; background: #150d11; color: #d89ba4; font-size: 0.69rem; line-height: 1.45; }
+    #curve-ascii { margin: 0; padding: 12px 14px; border: 1px solid #1d313d; border-radius: 8px; background: #061017; color: #dff4ff; font-family: "Cascadia Code", Consolas, monospace; font-size: 0.76rem; line-height: 1.08; letter-spacing: 0.08em; overflow: auto; }
+    .curve-ascii-wrap .subheading-row { margin-bottom: 8px; }
     @media (max-width: 1180px) { .curve-lab-body { grid-template-columns: minmax(260px, 1fr) 170px minmax(250px, 1fr); } .curve-ascii-wrap { grid-column: 1 / -1; } }
     @media (max-width: 820px) { .curve-lab-body { grid-template-columns: 1fr; } .curve-preview-frame { margin: 0; } .curve-ascii-wrap { grid-column: auto; } }
   `;
@@ -92,7 +96,9 @@ function drawCurveBitmap(canvas: HTMLCanvasElement, result: CurveRasterResult): 
   canvas.width = CELL_WIDTH * scale;
   canvas.height = CELL_HEIGHT * scale;
   const context = canvas.getContext("2d");
-  if (!context) throw new Error("Curve preview canvas 2D context is unavailable.");
+  if (!context) {
+    throw new Error("Curve preview canvas 2D context is unavailable.");
+  }
 
   context.imageSmoothingEnabled = false;
   context.fillStyle = "#0a1016";
@@ -116,7 +122,9 @@ function drawCurveBitmap(canvas: HTMLCanvasElement, result: CurveRasterResult): 
   context.fillStyle = result.validation.valid ? "#f4fbff" : "#e5a2aa";
   for (let y = 0; y < CELL_HEIGHT; y += 1) {
     for (let x = 0; x < CELL_WIDTH; x += 1) {
-      if (hasPixel(result.bitmap, x, y)) context.fillRect(x * scale + 1, y * scale + 1, scale - 1, scale - 1);
+      if (hasPixel(result.bitmap, x, y)) {
+        context.fillRect(x * scale + 1, y * scale + 1, scale - 1, scale - 1);
+      }
     }
   }
 }
@@ -124,7 +132,9 @@ function drawCurveBitmap(canvas: HTMLCanvasElement, result: CurveRasterResult): 
 function mountCurveExplorer(): void {
   const atlasPanel = document.querySelector<HTMLElement>(".atlas-panel");
   const parent = atlasPanel?.parentElement;
-  if (!atlasPanel || !parent || document.getElementById("curve-research-panel")) return;
+  if (!atlasPanel || !parent || document.getElementById("curve-research-panel")) {
+    return;
+  }
 
   ensureStyles();
 
@@ -141,7 +151,10 @@ function mountCurveExplorer(): void {
   panel.className = "panel curve-research-panel";
   panel.innerHTML = `
     <div class="panel-heading">
-      <div><p class="section-kicker">Milestone 3A · research only</p><h2>Single-curve explorer</h2></div>
+      <div>
+        <p class="section-kicker">Milestone 3A · research only</p>
+        <h2>Single-curve explorer</h2>
+      </div>
       <div class="codepoint-chip">No curve codepoints allocated</div>
     </div>
     <div class="curve-lab-body">
@@ -153,9 +166,11 @@ function mountCurveExplorer(): void {
           <label class="curve-field"><span>End tangent</span><select id="curve-end-tangent">${optionMarkup(CURVE_TANGENTS, defaults.endTangent)}</select></label>
           <label class="curve-field"><span>Strength</span><select id="curve-strength">${optionMarkup(CURVE_STRENGTHS, defaults.strength)}</select></label>
         </div>
-        <p class="curve-help">Fixed-point cubic Bézier · 256 deterministic samples · same binary raster identity as straight glyphs.</p>
+        <p class="curve-help">The curve is a fixed-point cubic Bézier sampled at 256 deterministic intervals, then rasterized through the same binary line engine used by the straight vocabulary.</p>
       </div>
-      <div><div class="curve-preview-frame"><canvas id="curve-preview" width="128" height="256"></canvas></div></div>
+      <div>
+        <div class="curve-preview-frame"><canvas id="curve-preview" width="128" height="256" aria-label="Curve raster preview"></canvas></div>
+      </div>
       <div>
         <div id="curve-status" class="curve-status">—</div>
         <dl class="curve-mini-data">
@@ -169,7 +184,10 @@ function mountCurveExplorer(): void {
         </dl>
         <div id="curve-errors" class="curve-errors" hidden></div>
       </div>
-      <div class="curve-ascii-wrap"><div class="subheading-row"><h3>Curve raster</h3><span>8 × 16 canonical pixels</span></div><pre id="curve-ascii">--------</pre></div>
+      <div class="curve-ascii-wrap">
+        <div class="subheading-row"><h3>Curve raster</h3><span>8 × 16 canonical pixels</span></div>
+        <pre id="curve-ascii">--------</pre>
+      </div>
     </div>
   `;
   parent.insertBefore(panel, atlasPanel);
@@ -190,6 +208,7 @@ function mountCurveExplorer(): void {
   const p3 = panel.querySelector<HTMLElement>("#curve-p3");
   const errors = panel.querySelector<HTMLElement>("#curve-errors");
   const ascii = panel.querySelector<HTMLElement>("#curve-ascii");
+
   if (!start || !end || !startTangent || !endTangent || !strength || !preview || !status || !alias || !key || !owner || !p0 || !p1 || !p2 || !p3 || !errors || !ascii) {
     throw new Error("Curve explorer failed to mount required controls.");
   }
@@ -202,6 +221,7 @@ function mountCurveExplorer(): void {
       endTangent: endTangent.value as CurveTangentId,
       strength: strength.value as CurveStrengthId,
     };
+
     const curve = rasterizeCurve(spec);
     const resolution = resolveCurveAgainstStraights(curve, straightBaseline.glyphs);
     drawCurveBitmap(preview, curve);
@@ -213,6 +233,7 @@ function mountCurveExplorer(): void {
     p2.textContent = fixedPointText(curve.controlPoints.p2);
     p3.textContent = fixedPointText(curve.controlPoints.p3);
     ascii.textContent = bitmapAscii(curve.bitmap);
+
     status.className = "curve-status";
     errors.hidden = curve.validation.valid;
     errors.textContent = curve.validation.reasons.join(" · ");
@@ -221,17 +242,24 @@ function mountCurveExplorer(): void {
       status.classList.add("invalid");
       status.textContent = "INVALID CURVE";
       owner.textContent = "not eligible for allocation";
-    } else if (resolution.exactBitmapMatch) {
+      return;
+    }
+
+    if (resolution.exactBitmapMatch) {
       status.classList.add("reuse");
       status.textContent = `EXACT MATCH · REUSE ${resolution.canonicalCodepoint}`;
       owner.textContent = `${resolution.canonicalCodepoint} · glyph 0x${resolution.canonicalGlyphId?.toString(16).toUpperCase().padStart(3, "0")}`;
-    } else {
-      status.textContent = "NOVEL CURVE RASTER · UNALLOCATED";
-      owner.textContent = "new visual candidate (research only)";
+      return;
     }
+
+    status.textContent = "NOVEL CURVE RASTER · UNALLOCATED";
+    owner.textContent = "new visual candidate (research only)";
   };
 
-  [start, end, startTangent, endTangent, strength].forEach((control) => control.addEventListener("change", render));
+  [start, end, startTangent, endTangent, strength].forEach((control) => {
+    control.addEventListener("change", render);
+  });
+
   render();
 }
 
