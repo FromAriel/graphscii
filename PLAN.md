@@ -317,7 +317,7 @@ Generated from boundary geometry plus a fill-side rule:
 - ordered dither levels,
 - checker patterns,
 - horizontal/vertical hatch,
-- `/` and `\` hatch,
+- `/` and `\`  hatch,
 - crosshatch,
 - dots/stipple,
 - phase-shifted variants that tile seamlessly.
@@ -348,40 +348,31 @@ Current/target structure:
 
 ```text
 graphscii/
-â”œâ”€â”€ PLAN.md
-â”œâ”€â”€ README.md
+â”‚â”€â”€ PLAN.md
+â”‚â”€â”€ README.md
 â”‚
-â”œâ”€â”€ geometric-glyph-lab/
-â”‚   â”œâ”€â”€ src/
-â”‚   â”‚   â””â”€â”€ core/
+â”‚â”€â”€ geometric-glyph-lab/
+â‚   â”œâ”€â”€ src/
+â‚   â”‚   â””â”€â”€ core/
 â”‚   â”œâ”€â”€ scripts/
 â”‚   â”œâ”€â”€ tests/
 â”‚   â”œâ”€â”€ dist/
 â”‚   â””â”€â”€ package.json
 â”‚
-â”œâ”€â”€ spec/
-â”‚   â”œâ”€â”€ classes/
+â”‚â”€â”€ spec/
+â‚   â”œâ”€â”€ classes/
 â”‚   â”œâ”€â”€ allocation.json
-â”‚   â””â”€â”€ schema/
+b‚   â””â”€â”€ schema/
 â”‚
-â”œâ”€â”€ artifacts/
+â”‚â”€â”€ artifacts/
 â”‚   â”œâ”€â”€ manifest/
-â”‚   â”‚   â”œâ”€â”€ glyphs.json
+â‚   â”‚   â”œâ”€â”€ glyphs.json
 â”‚   â”‚   â”œâ”€â”€ aliases.json
-â”‚   â”‚   â”œâ”€â”€ stats.json
-â”‚   â”‚   â””â”€â”€ compatibility.json
+b‚   â”‚   â”œâ”€â”€ stats.json
+b‚   â”‚   â””â”€â”€ compatibility.json
 â”‚   â”œâ”€â”€ glyphs/
-â”‚   â”‚   â”œâ”€â”€ png/
-â”‚   â”‚   â””â”€â”€ ascii/
-â”‚   â”œâ”€â”€ classes/
-â”‚   â”œâ”€â”€ atlases/
-â”‚   â””â”€â”€ font/
-â”‚
-â””â”€â”€ docs/
-    â”œâ”€â”€ format.md
-    â”œâ”€â”€ drawing-api.md
-    â”œâ”€â”€ connectivity.md
-    â””â”€â”€ examples/
+â”‚   â”‚   â”£â”€â”€ png/
+â”‚   â”‚   â””â”€â”€…Í¥¤¼+Š€€ƒŠRsŠRŠR ±…ÍÍ•Ì¼+ŠR€€ƒŠRsŠRŠR …Ñ±…Í•Ì¼+ŠR€€ƒŠRãŠRŠR ™½¹Ğ¼+ŠR+ŠRSŠRŠR ‘½Ì¼+Š €€€ƒŠRŠRŠRf÷&ÖBæÖ@¢)J>)H)H˜]Ú[™ËX\K›Yˆ8¥'8¥ 8¥ ÛÛ›™Xİ]š]K›Yˆ8¥.8¥ 8¥  examples/
 ```
 
 Do not reorganize the working lab merely for aesthetics. Refactor only when the architecture needs it.
@@ -448,56 +439,65 @@ Each catalog should contain:
 - semantic tags,
 - exact ASCII rendering of every glyph,
 - all aliases,
-- connectivity and tangent information,
-- path/link to the tiny PNG.
+- connectivity/tangent information,
+- path to the canonical PNG.
 
-Catalogs are generated documentation and should not be hand-maintained glyph by glyph.
+The catalogs are generated documentation, not hand-edited source.
 
 ---
 
-## 11. JSON manifest contract
+## 11. JSON manifest goals
 
 The manifest must be sufficient for a program to use GraphSCII without reverse-engineering the font.
 
-Proposed top-level form:
+Target top-level shape:
 
 ```json
 {
   "format": "graphscii",
   "formatVersion": 1,
   "generatorVersion": "...",
-  "cell": {
-    "width": 8,
-    "height": 16,
-    "orientation": "8-columns-by-16-rows"
-  },
-  "bitmapSerialization": "v1:rows-top-to-bottom;one-byte-per-row;x0-is-bit0;lowercase-hex",
-  "codepointBase": "U+00E000",
+  "cell": { "width": 8, "height": 16 },
+  "bitmapSerialization": "v1:...",
+  "codepointBase": "U+E000",
   "glyphCount": 746,
   "glyphs": []
 }
 ```
 
-Proposed glyph record:
+Thirst for each glyph:
 
 ```json
 {
   "glyphId": 570,
   "glyphIdHex": "23A",
   "codepoint": 57914,
-  "codepointHex": "U+00E23A",
-  "family": "straight-left-right",
+  "codepointHex": "U+E23A",
+  "character": "...",
+  ""family": "straight-left-right",
   "tags": ["straight", "diagonal", "left-right"],
   "bitmap": {
-    "rowsHex": ["00", "01"],
-    "key": "...32 lowercase hex chars..."
+    "rowsHex": ["00", "01", "02"],
+    "key": "..."
   },
   "connections": [
-    { "edge": "left", "port": 13, "tangent": "east" },
-    { "edge": "right", "port": 4, "tangent": "east" }
+    {
+      "edge": "left",
+      "port": 13,
+      "tangent": "east"
+    },
+    {
+      "edge": "right",
+      "port": 4,
+      "tangent": "east"
+    }
   ],
   "aliases": [
-    { "type": "straight", "start": "L13", "end": "R4" }
+    {
+      "type": "straight",
+      "start": "L13",
+      "end": "R4"
+    }
   ],
   "artifacts": {
     "png": "../glyphs/png/U+00E23A.png",
@@ -506,41 +506,44 @@ Proposed glyph record:
 }
 ```
 
-The external schema is not frozen yet. The canonical bitmap serialization is.
+The schema remains provisional until a stable external consumer is expected to rely on it.
 
 ---
 
-## 12. Lookup indexes
+## 12. Derived lookup indexes
 
-Consumers should not need to scan the whole vocabulary for common queries.
+Consumers should not need to scan the entire vocabulary for every query.
 
-Generated indexes may include:
+Possible derived indexes:
 
 - by codepoint,
 - by glyph ID,
 - by bitmap key,
 - by family,
-- by tag,
+- by tags,
 - by entry port,
 - by exit port,
-- by port+tangent,
+- by port + tangent,
 - by geometric alias,
 - by compatibility.
+
+These may be contained in the main manifest or derived into separate files as size/usability dictates.
 
 ---
 
 ## 13. Connectivity model
 
-Eventually each geometric connection should carry:
+A port connection eventually needs:
 
 ```text
 edge
 port index
+connected/not connected
 tangent
 join semantics
 ```
 
-Possible join semantics:
+Join semantics may include:
 
 - smooth continuation,
 - intentional corner,
@@ -553,479 +556,17 @@ Example future query:
 ```text
 current glyph exits R7 with tangent east
             â†“
-return glyphs entering L7 with compatible tangent
+return all glyphs entering L7 with compatible tangent
 ```
 
-A generated compatibility index can make neighbor selection cheap.
-
 ---
 
-## 14. Rendering and drawing paths
+## 14. How a program should draw with GraphSCII
 
-### Path A â€” font/text
+Two equivalent rendering paths should be supported.
 
-1. Load GraphSCII font.
-2. Load manifest/indexes.
-3. Solve/select glyph ID.
-4. Convert to assigned codepoint.
-5. Write character into a fixed-cell text grid.
-6. Render using GraphSCII metrics.
+### Path A â€” font/text rendering
 
-The drawing can then be serialized as Unicode text.
-
-### Path B â€” direct bitmap/tile rendering
-
-1. Load manifest or atlas index.
-2. Select the same glyph IDs.
-3. Copy canonical PNG/atlas cells into canvas/framebuffer.
-
-This bypasses font rasterization and reproduces canonical pixels exactly.
-
-### Long-term solver API
-
-Conceptually:
-
-```text
-findStraight(startPort, endPort)
-findCurve(startPort, endPort, tangents, curvature)
-findJunction(directionMask)
-findCompatibleNeighbor(glyph, edge)
-findClosestGeometry(segmentOrCurve)
-```
-
-A higher-level solver should sample vector geometry cell-by-cell and choose the best GraphSCII glyph for each cell.
-
----
-
-## 15. Font compilation
-
-Font outlines derive deterministically from canonical bitmaps.
-
-Initial strategy:
-
-- each filled pixel becomes a rectangle,
-- adjacent rectangles may be unioned,
-- identical fixed advance for every glyph,
-- no kerning,
-- no proportional metrics,
-- no default ligatures,
-- no shaping-dependent geometry.
-
-For 8Ã—16, a convenient scale is:
-
-```text
-1 canonical pixel = 128 font units
-cell width         = 1024 units
-cell height        = 2048 units
-```
-
-PNG/bitmap output remains authoritative because platform font rasterizers may differ at arbitrary scales.
-
----
-
-## 16. Atlas generation
-
-Stable page model:
-
-```text
-256 glyphs per page
-16 columns Ã— 16 rows
-16 pages for 4096 slots
-```
-
-```text
-page 0 = 000â€“0FF
-page 1 = 100â€“1FF
-...
-page F = F00â€“FFF
-```
-
-Artifacts:
-
-```text
-artifacts/atlases/all.png
-artifacts/atlases/page-0.png
-...
-artifacts/atlases/page-F.png
-```
-
-Family-specific atlases may also be generated.
-
----
-
-## 17. Deterministic artifact generation
-
-One command should eventually regenerate the distributable state:
-
-```text
-bun run generate
-```
-
-Target pipeline:
-
-1. load specification,
-2. generate mathematical candidates,
-3. rasterize deterministically,
-4. deduplicate visual identities,
-5. preserve aliases,
-6. allocate/freeze codepoints,
-7. validate metadata/connectivity,
-8. write manifests/indexes,
-9. write per-glyph ASCII,
-10. write per-glyph PNG,
-11. write class Markdown catalogs,
-12. write atlases,
-13. compile fonts,
-14. write statistics/provenance,
-15. verify committed artifacts.
-
----
-
-## 18. Artifact commit policy
-
-GraphSCII intentionally commits useful generated products:
-
-- canonical tiny PNGs,
-- exact ASCII glyph files,
-- JSON manifests/indexes,
-- class Markdown catalogs,
-- reference atlases,
-- release fonts.
-
-Do not commit:
-
-- dependency directories,
-- caches,
-- temporary canvases,
-- debug intermediates,
-- local state.
-
-A verification command should eventually fail if regeneration unexpectedly changes committed canonical artifacts.
-
----
-
-## 19. Codepoint stability
-
-During research, glyph IDs and provisional codepoints may move.
-
-After the first stable vocabulary release, codepoints become API.
-
-After freeze:
-
-1. never silently give an existing codepoint a different visual meaning,
-2. never recycle a retired codepoint for unrelated geometry in the same major version,
-3. record aliases/renames,
-4. increment the GraphSCII format major version for unavoidable breaking remaps.
-
----
-
-## 20. Candidate selection when slot pressure appears
-
-Do not hand-design 4096 isolated glyphs.
-
-Family generators should create candidate supersets. Measure:
-
-- exact duplicates,
-- symmetry,
-- connectivity coverage,
-- tangent coverage,
-- visual novelty,
-- family importance,
-- expected drawing utility.
-
-If candidates exceed the address budget, introduce an inspectable deterministic scoring stage.
-
-Possible score terms:
-
-- unique connectivity signature,
-- unique tangent behavior,
-- geometric coverage,
-- perceptual bitmap distance,
-- symmetry completion,
-- expected utility,
-- family priority.
-
----
-
-## 21. Symmetry and transforms
-
-Generators may derive:
-
-- horizontal mirror,
-- vertical mirror,
-- 180Â° rotation.
-
-Because the cell is non-square, 90Â° rotation changes dimensions and is not automatically valid.
-
-Transforms must update geometry metadata as well as pixels. Deduplication runs after transforms.
-
----
-
-## 22. Testing requirements
-
-### Raster tests
-
-- deterministic output,
-- exact 8Ã—16 dimensions,
-- known fixtures,
-- binary-only canonical pixels.
-
-### Deduplication tests
-
-- identical bitmaps merge,
-- aliases survive,
-- non-identical bitmaps never merge,
-- bitmap key serialization stays stable.
-
-### Registry tests
-
-- unique glyph IDs,
-- unique codepoints,
-- valid ranges,
-- reserved regions respected,
-- frozen allocations unchanged.
-
-### Artifact tests
-
-For every assigned glyph:
-
-- PNG exists,
-- PNG is exactly 8Ã—16,
-- ASCII exists,
-- ASCII is exactly 8Ã—16,
-- ASCII equals PNG/manifest bitmap,
-- manifest artifact paths resolve.
-
-### Catalog tests
-
-- every assigned glyph appears in correct catalogs,
-- class counts match manifest,
-- links/codepoints are current.
-
-### Connectivity tests
-
-- port indexes valid,
-- seams match expected boundary pixels,
-- smooth joins satisfy tangent rules,
-- intentional corners are not mislabeled smooth.
-
-### Reproducibility
-
-A clean run from the same source commit should produce byte-identical canonical artifacts wherever practical.
-
----
-
-## 23. Interactive lab roadmap
-
-Existing/early:
-
-- candidate-family generation,
-- candidate/unique/duplicate counts,
-- atlas browsing,
-- glyph inspector,
-- nearest-neighbor preview,
-- exact ASCII view,
-- alias inspection,
-- PNG/JSON export.
-
-Next:
-
-- shape-class selector,
-- curve parameter explorer,
-- tangent visualization,
-- seam/neighbor preview,
-- compatibility search,
-- candidateâ†’deduplicated-survivor comparison,
-- codepoint allocation display,
-- symmetry inspection.
-
-Later:
-
-- multi-cell drawing canvas,
-- line/curve tools,
-- automatic glyph solving,
-- per-cell manual replacement,
-- Unicode copy/paste,
-- PNG/text/JSON drawing export.
-
----
-
-## 24. Documentation goals
-
-The README should eventually explain GraphSCII at three levels:
-
-### Human overview
-
-What GraphSCII is and why a geometric text/tile vocabulary is useful.
-
-### Artist/user usage
-
-- install/use the font,
-- browse atlases,
-- copy glyphs,
-- understand codepoint pages,
-- inspect class catalogs.
-
-### Programmer usage
-
-- load manifest,
-- locate by ID/codepoint,
-- query ports/tangents,
-- render through font or bitmap atlas,
-- match compatible neighbors,
-- serialize drawings.
-
-Detailed contracts belong in `docs/`.
-
----
-
-## 25. Milestone sequence
-
-### Milestone 0 â€” lock fundamentals â€” **COMPLETE**
-
-- [x] Canonical orientation locked: **8 columns Ã— 16 rows**.
-- [x] Cell dimensions centralized as constants.
-- [x] Straight-line baseline preserved and re-verified: `832 â†’ 746`, 86 duplicates, max 4 aliases.
-- [x] Permanent bitmap serialization format established.
-- [x] Artifact filename convention established: `U+00E000.*`.
-- [x] Canonical ASCII convention established: `#` / `-`.
-- [x] Low-level format documented in `docs/format.md`.
-- [x] Prebuilt regression verification checks the format contract.
-
-### Milestone 1 â€” persistent artifact pipeline â€” **NEXT**
-
-- [ ] Add generator CLI separate from UI actions.
-- [ ] Generate main JSON manifest.
-- [ ] Generate per-glyph exact ASCII files.
-- [ ] Generate per-glyph canonical PNG files.
-- [ ] Generate complete/page atlases.
-- [ ] Add artifact consistency tests.
-
-### Milestone 2 â€” straight-line class publication
-
-- [ ] Allocate provisional codepoints to unique straight glyphs.
-- [ ] Generate `straight-lines.md` containing every exact ASCII form.
-- [ ] Preserve all mathematical aliases in JSON/docs.
-- [ ] Add connectivity metadata.
-
-### Milestone 3 â€” curve research engine
-
-- [ ] Define curve grammar.
-- [ ] Implement deterministic curve rasterization.
-- [ ] Generate large candidate families.
-- [ ] Deduplicate.
-- [ ] Compare curvature/tangent coverage.
-- [ ] Publish curve artifacts/catalog.
-
-### Milestone 4 â€” junctions
-
-- [ ] Direction-mask model.
-- [ ] Sharp junction generation.
-- [ ] Rounded junction generation.
-- [ ] Compatibility metadata.
-- [ ] Junction artifacts/catalog.
-
-### Milestone 5 â€” filled contours
-
-- [ ] Fill-side classifier.
-- [ ] Straight filled boundaries.
-- [ ] Curved filled boundaries.
-- [ ] Wedges/corners.
-- [ ] Filled artifacts/catalog.
-
-### Milestone 6 â€” circles/ellipses
-
-- [ ] Radius/ellipse grammar.
-- [ ] Arc generation.
-- [ ] Deduplication/coverage analysis.
-- [ ] Class artifacts/catalog.
-
-### Milestone 7 â€” textures/blocks/terminals
-
-- [ ] Partial fills.
-- [ ] Dither families.
-- [ ] Seamless texture phases.
-- [ ] Caps/nodes/arrows.
-- [ ] Class artifacts/catalogs.
-
-### Milestone 8 â€” vocabulary optimization
-
-- [ ] Generate full candidate superset.
-- [ ] Analyze slot pressure.
-- [ ] Identify coverage holes.
-- [ ] Score/select competing candidates.
-- [ ] Preserve reserved space.
-- [ ] Produce provisional 4K allocation map.
-
-### Milestone 9 â€” font compiler
-
-- [ ] Bitmap-to-outline compiler.
-- [ ] Fixed metrics.
-- [ ] PUA cmap.
-- [ ] TTF output.
-- [ ] WOFF2 output.
-- [ ] Font specimen tests.
-
-### Milestone 10 â€” programmatic drawing API
-
-- [ ] Stable JSON schema.
-- [ ] Lookup/index library.
-- [ ] Neighbor compatibility API.
-- [ ] Geometry-to-glyph solver.
-- [ ] Multi-cell raster renderer.
-
-### Milestone 11 â€” interactive GraphSCII editor
-
-- [ ] Multi-cell canvas.
-- [ ] Geometric drawing tools.
-- [ ] Automatic glyph solving.
-- [ ] Manual tile replacement.
-- [ ] Unicode copy/paste.
-- [ ] PNG/text/JSON export.
-
-### Milestone 12 â€” first stable vocabulary release
-
-- [ ] Final coverage review.
-- [ ] Freeze initial codepoint meanings.
-- [ ] Freeze manifest schema v1.
-- [ ] Generate all committed artifacts.
-- [ ] Complete README/programmer documentation.
-- [ ] Tag/release GraphSCII v1.
-
----
-
-## 26. Definition of done for GraphSCII v1
-
-A v1 release is ready when:
-
-- canonical 8Ã—16 cell format is frozen,
-- all assigned glyphs reproduce from source,
-- every glyph has a stable codepoint,
-- every glyph has canonical PNG and ASCII artifacts,
-- every major class has a generated Markdown catalog,
-- JSON completely describes identity/connectivity,
-- atlases cover the assigned vocabulary,
-- a usable fixed-cell font exists,
-- programs can render through font or canonical bitmap artifacts,
-- neighbor compatibility is mechanically queryable,
-- generation/tests are deterministic,
-- README/programmer docs explain the format,
-- codepoint meanings are ready to be treated as stable API.
-
----
-
-## 27. Guiding rule
-
-When deciding whether to add a hand-authored glyph, generator rule, artifact, metadata field, or subsystem, prefer the choice that makes GraphSCII more:
-
-- **systematic**,
-- **reproducible**,
-- **queryable**,
-- **composable**,
-- **inspectable**,
-- **programmable**,
-- **geometrically expressive per codepoint**.
-
-The generator should let empirical results determine the vocabulary. We should not assume how many slots a class deserves when we can generate the candidates, rasterize them, deduplicate them, measure surviving visual space, and inspect the result.
-
-The objective is not to fill 4096 codepoints. It is to make those codepoints behave like a coherent graphical language.
+1. Load `GraphSCII.ttf` or `GraphSCIIİ™˜É€¸(È¸1½…±åÁ µ•Ñ…‘…Ñ„¸(Ì¸M•±•Ğ½ÈÍ½±Ù”Ñ¡”¹••‘•±åÁ %¸4Ğ¸½¹Ù•ÉĞ±åÁ %Ñ¼…ÍÍ¥¹•U¹¥½‘”¸(Ô¸]É¥Ñ”Ñ¡”¡…É…Ñ•È¥¹Ñ¼„™¥á•µ•±°Ñ•áĞÉ¥¸(Ø¸I•¹‘•Èİ¥Ñ É…Á¡M%$¸((ŒŒŒA…Ñ ƒŠP‘¥É•Ğ‰¥Ñµ…À½Ñ¥±”É•¹‘•É¥¹œ((Ä¸1½…±åÁ µ•Ñ…‘…Ñ„½È…¸…Ñ±…Ì¥¹‘•à¸(È¸M•±•Ğ±åÁ %ÌÕÍ¥¹œÑ¡”Í…µ”•½µ•ÑÉäµ•Ñ…‘…Ñ„¸(Ì¸½Áä…¹½¹¥…°‰¥Ñµ…À½¥µ…”Ñ¥±•Ì¥¹Ñ¼„™É…µ•‰Õ™™•È½…¹Ù…Ì¸()Q¡¥ÌÁ…Ñ ‰åÁ…ÍÍ•Ì™½¹ĞÉ…ÍÑ•É¥é…Ñ¥½¸…¹ÁÉ½‘Õ•Ì•á…Ğ…¹½¹¥…°Á¥á•±Ì¸((ŒŒŒ1½¹œµÑ•É´Í½±Ù•È()Ù•¹ÑÕ…±±ä•áÁ½Í”½Á•É…Ñ¥½¹Ì½¹•ÁÑÕ…±±ä±¥­”è()Ñ•áĞ)™¥¹‘MÑÉ…¥¡Ğ¡ÍÑ…ÉÑA½ÉĞ°•¹‘A½ÉĞ¤)™¥¹‘ÕÉÙ”¡ÍÑ…ÉÑA½ÉĞ°•¹‘A½ÉĞ°Ñ…¹•¹ÑÌ°ÕÉÙ…ÑÕÉ”¤)™¥¹‘)Õ¹Ñ¥½¸¡‘¥É•Ñ¥½¹5…Í¬¤)™¥¹‘½µÁ…Ñ¥‰±•9•¥¡‰½È¡±åÁ °•‘”¤)™¥¹‘±½Í•ÍÑ•½µ•ÑÉä¡Í•µ•¹Ñ=ÉÕÉÙ”¤)€()¡¥¡•Èµ±•Ù•°Í½±Ù•È…¸Í…µÁ±”„Ù•Ñ½ÈÁ…Ñ •±°µ‰äµ•±°…¹Í•±•ĞÑ¡”‰•ÍĞÉ…Á¡M%$Ñ¥±”™½È•… •±°¸((´´´((ŒŒ€ÄÔ¸½¹Ğ½µÁ¥±…Ñ¥½¸()…¹½¹¥…°‰¥Ñµ…ÁÌÍ¡½Õ±½µÁ¥±”‘•Ñ•Éµ¥¹¥ÍÑ¥…±±ä¥¹Ñ¼™½¹Ğ½ÕÑ±¥¹•Ì¸()M¥µÁ±”¥¹¥Ñ¥…°ÍÑÉ…Ñ•äè((´•… ™¥±±•Á¥á•°‰•½µ•Ì„Ù•Ñ½ÈÉ•Ñ…¹±”°(´…‘©…•¹ĞÉ•Ñ…¹±•Ìµ…ä‰”Õ¹¥½¹•™½ÈÍµ…±±•È½ÕÑ±¥¹•Ì°(´•Ù•Éä±åÁ ÕÍ•Ì¥‘•¹Ñ¥…°…‘Ù…¹”İ¥‘Ñ °(´¹¼­•É¹¥¹œ°(´¹¼ÁÉ½Á½ÉÑ¥½¹…°µ•ÑÉ¥Ì°(´¹¼‘•™…Õ±Ğ±¥…ÑÕÉ•Ì°(´¹¼Í¡…Á¥¹œµ‘•Á•¹‘•¹Ğ•½µ•ÑÉä¸()U¹¥Ğ¥‘•„™½È€ã\ÄØè()Ñ•áĞ(Ä…¹½¹¥…°Á¥á•°€ô€ÄÈà™½¹ĞÕ¹¥ÑÌ)•±°İ¥‘Ñ €€€€€€€€€ô€ÄÀÈĞ•±°¡•…ÉÑ €€€€€€€€ô€ÈÀĞà)€()…¹½¹¥…°A9½‰¥Ñµ…ÀÍÑ…åÌ…ÕÑ¡½É¥Ñ…Ñ¥Ù”‰•…ÕÍ”Á±…Ñ™½É´™½¹ĞÉ…ÍÑ•É¥é•ÉÌ…É”¹½ĞÕ…É…¹Ñ••Ñ¼ÁÉ½‘Õ”¥‘•¹Ñ¥…°Á¥á•±Ì¸((´´´((ŒŒ€ÄØ¸Ñ±…Ì•¹•É…Ñ¥½¸()I•½µµ•¹‘•Á…”µ½‘•°è()Ñ•áĞ(ÈÔØ±åÁ¡ÌÁ•ÈÁ…”(ÄØ½±Õµ¹Ìƒ\€ÄØÉ½İÌ(ÄØÁ…•Ì™½È„€ĞÀäØµÍ±½ĞÙ½…‰Õ±…Éä)€()9…µ¥¹œè()Ñ•áĞ)…ÉÑ¥™…ÑÌ½…Ñ±…Í•Ì½…±°¹Á¹œ)…ÉÑ¥™…ÑÌ½…Ñ±…Í•Ì½Á…”´À¹Á¹œ(¸°¸¸)…ÉÑ¥™…ÑÌ½…Ñ±…Í•Ì½Á…”µ¹Á¹œ)€()…µ¥±äµÍÁ•¥™¥Œ…Ñ±…Í•Ìµ…ä…±Í¼‰”•¹•É…Ñ•¸((´´´((ŒŒ€ÄÜ¸•Ñ•Éµ¥¹¥ÍÑ¥Œ…ÉÑ¥™…Ğ•¹•É…Ñ¥½¸()=¹”½µµ…¹Í¡½Õ±•Ù•¹ÑÕ…±±äÉ••¹•É…Ñ”Ñ¡”‘¥ÍÑÉ¥‰ÕÑ…‰±”ÍÑ…Ñ”è()Ñ•áĞ)‰Õ¸ÉÕ¸•¹•É…Ñ”)€()Q…É•ĞÁ¥Á•±¥¹”è((Ä¸±½…ÍÁ•¥™¥…Ñ¥½¸°(È¸•¹•É…Ñ”µ…Ñ¡•µ…Ñ¥…°…¹‘¥‘…Ñ•Ì°(Ì¸É…ÍÑ•É¥é”‘•Ñ•Éµ¥¹¥ÍÑ¥…±±ä°(Ğ¸‘•‘ÕÁ±¥…Ñ”Ù¥ÍÕ…°¥‘•¹Ñ¥Ñ¥•Ì°(Ô¸ÁÉ•Í•ÉÙ”…±¥…Í•Ì°(Ø¸…±±½…Ñ”½™É••é”½‘•Á½¥¹ÑÌ°(Ü¸Ù…±¥‘…Ñ”µ•Ñ…‘…Ñ„½½¹¹•Ñ¥Ù¥Ñä°(à¸İÉ¥Ñ”µ…¹¥™•ÍÑÌ½¥¹‘•á•Ì°(ä¸İÉ¥Ñ”Á•Èµ±åÁ M%$°(ÄÀ¸İÉ¥Ñ”Á•Èµ±åÁ A9°(ÄÄ¸İÉ¥Ñ”±…ÍÌ5…É­‘½İ¸…Ñ…±½Ì°(ÄÈ¸İÉ¥Ñ”…Ñ±…Í•Ì°(ÄÌ¸½µÁ¥±”™½¹ÑÌ°(ÄĞ¸İÉ¥Ñ”ÍÑ…Ñ¥ÍÑ¥Ì½ÁÉ½Ù•¹…¹”°(ÄÔ¸Ù•É¥™ä½µµ¥ÑÑ•…ÉÑ¥™…ÑÌ¸((´´´((ŒŒ€Äà¸ÉÑ¥™…Ğ½µµ¥ĞÁ½±¥ä()É…Á¡M%$¥¹Ñ•¹Ñ¥½¹…±±ä½µµ¥ÑÌÕÍ•™Õ°•¹•É…Ñ•ÁÉ½‘ÕÑÌè((´…¹½¹¥…°Ñ¥¹äA9Ì°(´•á…ĞM%$±åÁ ™¥±•Ì°(´)M=8µ…¹¥™•ÍÑÌ½¥¹‘•á•Ì°(´±…ÍÌ5…É­‘½İ¸…Ñ…±½Ì°(´É•™•É•¹”…Ñ±…Í•Ì°(´É•±•…Í”™½¹ÑÌ¸()¼¹½Ğ½µµ¥Ğè((´‘•Á•¹‘•¹ä‘¥É•Ñ½É¥•Ì°(´…¡•Ì°(´Ñ•µÁ½É…Éä…¹Ù…Í•Ì°(´‘•‰Õœ¥¹Ñ•Éµ•‘¥…Ñ•Ì°(´±½…°ÍÑ…Ñ”¸()Ù•É¥™¥…Ñ¥½¸½µµ…¹Í¡½Õ±•Ù•¹ÑÕ…±±ä™…¥°¥˜É••¹•É…Ñ¥½¸Õ¹•áÁ•Ñ•‘±ä¡…¹•Ì½µµ¥ÑÑ•…¹½¹¥…°…ÉÑ¥™…ÑÌ¸((´´´((ŒŒ€Ää¸½‘•Á½¥¹ĞÍÑ…‰¥±¥Ñä()ÕÉ¥¹œÉ•Í•…É °±åÁ %Ì…¹ÁÉ½Ù¥Í¥½¹…°½‘•Á½¥¹ÑÌµ…äµ½Ù”¸()™Ñ•ÈÑ¡”™¥ÉÍĞÍÑ…‰±”Ù½…‰Õ±…ÉäÉ•±•…Í”°½‘•Á½¥¹ÑÌ‰•½µ”A$¸()™Ñ•È™É••é”è((Ä¸¹•Ù•ÈÍ¥±•¹Ñ±ä¥Ù”…¸•á¥ÍÑ¥¹œ½‘•Á½¥¹Ğ„‘¥™™•É•¹ĞÙ¥ÍÕ…°µ•…¹¥¹œ°(È¸¹•Ù•ÈÉ•å±”„É•Ñ¥É•½‘•Á½¥¹Ğ™½ÈÕ¹É•±…Ñ••½µ•ÑÉä¥¸Ñ¡”Í…µ”µ…©½ÈÙ•ÉÍ¥½¸°(Ì¸É•½É…±¥…Í•Ì½É•¹…µ•Ì°(Ğ¸¥¹É•µ•¹ĞÑ¡”É…Á¡M%$™½Éµ…Ğµ…©½ÈÙ•ÉÍ¥½¸™½ÈÕ¹…Ù½¥‘…‰±”‰É•…­¥¹œÉ•µ…ÁÌ¸((´´´((ŒŒ€ÈÀ¸…¹‘¥‘…Ñ”Í•±•Ñ¥½¸İ¡•¸Í±½ĞÁÉ•ÍÍÕÉ”…ÁÁ•…ÉÌ()¼¹½Ğ¡…¹µ‘•Í¥¸€ĞÀäØ¥Í½±…Ñ•±åÁ¡Ì¸()…µ¥±ä•¹•É…Ñ½ÉÌÍ¡½Õ±É•…Ñ”…¹‘¥‘…Ñ”ÍÕÁ•ÉÍ•ÑÌ¸5•…ÍÕÉ”è((´•á…Ğ‘ÕÁ±¥…Ñ•Ì°(´Íåµµ•ÑÉä°(´½¹¹•Ñ¥Ù¥Ñä½Ù•É…”°(´Ñ…¹•¹Ğ½Ù•É…”°(´Ù¥ÍÕ…°¹½Ù•±Ñä°(´™…µ¥±ä¥µÁ½ÉÑ…¹”°(´•áÁ•Ñ•‘É…İ¥¹œÕÑ¥±¥Ñä¸()%˜…¹‘¥‘…Ñ•Ì•á••Ñ¡”…‘‘É•ÍÌ‰Õ‘•Ğ°¥¹ÑÉ½‘Õ”…¸¥¹ÍÁ•Ñ…‰±”‘•Ñ•Éµ¥¹¥ÍÑ¥ŒÍ½É¥¹œÍÑ…”¸()A½ÍÍ¥‰±”Í½É”Ñ•ÉµÌè((´Õ¹¥ÅÕ”½¹¹•Ñ¥Ù¥ÑäÍ¥¹…ÑÕÉ”°(´Õ¹¥ÅÕ”Ñ…¹•¹Ğ‰•¡…Ù¥½È°(´•½µ•ÑÉ¥Œ½Ù•É…”°(´Á•É•ÁÑÕ…°‰¥Ñµ…À‘¥ÍÑ…¹”°(´Íåµµ•ÑÉä½µÁ±•Ñ¥½¸°(´•áÁ•Ñ•ÕÑ¥±¥Ñä°(´™…µ¥±äÁÉ¥½É¥Ñä¸((´´´((ŒŒ€ÈÄ¸Måµµ•ÑÉä…¹ÑÉ…¹Í™½ÉµÌ()•¹•É…Ñ½ÉÌµ…ä‘•É¥Ù”è((´¡½É¥é½¹Ñ…°µ¥ÉÉ½È°(´Ù•ÉÑ¥…°µ¥ÉÉ½È°(´€ÄàÃ
+ÀÉ½Ñ…Ñ¥½¸¸()	•…ÕÍ”Ñ¡”•±°¥Ì¹½¸µÍÅÕ…É”°€äÃ
+ÀÉ½Ñ…Ñ¥½¸¡…¹•Ì‘¥µ•¹Í¥½¹Ì…¹¥Ì¹½Ğ…ÕÑ½µ…Ñ¥…±±äÙ…±¥¸()QÉ…¹Í™½ÉµÌµÕÍĞÕÁ‘…Ñ”•½µ•ÑÉäµ•Ñ…‘…Ñ„…Ìİ•±°…ÌÁ¥á•±Ì¸•‘ÕÁ±¥…Ñ¥½¸ÉÕ¹Ì…™Ñ•ÈÑÉ…¹Í™½ÉµÌ¸((´´´((ŒŒ€ÈÈ¸Q•ÍÑ¥¹œÉ•ÅÕ¥É•µ•¹ÑÌ((ŒŒŒI…ÍÑ•ÈÑ•ÍÑÌ((´‘•Ñ•Éµ¥¹¥ÍÑ¥Œ½ÕÑÁÕĞ°(´•á…Ğ€ã\ÄØ‘¥µ•¹Í¥½¹Ì°(´­¹½İ¸™¥áÑÕÉ•Ì°(´‰¥¹…Éäµ½¹±ä…¹½¹¥…°Á¥á•±Ì¸((ŒŒŒ•‘ÕÁ±¥…Ñ¥½¸Ñ•ÍÑÌ((´¥‘•¹Ñ¥…°‰¥Ñµ…ÁÌµ•É”°(´…±¥…Í•ÌÍÕÉÙ¥Ù”°(´¹½¸µ¥‘•¹Ñ¥…°‰¥Ñµ…ÁÌ¹•Ù•Èµ•É”°(´‰¥Ñµ…À­•äÍ•É¥…±¥é…Ñ¥½¸ÍÑ…åÌÍÑ…‰±”¸((ŒŒŒI•¥ÍÑÉäÑ•ÍÑÌ((´Õ¹¥ÅÕ”±åÁ %Ì°(´Õ¹¥ÅÕ”½‘•Á½¥¹ÑÌ°(´Ù…±¥É…¹•Ì°(´É•Í•ÉÙ•É•¥½¹ÌÉ•ÍÁ•Ñ•°(´™É½é•¸…±±½…Ñ¥½¹ÌÕ¹¡…¹•¸((ŒŒŒÉÑ¥™…ĞÑ•ÍÑÌ()½È•Ù•Éä…ÍÍ¥¹•±åÁ è((´A9•á¥ÍÑÌ°(´A9¥Ì•á…Ñ±ä€ã\ÄØ°(´M%$•á¥ÍÑÌ°(´M%$¥Ì•á…Ñ±ä€ã\ÄØ°(´M%$•ÅÕ…±ÌA9½µ…¹¥™•ÍĞ‰¥Ñµ…À°(´µ…¹¥™•ÍĞ…ÉÑ¥™…ĞÁ…Ñ¡ÌÉ•Í½±Ù”¸((ŒŒŒ…Ñ…±½œÑ•ÍÑÌ((´•Ù•Éä…ÍÍ¥¹•±åÁ …ÁÁ•…ÉÌ¥¸½ÉÉ•Ğ…Ñ…±½Ì°(´±…ÍÌ½Õ¹ÑÌµ…Ñ µ…¹¥™•ÍĞ°(´±¥¹­Ì½½‘•Á½¥¹ÑÌ…É”ÕÉÉ•¹Ğ¸((ŒŒŒ½¹¹•Ñ¥Ù¥ÑäÑ•ÍÑÌ((´Á½ÉĞ¥¹‘•á•ÌÙ…±¥°(´Í•…µÌµ…Ñ •áÁ•Ñ•‰½Õ¹‘…ÉäÁ¥á•±Ì°(´Íµ½½Ñ ©½¥¹ÌÍ…Ñ¥Í™äÑ…¹•¹ĞÉÕ±•Ì°(´¥¹Ñ•¹Ñ¥½¹…°½É¹•ÉÌ…É”¹½Ğµ¥Í±…‰•±•Íµ½½Ñ ¸((ŒŒŒI•ÁÉ½‘Õ¥‰¥±¥Ñä()±•…¸ÉÕ¸™É½´Ñ¡”Í…µ”Í½ÕÉ”½µµ¥ĞÍ¡½Õ±ÁÉ½‘Õ”‰åÑ”µ¥‘•¹Ñ¥…°…¹½¹¥…°…ÉÑ¥™…ÑÌİ¡•É•Ù•ÈÁÉ…Ñ¥…°¸((´´´((ŒŒ€ÈÌ¸%¹Ñ•É…Ñ¥Ù”±…ˆÉ½…‘µ…À()á¥ÍÑ¥¹œ½•…É±äè((´…¹‘¥‘…Ñ”µ™…µ¥±ä•¹•É…Ñ¥½¸°(´…¹‘¥‘…Ñ”½Õ¹¥ÅÕ”½‘ÕÁ±¥…Ñ”½Õ¹ÑÌ°(´…Ñ±…Ì‰É½İÍ¥¹œ°(´±åÁ ¥¹ÍÁ•Ñ½È°(´¹•…É•ÍĞµ¹•¥¡‰½ÈÁÉ•Ù¥•Ü°(´•á…ĞM%$Ù¥•Ü°(´…±¥…Ì¥¹ÍÁ•Ñ¥½¸°(´A9½)M=8•áÁ½ÉĞ¸()9•áĞè((´Í¡…Á”µ±…ÍÌÍ•±•Ñ½È°(´ÕÉÙ”Á…É…µ•Ñ•È•áÁ±½É•È°(´Ñ…¹•¹ĞÙ¥ÍÕ…±¥é…Ñ¥½¸°(´Í•…´½¹•¥¡‰½ÈÁÉ•Ù¥•Ü°(´½µÁ…Ñ¥‰¥±¥ÑäÍ•…É °(´…¹‘¥‘…Ñ—ŠI‘•‘ÕÁ±¥…Ñ•µÍÕÉÙ¥Ù½È½µÁ…É¥Í½¸°(´½‘•Á½¥¹Ğ…±±½…Ñ¥½¸‘¥ÍÁ±…ä°(´Íåµµ•ÑÉä¥¹ÍÁ•Ñ¥½¸¸()1…Ñ•Èè((´µÕ±Ñ¤µ•±°‘É…İ¥¹œ…¹Ù…Ì°(´±¥¹”½ÕÉÙ”Ñ½½±Ì°(´…ÕÑ½µ…Ñ¥Œ±åÁ Í½±Ù¥¹œ°(´Á•Èµ•±°µ…¹Õ…°É•Á±…•µ•¹Ğ°(´U¹¥½‘”½Áä½Á…ÍÑ”°(´A9½Ñ•áĞ½)M=8‘É…İ¥¹œ•áÁ½ÉĞ¸((´´´((ŒŒ€ÈĞ¸½Õµ•¹Ñ…Ñ¥½¸½…±Ì()Q¡”I5Í¡½Õ±•Ù•¹ÑÕ…±±ä•áÁ±…¥¸É…Á¡M%$…ĞÑ¡É•”±•Ù•±Ìè((ŒŒŒ!Õµ…¸½Ù•ÉÙ¥•Ü()]¡…ĞÉ…Á¡M%$¥Ì…¹İ¡ä„•½µ•ÑÉ¥ŒÑ•áĞ½Ñ¥±”Ù½…‰Õ±…Éä¥ÌÕÍ•™Õ°¸((ŒŒŒÉÑ¥ÍĞ½ÕÍ•ÈÕÍ…”((´¥¹ÍÑ…±°½ÕÍ”Ñ¡”™½¹Ğ°(´‰É½İÍ”…Ñ±…Í•Ì°(´½Áä±åÁ¡Ì°(´Õ¹‘•ÉÍÑ…¹½‘•Á½¥¹ĞÁ…•Ì°(´¥¹ÍÁ•Ğ±…ÍÌ…Ñ…±½Ì¸((ŒŒŒAÉ½É…µµ•ÈÕÍ…”((´±½…µ…¹¥™•ÍĞ°(´±½…Ñ”‰ä%½½‘•Á½¥¹Ğ°(´ÅÕ•ÉäÁ½ÉÑÌ½Ñ…¹•¹ÑÌ°(´É•¹‘•ÈÑ¡É½Õ ™½¹Ğ½È‰¥Ñµ…À…Ñ±…Ì°(´µ…Ñ ½µÁ…Ñ¥‰±”¹•¥¡‰½ÉÌ°(´Í•É¥…±¥é”‘É…İ¥¹Ì¸()•Ñ…¥±•½¹ÑÉ…ÑÌ‰•±½¹œ¥¸‘½Ì½€¸((´´´((ŒŒ€ÈÔ¸5¥±•ÍÑ½¹”Í•ÅÕ•¹”((ŒŒŒ5¥±•ÍÑ½¹”€ÀƒŠP±½¬™Õ¹‘…µ•¹Ñ…±ÌƒŠP€¨©=5A1Q¨¨((´mát…¹½¹¥…°½É¥•¹Ñ…Ñ¥½¸±½­•è€¨¨à½±Õµ¹Ìƒ\€ÄØÉ½İÌ¨¨¸(´mát•±°‘¥µ•¹Í¥½¹Ì•¹ÑÉ…±¥é•…Ì½¹ÍÑ…¹ÑÌ¸(´mátMÑÉ…¥¡Ğµ±¥¹”‰…Í•±¥¹”ÁÉ•Í•ÉÙ•…¹É”µÙ•É¥™¥•è€àÌÈƒŠH€ÜĞÙ€°€àØ‘ÕÁ±¥…Ñ•Ì°µ…à€Ğ…±¥…Í•Ì¸(´mátA•Éµ…¹•¹Ğ‰¥Ñµ…ÀÍ•É¥…±¥é…Ñ¥½¸™½Éµ…Ğ•ÍÑ…‰±¥Í¡•¸(´mátÉÑ¥™…Ğ™¥±•¹…µ”½¹Ù•¹Ñ¥½¸•ÍÑ…‰±¥Í¡•èT¬ÀÁÀÀÀ¸©€¸(´mát…¹½¹¥…°M%$½¹Ù•¹Ñ¥½¸•ÍÑ…‰±¥Í¡•è€€€¼€µ€¸(´mát1½Üµ±•Ù•°™½Éµ…Ğ‘½Õµ•¹Ñ•¥¸‘½Ì½™½Éµ…Ğ¹µ‘€¸(´mátAÉ•‰Õ¥±ĞÉ•É•ÍÍ¥½¸Ù•É¥™¥…Ñ¥½¸¡•­ÌÑ¡”™½Éµ…Ğ½¹ÑÉ…Ğ¸((ŒŒŒ5¥±•ÍÑ½¹”€ÄƒŠPÁ•ÉÍ¥ÍÑ•¹Ğ…ÉÑ¥™…ĞÁ¥Á•±¥¹”ƒŠP€¨©=5A1Q¨¨((´mát‘•¹•É…Ñ½È1$Í•Á…É…Ñ”™É½´U$…Ñ¥½¹Ì¸(´mát•¹•É…Ñ”µ…¥¸)M=8µ…¹¥™•ÍĞ…¹ÍÑ…Ñ¥ÍÑ¥Ìµ…¹¥™•ÍĞ¸(´mát•¹•É…Ñ”Á•Èµ±åÁ •á…ĞM%$™¥±•Ì¸(´mát•¹•É…Ñ”Á•Èµ±åÁ …¹½¹¥…°A9™¥±•Ì¸(´mát•¹•É…Ñ”½µÁ±•Ñ”½Á…”…Ñ±…Í•Ì¸(´mát‘…ÉÑ¥™…Ğ½¹Í¥ÍÑ•¹äÑ•ÍÑÌ¸(´mátAÕ‰±¥Í É•™•É•¹”½µÁ±•Ñ”½Á…”…Ñ±…Í•Ì…¹µ•…ÍÕÉ•ÍÑ…Ñ¥ÍÑ¥Ì¥¸Ñ¡”É•Á½Í¥Ñ½Éä¸()5•…ÍÕÉ•ÍÑÉ…¥¡Ğµ±¥¹”…ÉÑ¥™…ĞÍ¹…ÁÍ¡½Ğè()Ñ•áĞ(àÌÈ…¹‘¥‘…Ñ•Ì(ÜĞØ±åÁ¡Ì(ÜĞØM%$™¥±•Ì(ÜĞØ¹…Ñ¥Ù”€ã\ÄØA9™¥±•Ì(Ä½µÁ±•Ñ”…Ñ±…Ì€ ÄÈã\ÜÔÈ¤(Ì€ÈÔØµÍ±½ĞÁ…”…Ñ±…Í•Ì)€()Q¡”…¹½¹¥…°•¹•É…Ñ½ÈİÉ¥Ñ•ÌÑ¡”™Õ±±ä•áÁ…¹‘•…ÉÑ¥™…ÑÌ½€ÑÉ•”±½…±±ä¸I•™•É•¹”…Ñ±…Í•Ì…¹ÍÑ…Ñ¥ÍÑ¥Ì…É”½µµ¥ÑÑ•¹½Üì±…É•È•áÁ…¹‘•Í¹…ÁÍ¡½ÑÌ…¸‰”½µµ¥ÑÑ•¥¹Ñ•¹Ñ¥½¹…±±äİ¡•¸Ñ¡•ä…É”ÕÍ•™Õ°É…Ñ¡•ÈÑ¡…¸µ…­¥¹œ•Ù•ÉäÍ½ÕÉ”¡…¹”…ÉÉäÑ¡½ÕÍ…¹‘Ì½˜•¹•É…Ñ•‰¥¹…Éä™¥±•Ì¸((ŒŒŒ5¥±•ÍÑ½¹”€ÈƒŠPÍÑÉ…¥¡Ğµ±¥¹”±…ÍÌÁÕ‰±¥…Ñ¥½¸ƒŠP€¨©9aP¨¨((´lt±±½…Ñ”ÁÉ½Ù¥Í¥½¹…°½‘•Á½¥¹ÑÌÑ¼Õ¹¥ÅÕ”ÍÑÉ…¥¡Ğ±åÁ¡Ì¸(´lt•¹•É…Ñ”ÍÑÉ…¥¡Ğµ±¥¹•Ì¹µ‘€½¹Ñ…¥¹¥¹œ•Ù•Éä•á…ĞM%$™½É´¸(´ltAÉ•Í•ÉÙ”…±°µ…Ñ¡•µ…Ñ¥…°…±¥…Í•Ì¥¸)M=8½‘½Ì¸(´lt‘½¹¹•Ñ¥Ù¥Ñäµ•Ñ…‘…Ñ„¸((ŒŒŒ5¥±•ÍÑ½¹”€ÌƒŠPÕÉÙ”É•Í•…É •¹¥¹”((´lt•™¥¹”ÕÉÙ”É…µµ…È¸(´lt%µÁ±•µ•¹Ğ‘•Ñ•Éµ¥¹¥ÍÑ¥ŒÕÉÙ”É…ÍÑ•É¥é…Ñ¥½¸¸(´lt•¹•É…Ñ”±…É”…¹‘¥‘…Ñ”™…µ¥±¥•Ì¸(´lt•‘ÕÁ±¥…Ñ”¸(´lt½µÁ…É”ÕÉÙ…ÑÕÉ”½Ñ…¹•¹Ğ½Ù•É…”¸(´ltAÕ‰±¥Í ÕÉÙ”…ÉÑ¥™…ÑÌ½…Ñ…±½œ¸((ŒŒŒ5¥±•ÍÑ½¹”€ĞƒŠP©Õ¹Ñ¥½¹Ì((´lt¥É•Ñ¥½¸µµ…Í¬µ½‘•°¸(´ltM¡…ÉÀ©Õ¹Ñ¥½¸•¹•É…Ñ¥½¸¸(´ltI½Õ¹‘•©Õ¹Ñ¥½¸•¹•É…Ñ¥½¸¸(´lt½µÁ…Ñ¥‰¥±¥Ñäµ•Ñ…‘…Ñ„¸(´lt)Õ¹Ñ¥½¸…ÉÑ¥™…ÑÌ½…Ñ…±½œ¸((ŒŒŒ5¥±•ÍÑ½¹”€ÔƒŠP™¥±±•½¹Ñ½ÕÉÌ((´lt¥±°µÍ¥‘”±…ÍÍ¥™¥•È¸(´ltMÑÉ…¥¡Ğ™¥±±•‰½Õ¹‘…É¥•Ì¸(´ltÕÉÙ•™¥±±•‰½Õ¹‘…É¥•Ì¸(´lt]•‘•Ì½½É¹•ÉÌ¸(´lt¥±±•…ÉÑ¥™…ÑÌ½…Ñ…±½œ¸((ŒŒŒ5¥±•ÍÑ½¹”€ØƒŠP¥É±•Ì½•±±¥ÁÍ•Ì((´ltI…‘¥ÕÌ½•±±¥ÁÍ”É…µµ…È¸(´ltÉŒ•¹•É…Ñ¥½¸¸(´lt•‘ÕÁ±¥…Ñ¥½¸½½Ù•É…”…¹…±åÍ¥Ì¸(´lt±…ÍÌ…ÉÑ¥™…ÑÌ½…Ñ…±½œ¸((ŒŒŒ5¥±•ÍÑ½¹”€ÜƒŠPÑ•áÑÕÉ•Ì½‰±½­Ì½Ñ•Éµ¥¹…±Ì((´ltA…ÉÑ¥…°™¥±±Ì¸(´lt¥Ñ¡•È™…µ¥±¥•Ì¸(´ltM•…µ±•ÍÌÑ•áÑÕÉ”Á¡…Í•Ì¸(´lt…ÁÌ½¹½‘•Ì½…ÉÉ½İÌ¸(´lt±…ÍÌ…ÉÑ¥™…ÑÌ½…Ñ…±½Ì¸((ŒŒŒ5¥±•ÍÑ½¹”€àƒŠPÙ½…‰Õ±…Éä½ÁÑ¥µ¥é…Ñ¥½¸((´lt•¹•É…Ñ”™Õ±°…¹‘¥‘…Ñ”ÍÕÁ•ÉÍ•Ğ¸(´lt¹…±åé”Í±½ĞÁÉ•ÍÍÕÉ”¸(´lt%‘•¹Ñ¥™ä½Ù•É…”¡½±•Ì¸(´ltM½É”½Í•±•Ğ½µÁ•Ñ¥¹œ…¹‘¥‘…Ñ•Ì¸(´ltAÉ•Í•ÉÙ”É•Í•ÉÙ•ÍÁ…”¸(´ltAÉ½‘Õ”ÁÉ½Ù¥Í¥½¹…°€Ñ,…±±½…Ñ¥½¸µ…À¸((ŒŒŒ5¥±•ÍÑ½¹”€äƒŠP™½¹Ğ½µÁ¥±•È((´lt	¥Ñµ…ÀµÑ¼µ½ÕÑ±¥¹”½µÁ¥±•È¸(´lt¥á•µ•ÑÉ¥Ì¸(´ltAUµ…À¸(´ltQQ½ÕÑÁÕĞ¸(´lt]=È½ÕÑÁÕĞ¸(´lt½¹ĞÍÁ•¥µ•¸Ñ•ÍÑÌ¸((ŒŒŒ5¥±•ÍÑ½¹”€ÄÀƒŠPÁÉ½É…µµ…Ñ¥Œ‘É…İ¥¹œA$((´ltMÑ…‰±”)M=8Í¡•µ„¸(´lt1½½­ÕÀ½¥¹‘•à±¥‰É…Éä¸(´lt9•¥¡‰½È½µÁ…Ñ¥‰¥±¥ÑäA$¸(´lt•½µ•ÑÉäµÑ¼µ±åÁ Í½±Ù•È¸(´lt5Õ±Ñ¤µ•±°É…ÍÑ•ÈÉ•¹‘•É•È¸((ŒŒŒ5¥±•ÍÑ½¹”€ÄÄƒŠP¥¹Ñ•É…Ñ¥Ù”É…Á¡M%$•‘¥Ñ½È((´lt5Õ±Ñ¤µ•±°…¹Ù…Ì¸(´lt•½µ•ÑÉ¥Œ‘É…İ¥¹œÑ½½±Ì¸(´ltÕÑ½µ…Ñ¥Œ±åÁ Í½±Ù¥¹œ¸(´lt5…¹Õ…°Ñ¥±”É•Á±…•µ•¹Ğ¸(´ltU¹¥½‘”½Áä½Á…ÍÑ”¸(´ltA9½Ñ•áĞ½)M=8•áÁ½ÉĞ¸((ŒŒŒ5¥±•ÍÑ½¹”€ÄÈƒŠP™¥ÉÍĞÍÑ…‰±”Ù½…‰Õ±…ÉäÉ•±•…Í”((´lt¥¹…°½Ù•É…”É•Ù¥•Ü¸(´ltÉ••é”¥¹¥Ñ¥…°½‘•Á½¥¹Ğµ•…¹¥¹Ì¸(´ltÉ••é”µ…¹¥™•ÍĞÍ¡•µ„ØÄ¸(´lt•¹•É…Ñ”…±°½µµ¥ÑÑ•…ÉÑ¥™…ÑÌ¸(´lt½µÁ±•Ñ”I5½ÁÉ½É…µµ•È‘½Õµ•¹Ñ…Ñ¥½¸¸(´ltQ…œ½É•±•…Í”É…Á¡M%$ØÄ¸((´´´((ŒŒ€ÈØ¸•™¥¹¥Ñ¥½¸½˜‘½¹”™½ÈÉ…Á¡M%$ØÄ()ØÄÉ•±•…Í”¥ÌÉ•…‘äİ¡•¸è((´…¹½¹¥…°€ã\ÄØ•±°™½Éµ…Ğ¥Ì™É½é•¸°(´…±°…ÍÍ¥¹•±åÁ¡ÌÉ•ÁÉ½‘Õ”™É½´Í½ÕÉ”°(´•Ù•Éä±åÁ ¡…Ì„ÍÑ…‰±”½‘•Á½¥¹Ğ°(´•Ù•Éä±åÁ ¡…Ì…¹½¹¥…°A9…¹M%$…ÉÑ¥™…ÑÌ°(´•Ù•Éäµ…©½È±…ÍÌ¡…Ì„•¹•É…Ñ•5…É­‘½İ¸…Ñ…±½œ°(´)M=8½µÁ±•Ñ•±ä‘•ÍÉ¥‰•Ì¥‘•¹Ñ¥Ñä½½¹¹•Ñ¥Ù¥Ñä°(´…Ñ±…Í•Ì½Ù•ÈÑ¡”…ÍÍ¥¹•Ù½…‰Õ±…Éä°(´„ÕÍ…‰±”™¥á•µ•±°™½¹Ğ•á¥ÍÑÌ°(´ÁÉ½É…µÌ…¸É•¹‘•ÈÑ¡É½Õ ™½¹Ğ½È…¹½¹¥…°‰¥Ñµ…À…ÉÑ¥™…ÑÌ°(´¹•¥¡‰½È½µÁ…Ñ¥‰¥±¥Ñä¥Ìµ•¡…¹¥…±±äÅÕ•Éå…‰±”°(´•¹•É…Ñ¥½¸½Ñ•ÍÑÌ…É”‘•Ñ•Éµ¥¹¥ÍÑ¥Œ°(´I5½ÁÉ½É…µµ•È‘½Ì•áÁ±…¥¸Ñ¡”™½Éµ…Ğ°(´½‘•Á½¥¹Ğµ•…¹¥¹Ì…É”É•…‘äÑ¼‰”ÑÉ•…Ñ•…ÌÍÑ…‰±”A$¸((´´´((ŒŒ€ÈÜ¸Õ¥‘¥¹œÉÕ±”()]¡•¸‘•¥‘¥¹œİ¡•Ñ¡•ÈÑ¼…‘„¡…¹µ…ÕÑ¡½É•±åÁ °•¹•É…Ñ½ÈÉÕ±”°…ÉÑ¥™…Ğ°µ•Ñ…‘…Ñ„™¥•±°½ÈÍÕ‰ÍåÍÑ•´°ÁÉ•™•ÈÑ¡”¡½¥”Ñ¡…Ğµ…­•ÌÉ…Á¡M%$µ½É”è((´€¨©ÍåÍÑ•µ…Ñ¥Œ¨¨°(´€¨©É•ÁÉ½‘Õ¥‰±”¨¨°(´€¨©ÅÕ•Éå…‰±”¨¨°(´€¨©½µÁ½Í…‰±”¨¨°(´€¨©¥¹ÍÁ•Ñ…‰±”¨¨°(´€¨©ÁÉ½É…µµ…‰±”¨¨°(´€¨©•½µ•ÑÉ¥…±±ä•áÁÉ•ÍÍ¥Ù”Á•È½‘•Á½¥¹Ğ¨¨¸()Q¡”•¹•É…Ñ½ÈÍ¡½Õ±±•Ğ•µÁ¥É¥…°É•ÍÕ±ÑÌ‘•Ñ•Éµ¥¹”Ñ¡”Ù½…‰Õ±…Éä¸]”Í¡½Õ±¹½Ğ…ÍÍÕµ”¡½Üµ…¹äÍ±½ÑÌ„±…ÍÌ‘•Í•ÉÙ•Ìİ¡•¸İ”…¸•¹•É…Ñ”Ñ¡”…¹‘¥‘…Ñ•Ì°É…ÍÑ•É¥é”Ñ¡•´°‘•‘ÕÁ±¥…Ñ”Ñ¡•´°µ•…ÍÕÉ”ÍÕÉÙ¥Ù¥¹œÙ¥ÍÕ…°ÍÁ…”°…¹¥¹ÍÁ•ĞÑ¡”É•ÍÕ±Ğ¸()Q¡”½‰©•Ñ¥Ù”¥Ì¹½ĞÑ¼™¥±°€ĞÀäØ½‘•Á½¥¹ÑÌ¸%Ğ¥ÌÑ¼µ…­”Ñ¡½Í”½‘•Á½¥¹ÑÌ‰•¡…Ù”±¥­”„½¡•É•¹ĞÉ…Á¡¥…°±…¹Õ…”¸
