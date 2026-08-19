@@ -1,0 +1,16 @@
+{
+  "schema": "graphscii-straight-allocation",
+  "schemaVersion": 1,
+  "status": "provisional",
+  "class": "straight-lines",
+  "formatVersion": 1,
+  "glyphIdStart": 0,
+  "glyphIdCount": 746,
+  "unicodeStart": 57344,
+  "unicodeStartHex": "U+00E000",
+  "unicodeEndHex": "U+00E2E9",
+  "assignmentRule": "codepoint = unicodeStart + glyphId",
+  "generationOrder": ["LR", "TB", "LT", "LB", "RT", "RB"],
+  "deduplicationRule": "first raster-unique candidate receives the next glyph ID; later raster-identical candidates become aliases",
+  "stability": "provisional until the GraphSCII v1 codepoint freeze"
+}
