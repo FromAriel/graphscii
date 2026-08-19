@@ -198,7 +198,11 @@ async function ensureDirs(root) {
 
 export async function buildArtifacts(root, { clean = true } = {}) {
   if (clean) {
-    await rm(root, { recursive: true, force: true });
+    await Promise.all([
+      rm(path.join(root, "manifest"), { recursive: true, force: true }),
+      rm(path.join(root, "glyphs"), { recursive: true, force: true }),
+      rm(path.join(root, "atlases"), { recursive: true, force: true }),
+    ]);
   }
   await ensureDirs(root);
 
