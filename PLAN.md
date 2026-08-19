@@ -16,19 +16,18 @@
 
 GraphSCII is a fixed-cell graphics language encoded as Unicode glyphs and machine-readable tile data.
 
-Each glyph is a deterministic 8×16 binary bitmap representing a useful local piece of geometry: straight segments, solid regions, filled boundaries, curves, junctions, circle/ellipse fragments, textures, terminals, nodes, arrows, and other primitives discovered through actual drawing use.
+Each assigned visual glyph is one deterministic 8×16 binary bitmap. Multiple mathematical definitions may share that bitmap and therefore share one canonical glyph/codepoint.
 
-The goal is not a miscellaneous symbol font. The goal is a compact **2D graphics instruction set** whose cells compose predictably and can be selected mechanically by software.
+The goal is a compact **2D graphics instruction set** whose cells compose predictably and can be selected mechanically by software.
 
-A program should eventually be able to ask questions such as:
+A program should eventually be able to ask:
 
 ```text
 Which glyph connects L13 to R4?
-Which glyph fills the lower 5/16 of this cell?
-Which filled boundary follows this local slope?
-Which glyph smoothly continues this curve?
-Which junction matches this direction mask?
-Which neighboring glyphs are compatible?
+Which curve connects these ports with these tangents?
+Does this curve visually reuse an existing straight glyph?
+Which glyph fills side A of this boundary?
+Which neighboring glyphs are geometrically compatible?
 ```
 
 The same vocabulary should support font rendering, direct bitmap rendering, ASCII inspection, generated class catalogs, JSON lookup, atlases, an editor, and eventually an automatic geometry-to-glyph solver.
@@ -39,23 +38,24 @@ The same vocabulary should support font rendering, direct bitmap rendering, ASCI
 
 Authority order:
 
-1. **Generator/specification source** — geometry and family rules.
+1. **Generator/specification source** — mathematical geometry and family rules.
 2. **Canonical bitmap** — visual identity.
-3. **Glyph registry/allocation** — assigned identity and semantic metadata.
-4. **Generated artifacts** — PNG, ASCII, JSON, Markdown, atlases, fonts.
+3. **Global visual registry** — one canonical visual glyph per bitmap key.
+4. **Semantic aliases** — straight/curve/fill/etc. definitions that resolve to canonical visuals.
+5. **Generated artifacts** — PNG, ASCII, JSON, Markdown, atlases, fonts.
 
 Pipeline:
 
 ```text
-geometry / family rule
+mathematical shape definition
         ↓
 deterministic rasterizer
         ↓
 canonical 8×16 bitmap
         ↓
-exact bitmap deduplication
+GLOBAL exact bitmap deduplication
         ↓
-glyph registry + semantic aliases
+canonical visual glyph + semantic aliases
         ↓
 PNG / ASCII / JSON / catalogs / atlases
         ↓
@@ -86,37 +86,75 @@ Right:   R0..R15
 
 Normative contract: [`docs/format.md`](docs/format.md).
 
-### Bitmap serialization
+Bitmap serialization:
 
-Each glyph is exactly 16 bytes, one byte per row, top to bottom. `x=0` is bit 0 and `x=7` is bit 7. The stable bitmap key is 32 lowercase hexadecimal characters.
+```text
+16 bytes
+rows top → bottom
+x=0 is bit 0
+32 lowercase hexadecimal characters
+```
+
+Serialization ID:
 
 ```text
 v1:rows-top-to-bottom;one-byte-per-row;x0-is-bit0;lowercase-hex
 ```
 
-### ASCII
+ASCII:
 
 ```text
 # = filled pixel
 - = empty pixel
 ```
 
-Every canonical ASCII glyph is exactly 16 rows × 8 characters.
-
-### Artifact naming
-
-```text
-U+00E000.png
-U+00E000.txt
-```
-
-Codepoint stems use six uppercase hexadecimal digits.
+Artifact stems use six uppercase hexadecimal digits, e.g. `U+00E000`.
 
 ---
 
-## 4. Vocabulary and codepoint budget
+## 4. Global visual-dedup and codepoint rule
 
-Working address-space target:
+GraphSCII codepoints identify **canonical visual bitmaps**, not semantic shape classes.
+
+Global invariant:
+
+> **One bitmap key gets at most one canonical glyph/codepoint.**
+
+For any new mathematical definition:
+
+```text
+new definition
+    ↓
+rasterize
+    ↓
+bitmap already exists?
+    ├── yes → attach semantic alias and reuse existing glyph/codepoint
+    └── no  → create new visual candidate
+```
+
+This rule applies across straight lines, curves, filled boundaries, junctions, arcs, textures, and future classes.
+
+A semantic record that reuses an existing visual must expose background resolution data such as:
+
+```json
+{
+  "visualDisposition": "reuse-existing-straight",
+  "canonicalGlyphId": 66,
+  "canonicalCodepoint": "U+00E042",
+  "canonicalClass": "straight-lines",
+  "exactBitmapMatch": true
+}
+```
+
+The semantic geometry is still preserved in full even when its visual rendering is reused.
+
+That is critical because later derived operations can distinguish mathematically different boundaries that happened to share the same thin raster.
+
+---
+
+## 5. Vocabulary/codepoint budget
+
+Working target:
 
 ```text
 4096 glyph IDs = 12 bits
@@ -130,7 +168,7 @@ glyph 0x000 → U+E000
 glyph 0xFFF → U+EFFF
 ```
 
-`4096` is a budget, not a requirement to fill every slot.
+`4096` is a budget, not a target to fill blindly.
 
 Provisional reserve goal:
 
@@ -139,23 +177,23 @@ Provisional reserve goal:
 0xF00–0xFFF   reserved/experimental  256
 ```
 
-Do not pre-allocate large blocks to shape classes by guesswork. Generate candidate supersets, rasterize them, deduplicate them, measure the surviving visual vocabulary, then allocate intentionally.
+Generate candidate supersets first. Measure exact deduplication and visual coverage before assigning slots.
 
 ---
 
-## 5. Straight-line baseline — COMPLETE AND PUBLISHED
+## 6. Straight-line vocabulary — COMPLETE AND PUBLISHED
 
 Candidate families:
 
 ```text
-Left → Right      16 × 16 = 256
-Top → Bottom       8 ×  8 =  64
-Left → Top        16 ×  8 = 128
-Left → Bottom     16 ×  8 = 128
-Right → Top       16 ×  8 = 128
-Right → Bottom    16 ×  8 = 128
-                               ───
-                               832
+LR  16 × 16 = 256
+TB   8 ×  8 =  64
+LT  16 ×  8 = 128
+LB  16 ×  8 = 128
+RT  16 ×  8 = 128
+RB  16 ×  8 = 128
+                 ───
+                 832
 ```
 
 Frozen regression fixture:
@@ -168,7 +206,7 @@ compression              10.3%
 maximum aliases              4
 ```
 
-Current provisional straight allocation:
+Provisional allocation:
 
 ```text
 glyph IDs    0..745
@@ -178,135 +216,283 @@ assignment   codepoint = U+E000 + glyphId
 
 Source: `spec/straight-allocation.json`.
 
-Generation order:
+Semantic registry preserves all 832 straight definitions and generates codepoint, bitmap, port, and connection-pair indexes.
+
+Published snapshot:
 
 ```text
-LR → TB → LT → LB → RT → RB
+publication    straight-v0
+source commit   791a0a2175b888ee24061ed92a0d31eaf3342fdc
+snapshot commit 5806d99d73ab635bdbd0b1ff661ed810aeaa995d
 ```
 
-The first raster-unique candidate gets the next glyph ID. Later raster-identical candidates become semantic aliases.
+The repository contains all 746 ASCII files, all 746 PNG files, the semantic manifest/indexes, `straight-lines.md`, four atlases, statistics, and publication provenance.
 
-Any rasterizer/coordinate change that alters `832 → 746 → 86` is format-affecting and must be deliberate.
+See:
+
+- [`docs/connectivity.md`](docs/connectivity.md)
+- [`docs/milestone-2a-semantic-registry.md`](docs/milestone-2a-semantic-registry.md)
+- [`docs/milestone-2b-straight-catalog.md`](docs/milestone-2b-straight-catalog.md)
+- [`docs/milestone-2c-straight-publication.md`](docs/milestone-2c-straight-publication.md)
 
 ---
 
-## 6. Straight semantic registry — COMPLETE
+## 7. Curve strategy — NEXT
 
-Every one of the 832 straight definitions is preserved as a semantic alias even when several definitions share one raster glyph.
+Detailed design: [`docs/milestone-3-curve-plan.md`](docs/milestone-3-curve-plan.md).
 
-Example alias:
+Curves are generated before a separate solids vocabulary because filled geometry will later be derived generically from boundary primitives.
 
-```text
-straight:L13>R4
-```
-
-Each alias stores candidate ID, family, start/end ports, and endpoint records.
-
-A multi-alias raster glyph uses `alternative-alias-pairs` semantics: ports from separate aliases are alternatives, **not simultaneous junction branches**.
-
-Generated indexes:
+Initial curve primitive:
 
 ```text
-artifacts/manifest/indexes/
-├── by-codepoint.json
-├── by-bitmap.json
-├── by-port.json
-└── by-connection-pair.json
+cubic Bézier
+P0 = start port
+P1 = derived from start tangent + strength
+P2 = derived from end tangent + strength
+P3 = end port
 ```
 
-Verified counts:
+Authored grammar:
 
 ```text
-visual glyphs               746
-aliases                     832
-boundary ports               48
-codepoint lookups           746
-bitmap lookups              746
-port index entries         1664
-connection-pair lookups    1664
+start port
+end port
+start tangent class
+end tangent class
+curvature/handle strength
 ```
 
-See [`docs/connectivity.md`](docs/connectivity.md) and [`docs/milestone-2a-semantic-registry.md`](docs/milestone-2a-semantic-registry.md).
+Endpoint topology includes:
+
+```text
+opposite edges  LR TB
+adjacent edges  LT LB RT RB
+same edge       LL RR TT BB
+```
+
+There are 48 semantic ports, giving `C(48,2)=1128` unordered distinct semantic endpoint pairs before rejection of coordinate-degenerate corner pairs.
+
+Initial tangent research basis:
+
+```text
+hard-left
+soft-left
+normal
+soft-right
+hard-right
+```
+
+Initial strengths:
+
+```text
+tight
+normal
+gentle
+```
+
+A broad first sweep is therefore on the order of ~84,000 mathematical candidates before validity filtering and exact raster deduplication.
+
+This is a research pool, not a Unicode allocation.
 
 ---
 
-## 7. Straight-line class catalog — COMPLETE
+## 8. Curve dedup behavior
 
-Generated artifact:
-
-```text
-artifacts/classes/straight-lines.md
-```
-
-Every one of the 746 visual glyphs has a human-readable entry containing codepoint, glyph ID, family membership, bitmap key, aliases, connectivity semantics, canonical artifact links, and exact inline 8×16 ASCII.
-
-Current catalog fixture:
+Every accepted curve definition is preserved semantically, then classified visually:
 
 ```text
-catalog bytes      515,888
-visual entries         746
-alias records          832
+reuse-existing-straight
+reuse-existing-curve
+new-raster-unallocated
 ```
 
-The verifier regenerates the entire catalog in memory and requires byte-for-byte equality.
+Example:
 
-See [`docs/milestone-2b-straight-catalog.md`](docs/milestone-2b-straight-catalog.md).
+```text
+requested curve alias
+        ↓
+raster exactly matches U+00E042
+        ↓
+semantic curve remains in data
+render using U+00E042
+no new Unicode slot consumed
+```
+
+This handles short/subtle curves that collapse to existing straight pixels under 8×16 confinement.
+
+Curve-to-curve collisions work the same way: many mathematical curves may share one canonical curve visual.
+
+Exact equality is the only automatic dedup criterion.
+
+Near-duplicate analysis is reported separately using Hamming distance so we can decide later whether a 1-pixel-different curve is worth a scarce codepoint.
 
 ---
 
-## 8. Straight publication snapshot — COMPLETE
+## 9. Curve raster contract
 
-Publication:
+Curve rasterization must be deterministic and binary.
 
-```text
-straight-v0
-```
-
-Source commit:
+Planned approach:
 
 ```text
-791a0a2175b888ee24061ed92a0d31eaf3342fdc
+fixed-point geometry
+256 subunits / pixel
+        ↓
+cubic control points quantized to fixed-point
+        ↓
+8 deterministic t=1/2 subdivision levels
+        ↓
+256 polyline segments
+        ↓
+existing Bresenham segment rasterizer
+        ↓
+canonical 8×16 bitmap
 ```
 
-Snapshot commit:
+No browser Canvas stroking and no anti-aliasing.
+
+Initial candidate rejection reasons include:
 
 ```text
-5806d99d73ab635bdbd0b1ff661ed810aeaa995d
+coordinate-identical endpoints
+curve leaves cell
+extra boundary crossings
+self-intersection / loop
+unintended boundary pixels
+disconnected raster
+missing declared endpoint pixel
 ```
 
-The repository now contains the complete provisional straight-line artifact tree:
-
-```text
-746 ASCII glyph files
-746 native 8×16 PNG glyph files
-semantic glyph manifest
-4 lookup indexes
-straight-lines.md
-full atlas
-3 page atlases
-statistics
-publication provenance
-```
-
-Machine provenance:
-
-```text
-artifacts/publications/straight-v0.json
-```
-
-The publication is generated and verified by:
-
-```text
-.github/workflows/publish-straight-snapshot.yml
-```
-
-See [`docs/milestone-2c-straight-publication.md`](docs/milestone-2c-straight-publication.md).
-
-`straight-v0` is a provisional research publication, not the final GraphSCII v1 codepoint freeze.
+For the initial curve model, a boundary stroke should normally touch the cell boundary only at its declared ports.
 
 ---
 
-## 9. Current generation pipeline
+## 10. Curve research outputs
+
+Before any curve codepoint allocation, generate:
+
+```text
+artifacts/research/curves/
+├── stats.json
+├── accepted-curves.json
+├── rejected-curves.json
+├── straight-collisions.json
+├── novel-rasters.json
+├── nearest-straight.json
+├── atlas-novel.png
+├── atlas-straight-collisions.png
+└── report.md
+```
+
+Measure:
+
+```text
+raw mathematical candidates
+accepted candidates
+rejections by reason
+exact straight collisions
+curve-to-curve duplicate aliases
+novel curve rasters
+novel rasters by endpoint topology
+novel rasters by tangent pair
+novel rasters by strength
+maximum aliases per raster
+nearest-straight Hamming distance
+projected glyph total if all novel curves were allocated
+```
+
+No new curve codepoints during the research sweep.
+
+The first currently available provisional codepoint is `U+00E2EA`, but it is not assigned until the coverage decision gate.
+
+---
+
+## 11. Curve semantic/query requirements
+
+Each accepted curve alias retains:
+
+```text
+stable alias key
+start/end ports
+orientation
+start/end tangent classes
+curvature strength
+derived P0/P1/P2/P3 control points
+bitmap key
+visual disposition
+canonical visual resolution
+reverse-query relationship
+```
+
+Stroke reversal resolves to the same visual with `reversed: true`.
+
+Orientation must still be preserved because generic fill later depends on direction; reversing a boundary swaps its A/B fill interpretation.
+
+The browser research UI should expose filters for:
+
+```text
+novel curves
+matches straight
+curve duplicates
+rejected curves
+same-edge
+adjacent-edge
+opposite-edge
+```
+
+and show the curve, straight chord, raster, canonical codepoint reuse, nearest-straight distance, aliases, tangents, strength, and control points.
+
+---
+
+## 12. Generic boundary fill — AFTER CURVES
+
+There is no longer a separate basic-solids milestone.
+
+After straight and curve boundaries exist, implement one generic operation:
+
+```text
+BOUNDARY
+├── stroke
+├── fill side A
+└── fill side B
+```
+
+Input is the preserved **mathematical boundary alias**, not merely the canonical stroke glyph.
+
+Therefore:
+
+```text
+curve stroke visually matches straight stroke
+             ↓
+curve reuses straight codepoint for stroke
+             ↓
+curve geometry is still preserved
+             ↓
+curve fill A/B may rasterize differently
+```
+
+This generic fill system should naturally generate much of the solid vocabulary:
+
+```text
+progressive horizontal/vertical fills
+halves
+slopes
+wedges
+triangles
+terrain edges
+silhouette boundaries
+rounded filled contours
+concave/convex solid pieces
+```
+
+Filled results then go through the same global bitmap deduplication and canonical-codepoint reuse policy.
+
+A standalone full block will still be needed. Empty can probably remain a structural blank rather than consuming a PUA glyph, subject to verification when fill work begins.
+
+---
+
+## 13. Current generation pipeline
 
 From `geometric-glyph-lab/`:
 
@@ -315,105 +501,21 @@ npm run generate
 npm run verify
 ```
 
-Current pipeline:
+Current published pipeline:
 
 ```text
-base bitmap artifacts
+straight base artifacts
         ↓
 straight semantic registry
         ↓
 straight-lines.md catalog
 ```
 
-Specific commands:
-
-```powershell
-npm run generate:base
-npm run generate:semantic
-npm run generate:catalog
-
-npm run verify:prebuilt
-npm run verify:artifacts
-npm run verify:semantic
-npm run verify:catalog
-```
-
-As new classes are added, they should join the same deterministic generation/verification model rather than becoming hand-authored exceptions.
+Curve research joins this pipeline without changing the published straight-v0 output.
 
 ---
 
-## 10. Shape-class strategy
-
-### Basic solids — NEXT
-
-GraphSCII needs area-filling primitives early, not only line art.
-
-The first solid family should include deterministic simple regions such as:
-
-```text
-empty
-full
-horizontal progressive fills
-vertical progressive fills
-halves
-quarters
-simple corner blocks
-simple rectangular partitions
-```
-
-We should generate a systematic candidate superset and deduplicate before deciding the exact inventory.
-
-Empty may remain a reserved/structural value rather than consuming a PUA glyph if that proves cleaner; this decision belongs in the basic-solids slice.
-
-### Filled straight contours
-
-Reuse the existing straight geometry as a boundary and classify one side as filled:
-
-```text
-boundary only      existing straight glyph
-fill side A
-fill side B
-```
-
-This should produce diagonal solid edges, wedges, slopes, silhouette boundaries, and terrain-like pieces with very little new geometric machinery.
-
-The filled forms must be generated from geometry, not by merely flood-filling arbitrary raster aliases, so side semantics remain stable and queryable.
-
-### Curves
-
-Define start/end ports, start/end tangents, and curvature strength. Initial research strengths:
-
-```text
-gentle
-normal
-tight
-```
-
-Generate a broad candidate superset and let raster deduplication reveal the true visual cost.
-
-### Curved filled contours
-
-Apply the same side-fill semantics to curve boundaries after the curve grammar is stable.
-
-### Junctions
-
-Corners, T-junctions, crosses, forks, cardinal/diagonal combinations, sharp joins, rounded joins, and possibly chamfered joins. Prefer direction masks where practical.
-
-### Circles and ellipses
-
-Generate radius/ellipse fragments and retain only raster forms that materially improve geometric coverage beyond the generic curve vocabulary.
-
-### Textures, blocks, terminals
-
-Ordered dithers, hatches, seamless texture phases, stipple, caps, nodes, diamonds, arrowheads, and directional terminals.
-
-### Compound/special + reserve
-
-Use actual drawing failures to justify additions rather than trying to predict every useful primitive in advance.
-
----
-
-## 11. Repository/artifact structure
+## 14. Repository structure
 
 ```text
 graphscii/
@@ -422,26 +524,17 @@ graphscii/
 ├── .github/workflows/
 │   └── publish-straight-snapshot.yml
 ├── geometric-glyph-lab/
-│   ├── src/core/
-│   ├── scripts/
-│   ├── dist/
-│   └── package.json
 ├── spec/
-│   └── straight-allocation.json
+│   ├── straight-allocation.json
+│   └── curve-grammar.json          # Milestone 3
 ├── artifacts/
 │   ├── manifest/
-│   │   ├── glyphs.json
-│   │   ├── stats.json
-│   │   └── indexes/
 │   ├── glyphs/
-│   │   ├── ascii/
-│   │   └── png/
 │   ├── classes/
-│   │   └── straight-lines.md
 │   ├── atlases/
 │   ├── publications/
-│   │   └── straight-v0.json
-│   └── font/
+│   └── research/
+│       └── curves/                 # Milestone 3
 └── docs/
     ├── format.md
     ├── connectivity.md
@@ -449,150 +542,157 @@ graphscii/
     ├── milestone-1-artifacts.md
     ├── milestone-2a-semantic-registry.md
     ├── milestone-2b-straight-catalog.md
-    └── milestone-2c-straight-publication.md
+    ├── milestone-2c-straight-publication.md
+    └── milestone-3-curve-plan.md
 ```
-
-Generated artifacts may be committed when useful, but remain reproducible outputs rather than source of truth.
 
 ---
 
-## 12. Codepoint stability policy
+## 15. Codepoint stability policy
 
-Before v1 freeze, provisional IDs/codepoints may move.
+Before v1 freeze, provisional IDs/codepoints may move, but existing published visual owners should not move casually.
 
 After freeze:
 
 1. never silently change an assigned codepoint's visual meaning,
-2. never recycle a retired codepoint for unrelated geometry in the same major version,
-3. preserve aliases/renames in metadata,
-4. increment the format major version for breaking remaps.
+2. never allocate two codepoints to the same canonical bitmap merely for semantic distinction,
+3. never recycle a retired codepoint for unrelated geometry within the same major version,
+4. preserve semantic aliases and redirects in metadata,
+5. increment the format major version for unavoidable breaking remaps.
 
 ---
 
-## 13. Milestone sequence
+## 16. Milestone sequence
 
 ### Milestone 0 — fundamentals — **COMPLETE**
 
-- [x] Freeze 8×16 cell/orientation.
-- [x] Freeze bitmap serialization.
-- [x] Freeze ASCII and artifact naming.
-- [x] Preserve `832 → 746 → 86` regression.
-- [x] Add format verification.
+- [x] freeze 8×16 cell/orientation.
+- [x] freeze bitmap serialization.
+- [x] freeze ASCII/artifact naming.
+- [x] preserve `832 → 746 → 86` regression.
 
-### Milestone 1 — persistent artifact pipeline — **COMPLETE**
+### Milestone 1 — artifact pipeline — **COMPLETE**
 
-- [x] generator CLI.
+- [x] deterministic generator CLI.
 - [x] JSON manifest/stats.
-- [x] per-glyph ASCII and PNG output.
-- [x] full/page atlases.
-- [x] artifact reproducibility checks.
+- [x] per-glyph ASCII/PNG.
+- [x] atlases.
+- [x] reproducibility verification.
 
 ### Milestone 2A — straight semantic registry — **COMPLETE**
 
-- [x] provisional straight allocation spec.
-- [x] alias keys and endpoint semantics.
-- [x] preserve all 832 aliases.
+- [x] provisional straight allocation.
+- [x] preserve all 832 semantic aliases.
 - [x] codepoint/bitmap/port/pair indexes.
-- [x] semantic verification.
 
-### Milestone 2B — straight-line class catalog — **COMPLETE**
+### Milestone 2B — straight class catalog — **COMPLETE**
 
-- [x] generate `straight-lines.md`.
-- [x] include all 746 exact ASCII forms.
-- [x] include semantic metadata and aliases.
-- [x] byte-for-byte catalog verification.
+- [x] generated `straight-lines.md`.
+- [x] all 746 inline ASCII forms.
+- [x] semantic metadata and aliases.
 
-### Milestone 2C — straight vocabulary publication — **COMPLETE**
+### Milestone 2C — straight publication — **COMPLETE**
 
-- [x] generate clean complete straight artifact tree.
-- [x] commit semantic manifest/indexes.
-- [x] commit all 746 ASCII files.
-- [x] commit all 746 PNG files.
-- [x] commit class catalog and atlases.
-- [x] record publication provenance.
-- [x] verify before publication commit.
+- [x] complete `straight-v0` artifact snapshot.
+- [x] all 746 ASCII + 746 PNG files committed.
+- [x] provenance and publication verification.
 
-### Milestone 3A — basic solids — **NEXT**
+### Milestone 3A — curve grammar + deterministic rasterizer — **NEXT**
 
-- [ ] define the basic-solid grammar.
-- [ ] generate full/partial rectangular fill candidates.
-- [ ] include horizontal/vertical progressive fills.
-- [ ] include halves/quarters/corner blocks.
-- [ ] decide whether the empty tile consumes a glyph slot.
-- [ ] exact raster deduplication against the existing vocabulary.
-- [ ] report candidate/unique/collision counts.
-- [ ] add browser filters/previews for solids.
-- [ ] generate solid ASCII/PNG/catalog artifacts.
+- [ ] version `spec/curve-grammar.json`.
+- [ ] implement cubic Bézier semantic grammar.
+- [ ] support opposite/adjacent/same-edge endpoint topology.
+- [ ] implement five initial tangent deviations.
+- [ ] implement three initial strengths.
+- [ ] implement fixed-point deterministic cubic flattening/rasterization.
+- [ ] implement validity/rejection rules.
+- [ ] build single-curve browser explorer.
+- [ ] add curve raster regression tests.
+- [ ] allocate **no new Unicode codepoints**.
 
-### Milestone 3B — filled straight contours
+### Milestone 3B — broad curve generation + global dedup research
 
-- [ ] define deterministic side-of-line semantics.
-- [ ] generate both fill sides for useful straight boundaries.
-- [ ] deduplicate against straight/basic-solid vocabulary.
-- [ ] retain boundary + fill-side semantic metadata.
-- [ ] publish filled-straight catalog/artifacts.
+- [ ] run broad candidate sweep (~84k upper-bound before rejection).
+- [ ] exact-dedup every accepted curve against straight-v0.
+- [ ] exact-dedup curves against earlier curve rasters.
+- [ ] preserve all mathematical curve aliases.
+- [ ] generate canonical visual-resolution redirects.
+- [ ] compute nearest-straight Hamming distances.
+- [ ] generate research JSON, atlases, and report.
+- [ ] report projected codepoint pressure.
+- [ ] allocate **no new Unicode codepoints**.
 
-### Milestone 4 — curve research engine
+### Milestone 3C — curve coverage selection + provisional allocation
 
-- [ ] define curve grammar and tangent semantics.
-- [ ] implement deterministic curve rasterization.
-- [ ] build interactive curve explorer.
-- [ ] generate broad candidate families.
-- [ ] deduplicate and measure new visual coverage.
-- [ ] publish curve artifacts/catalog.
+- [ ] inspect novel/near-duplicate atlases.
+- [ ] decide which tangent/strength classes earn space.
+- [ ] select useful novel curve rasters.
+- [ ] assign codepoints only to selected novel rasters.
+- [ ] keep exact-straight matches as redirects to existing codepoints.
+- [ ] add curve lookup indexes and main atlas filters.
 
-### Milestone 5 — curved filled contours
+### Milestone 3D — curve publication
 
-- [ ] fill-side semantics for curves.
-- [ ] inside/outside and wedge-like fragments.
-- [ ] deduplicate and publish.
+- [ ] generate canonical PNG/ASCII for allocated curve visuals.
+- [ ] generate `curves.md`.
+- [ ] generate combined manifest/indexes/atlases.
+- [ ] publish `curve-v0` snapshot with provenance.
 
-### Milestone 6 — junctions
+### Milestone 4 — generic boundary fill
+
+- [ ] define orientation-relative A/B side semantics.
+- [ ] apply to every retained straight boundary alias.
+- [ ] apply to every retained curve boundary alias.
+- [ ] preserve mathematical provenance even for stroke redirects.
+- [ ] globally dedup filled rasters against all existing visuals.
+- [ ] add full-block primitive and settle structural empty policy.
+- [ ] generate filled-boundary catalogs/artifacts.
+
+### Milestone 5 — junctions
 
 - [ ] direction-mask model.
 - [ ] sharp/rounded junction generation.
 - [ ] compatibility metadata.
-- [ ] catalog/artifacts.
+- [ ] global dedup + artifacts.
 
-### Milestone 7 — circles/ellipses
+### Milestone 6 — circles/ellipses
 
 - [ ] radius/ellipse grammar.
 - [ ] arc generation.
-- [ ] deduplication/coverage analysis.
-- [ ] catalog/artifacts.
+- [ ] reuse generic fill operation.
+- [ ] global dedup/coverage analysis.
 
-### Milestone 8 — textures/blocks/terminals
+### Milestone 7 — textures/terminals/specials
 
 - [ ] dithers/hatches/stipple.
 - [ ] seamless texture phases.
 - [ ] caps/nodes/arrows.
-- [ ] catalogs/artifacts.
+- [ ] special primitives justified by drawing failures.
 
-### Milestone 9 — vocabulary optimization
+### Milestone 8 — vocabulary optimization
 
-- [ ] generate full candidate superset.
-- [ ] analyze slot pressure and coverage holes.
-- [ ] score/select competing candidates where necessary.
+- [ ] analyze full candidate superset.
+- [ ] identify coverage holes and codepoint pressure.
+- [ ] score/select competing visuals.
 - [ ] preserve reserve space.
 - [ ] produce provisional 4K allocation map.
 
-### Milestone 10 — font compiler
+### Milestone 9 — font compiler
 
 - [ ] bitmap-to-outline compiler.
 - [ ] fixed metrics + PUA cmap.
-- [ ] TTF output.
-- [ ] WOFF2 output.
+- [ ] TTF/WOFF2.
 - [ ] specimen tests.
 
-### Milestone 11 — drawing API
+### Milestone 10 — drawing API
 
-- [ ] stable JSON schema.
-- [ ] lookup library.
-- [ ] neighbor compatibility API.
+- [ ] stable manifest/query API.
+- [ ] canonical glyph resolver.
+- [ ] neighbor compatibility.
 - [ ] geometry-to-glyph solver.
 - [ ] multi-cell renderer.
 
-### Milestone 12 — interactive editor
+### Milestone 11 — interactive editor
 
 - [ ] multi-cell canvas.
 - [ ] line/curve/shape tools.
@@ -601,7 +701,7 @@ After freeze:
 - [ ] Unicode copy/paste.
 - [ ] PNG/text/JSON export.
 
-### Milestone 13 — GraphSCII v1
+### Milestone 12 — GraphSCII v1
 
 - [ ] final coverage review.
 - [ ] freeze codepoint meanings.
@@ -612,14 +712,14 @@ After freeze:
 
 ---
 
-## 14. Definition of done for v1
+## 17. Definition of done for v1
 
-GraphSCII v1 is ready when every assigned glyph reproduces from source; codepoints are stable; PNG/ASCII artifacts exist; each major class has a generated catalog; JSON fully describes identity/connectivity/fill semantics; atlases cover the vocabulary; a fixed-cell font exists; programs can render through font or canonical bitmap data; neighbor compatibility is mechanically queryable; generation is deterministic; and the codepoint map is ready to be treated as API.
+GraphSCII v1 is ready when every assigned visual glyph reproduces from source; one bitmap maps to at most one canonical codepoint; semantic aliases and redirects preserve mathematical meaning; PNG/ASCII artifacts exist; major classes have generated catalogs; JSON fully describes identity/connectivity/fill semantics; atlases cover the vocabulary; a fixed-cell font exists; programs can render through font or canonical bitmap data; neighbor compatibility is mechanically queryable; generation is deterministic; and the codepoint map is ready to be treated as API.
 
 ---
 
-## 15. Guiding rule
+## 18. Guiding rule
 
 Prefer designs that make GraphSCII more **systematic, reproducible, queryable, composable, inspectable, programmable, and geometrically expressive per codepoint**.
 
-Do not guess how many slots a family deserves when the generator can create candidates, rasterize them, deduplicate them, measure surviving visual space, and show us what reality says.
+Generate broadly. Preserve mathematical meaning. Deduplicate globally. Allocate a new codepoint only when new pixels earn the space.
