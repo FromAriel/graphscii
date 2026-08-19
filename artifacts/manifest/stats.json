@@ -39,5 +39,14 @@
     "byPortKeys": 48,
     "byPortEntries": 1664,
     "byConnectionPair": 1664
+  },
+  "catalogs": {
+    "straightLines": {
+      "catalogSchemaVersion": 1,
+      "glyphCount": 746,
+      "aliasCount": 832,
+      "bytes": 515888,
+      "path": "classes/straight-lines.md"
+    }
   }
 }

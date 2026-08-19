@@ -1,0 +1,14 @@
+{
+  "schema": "graphscii-publication",
+  "schemaVersion": 1,
+  "publication": "straight-v0",
+  "status": "provisional",
+  "sourceCommit": "791a0a2175b888ee24061ed92a0d31eaf3342fdc",
+  "generator": "cd geometric-glyph-lab && npm run generate",
+  "verification": "cd geometric-glyph-lab && npm run verify",
+  "glyphCount": 746,
+  "aliasCount": 832,
+  "unicodeStart": "U+00E000",
+  "unicodeEnd": "U+00E2E9",
+  "canonicalCell": "8x16"
+}
