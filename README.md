@@ -31,12 +31,14 @@ From `geometric-glyph-lab/`:
 npm run generate
 ```
 
-Generation has two stages:
+Generation now has three stages:
 
 ```text
 base bitmap/artifact generation
             ↓
 straight semantic registry/index generation
+            ↓
+straight-line Markdown catalog generation
 ```
 
 To verify an existing generated tree without rewriting it:
@@ -62,6 +64,8 @@ artifacts/
 │   │   └── U+00E000.txt ...
 │   └── png/
 │       └── U+00E000.png ...
+├── classes/
+│   └── straight-lines.md
 └── atlases/
     ├── all.png
     ├── page-0.png
@@ -70,6 +74,10 @@ artifacts/
 ```
 
 Every current glyph gets one exact 8×16 ASCII bitmap and one native 8×16 transparent PNG. Filled PNG pixels are opaque black; empty pixels are transparent.
+
+`artifacts/classes/straight-lines.md` is generated from the semantic manifest plus the canonical per-glyph ASCII files. It contains all 746 visual glyphs, all 832 mathematical aliases, exact 8×16 ASCII renderings, connectivity semantics, bitmap keys, family membership, and links to each glyph's canonical ASCII/PNG artifacts.
+
+The catalog is not hand-maintained. `npm run verify:catalog` regenerates its expected contents in memory and requires byte-for-byte equality.
 
 ## Programmatic use
 
@@ -111,5 +119,6 @@ See:
 
 - [`docs/format.md`](docs/format.md) — frozen GraphSCII v1 bitmap contract
 - [`docs/connectivity.md`](docs/connectivity.md) — straight connectivity and lookup semantics
-- [`docs/milestone-2a-semantic-registry.md`](docs/milestone-2a-semantic-registry.md) — current semantic-registry slice
+- [`docs/milestone-2a-semantic-registry.md`](docs/milestone-2a-semantic-registry.md) — semantic-registry slice
+- [`docs/milestone-2b-straight-catalog.md`](docs/milestone-2b-straight-catalog.md) — generated straight-line catalog slice
 - [`PLAN.md`](PLAN.md) — living architecture and roadmap
