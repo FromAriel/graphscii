@@ -10,5 +10,34 @@
   "glyphCount": 746,
   "duplicateCandidateCount": 86,
   "maxAliases": 4,
-  "compressionRatio": 0.103365
+  "compressionRatio": 0.103365,
+  "manifestSchemaVersion": 2,
+  "allocation": {
+    "class": "straight-lines",
+    "status": "provisional",
+    "allocationSchemaVersion": 1,
+    "glyphIdStart": 0,
+    "glyphIdEnd": 745,
+    "unicodeStart": "U+00E000",
+    "unicodeEnd": "U+00E2E9",
+    "assignmentRule": "codepoint = unicodeStart + glyphId",
+    "generationOrder": [
+      "LR",
+      "TB",
+      "LT",
+      "LB",
+      "RT",
+      "RB"
+    ],
+    "deduplicationRule": "first raster-unique candidate receives the next glyph ID; later raster-identical candidates become aliases",
+    "stability": "provisional until the GraphSCII v1 codepoint freeze"
+  },
+  "aliasCount": 832,
+  "lookupIndexes": {
+    "byCodepoint": 746,
+    "byBitmap": 746,
+    "byPortKeys": 48,
+    "byPortEntries": 1664,
+    "byConnectionPair": 1664
+  }
 }
