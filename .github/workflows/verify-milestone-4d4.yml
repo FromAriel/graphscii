@@ -104,6 +104,23 @@ jobs:
           path.write_text(text)
           PY
 
+      - name: Fix master layout emphasis
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("geometric-glyph-lab/scripts/vocabulary-master-atlas.mjs")
+          text = path.read_text()
+          old = 'unique derived bitmaps.`,\n'
+          new = 'unique derived bitmaps**.`,\n'
+          if old in text:
+              text = text.replace(old, new, 1)
+          elif new not in text:
+              raise SystemExit("Could not locate master layout renderer-only emphasis")
+          path.write_text(text)
+          PY
+
       - name: Typecheck source
         working-directory: geometric-glyph-lab
         run: npm run check
@@ -123,6 +140,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- \
             geometric-glyph-lab/scripts/vocabulary-atlases.mjs \
+            geometric-glyph-lab/scripts/vocabulary-master-atlas.mjs \
             artifacts/vocabulary/atlases/master-text-atlas.md \
             artifacts/vocabulary/atlases/master-text-atlas.txt \
             artifacts/vocabulary/atlases/master-page-atlas.md \
@@ -137,5 +155,5 @@ jobs:
             echo "Milestone 4D.4 master outputs already match deterministic generation."
             exit 0
           fi
-          git commit -m "Generate Milestone 4D.4 master atlases"
+          git commit -m "Polish Milestone 4D.4 master atlases"
           git push origin HEAD:milestone-4d-publication-plan
