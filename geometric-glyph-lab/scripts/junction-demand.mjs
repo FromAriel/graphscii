@@ -17,6 +17,7 @@ const ZONE_ROWS = 4;
 const PORT_BANDS = 4;
 const ANGLE_SECTORS = 16;
 const MAX_SOURCE_EXAMPLES = 8;
+const MAX_SEMANTIC_HUB_EXAMPLES = 8;
 const THEORETICAL_REFERENCE_SEMANTICS = 22528;
 
 function jsonText(value) {
@@ -39,9 +40,7 @@ function gcd(a, b) {
 }
 
 function fraction(num, den) {
-  if (den === 0) {
-    throw new Error("Cannot normalize a zero-denominator fraction.");
-  }
+  if (den === 0) throw new Error("Cannot normalize zero-denominator fraction.");
   let n = num;
   let d = den;
   if (d < 0) {
@@ -60,6 +59,10 @@ function fractionDecimal(value) {
   return value.num / value.den;
 }
 
+function rounded(value, digits = 6) {
+  return Number(value.toFixed(digits));
+}
+
 function cross(a, b) {
   return a.x * b.y - a.y * b.x;
 }
@@ -72,9 +75,8 @@ function segmentIntersection(a0, a1, b0, b1) {
   const r = subtract(a1, a0);
   const s = subtract(b1, b0);
   let den = cross(r, s);
-  if (den === 0) {
-    return null;
-  }
+  if (den === 0) return null;
+
   const qMinusP = subtract(b0, a0);
   let tNum = cross(qMinusP, s);
   let uNum = cross(qMinusP, r);
@@ -83,17 +85,11 @@ function segmentIntersection(a0, a1, b0, b1) {
     tNum = -tNum;
     uNum = -uNum;
   }
-  if (tNum <= 0 || tNum >= den || uNum <= 0 || uNum >= den) {
-    return null;
-  }
+  if (tNum <= 0 || tNum >= den || uNum <= 0 || uNum >= den) return null;
 
   const x = fraction(a0.x * den + r.x * tNum, den);
   const y = fraction(a0.y * den + r.y * tNum, den);
-  return {
-    x,
-    y,
-    key: `${fractionKey(x)},${fractionKey(y)}`,
-  };
+  return { x, y, key: `${fractionKey(x)},${fractionKey(y)}` };
 }
 
 function comparePorts(a, b) {
@@ -110,15 +106,43 @@ function uniquePorts(lines) {
 }
 
 function topologyForPorts(ports) {
-  if (ports.length !== 3 && ports.length !== 4) {
-    return null;
-  }
+  if (ports.length !== 3 && ports.length !== 4) return null;
   const edges = new Set(ports.map((port) => port.edge));
-  if (edges.size !== ports.length) {
-    return null;
-  }
+  if (edges.size !== ports.length) return null;
   const topology = ["L", "R", "T", "B"].filter((edge) => edges.has(edge)).join("");
   return TOPOLOGY_SET.has(topology) ? topology : null;
+}
+
+function combinations(items, size) {
+  const result = [];
+  const chosen = [];
+  function visit(start) {
+    if (chosen.length === size) {
+      result.push([...chosen]);
+      return;
+    }
+    const needed = size - chosen.length;
+    for (let index = start; index <= items.length - needed; index += 1) {
+      chosen.push(items[index]);
+      visit(index + 1);
+      chosen.pop();
+    }
+  }
+  visit(0);
+  return result;
+}
+
+function validRaySubsets(lines) {
+  const ports = uniquePorts(lines);
+  const result = [];
+  for (const size of [3, 4]) {
+    if (ports.length < size) continue;
+    for (const subset of combinations(ports, size)) {
+      const topology = topologyForPorts(subset);
+      if (topology) result.push({ ports: subset, topology });
+    }
+  }
+  return result;
 }
 
 function portCount(edge) {
@@ -134,27 +158,21 @@ function hubZone(hub) {
   const y = fractionDecimal(hub.y);
   const column = Math.min(ZONE_COLUMNS - 1, Math.floor((x * ZONE_COLUMNS) / CELL_WIDTH));
   const row = Math.min(ZONE_ROWS - 1, Math.floor((y * ZONE_ROWS) / CELL_HEIGHT));
-  return {
-    column,
-    row,
-    key: `z${row}${column}`,
-  };
+  return { column, row, key: `z${row}${column}` };
 }
 
 function nearestIntegers(value, maxValue) {
   const floorValue = Math.floor(value.num / value.den);
   const ceilValue = Math.ceil(value.num / value.den);
-  if (floorValue === ceilValue) {
-    return [Math.max(0, Math.min(maxValue, floorValue))];
-  }
-  const floorDistanceNum = value.num - floorValue * value.den;
-  const ceilDistanceNum = ceilValue * value.den - value.num;
-  const result = floorDistanceNum < ceilDistanceNum
+  if (floorValue === ceilValue) return [Math.max(0, Math.min(maxValue, floorValue))];
+  const floorDistance = value.num - floorValue * value.den;
+  const ceilDistance = ceilValue * value.den - value.num;
+  const values = floorDistance < ceilDistance
     ? [floorValue]
-    : ceilDistanceNum < floorDistanceNum
+    : ceilDistance < floorDistance
       ? [ceilValue]
       : [floorValue, ceilValue];
-  return result.filter((entry) => entry >= 0 && entry <= maxValue);
+  return values.filter((entry) => entry >= 0 && entry <= maxValue);
 }
 
 function nearestHubPixels(hub) {
@@ -162,9 +180,7 @@ function nearestHubPixels(hub) {
   const ys = nearestIntegers(hub.y, CELL_HEIGHT - 1);
   const pixels = [];
   for (const y of ys) {
-    for (const x of xs) {
-      pixels.push({ x, y, key: `${x},${y}` });
-    }
+    for (const x of xs) pixels.push({ x, y, key: `${x},${y}` });
   }
   return pixels;
 }
@@ -174,9 +190,7 @@ function normalizedAngleDegrees(hub, port) {
   const dx = point.x - fractionDecimal(hub.x);
   const dy = point.y - fractionDecimal(hub.y);
   let angle = Math.atan2(dy, dx) * 180 / Math.PI;
-  if (angle < 0) {
-    angle += 360;
-  }
+  if (angle < 0) angle += 360;
   return angle;
 }
 
@@ -187,10 +201,6 @@ function angleSector(angle) {
 function circularSeparation(a, b) {
   const delta = Math.abs(a - b) % 360;
   return Math.min(delta, 360 - delta);
-}
-
-function rounded(value, digits = 6) {
-  return Number(value.toFixed(digits));
 }
 
 function separationBucket(value) {
@@ -220,36 +230,26 @@ function classifyShape(angles) {
   }
   const minPairwise = Math.min(...pairwise);
   const maxPairwise = Math.max(...pairwise);
-  if (minPairwise < 15) {
-    return "near-degenerate";
-  }
+  if (minPairwise < 15) return "near-degenerate";
   if (angles.length === 3) {
     if (maxPairwise >= 150) return "T-like";
     if (minPairwise >= 60 && maxPairwise <= 150) return "Y-like";
     return "strongly-asymmetric";
   }
-
   const cardinalScore = Math.max(...angles.map((angle) => nearestAxisDistance(angle, 0)));
   const diagonalScore = Math.max(...angles.map((angle) => nearestAxisDistance(angle, 45)));
   if (cardinalScore <= 15) return "cross-like";
   if (diagonalScore <= 15) return "X-like";
-
   const sorted = [...angles].sort((a, b) => a - b);
   const gaps = sorted.map((angle, index) => {
     const next = index + 1 < sorted.length ? sorted[index + 1] : sorted[0] + 360;
     return next - angle;
   });
-  if (Math.max(...gaps) - Math.min(...gaps) > 90) {
-    return "strongly-asymmetric";
-  }
+  if (Math.max(...gaps) - Math.min(...gaps) > 90) return "strongly-asymmetric";
   return "mixed-angle";
 }
 
-function semanticKey(hub, ports) {
-  return `${hub.key}|${ports.map(formatPort).join(",")}`;
-}
-
-function buildSemanticRecord(hub, ports, topology) {
+function geometryForDemand(hub, ports) {
   const zone = hubZone(hub);
   const branchAngles = ports.map((port) => {
     const angle = normalizedAngleDegrees(hub, port);
@@ -271,9 +271,17 @@ function buildSemanticRecord(hub, ports, topology) {
       });
     }
   }
-  const shape = classifyShape(branchAngles.map((entry) => entry.angleDegrees));
+  const shapeCharacter = classifyShape(branchAngles.map((entry) => entry.angleDegrees));
+  return { zone, branchAngles, separations, shapeCharacter };
+}
+
+function semanticKey(ports) {
+  return ports.map(formatPort).join(",");
+}
+
+function makeSemanticState(ports, topology) {
   return {
-    key: semanticKey(hub, ports),
+    key: semanticKey(ports),
     topology,
     ports: ports.map((port) => ({
       edge: port.edge,
@@ -281,99 +289,115 @@ function buildSemanticRecord(hub, ports, topology) {
       label: formatPort(port),
       band: portBand(port),
     })),
-    hub: {
-      x: hub.x,
-      y: hub.y,
-      key: hub.key,
-      xDecimal: rounded(fractionDecimal(hub.x)),
-      yDecimal: rounded(fractionDecimal(hub.y)),
-      zone,
-      nearestPixels: nearestHubPixels(hub),
-    },
-    branchAngles,
-    pairwiseSeparations: separations,
-    shapeCharacter: shape,
-    symmetryOrientationClass: `${topology}:${shape}:${zone.key}`,
     demandMultiplicity: 0,
-    pairCompositions: 0,
-    tripleCompositions: 0,
+    pairDemand: 0,
+    tripleDemand: 0,
+    hubDemand: new Map(),
+    zoneDemand: new Map(),
+    shapeDemand: new Map(),
     sourceExamples: [],
   };
 }
 
-function addDemand(semanticMap, hub, lines, compositionKind) {
-  const ports = uniquePorts(lines);
-  const topology = topologyForPorts(ports);
-  if (!topology) {
-    return false;
+function incrementMap(map, key, amount = 1) {
+  map.set(key, (map.get(key) ?? 0) + amount);
+}
+
+function makeCoverageAccumulator() {
+  return new Map();
+}
+
+function addCoverage(accumulator, key, semanticKeyValue, weight = 1) {
+  let current = accumulator.get(key);
+  if (!current) {
+    current = { key, semantics: new Set(), weightedDemand: 0 };
+    accumulator.set(key, current);
   }
-  const key = semanticKey(hub, ports);
+  current.semantics.add(semanticKeyValue);
+  current.weightedDemand += weight;
+}
+
+function serializeCoverage(accumulator) {
+  return [...accumulator.values()]
+    .map((entry) => ({ key: entry.key, semanticCount: entry.semantics.size, weightedDemand: entry.weightedDemand }))
+    .sort((a, b) => a.key.localeCompare(b.key));
+}
+
+function makeCoverageSet() {
+  return {
+    topology: makeCoverageAccumulator(),
+    hubZone: makeCoverageAccumulator(),
+    exactPort: makeCoverageAccumulator(),
+    normalizedPortBand: makeCoverageAccumulator(),
+    branchAngleSector: makeCoverageAccumulator(),
+    pairwiseAngularSeparation: makeCoverageAccumulator(),
+    shapeCharacter: makeCoverageAccumulator(),
+    symmetryOrientationClass: makeCoverageAccumulator(),
+  };
+}
+
+function addDemandEvent(semanticMap, coverage, hubDemandMap, hub, ports, topology, lines, compositionKind) {
+  const key = semanticKey(ports);
   let semantic = semanticMap.get(key);
   if (!semantic) {
-    semantic = buildSemanticRecord(hub, ports, topology);
+    semantic = makeSemanticState(ports, topology);
     semanticMap.set(key, semantic);
   }
+  const geometry = geometryForDemand(hub, ports);
   semantic.demandMultiplicity += 1;
-  if (compositionKind === "pair") semantic.pairCompositions += 1;
-  if (compositionKind === "triple") semantic.tripleCompositions += 1;
+  if (compositionKind === "pair") semantic.pairDemand += 1;
+  else semantic.tripleDemand += 1;
+  incrementMap(semantic.hubDemand, hub.key);
+  incrementMap(semantic.zoneDemand, geometry.zone.key);
+  incrementMap(semantic.shapeDemand, geometry.shapeCharacter);
+  incrementMap(hubDemandMap, hub.key);
+
   if (semantic.sourceExamples.length < MAX_SOURCE_EXAMPLES) {
     semantic.sourceExamples.push({
       kind: compositionKind,
+      hub: hub.key,
       candidateIds: lines.map((line) => line.candidateId).sort((a, b) => a - b),
-      families: lines.map((line) => line.family).sort(),
+      selectedPorts: ports.map(formatPort),
     });
   }
-  return true;
-}
 
-function incrementBucket(map, key, demand, semanticCount = 1) {
-  const current = map.get(key) ?? { key, semanticCount: 0, weightedDemand: 0 };
-  current.semanticCount += semanticCount;
-  current.weightedDemand += demand;
-  map.set(key, current);
-}
-
-function sortedBucket(map) {
-  return [...map.values()].sort((a, b) => a.key.localeCompare(b.key));
-}
-
-function aggregateCoverage(semantics) {
-  const topology = new Map();
-  const hubZoneBuckets = new Map();
-  const exactPort = new Map();
-  const portBandBuckets = new Map();
-  const angleSectorBuckets = new Map();
-  const separationBuckets = new Map();
-  const shape = new Map();
-  const symmetry = new Map();
-
-  for (const semantic of semantics) {
-    const demand = semantic.demandMultiplicity;
-    incrementBucket(topology, semantic.topology, demand);
-    incrementBucket(hubZoneBuckets, semantic.hub.zone.key, demand);
-    incrementBucket(shape, semantic.shapeCharacter, demand);
-    incrementBucket(symmetry, semantic.symmetryOrientationClass, demand);
-    for (const port of semantic.ports) {
-      incrementBucket(exactPort, port.label, demand);
-      incrementBucket(portBandBuckets, `${port.edge}:band-${port.band}`, demand);
-    }
-    for (const branch of semantic.branchAngles) {
-      incrementBucket(angleSectorBuckets, `sector-${String(branch.sector).padStart(2, "0")}`, demand);
-    }
-    for (const separation of semantic.pairwiseSeparations) {
-      incrementBucket(separationBuckets, separation.bucket, demand);
-    }
+  addCoverage(coverage.topology, topology, key);
+  addCoverage(coverage.hubZone, geometry.zone.key, key);
+  addCoverage(coverage.shapeCharacter, geometry.shapeCharacter, key);
+  addCoverage(coverage.symmetryOrientationClass, `${topology}:${geometry.shapeCharacter}:${geometry.zone.key}`, key);
+  for (const port of ports) {
+    addCoverage(coverage.exactPort, formatPort(port), key);
+    addCoverage(coverage.normalizedPortBand, `${port.edge}:band-${portBand(port)}`, key);
   }
+  for (const branch of geometry.branchAngles) {
+    addCoverage(coverage.branchAngleSector, `sector-${String(branch.sector).padStart(2, "0")}`, key);
+  }
+  for (const separation of geometry.separations) {
+    addCoverage(coverage.pairwiseAngularSeparation, separation.bucket, key);
+  }
+}
 
+function sortedDemandMap(map) {
+  return [...map.entries()]
+    .map(([key, weightedDemand]) => ({ key, weightedDemand }))
+    .sort((a, b) => b.weightedDemand - a.weightedDemand || a.key.localeCompare(b.key));
+}
+
+function serializeSemantic(state, semanticId) {
+  const hubs = sortedDemandMap(state.hubDemand);
   return {
-    topology: sortedBucket(topology),
-    hubZone: sortedBucket(hubZoneBuckets),
-    exactPort: sortedBucket(exactPort),
-    normalizedPortBand: sortedBucket(portBandBuckets),
-    branchAngleSector: sortedBucket(angleSectorBuckets),
-    pairwiseAngularSeparation: sortedBucket(separationBuckets),
-    shapeCharacter: sortedBucket(shape),
-    symmetryOrientationClass: sortedBucket(symmetry),
+    semanticId,
+    key: state.key,
+    topology: state.topology,
+    ports: state.ports,
+    demandMultiplicity: state.demandMultiplicity,
+    pairDemand: state.pairDemand,
+    tripleDemand: state.tripleDemand,
+    hubSupportCount: hubs.length,
+    topHubs: hubs.slice(0, MAX_SEMANTIC_HUB_EXAMPLES),
+    hubZoneDemand: sortedDemandMap(state.zoneDemand),
+    shapeDemand: sortedDemandMap(state.shapeDemand),
+    sourceExamples: state.sourceExamples,
   };
 }
 
@@ -390,41 +414,41 @@ function exactCenterKey() {
   return `${fractionKey(fraction(7, 2))},${fractionKey(fraction(15, 2))}`;
 }
 
-function reportMarkdown(stats, hubDensity, coverage) {
-  const topHubs = hubDensity.exactHubs.slice(0, 12);
+function reportMarkdown(stats, hubDensity, coverageBuckets) {
   const topologyLines = TOPOLOGY_ORDER.map((key) => {
     const value = stats.topologies[key];
     return `| ${key} | ${value.semanticCount.toLocaleString("en-US")} | ${value.weightedDemand.toLocaleString("en-US")} |`;
   }).join("\n");
-  const hubLines = topHubs.map((hub, index) =>
+  const hubLines = hubDensity.exactHubs.slice(0, 12).map((hub, index) =>
     `| ${index + 1} | ${hub.key} | ${hub.xDecimal}, ${hub.yDecimal} | ${hub.intersectionPairCount.toLocaleString("en-US")} | ${hub.junctionDemand.toLocaleString("en-US")} | ${hub.zone} |`
   ).join("\n");
-  const zoneLines = [...coverage.hubZone]
+  const zoneLines = [...coverageBuckets.hubZone]
     .sort((a, b) => b.weightedDemand - a.weightedDemand || a.key.localeCompare(b.key))
     .map((entry) => `| ${entry.key} | ${entry.semanticCount.toLocaleString("en-US")} | ${entry.weightedDemand.toLocaleString("en-US")} |`)
     .join("\n");
 
   return `# Milestone 5A.1 Junction Demand Map\n\n` +
     `Status: **GENERATED RESEARCH — ALLOCATION-FREE**\n\n` +
-    `This artifact measures where the existing 832-definition straight GraphSCII language naturally creates 3-port and 4-port junction demand. No junction codepoints are allocated.\n\n` +
+    `This artifact measures where the existing 832-definition straight GraphSCII language naturally creates junction demand. At every exact interior straight-line intersection, each contributing straight supplies two selectable rays from the hub to its boundary ports. Valid 3-ray and 4-ray subsets become junction demand events. No junction codepoints are allocated.\n\n` +
     `## Headline measurements\n\n` +
     `- Straight mathematical definitions: **${stats.straightSemanticDefinitions.toLocaleString("en-US")}**\n` +
     `- Unordered straight pairs examined: **${stats.totalPossiblePairs.toLocaleString("en-US")}**\n` +
     `- Strict interior intersecting pairs: **${stats.interiorIntersectingPairs.toLocaleString("en-US")}**\n` +
     `- Exact mathematical hub positions: **${stats.exactHubCount.toLocaleString("en-US")}**\n` +
-    `- Valid pair junction compositions: **${stats.validPairDemandCompositions.toLocaleString("en-US")}**\n` +
+    `- Pair source compositions producing demand: **${stats.pairSourcesWithDemand.toLocaleString("en-US")}**\n` +
+    `- Pair-derived junction demand events: **${stats.pairDemandEvents.toLocaleString("en-US")}**\n` +
     `- Concurrent straight triples examined: **${stats.tripleCombinationsConsidered.toLocaleString("en-US")}**\n` +
-    `- Valid triple junction compositions: **${stats.validTripleDemandCompositions.toLocaleString("en-US")}**\n` +
-    `- Unique demanded junction semantics: **${stats.uniqueDemandSemantics.toLocaleString("en-US")}**\n` +
+    `- Triple source compositions producing demand: **${stats.tripleSourcesWithDemand.toLocaleString("en-US")}**\n` +
+    `- Triple-derived junction demand events: **${stats.tripleDemandEvents.toLocaleString("en-US")}**\n` +
+    `- Unique demanded port semantics: **${stats.uniqueDemandSemantics.toLocaleString("en-US")} of ${THEORETICAL_REFERENCE_SEMANTICS.toLocaleString("en-US")}** (${stats.theoreticalSemanticCoveragePercent.toFixed(3)}%)\n` +
     `- Total weighted demand multiplicity: **${stats.totalDemandMultiplicity.toLocaleString("en-US")}**\n` +
     `- Exact center-hub demand share: **${stats.centerHubDemandSharePercent.toFixed(3)}%**\n` +
     `- PUA reserve consumed: **0 of 604**\n\n` +
     `## Topology demand\n\n| Topology | Unique semantics | Weighted demand |\n| --- | ---: | ---: |\n${topologyLines}\n\n` +
-    `## Highest-density exact hubs\n\n| Rank | Exact hub | Decimal hub | Intersecting pairs | Junction demand | Zone |\n| ---: | --- | --- | ---: | ---: | --- |\n${hubLines}\n\n` +
+    `## Highest-demand exact hubs\n\n| Rank | Exact hub | Decimal hub | Intersecting pairs | Junction demand | Zone |\n| ---: | --- | --- | ---: | ---: | --- |\n${hubLines}\n\n` +
     `## Coarse 4×4 hub-zone demand\n\n| Zone | Unique semantics | Weighted demand |\n| --- | ---: | ---: |\n${zoneLines}\n\n` +
-    `The 4×4 zones are deliberately coarse. They are coverage buckets, not a proposal to quantize junction hubs. Later slices compare exact mathematical hubs with centered and 2×2 hub raster models.\n\n` +
-    `## Interpretation\n\n` +
-    `Milestone 5A.1 establishes the empirical demand distribution that later budget optimization will use. High-demand regions matter, but rare topology/port/angle buckets remain visible so the optimizer can maximize broad drawability rather than overfit the busiest hub cluster.\n`;
+    `The demand semantics are keyed by boundary-port tuple, matching the 22,528 one-port-per-edge reference universe. Exact hub positions remain a measured distribution attached to those semantics rather than multiplying the semantic address space.\n\n` +
+    `Milestone 5A.2 will use this demand field to compare mathematical-intersection, symmetric half-pixel-center, and central-2×2 raster models.\n`;
 }
 
 function buildResearchSpec(stats) {
@@ -448,9 +472,11 @@ function buildResearchSpec(stats) {
     },
     demandMethod: {
       pairIntersections: "strict-interior exact rational segment intersections",
-      tripleDemand: "unordered triples of straight definitions concurrent at one exact hub",
+      selectableRays: "each concurrent straight contributes hub-to-endpoint rays",
+      pairAndTripleRaySubsets: [3, 4],
       topologyGate: [...TOPOLOGY_ORDER],
       onePortPerParticipatingEdge: true,
+      semanticIdentity: "sorted boundary-port tuple; exact hub is demand metadata",
       theoreticalReferenceSemanticCount: THEORETICAL_REFERENCE_SEMANTICS,
     },
     coverageTaxonomy: {
@@ -464,10 +490,13 @@ function buildResearchSpec(stats) {
       totalPossiblePairs: stats.totalPossiblePairs,
       interiorIntersectingPairs: stats.interiorIntersectingPairs,
       exactHubCount: stats.exactHubCount,
-      validPairDemandCompositions: stats.validPairDemandCompositions,
+      pairSourcesWithDemand: stats.pairSourcesWithDemand,
+      pairDemandEvents: stats.pairDemandEvents,
       tripleCombinationsConsidered: stats.tripleCombinationsConsidered,
-      validTripleDemandCompositions: stats.validTripleDemandCompositions,
+      tripleSourcesWithDemand: stats.tripleSourcesWithDemand,
+      tripleDemandEvents: stats.tripleDemandEvents,
       uniqueDemandSemantics: stats.uniqueDemandSemantics,
+      theoreticalSemanticCoveragePercent: stats.theoreticalSemanticCoveragePercent,
       totalDemandMultiplicity: stats.totalDemandMultiplicity,
       centerHubDemand: stats.centerHubDemand,
       centerHubDemandSharePercent: stats.centerHubDemandSharePercent,
@@ -507,9 +536,12 @@ export async function buildJunctionDemandDocuments(repoRoot) {
   }));
   const totalPossiblePairs = lines.length * (lines.length - 1) / 2;
   const hubs = new Map();
-  const semantics = new Map();
+  const semanticMap = new Map();
+  const coverage = makeCoverageSet();
+  const hubDemandMap = new Map();
   let interiorIntersectingPairs = 0;
-  let validPairDemandCompositions = 0;
+  let pairSourcesWithDemand = 0;
+  let pairDemandEvents = 0;
 
   for (let i = 0; i < lines.length; i += 1) {
     for (let j = i + 1; j < lines.length; j += 1) {
@@ -518,27 +550,26 @@ export async function buildJunctionDemandDocuments(repoRoot) {
       interiorIntersectingPairs += 1;
       let hubRecord = hubs.get(hub.key);
       if (!hubRecord) {
-        hubRecord = {
-          hub,
-          lineIds: new Set(),
-          intersectionPairCount: 0,
-          validPairDemand: 0,
-          validTripleDemand: 0,
-        };
+        hubRecord = { hub, lineIds: new Set(), intersectionPairCount: 0 };
         hubs.set(hub.key, hubRecord);
       }
       hubRecord.lineIds.add(i);
       hubRecord.lineIds.add(j);
       hubRecord.intersectionPairCount += 1;
-      if (addDemand(semantics, hub, [lines[i], lines[j]], "pair")) {
-        validPairDemandCompositions += 1;
-        hubRecord.validPairDemand += 1;
+
+      const sourceLines = [lines[i], lines[j]];
+      const subsets = validRaySubsets(sourceLines);
+      if (subsets.length > 0) pairSourcesWithDemand += 1;
+      for (const subset of subsets) {
+        addDemandEvent(semanticMap, coverage, hubDemandMap, hub, subset.ports, subset.topology, sourceLines, "pair");
+        pairDemandEvents += 1;
       }
     }
   }
 
   let tripleCombinationsConsidered = 0;
-  let validTripleDemandCompositions = 0;
+  let tripleSourcesWithDemand = 0;
+  let tripleDemandEvents = 0;
   for (const hubRecord of hubs.values()) {
     const ids = [...hubRecord.lineIds].sort((a, b) => a - b);
     if (ids.length < 3) continue;
@@ -546,27 +577,24 @@ export async function buildJunctionDemandDocuments(repoRoot) {
       for (let b = a + 1; b < ids.length - 1; b += 1) {
         for (let c = b + 1; c < ids.length; c += 1) {
           tripleCombinationsConsidered += 1;
-          const triple = [lines[ids[a]], lines[ids[b]], lines[ids[c]]];
-          if (addDemand(semantics, hubRecord.hub, triple, "triple")) {
-            validTripleDemandCompositions += 1;
-            hubRecord.validTripleDemand += 1;
+          const sourceLines = [lines[ids[a]], lines[ids[b]], lines[ids[c]]];
+          const subsets = validRaySubsets(sourceLines);
+          if (subsets.length > 0) tripleSourcesWithDemand += 1;
+          for (const subset of subsets) {
+            addDemandEvent(semanticMap, coverage, hubDemandMap, hubRecord.hub, subset.ports, subset.topology, sourceLines, "triple");
+            tripleDemandEvents += 1;
           }
         }
       }
     }
   }
 
-  const semanticEntries = [...semantics.values()]
+  const semanticEntries = [...semanticMap.values()]
     .sort((a, b) => a.key.localeCompare(b.key))
-    .map((semantic, index) => ({ semanticId: index, ...semantic }));
+    .map((state, index) => serializeSemantic(state, index));
   const totalDemandMultiplicity = semanticEntries.reduce((sum, entry) => sum + entry.demandMultiplicity, 0);
   const topologySummary = summarizeTopology(semanticEntries);
-  const coverageBuckets = aggregateCoverage(semanticEntries);
-
-  const semanticDemandByHub = new Map();
-  for (const semantic of semanticEntries) {
-    semanticDemandByHub.set(semantic.hub.key, (semanticDemandByHub.get(semantic.hub.key) ?? 0) + semantic.demandMultiplicity);
-  }
+  const coverageBuckets = Object.fromEntries(Object.entries(coverage).map(([key, value]) => [key, serializeCoverage(value)]));
 
   const exactHubs = [...hubs.values()].map((record) => {
     const zone = hubZone(record.hub);
@@ -580,15 +608,9 @@ export async function buildJunctionDemandDocuments(repoRoot) {
       nearestPixels: nearestHubPixels(record.hub),
       intersectingLineCount: record.lineIds.size,
       intersectionPairCount: record.intersectionPairCount,
-      validPairDemand: record.validPairDemand,
-      validTripleDemand: record.validTripleDemand,
-      junctionDemand: semanticDemandByHub.get(record.hub.key) ?? 0,
+      junctionDemand: hubDemandMap.get(record.hub.key) ?? 0,
     };
-  }).sort((a, b) =>
-    b.junctionDemand - a.junctionDemand ||
-    b.intersectionPairCount - a.intersectionPairCount ||
-    a.key.localeCompare(b.key)
-  );
+  }).sort((a, b) => b.junctionDemand - a.junctionDemand || b.intersectionPairCount - a.intersectionPairCount || a.key.localeCompare(b.key));
 
   const pixelDensityMap = new Map();
   const zoneDensityMap = new Map();
@@ -611,27 +633,31 @@ export async function buildJunctionDemandDocuments(repoRoot) {
   const centerHub = exactHubs.find((hub) => hub.key === centerKey) ?? null;
   const centerHubDemand = centerHub?.junctionDemand ?? 0;
   const centerHubDemandSharePercent = totalDemandMultiplicity === 0 ? 0 : centerHubDemand * 100 / totalDemandMultiplicity;
+  const theoreticalSemanticCoveragePercent = semanticEntries.length * 100 / THEORETICAL_REFERENCE_SEMANTICS;
 
   const stats = {
     format: "graphscii",
     formatVersion: 1,
     schema: "graphscii-junction-demand-stats",
-    schemaVersion: 1,
+    schemaVersion: 2,
     status: "5A.1-allocation-free",
     straightSemanticDefinitions: generated.candidates.length,
     straightVisualOwners: generated.glyphs.length,
     totalPossiblePairs,
     interiorIntersectingPairs,
     exactHubCount: hubs.size,
-    validPairDemandCompositions,
+    pairSourcesWithDemand,
+    pairDemandEvents,
     tripleCombinationsConsidered,
-    validTripleDemandCompositions,
+    tripleSourcesWithDemand,
+    tripleDemandEvents,
     uniqueDemandSemantics: semanticEntries.length,
     totalDemandMultiplicity,
+    theoreticalReferenceSemantics: THEORETICAL_REFERENCE_SEMANTICS,
+    theoreticalSemanticCoveragePercent: rounded(theoreticalSemanticCoveragePercent, 6),
     centerHubKey: centerKey,
     centerHubDemand,
     centerHubDemandSharePercent: rounded(centerHubDemandSharePercent, 6),
-    theoreticalReferenceSemantics: THEORETICAL_REFERENCE_SEMANTICS,
     junctionAllocations: 0,
     reserveSlots: 604,
     topologies: topologySummary,
@@ -641,8 +667,9 @@ export async function buildJunctionDemandDocuments(repoRoot) {
     format: "graphscii",
     formatVersion: 1,
     schema: "graphscii-junction-demand-map",
-    schemaVersion: 1,
+    schemaVersion: 2,
     status: "research-allocation-free",
+    semanticIdentity: "sorted boundary-port tuple",
     semanticCount: semanticEntries.length,
     totalDemandMultiplicity,
     semantics: semanticEntries,
@@ -652,25 +679,21 @@ export async function buildJunctionDemandDocuments(repoRoot) {
     format: "graphscii",
     formatVersion: 1,
     schema: "graphscii-junction-hub-density",
-    schemaVersion: 1,
+    schemaVersion: 2,
     exactHubCount: exactHubs.length,
     exactCenter: centerHub,
     exactHubs,
     nearestRasterPixels: [...pixelDensityMap.values()]
-      .map((entry) => ({
-        ...entry,
-        intersectionPairWeight: rounded(entry.intersectionPairWeight),
-        junctionDemandWeight: rounded(entry.junctionDemandWeight),
-      }))
+      .map((entry) => ({ ...entry, intersectionPairWeight: rounded(entry.intersectionPairWeight), junctionDemandWeight: rounded(entry.junctionDemandWeight) }))
       .sort((a, b) => b.junctionDemandWeight - a.junctionDemandWeight || a.y - b.y || a.x - b.x),
     coarseZones: [...zoneDensityMap.values()].sort((a, b) => a.key.localeCompare(b.key)),
   };
 
-  const coverage = {
+  const coverageDocument = {
     format: "graphscii",
     formatVersion: 1,
     schema: "graphscii-junction-coverage-buckets",
-    schemaVersion: 1,
+    schemaVersion: 2,
     taxonomy: {
       topology: [...TOPOLOGY_ORDER],
       hubGrid: { columns: ZONE_COLUMNS, rows: ZONE_ROWS },
@@ -683,19 +706,13 @@ export async function buildJunctionDemandDocuments(repoRoot) {
 
   const spec = buildResearchSpec(stats);
   const report = reportMarkdown(stats, hubDensity, coverageBuckets);
-
   return {
     stats,
-    demandMap,
-    hubDensity,
-    coverage,
-    spec,
-    report,
     texts: {
       "stats.json": jsonText(stats),
       "demand-map.json": jsonText(demandMap),
       "hub-density.json": jsonText(hubDensity),
-      "coverage-buckets.json": jsonText(coverage),
+      "coverage-buckets.json": jsonText(coverageDocument),
       "report.md": report,
       "spec/junction-coverage-research-v0.json": jsonText(spec),
     },
@@ -730,9 +747,7 @@ export async function verifyJunctionDemandArtifacts(repoRoot) {
   ];
   for (const [filename, expected] of checks) {
     const actual = await readFile(filename, "utf8");
-    if (actual !== expected) {
-      throw new Error(`${path.relative(repoRoot, filename)} does not match deterministic Milestone 5A.1 generation.`);
-    }
+    if (actual !== expected) throw new Error(`${path.relative(repoRoot, filename)} does not match deterministic Milestone 5A.1 generation.`);
   }
   if (
     built.stats.straightSemanticDefinitions !== 832 ||
@@ -743,6 +758,11 @@ export async function verifyJunctionDemandArtifacts(repoRoot) {
     built.stats.reserveSlots !== 604
   ) {
     throw new Error("Milestone 5A.1 frozen input or allocation-free fixture mismatch.");
+  }
+  for (const topology of TOPOLOGY_ORDER) {
+    if (built.stats.topologies[topology].semanticCount <= 0 || built.stats.topologies[topology].weightedDemand <= 0) {
+      throw new Error(`Milestone 5A.1 demand model lost topology ${topology}.`);
+    }
   }
   return built.stats;
 }
