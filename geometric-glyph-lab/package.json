@@ -13,15 +13,17 @@
     "verify:fills": "node scripts/verify-fills.mjs",
     "verify:dithers": "node scripts/verify-dithers.mjs",
     "verify:fill-registry": "node scripts/verify-fill-registry.mjs",
+    "verify:dither-research": "node scripts/verify-dither-research.mjs",
     "generate:base": "node scripts/generate-artifacts.mjs",
     "generate:semantic": "node scripts/generate-semantic-registry.mjs",
     "generate:catalog": "node scripts/generate-straight-catalog.mjs",
     "generate:fills": "node scripts/generate-fill-registry.mjs",
-    "generate": "npm run generate:base && npm run generate:semantic && npm run generate:catalog && npm run generate:fills",
+    "generate:dithers": "node scripts/generate-dither-research.mjs",
+    "generate": "npm run generate:base && npm run generate:semantic && npm run generate:catalog && npm run generate:fills && npm run generate:dithers",
     "verify:artifacts": "node scripts/verify-artifacts.mjs",
     "verify:semantic": "node scripts/verify-semantic-registry.mjs",
     "verify:catalog": "node scripts/verify-straight-catalog.mjs",
-    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:fills && npm run verify:dithers && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog && npm run verify:fill-registry"
+    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:fills && npm run verify:dithers && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog && npm run verify:fill-registry && npm run verify:dither-research"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
