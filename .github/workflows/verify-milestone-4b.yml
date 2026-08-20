@@ -1,0 +1,45 @@
+name: Verify Milestone 4B dither sweep
+
+on:
+  push:
+    branches:
+      - milestone-4b-dither-sweep
+
+permissions:
+  contents: read
+
+concurrency:
+  group: graphscii-milestone-4b-verify
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: milestone-4b-dither-sweep
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: geometric-glyph-lab/package-lock.json
+
+      - name: Install dependencies
+        working-directory: geometric-glyph-lab
+        run: npm ci
+
+      - name: Typecheck source
+        working-directory: geometric-glyph-lab
+        run: npm run check
+
+      - name: Verify dither sweep
+        working-directory: geometric-glyph-lab
+        run: npm run verify:dithers
+
+      - name: Verify full project
+        working-directory: geometric-glyph-lab
+        run: npm run verify
