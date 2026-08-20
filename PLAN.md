@@ -190,11 +190,71 @@ Regression command:
 npm run verify:fills
 ```
 
-The browser lab now includes a Straight Fill Explorer showing the original stroke, solid side A, and solid side B for any of the 832 mathematical straight definitions.
+The browser lab includes a Straight Fill Explorer showing the original stroke, solid side A, and solid side B for any of the 832 mathematical straight definitions.
 
 ---
 
-## 7. Milestone 4B — phase-locked dither sweep — NEXT
+## 7. Milestone 4A.1 — persistent fill registry — COMPLETE
+
+Completion note:
+
+[`docs/milestone-4a1-fill-registry.md`](docs/milestone-4a1-fill-registry.md)
+
+The 1,664 solid fill semantics and their 1,347 unique fill rasters are now persistent generated artifacts rather than only in-memory research output.
+
+`npm run generate` writes:
+
+```text
+artifacts/manifest/fills/
+├── registry.json
+├── stats.json
+└── indexes/
+    ├── by-alias.json
+    ├── by-bitmap.json
+    ├── by-boundary-side.json
+    ├── by-owner.json
+    └── by-straight-candidate.json
+```
+
+Frozen lookup counts:
+
+```text
+by-alias                 1,664
+by-bitmap                1,347
+by-boundary-side         1,664
+by-straight-candidate      832
+by-owner                 1,347
+```
+
+Registry ownership distinguishes:
+
+```text
+straight-glyph:ID  → already allocated visual owner
+fill-visual:ID     → deterministic research visual owner, unallocated
+```
+
+All 1,259 novel fill visuals remain:
+
+```text
+glyphId   = null
+codepoint = null
+allocationStatus = unallocated-research
+```
+
+The first unused provisional PUA codepoint remains `U+00E2EA`; Milestone 4A.1 does not consume it.
+
+Commands:
+
+```powershell
+npm run generate:fills
+npm run verify:fill-registry
+```
+
+Both are included in the normal `npm run generate` / `npm run verify` pipeline.
+
+---
+
+## 8. Milestone 4B — phase-locked dither sweep — NEXT
 
 Apply the dither palette to the same underlying 1,664 semantic side definitions.
 
@@ -242,7 +302,7 @@ No dither codepoints are allocated during 4B.
 
 ---
 
-## 8. Milestone 4C — palette and address-space decision
+## 9. Milestone 4C — palette and address-space decision
 
 After 4B, decide which brightness levels earn permanent vocabulary space.
 
@@ -267,7 +327,7 @@ Do not allocate by guesswork before this gate.
 
 ---
 
-## 9. Milestone 4D — publication
+## 10. Milestone 4D — publication
 
 After the palette decision:
 
@@ -280,7 +340,7 @@ After the palette decision:
 
 ---
 
-## 10. Later milestones
+## 11. Later milestones
 
 ```text
 5   junctions
@@ -295,7 +355,7 @@ After the palette decision:
 
 ---
 
-## 11. Current commands
+## 12. Current commands
 
 From `geometric-glyph-lab/`:
 
@@ -304,6 +364,8 @@ npm run generate
 npm run verify
 npm run verify:curves
 npm run verify:fills
+npm run generate:fills
+npm run verify:fill-registry
 npm run check
 ```
 
@@ -311,7 +373,7 @@ The published straight allocation remains authoritative. Solid and dither visual
 
 ---
 
-## 12. Guiding rule
+## 13. Guiding rule
 
 Prefer **geometry reuse + derived appearance** over independent hand-authored glyph families.
 
