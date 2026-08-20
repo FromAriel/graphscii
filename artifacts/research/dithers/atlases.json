@@ -1,0 +1,113 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "straight-fill-dither-atlases",
+  "schemaVersion": 1,
+  "cell": {
+    "width": 8,
+    "height": 16
+  },
+  "candidateOrder": "straight candidate ID ascending; one selected side per atlas",
+  "atlases": [
+    {
+      "style": "solid",
+      "side": "A",
+      "filename": "atlases/solid-side-a.png",
+      "candidateCount": 832,
+      "columns": 32,
+      "rows": 26,
+      "width": 256,
+      "height": 416
+    },
+    {
+      "style": "solid",
+      "side": "B",
+      "filename": "atlases/solid-side-b.png",
+      "candidateCount": 832,
+      "columns": 32,
+      "rows": 26,
+      "width": 256,
+      "height": 416
+    },
+    {
+      "style": "dense",
+      "side": "A",
+      "filename": "atlases/dense-side-a.png",
+      "candidateCount": 832,
+      "columns": 32,
+      "rows": 26,
+      "width": 256,
+      "height": 416
+    },
+    {
+      "style": "dense",
+      "side": "B",
+      "filename": "atlases/dense-side-b.png",
+      "candidateCount": 832,
+      "columns": 32,
+      "rows": 26,
+      "width": 256,
+      "height": 416
+    },
+    {
+      "style": "medium",
+      "side": "A",
+      "filename": "atlases/medium-side-a.png",
+      "candidateCount": 832,
+      "columns": 32,
+      "rows": 26,
+      "width": 256,
+      "height": 416
+    },
+    {
+      "style": "medium",
+      "side": "B",
+      "filename": "atlases/medium-side-b.png",
+      "candidateCount": 832,
+      "columns": 32,
+      "rows": 26,
+      "width": 256,
+      "height": 416
+    },
+    {
+      "style": "light",
+      "side": "A",
+      "filename": "atlases/light-side-a.png",
+      "candidateCount": 832,
+      "columns": 32,
+      "rows": 26,
+      "width": 256,
+      "height": 416
+    },
+    {
+      "style": "light",
+      "side": "B",
+      "filename": "atlases/light-side-b.png",
+      "candidateCount": 832,
+      "columns": 32,
+      "rows": 26,
+      "width": 256,
+      "height": 416
+    },
+    {
+      "style": "sparse",
+      "side": "A",
+      "filename": "atlases/sparse-side-a.png",
+      "candidateCount": 832,
+      "columns": 32,
+      "rows": 26,
+      "width": 256,
+      "height": 416
+    },
+    {
+      "style": "sparse",
+      "side": "B",
+      "filename": "atlases/sparse-side-b.png",
+      "candidateCount": 832,
+      "columns": 32,
+      "rows": 26,
+      "width": 256,
+      "height": 416
+    }
+  ]
+}

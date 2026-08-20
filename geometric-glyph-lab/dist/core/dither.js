@@ -2,9 +2,8 @@ import { formatCodepoint } from "./format.js";
 import { portToPixel } from "./ports.js";
 import { bitmapKey, cloneBitmap, setPixel } from "./raster.js";
 import { ALL_FAMILIES, generate } from "./generator.js";
-import { generateStraightSolidFills } from "./fill.js";
-import { CELL_HEIGHT, CELL_WIDTH } from "./types.js";
-
+import { generateStraightSolidFills, } from "./fill.js";
+import { CELL_HEIGHT, CELL_WIDTH, } from "./types.js";
 export const STRAIGHT_FILL_STYLE_ORDER = [
     "solid",
     "dense",
@@ -12,7 +11,6 @@ export const STRAIGHT_FILL_STYLE_ORDER = [
     "light",
     "sparse",
 ];
-
 export const STRAIGHT_FILL_STYLE_DEFINITIONS = [
     {
         id: "solid",
@@ -94,16 +92,11 @@ export const STRAIGHT_FILL_STYLE_DEFINITIONS = [
         ],
     },
 ];
-
-const STYLE_BY_ID = new Map(
-    STRAIGHT_FILL_STYLE_DEFINITIONS.map((definition) => [definition.id, definition]),
-);
-
+const STYLE_BY_ID = new Map(STRAIGHT_FILL_STYLE_DEFINITIONS.map((definition) => [definition.id, definition]));
 function orientedCross(start, end, point) {
     return (end.x - start.x) * (point.y - start.y)
         - (end.y - start.y) * (point.x - start.x);
 }
-
 export function ditherMaskHasPixel(style, x, y) {
     const definition = STYLE_BY_ID.get(style);
     if (!definition) {
@@ -116,7 +109,6 @@ export function ditherMaskHasPixel(style, x, y) {
     const wrappedY = ((y % 8) + 8) % 8;
     return definition.rows[wrappedY]?.[wrappedX] === "#";
 }
-
 export function rasterizeStraightStyledFill(straight, side, style) {
     const start = portToPixel(straight.start);
     const end = portToPixel(straight.end);
@@ -132,11 +124,9 @@ export function rasterizeStraightStyledFill(straight, side, style) {
     }
     return bitmap;
 }
-
 export function makeStraightStyledFillAliasKey(straight, side, style) {
     return `straight-fill:${straight.family}:${straight.start.edge}${straight.start.index}>${straight.end.edge}${straight.end.index}:side${side}:${style}`;
 }
-
 function validateStyleDefinitions() {
     for (const definition of STRAIGHT_FILL_STYLE_DEFINITIONS) {
         if (definition.rows.length !== 8 || definition.rows.some((row) => row.length !== 8 || /[^#-]/u.test(row))) {
@@ -148,7 +138,6 @@ function validateStyleDefinitions() {
         }
     }
 }
-
 const POPCOUNT_8 = Array.from({ length: 256 }, (_, value) => {
     let remaining = value;
     let count = 0;
@@ -158,7 +147,6 @@ const POPCOUNT_8 = Array.from({ length: 256 }, (_, value) => {
     }
     return count;
 });
-
 export function bitmapHammingDistance(a, b) {
     if (a.length !== b.length) {
         throw new Error("Cannot compare bitmaps with different row counts.");
@@ -169,20 +157,16 @@ export function bitmapHammingDistance(a, b) {
     }
     return distance;
 }
-
 function buildHammingComparison(styleA, styleB, candidatesA, candidatesB) {
     if (candidatesA.length !== candidatesB.length) {
         throw new Error(`Cannot compare ${styleA} and ${styleB}: semantic candidate counts differ.`);
     }
-    const distances = candidatesA.map((candidate, index) =>
-        bitmapHammingDistance(candidate.bitmap, candidatesB[index]?.bitmap ?? new Uint8Array()));
+    const distances = candidatesA.map((candidate, index) => bitmapHammingDistance(candidate.bitmap, candidatesB[index]?.bitmap ?? new Uint8Array()));
     const histogramCounts = new Map();
     for (const distance of distances) {
         histogramCounts.set(distance, (histogramCounts.get(distance) ?? 0) + 1);
     }
-    const histogram = Object.fromEntries(
-        [...histogramCounts.entries()].sort(([a], [b]) => a - b).map(([distance, count]) => [String(distance), count]),
-    );
+    const histogram = Object.fromEntries([...histogramCounts.entries()].sort(([a], [b]) => a - b).map(([distance, count]) => [String(distance), count]));
     const sum = distances.reduce((total, distance) => total + distance, 0);
     return {
         styleA,
@@ -197,7 +181,6 @@ function buildHammingComparison(styleA, styleB, candidatesA, candidatesB) {
         histogram,
     };
 }
-
 function solidCandidateToStyled(styledCandidateId, sourceFillCandidateId, straight, solidResult) {
     const solid = solidResult.candidates[sourceFillCandidateId];
     if (!solid) {
@@ -223,11 +206,7 @@ function solidCandidateToStyled(styledCandidateId, sourceFillCandidateId, straig
         canonicalDitherStyle: null,
     };
 }
-
-export function generateStraightDitherSweep(
-    straightResult = generate(ALL_FAMILIES),
-    solidResult = generateStraightSolidFills(straightResult),
-) {
+export function generateStraightDitherSweep(straightResult = generate(ALL_FAMILIES), solidResult = generateStraightSolidFills(straightResult)) {
     validateStyleDefinitions();
     const straightByBitmap = new Map(straightResult.glyphs.map((glyph) => [glyph.bitmapKey, glyph]));
     const solidByBitmap = new Map(solidResult.visuals.map((visual) => [visual.bitmapKey, visual]));
@@ -238,7 +217,6 @@ export function generateStraightDitherSweep(
     const styleStats = [];
     const allStyledKeys = new Set();
     const allStraightReuseKeys = new Set();
-
     for (const [styleIndex, style] of STRAIGHT_FILL_STYLE_ORDER.entries()) {
         const definition = STYLE_BY_ID.get(style);
         if (!definition) {
@@ -254,18 +232,12 @@ export function generateStraightDitherSweep(
         let sameStyleDuplicateCandidates = 0;
         let priorDitherStyleReuseCandidates = 0;
         let newVisuals = 0;
-
         for (const straight of straightResult.candidates) {
             for (const [sideIndex, side] of ["A", "B"].entries()) {
                 const sourceFillCandidateId = straight.candidateId * 2 + sideIndex;
                 const styledCandidateId = styleIndex * solidResult.candidates.length + sourceFillCandidateId;
                 if (style === "solid") {
-                    const candidate = solidCandidateToStyled(
-                        styledCandidateId,
-                        sourceFillCandidateId,
-                        straight,
-                        solidResult,
-                    );
+                    const candidate = solidCandidateToStyled(styledCandidateId, sourceFillCandidateId, straight, solidResult);
                     currentCandidates.push(candidate);
                     candidates.push(candidate);
                     uniqueKeys.add(candidate.bitmapKey);
@@ -283,7 +255,6 @@ export function generateStraightDitherSweep(
                     }
                     continue;
                 }
-
                 const bitmap = rasterizeStraightStyledFill(straight, side, style);
                 const key = bitmapKey(bitmap);
                 uniqueKeys.add(key);
@@ -409,7 +380,6 @@ export function generateStraightDitherSweep(
                 candidates.push(candidate);
             }
         }
-
         styleCandidates.set(style, currentCandidates);
         styleStats.push({
             style,
@@ -427,7 +397,6 @@ export function generateStraightDitherSweep(
             newVisuals,
         });
     }
-
     const hammingComparisons = [];
     for (let first = 0; first < STRAIGHT_FILL_STYLE_ORDER.length; first += 1) {
         for (let second = first + 1; second < STRAIGHT_FILL_STYLE_ORDER.length; second += 1) {
@@ -438,7 +407,6 @@ export function generateStraightDitherSweep(
             hammingComparisons.push(buildHammingComparison(styleA, styleB, candidatesA, candidatesB));
         }
     }
-
     const ditherStyles = styleStats.filter((style) => style.style !== "solid");
     const stats = {
         straightMathematicalDefinitions: straightResult.candidates.length,
@@ -450,8 +418,7 @@ export function generateStraightDitherSweep(
         straightVisualsReusedAcrossStyles: allStraightReuseKeys.size,
         novelSolidVisuals: solidResult.visuals.length,
         novelDitherVisuals: visuals.length,
-        combinedStraightSolidAndDitherVisuals:
-            straightResult.glyphs.length + solidResult.visuals.length + visuals.length,
+        combinedStraightSolidAndDitherVisuals: straightResult.glyphs.length + solidResult.visuals.length + visuals.length,
         ditherSemanticCandidates: ditherStyles.reduce((sum, style) => sum + style.semanticCandidates, 0),
         ditherStraightReuseCandidates: ditherStyles.reduce((sum, style) => sum + style.straightReuseCandidates, 0),
         ditherSolidReuseCandidates: ditherStyles.reduce((sum, style) => sum + style.solidReuseCandidates, 0),
