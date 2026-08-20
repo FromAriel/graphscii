@@ -344,8 +344,8 @@ Execution order:
 
 ```text
 4D.1  canonical allocation registry                 COMPLETE
-4D.2  5,796 canonical ASCII/PNG artifacts             NEXT
-4D.3  categorized visual/text atlases
+4D.2  5,796 canonical ASCII/PNG artifacts             COMPLETE
+4D.3  categorized visual/text atlases                  NEXT
 4D.4  master text atlas + page atlas + layout map
 4D.5  renderer-only resolution registry
 4D.6  graphscii-graphics-v0 publication snapshot
@@ -385,9 +385,11 @@ artifacts/manifest/vocabulary/
     └── renderer-only.json
 ```
 
-### 4D.2 — canonical per-glyph artifacts
+### 4D.2 — canonical per-glyph artifacts — COMPLETE
 
-Generate deterministic source artifacts for all 5,796 encoded owners:
+Completion note: [`docs/milestone-4d2-canonical-glyph-artifacts.md`](docs/milestone-4d2-canonical-glyph-artifacts.md)
+
+The complete encoded vocabulary is now materialized directly from the canonical registry:
 
 ```text
 artifacts/vocabulary/glyphs/
@@ -395,9 +397,11 @@ artifacts/vocabulary/glyphs/
 └── png/      5,796 files
 ```
 
-The canonical bitmap registry remains the source of truth for both.
+Exactly **11,592** per-glyph files are present. Every ASCII artifact is an exact 8×16 `#`/`-` raster and every PNG is an exact 8×16 deterministic RGBA rendering of the same registry bitmap. The generator clears only this glyph-artifact tree before rebuilding, and the verifier checks every filename and every file byte against the corresponding owner bitmap key.
 
-### 4D.3 — categorized atlases
+The canonical bitmap registry remains the source of truth for both forms.
+
+### 4D.3 — categorized atlases — NEXT
 
 Generate category atlases for:
 
@@ -525,10 +529,12 @@ npm run generate:palette
 npm run verify:palette
 npm run generate:vocabulary
 npm run verify:vocabulary
+npm run generate:vocabulary-artifacts
+npm run verify:vocabulary-artifacts
 npm run check
 ```
 
-The published straight allocation remains authoritative. The 4C fill/dither ranges are planned but unallocated until Milestone 4D publication.
+The published straight allocation remains authoritative. Milestone 4D.1 has provisionally allocated the selected 5,796-owner graphics vocabulary through U+F6A3; Milestone 4D.2 has materialized all 5,796 ASCII and PNG owners. The 604-slot U+F6A4..U+F8FF reserve remains untouched.
 
 ---
 
