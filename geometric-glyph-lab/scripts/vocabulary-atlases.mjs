@@ -360,8 +360,17 @@ export async function generateVocabularyAtlases(repoRoot) {
   const { registry, rendererOnly } = await loadCanonicalInputs(repoRoot);
   const outputRoot = path.join(repoRoot, "artifacts", "vocabulary", "atlases");
   const built = buildAtlasFiles(registry, rendererOnly);
-  await rm(outputRoot, { recursive: true, force: true });
   await mkdir(outputRoot, { recursive: true });
+  const managedDirectories = [
+    ...CATEGORY_DEFINITIONS.map((definition) => definition.id),
+    "combined",
+    "renderer-only",
+    "reserve-layout",
+  ];
+  for (const directory of managedDirectories) {
+    await rm(path.join(outputRoot, directory), { recursive: true, force: true });
+  }
+  await rm(path.join(outputRoot, "stats.json"), { force: true });
   await writeFiles(outputRoot, built.files);
   return built.stats;
 }
@@ -371,9 +380,19 @@ export async function verifyVocabularyAtlases(repoRoot) {
   const outputRoot = path.join(repoRoot, "artifacts", "vocabulary", "atlases");
   const expected = buildAtlasFiles(registry, rendererOnly);
   const expectedNames = [...expected.files.keys()].sort();
-  const actualNames = await listFilesRecursive(outputRoot);
+  const managedDirectories = new Set([
+    ...CATEGORY_DEFINITIONS.map((definition) => definition.id),
+    "combined",
+    "renderer-only",
+    "reserve-layout",
+  ]);
+  const actualNames = (await listFilesRecursive(outputRoot)).filter((relative) => {
+    if (relative === "stats.json") return true;
+    const [topLevel] = relative.split("/");
+    return managedDirectories.has(topLevel);
+  });
   if (JSON.stringify(actualNames) !== JSON.stringify(expectedNames)) {
-    throw new Error(`Milestone 4D.3 atlas file list mismatch: expected ${expectedNames.length}, got ${actualNames.length}.`);
+    throw new Error(`Milestone 4D.3 managed atlas file list mismatch: expected ${expectedNames.length}, got ${actualNames.length}.`);
   }
   for (const relative of expectedNames) {
     const expectedContent = expected.files.get(relative);
