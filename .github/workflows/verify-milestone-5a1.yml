@@ -4,12 +4,15 @@ on:
   push:
     branches:
       - milestone-5-junction-coverage-plan
+  pull_request:
+    branches:
+      - milestone-4d-publication-plan
 
 permissions:
   contents: write
 
 concurrency:
-  group: graphscii-milestone-5a1
+  group: graphscii-milestone-5a1-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
@@ -43,7 +46,8 @@ jobs:
         working-directory: geometric-glyph-lab
         run: npm run verify
 
-      - name: Commit deterministic Milestone 5A.1 outputs
+      - name: Commit deterministic Milestone 5A.1 outputs on push runs
+        if: github.event_name == 'push'
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
