@@ -1,0 +1,22 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "registry": "straight-solid-fills",
+  "registrySchemaVersion": 1,
+  "status": "research-unallocated",
+  "straightMathematicalDefinitions": 832,
+  "semanticFillCandidates": 1664,
+  "uniqueFillRasters": 1347,
+  "straightReuseCandidates": 100,
+  "straightReuseVisuals": 88,
+  "fillDuplicateCandidates": 305,
+  "newFillVisuals": 1259,
+  "combinedStraightAndFillVisuals": 2005,
+  "lookupIndexes": {
+    "byAlias": 1664,
+    "byBitmap": 1347,
+    "byBoundarySide": 1664,
+    "byStraightCandidate": 832,
+    "byOwner": 1347
+  }
+}
