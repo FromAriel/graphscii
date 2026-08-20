@@ -31,105 +31,6 @@ jobs:
         working-directory: geometric-glyph-lab
         run: npm install
 
-      - name: Apply permanent 4D.3 atlas ownership boundary
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path("geometric-glyph-lab/scripts/vocabulary-atlases.mjs")
-          text = path.read_text()
-
-          old_generate = '''export async function generateVocabularyAtlases(repoRoot) {
-            const { registry, rendererOnly } = await loadCanonicalInputs(repoRoot);
-            const outputRoot = path.join(repoRoot, "artifacts", "vocabulary", "atlases");
-            const built = buildAtlasFiles(registry, rendererOnly);
-            await rm(outputRoot, { recursive: true, force: true });
-            await mkdir(outputRoot, { recursive: true });
-            await writeFiles(outputRoot, built.files);
-            return built.stats;
-          }'''.replace("          ", "")
-
-          new_generate = '''export async function generateVocabularyAtlases(repoRoot) {
-            const { registry, rendererOnly } = await loadCanonicalInputs(repoRoot);
-            const outputRoot = path.join(repoRoot, "artifacts", "vocabulary", "atlases");
-            const built = buildAtlasFiles(registry, rendererOnly);
-            await mkdir(outputRoot, { recursive: true });
-            const managedDirectories = [
-              ...CATEGORY_DEFINITIONS.map((definition) => definition.id),
-              "combined",
-              "renderer-only",
-              "reserve-layout",
-            ];
-            for (const directory of managedDirectories) {
-              await rm(path.join(outputRoot, directory), { recursive: true, force: true });
-            }
-            await rm(path.join(outputRoot, "stats.json"), { force: true });
-            await writeFiles(outputRoot, built.files);
-            return built.stats;
-          }'''.replace("          ", "")
-
-          old_verify = '''  const expectedNames = [...expected.files.keys()].sort();
-            const actualNames = await listFilesRecursive(outputRoot);
-            if (JSON.stringify(actualNames) !== JSON.stringify(expectedNames)) {
-              throw new Error(`Milestone 4D.3 atlas file list mismatch: expected ${expectedNames.length}, got ${actualNames.length}.`);
-            }'''.replace("          ", "")
-
-          new_verify = '''  const expectedNames = [...expected.files.keys()].sort();
-            const managedDirectories = new Set([
-              ...CATEGORY_DEFINITIONS.map((definition) => definition.id),
-              "combined",
-              "renderer-only",
-              "reserve-layout",
-            ]);
-            const actualNames = (await listFilesRecursive(outputRoot)).filter((relative) => {
-              if (relative === "stats.json") return true;
-              const [topLevel] = relative.split("/");
-              return managedDirectories.has(topLevel);
-            });
-            if (JSON.stringify(actualNames) !== JSON.stringify(expectedNames)) {
-              throw new Error(`Milestone 4D.3 managed atlas file list mismatch: expected ${expectedNames.length}, got ${actualNames.length}.`);
-            }'''.replace("          ", "")
-
-          if old_generate in text:
-              text = text.replace(old_generate, new_generate)
-          elif new_generate not in text:
-              raise SystemExit("Could not locate Milestone 4D.3 generation ownership block")
-
-          if old_verify in text:
-              text = text.replace(old_verify, new_verify)
-          elif new_verify not in text:
-              raise SystemExit("Could not locate Milestone 4D.3 verification ownership block")
-
-          path.write_text(text)
-          PY
-
-      - name: Normalize master markdown emphasis
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path("geometric-glyph-lab/scripts/vocabulary-master-atlas.mjs")
-          text = path.read_text()
-
-          bad_master = '    `Derived aliases: **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")}** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")}** unique derived bitmaps**.`,\n'
-          good_master = '    `Derived aliases: **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")}** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")}** unique derived bitmaps.`,\n'
-          if bad_master in text:
-              text = text.replace(bad_master, good_master, 1)
-          elif good_master not in text:
-              raise SystemExit("Could not normalize master-text renderer-only summary")
-
-          bad_layout = '    `Renderer-only semantics remain outside the PUA allocation: **${state.atlasStats.rendererOnly.semanticAliases.toLocaleString("en-US")} aliases**, including **${state.atlasStats.rendererOnly.exactReuseAliases.toLocaleString("en-US")} exact encoded reuses** and **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")} derived aliases** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")} unique derived bitmaps.`,\n'
-          good_layout = '    `Renderer-only semantics remain outside the PUA allocation: **${state.atlasStats.rendererOnly.semanticAliases.toLocaleString("en-US")} aliases**, including **${state.atlasStats.rendererOnly.exactReuseAliases.toLocaleString("en-US")} exact encoded reuses** and **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")} derived aliases** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")} unique derived bitmaps**.`,\n'
-          if bad_layout in text:
-              text = text.replace(bad_layout, good_layout, 1)
-          elif good_layout not in text:
-              raise SystemExit("Could not normalize master-layout renderer-only summary")
-
-          path.write_text(text)
-          PY
-
       - name: Typecheck source
         working-directory: geometric-glyph-lab
         run: npm run check
@@ -142,27 +43,90 @@ jobs:
         working-directory: geometric-glyph-lab
         run: npm run verify
 
-      - name: Commit deterministic Milestone 4D.4 outputs
+      - name: Advance Milestone 4D roadmap
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(text, old, new, label):
+              if old in text:
+                  return text.replace(old, new, 1)
+              if new in text:
+                  return text
+              raise SystemExit(f"Could not update {label}")
+
+          plan = Path("PLAN.md")
+          text = plan.read_text()
+          replacements = [
+              (
+                  "4D.4  master text atlas + page atlas + layout map          NEXT",
+                  "4D.4  master text atlas + page atlas + layout map          COMPLETE",
+                  "PLAN 4D.4 execution status",
+              ),
+              (
+                  "4D.5  renderer-only resolution registry",
+                  "4D.5  renderer-only resolution registry                     NEXT",
+                  "PLAN 4D.5 execution status",
+              ),
+              (
+                  "### 4D.4 — master text atlas — REQUIRED PUBLICATION ARTIFACT — NEXT",
+                  "### 4D.4 — master text atlas — COMPLETE\n\nCompletion note: [`docs/milestone-4d4-master-atlases.md`](docs/milestone-4d4-master-atlases.md)",
+                  "PLAN 4D.4 heading",
+              ),
+              (
+                  "### 4D.5 — renderer-only resolution",
+                  "### 4D.5 — renderer-only resolution — NEXT",
+                  "PLAN 4D.5 heading",
+              ),
+              (
+                  "npm run generate:vocabulary-atlases\nnpm run verify:vocabulary-atlases\nnpm run check",
+                  "npm run generate:vocabulary-atlases\nnpm run verify:vocabulary-atlases\nnpm run generate:vocabulary-master-atlas\nnpm run verify:vocabulary-master-atlas\nnpm run check",
+                  "PLAN master atlas commands",
+              ),
+              (
+                  "The published straight allocation remains authoritative. Milestone 4D.1 has provisionally allocated the selected 5,796-owner graphics vocabulary through U+F6A3; Milestone 4D.3 has added deterministic categorized, combined, renderer-only, and reserve-layout atlases on top of the 5,796 canonical owners. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D.4 is next.",
+                  "The published straight allocation remains authoritative. Milestone 4D.1 has provisionally allocated the selected 5,796-owner graphics vocabulary through U+F6A3; Milestone 4D.4 has added the deterministic master text atlas, 23-page codepoint atlas, five category text atlases, and master layout map on top of the verified 4D.3 atlas layer. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D.5 is next.",
+                  "PLAN current-state paragraph",
+              ),
+          ]
+          for old, new, label in replacements:
+              text = replace_once(text, old, new, label)
+          plan.write_text(text)
+
+          detailed = Path("docs/milestone-4d-publication-plan.md")
+          text = detailed.read_text()
+          replacements = [
+              (
+                  "Status: **IN PROGRESS — 4D.1, 4D.2, AND 4D.3 COMPLETE; 4D.4 NEXT**",
+                  "Status: **IN PROGRESS — 4D.1 THROUGH 4D.4 COMPLETE; 4D.5 NEXT**",
+                  "detailed 4D status",
+              ),
+              (
+                  "## 5. Milestone 4D.4 — master text atlas and master layout map — NEXT",
+                  "## 5. Milestone 4D.4 — master text atlas and master layout map — COMPLETE\n\nCompletion note: [`milestone-4d4-master-atlases.md`](milestone-4d4-master-atlases.md)",
+                  "detailed 4D.4 heading",
+              ),
+              (
+                  "## 6. Milestone 4D.5 — renderer-only resolution registry",
+                  "## 6. Milestone 4D.5 — renderer-only resolution registry — NEXT",
+                  "detailed 4D.5 heading",
+              ),
+          ]
+          for old, new, label in replacements:
+              text = replace_once(text, old, new, label)
+          detailed.write_text(text)
+          PY
+
+      - name: Commit Milestone 4D.4 roadmap completion
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- \
-            geometric-glyph-lab/scripts/vocabulary-atlases.mjs \
-            geometric-glyph-lab/scripts/vocabulary-master-atlas.mjs \
-            artifacts/vocabulary/atlases/master-text-atlas.md \
-            artifacts/vocabulary/atlases/master-text-atlas.txt \
-            artifacts/vocabulary/atlases/master-page-atlas.md \
-            artifacts/vocabulary/atlases/master-page-atlas.txt \
-            artifacts/vocabulary/atlases/master-layout-map.md \
-            artifacts/vocabulary/atlases/straight-text-atlas.md \
-            artifacts/vocabulary/atlases/solid-text-atlas.md \
-            artifacts/vocabulary/atlases/medium-text-atlas.md \
-            artifacts/vocabulary/atlases/half-text-atlas.md \
-            artifacts/vocabulary/atlases/light-text-atlas.md
+          git add -- PLAN.md docs/milestone-4d-publication-plan.md
           if git diff --cached --quiet; then
-            echo "Milestone 4D.4 master outputs already match deterministic generation."
+            echo "Milestone 4D.4 roadmap already complete."
             exit 0
           fi
-          git commit -m "Finalize Milestone 4D.4 master atlases"
+          git commit -m "Complete Milestone 4D.4 master atlases"
           git push origin HEAD:milestone-4d-publication-plan
