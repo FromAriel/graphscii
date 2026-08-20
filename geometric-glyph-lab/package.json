@@ -16,6 +16,7 @@
     "verify:dither-research": "node scripts/verify-dither-research.mjs",
     "verify:palette": "node scripts/verify-palette-decision.mjs",
     "verify:vocabulary": "node scripts/verify-vocabulary-registry.mjs",
+    "verify:vocabulary-artifacts": "node scripts/verify-vocabulary-artifacts.mjs",
     "generate:base": "node scripts/generate-artifacts.mjs",
     "generate:semantic": "node scripts/generate-semantic-registry.mjs",
     "generate:catalog": "node scripts/generate-straight-catalog.mjs",
@@ -23,11 +24,12 @@
     "generate:dithers": "node scripts/generate-dither-research.mjs",
     "generate:palette": "node scripts/generate-palette-decision.mjs",
     "generate:vocabulary": "node scripts/generate-vocabulary-registry.mjs",
-    "generate": "npm run generate:base && npm run generate:semantic && npm run generate:catalog && npm run generate:fills && npm run generate:dithers && npm run generate:palette && npm run generate:vocabulary",
+    "generate:vocabulary-artifacts": "node scripts/generate-vocabulary-artifacts.mjs",
+    "generate": "npm run generate:base && npm run generate:semantic && npm run generate:catalog && npm run generate:fills && npm run generate:dithers && npm run generate:palette && npm run generate:vocabulary && npm run generate:vocabulary-artifacts",
     "verify:artifacts": "node scripts/verify-artifacts.mjs",
     "verify:semantic": "node scripts/verify-semantic-registry.mjs",
     "verify:catalog": "node scripts/verify-straight-catalog.mjs",
-    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:fills && npm run verify:dithers && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog && npm run verify:fill-registry && npm run verify:dither-research && npm run verify:palette && npm run verify:vocabulary"
+    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:fills && npm run verify:dithers && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog && npm run verify:fill-registry && npm run verify:dither-research && npm run verify:palette && npm run verify:vocabulary && npm run verify:vocabulary-artifacts"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
