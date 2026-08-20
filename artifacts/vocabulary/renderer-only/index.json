@@ -1,0 +1,51 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-renderer-only-resolution-index",
+  "schemaVersion": 1,
+  "status": "provisional-graphics-v0",
+  "source": "artifacts/manifest/vocabulary/indexes/renderer-only.json",
+  "resolutionKinds": [
+    "encoded-exact-reuse",
+    "renderer-only-derived"
+  ],
+  "summary": {
+    "semanticAliases": 3392,
+    "exactEncodedReuses": 414,
+    "derivedAliases": 2978,
+    "uniqueDerivedBitmaps": 2555,
+    "encodedCodepointsConsumed": 0
+  },
+  "groups": {
+    "dense": {
+      "semanticAliases": 1664,
+      "exactEncodedReuses": 207,
+      "derivedAliases": 1457,
+      "uniqueDerivedBitmaps": 1204,
+      "fallbackAliases": 0,
+      "uniqueFallbackDesiredBitmaps": 0
+    },
+    "sparse": {
+      "semanticAliases": 1664,
+      "exactEncodedReuses": 207,
+      "derivedAliases": 1457,
+      "uniqueDerivedBitmaps": 1289,
+      "fallbackAliases": 0,
+      "uniqueFallbackDesiredBitmaps": 0
+    },
+    "demoted-half": {
+      "semanticAliases": 64,
+      "exactEncodedReuses": 0,
+      "derivedAliases": 64,
+      "uniqueDerivedBitmaps": 62,
+      "fallbackAliases": 64,
+      "uniqueFallbackDesiredBitmaps": 62
+    }
+  },
+  "files": {
+    "dense": "dense.json",
+    "sparse": "sparse.json",
+    "demotedHalf": "demoted-half.json",
+    "humanAtlas": "renderer-only-atlas.md"
+  }
+}
