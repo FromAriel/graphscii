@@ -251,6 +251,10 @@ export function buildPaletteDecision(
   straightResult: GenerationResult = generate(ALL_FAMILIES),
 ): PaletteDecision {
   const solidResult = generateStraightSolidFills(straightResult);
+  if (solidResult.candidates.length !== 1664 || solidResult.visuals.length !== 1259) {
+    throw new Error("Milestone 4C requires the frozen 1,664 solid semantics / 1,259 novel solid visual baseline.");
+  }
+
   const straightKeys = new Set(straightResult.glyphs.map((glyph) => glyph.bitmapKey));
   const styleMaps = new Map<PaletteResearchStyle, Map<string, { bitmap: Uint8Array; semanticAliasCount: number }>>();
   for (const style of PALETTE_RESEARCH_STYLE_ORDER) {
