@@ -8,7 +8,7 @@
 >
 > **Canonical cell:** **8 columns × 16 rows**
 >
-> The original long-form planning document is preserved at [`docs/PLAN-v0.md`](docs/PLAN-v0.md). Completed milestone notes live in `docs/` and published generated snapshots live under `artifacts/`.
+> The original long-form plan is preserved at [`docs/PLAN-v0.md`](docs/PLAN-v0.md). Detailed milestone plans and completion notes live under `docs/`.
 
 ---
 
@@ -16,37 +16,17 @@
 
 GraphSCII is a fixed-cell graphics language encoded as Unicode glyphs and machine-readable tile data.
 
-Each canonical visual is a deterministic 8×16 binary bitmap. Multiple mathematical or appearance definitions may share one visual glyph when they rasterize identically.
+Each canonical visual is one deterministic **8×16 binary bitmap**. Multiple mathematical or appearance definitions may share the same visual owner when they rasterize identically.
 
-The project goal is a compact **2D graphics instruction set** whose cells compose predictably and can be selected mechanically by software.
-
-The same vocabulary should support font rendering, direct bitmap rendering, ASCII inspection, generated catalogs, JSON lookup, atlases, an editor, and eventually automatic geometry-to-glyph solving.
-
----
-
-## 2. Global visual identity rule
+Global rule:
 
 > **One bitmap key gets at most one canonical glyph/codepoint.**
 
-For any new semantic definition:
-
-```text
-mathematical definition
-        ↓
-deterministic 8×16 raster
-        ↓
-bitmap already exists?
-    ├── yes → preserve semantic alias and reuse visual owner
-    └── no  → create a novel visual candidate
-```
-
-This applies across straight strokes, filled regions, dithered fills, curves, junctions, arcs, textures, and future classes.
-
-Semantic geometry is never discarded merely because its current raster duplicates another definition. Derived operations can distinguish definitions that share one visual form.
+Semantic geometry is preserved even when its current visual form deduplicates, because later derived operations can distinguish definitions that temporarily share pixels.
 
 ---
 
-## 3. GraphSCII v1 cell contract — FROZEN
+## 2. Frozen cell contract
 
 ```text
 width  = 8 pixels
@@ -58,61 +38,37 @@ y = 0..15  top → bottom
 Ports:
 
 ```text
-Top:     T0..T7
-Bottom:  B0..B7
-Left:    L0..L15
-Right:   R0..R15
+T0..T7
+B0..B7
+L0..L15
+R0..R15
 ```
 
-Normative contract: [`docs/format.md`](docs/format.md).
-
-Bitmap serialization remains 16 row bytes, top-to-bottom, `x=0` as bit 0, with 32 lowercase hex characters as the canonical bitmap key.
+Bitmap identity remains 16 row bytes, top-to-bottom, `x=0` as bit 0, serialized as 32 lowercase hexadecimal characters.
 
 ASCII:
 
 ```text
-# = filled pixel
-- = empty pixel
+# = filled
+- = empty
 ```
+
+Normative details: [`docs/format.md`](docs/format.md).
 
 ---
 
-## 4. Vocabulary/codepoint budget
+## 3. Straight vocabulary — COMPLETE AND PUBLISHED
 
-Current preferred PUA window:
-
-```text
-U+E000..U+EFFF = 4,096 codepoints
-```
-
-Current provisional reserve idea:
+Frozen fixture:
 
 ```text
-0x000–0xEFF   vocabulary             3840
-0xF00–0xFFF   reserved/experimental  256
+mathematical straight definitions    832
+unique straight visuals              746
+duplicate definitions                 86
+maximum aliases                        4
 ```
 
-The new fill/dither research may intentionally explore a visual vocabulary below roughly **6,000 glyphs**, but 6,000 does **not** fit in the current single 4K PUA window.
-
-Therefore allocation is deferred until measured counts exist. If the selected vocabulary exceeds 4,096, choose deliberately between pruning to one 4K window or expanding into an additional Private Use range.
-
-Do not pre-allocate by guesswork.
-
----
-
-## 5. Straight vocabulary — COMPLETE AND PUBLISHED
-
-Frozen regression fixture:
-
-```text
-mathematical candidates    832
-unique canonical bitmaps   746
-duplicate candidates        86
-compression              10.3%
-maximum aliases              4
-```
-
-Provisional allocation:
+Current provisional allocation:
 
 ```text
 glyph IDs    0..745
@@ -126,88 +82,56 @@ straight-v0
 snapshot commit 5806d99d73ab635bdbd0b1ff661ed810aeaa995d
 ```
 
-The repository contains all 746 ASCII files, all 746 PNG files, semantic manifest/indexes, `straight-lines.md`, atlases, statistics, and publication provenance.
-
-The **832 mathematical definitions**, not only the 746 visual owners, remain authoritative input for derived fill generation.
+The **832 mathematical definitions**, not only the 746 deduplicated stroke owners, remain authoritative input for derived geometry.
 
 ---
 
-## 6. Curve research — PRESERVED, EXPANSION PAUSED
+## 4. Curve research — PRESERVED, EXPANSION PAUSED
 
-Milestone 3A implemented a deterministic cubic Bézier research engine and single-curve explorer with:
+Milestone 3A produced a deterministic cubic Bézier curve engine and single-curve explorer with five tangent classes, three strengths, fixed-point rasterization, validity checks, and exact reuse detection against the straight vocabulary.
 
-```text
-start/end ports
-5 tangent classes
-3 strengths
-256-unit fixed-point geometry
-256 deterministic samples
-exact straight-raster reuse detection
-```
+That work remains in the repository and is useful for future curated extensions.
 
-This work remains useful and should not be deleted.
+The broad curve vocabulary is no longer the immediate direction because the research sweep demonstrated severe codepoint pressure. Curves may return later after the straight fill+dither vocabulary is measured.
 
-The broad curve-vocabulary expansion is paused as the primary direction. The full research space proved large enough that allocating curves first would put heavy pressure on the compact glyph budget.
+See:
 
-Detailed historical design remains in [`docs/milestone-3-curve-plan.md`](docs/milestone-3-curve-plan.md) and [`docs/milestone-3a-curve-engine.md`](docs/milestone-3a-curve-engine.md).
-
-Curves may return later as a curated extension after the straight filled+dither vocabulary is measured.
+- [`docs/milestone-3-curve-plan.md`](docs/milestone-3-curve-plan.md)
+- [`docs/milestone-3a-curve-engine.md`](docs/milestone-3a-curve-engine.md)
 
 ---
 
-## 7. New direction — straight filled geometry + brightness dithers — NEXT
+## 5. Current direction — straight filled geometry + brightness dithers
 
-Detailed design: [`docs/milestone-4-straight-fill-dither-plan.md`](docs/milestone-4-straight-fill-dither-plan.md).
+Detailed design:
 
-Core pipeline:
+[`docs/milestone-4-straight-fill-dither-plan.md`](docs/milestone-4-straight-fill-dither-plan.md)
+
+Architecture:
 
 ```text
-832 published straight mathematical boundaries
+832 mathematical straight boundaries
         ↓
-fill side A / fill side B
-        ↓
-1,664 semantic fill definitions
+select side A / side B
         ↓
 solid or phase-locked dither mask
         ↓
-canonical 8×16 raster
+boundary stroke forced ON
         ↓
-GLOBAL exact bitmap deduplication
+canonical 8×16 bitmap
+        ↓
+GLOBAL exact raster dedup
 ```
 
-The boundary stroke remains fully ON for every fill style:
+Generic appearance rule:
 
 ```text
-final = stroke OR (selected-side-region AND fill-mask)
+final = boundary-stroke OR (selected-side-region AND fill-mask)
 ```
 
-This allows shape and approximate brightness to coexist in one glyph.
+Dither masks are **phase locked** to the cell coordinate system. No random or per-glyph phase shifts are allowed.
 
-### Side-fill rule
-
-For each oriented line, classify pixel centers by the sign of the mathematical line cross product.
-
-```text
-cross > 0 → side A
-cross < 0 → side B
-cross = 0 → boundary
-```
-
-The implementation must be deterministic/fixed-point and preserve the original straight stroke.
-
-### Dither phase rule
-
-Dither patterns use an 8×8 phase-locked tile.
-
-For the 8×16 GraphSCII cell, the mask repeats vertically twice:
-
-```text
-mask(x,y) = pattern[x, y mod 8]
-```
-
-No random or per-glyph phase shifts are allowed. Neighboring cells must tile coherently.
-
-### Initial five-style research palette
+Initial research palette:
 
 ```text
 solid       100%
@@ -217,84 +141,161 @@ light       25%
 sparse      12.5%
 ```
 
-These are the user-supplied seed patterns. A 50% mask may be tested later if the measured vocabulary budget supports it.
-
-Important: dithered forms are generated from the **underlying mathematical side region**, not from a deduplicated solid bitmap, because semantic boundaries that collapse under solid fill may separate again under a sparse mask.
-
 ---
 
-## 8. Immediate milestone sequence
+## 6. Milestone 4A — solid straight half-fills — COMPLETE
 
-### Milestone 4A — solid straight half-fill generator — **NEXT**
+Implementation/completion note:
+
+[`docs/milestone-4a-straight-solid-fills.md`](docs/milestone-4a-straight-solid-fills.md)
+
+Each of the 832 oriented straight definitions produces two semantic solid fills:
 
 ```text
-832 straight definitions × 2 sides = 1,664 semantic candidates
+832 × 2 = 1,664 semantic fill candidates
 ```
 
-- [ ] deterministic side-A / side-B classification;
-- [ ] boundary stroke always ON;
-- [ ] exact global dedup against 746 straight visuals and other fills;
-- [ ] preserve all semantic fill aliases;
-- [ ] exact candidate/unique/reuse statistics;
-- [ ] browser preview for stroke / fill A / fill B;
-- [ ] no dithers yet;
-- [ ] no new codepoints yet.
+The selected side is determined by the exact integer oriented cross product of each pixel center against the mathematical line. The existing Bresenham stroke is cloned first, so all boundary pixels remain ON.
 
-Primary question: **How many genuinely new solid filled rasters do the 832 straight boundaries produce?**
-
-### Milestone 4B — phase-locked dither sweep
-
-- [ ] freeze the initial 8×8 mask palette;
-- [ ] apply masks to all 1,664 semantic fill definitions;
-- [ ] preserve stroke pixels fully ON;
-- [ ] exact global dedup across straights, solids, and dither variants;
-- [ ] report unique/reuse counts per fill style;
-- [ ] atlas filters by style and side;
-- [ ] no codepoint allocation yet.
-
-With five total styles the raw semantic upper bound is:
+Measured result:
 
 ```text
-1,664 × 5 = 8,320 styled candidates
+semantic solid fills                 1,664
+unique fill rasters                  1,347
+
+fill candidates reusing straight       100
+straight visuals reused                  88
+fill candidates reusing earlier fill    305
+new fill visual owners               1,259
+
+published straight visuals             746
+combined straight + solid visuals     2,005
 ```
 
-This is not the expected final visual count; exact dedup determines the real cost.
+Important consequences:
 
-### Milestone 4C — palette/budget decision
+- The full solid block emerges automatically from the geometry.
+- Progressive horizontal and vertical fills emerge automatically.
+- Slopes, wedges, and silhouette-like filled edges emerge from the diagonal/corner-crossing boundaries.
+- 88 already-published straight visuals can also serve as fill outputs without consuming another visual slot.
+- **No fill codepoints have been allocated yet.**
 
-- [ ] inspect visual separation among brightness levels;
-- [ ] analyze exact and near duplicates;
-- [ ] measure total codepoint pressure;
-- [ ] choose retained style set;
-- [ ] decide one-PUA-window vs expanded address space only if required;
-- [ ] allocate provisional codepoints only after this gate.
+Machine fixture:
 
-### Milestone 4D — filled/dither publication
+`spec/straight-fill-solid-research.json`
 
-- [ ] generate ASCII and PNG artifacts;
-- [ ] publish semantic manifest and indexes;
-- [ ] publish fill masks/spec;
-- [ ] generate catalogs and atlases by style;
-- [ ] record reproducible statistics/provenance.
+Regression command:
 
----
+```powershell
+npm run verify:fills
+```
 
-## 9. Later work
-
-After the filled+dither vocabulary is measured and useful:
-
-### Milestone 5 — junctions
-### Milestone 6 — curated curve/arc extension if justified
-### Milestone 7 — terminals/specials
-### Milestone 8 — vocabulary optimization
-### Milestone 9 — font compiler
-### Milestone 10 — drawing API / solver
-### Milestone 11 — interactive editor
-### Milestone 12 — GraphSCII v1 freeze/release
+The browser lab now includes a Straight Fill Explorer showing the original stroke, solid side A, and solid side B for any of the 832 mathematical straight definitions.
 
 ---
 
-## 10. Current generation/verification commands
+## 7. Milestone 4B — phase-locked dither sweep — NEXT
+
+Apply the dither palette to the same underlying 1,664 semantic side definitions.
+
+Do **not** derive dithered variants from the 1,347 deduplicated solid rasters. Dither generation starts from the original mathematical boundary + selected side so definitions that collapsed under solid fill are allowed to separate again under sparse masks.
+
+For every style:
+
+```text
+boundary geometry
+        ↓
+side region
+        ↓
+8×8 phase-locked mask
+        ↓
+stroke forced ON
+        ↓
+8×16 raster
+        ↓
+global exact dedup against:
+    published straights
+    solid fills
+    earlier dither variants
+```
+
+Raw styled semantic upper bound with five total fill styles:
+
+```text
+1,664 × 5 = 8,320 styled definitions
+```
+
+This is **not** the expected visual count. Exact dedup determines the real vocabulary cost.
+
+4B must report, per style and globally:
+
+- semantic candidate count;
+- exact straight reuses;
+- exact solid-fill reuses;
+- dither-to-dither duplicates;
+- genuinely new visual owners;
+- combined visual vocabulary size;
+- near-duplicate/Hamming distribution for later palette pruning;
+- atlas views by brightness/style and side.
+
+No dither codepoints are allocated during 4B.
+
+---
+
+## 8. Milestone 4C — palette and address-space decision
+
+After 4B, decide which brightness levels earn permanent vocabulary space.
+
+Current preferred PUA window:
+
+```text
+U+E000..U+EFFF = 4,096 slots
+```
+
+Research may intentionally explore below roughly 6,000 visuals, but that cannot fit inside one 4K window.
+
+Therefore 4C must deliberately choose among:
+
+```text
+prune to one 4K window
+expand into another Private Use range
+reduce/merge dither levels
+reserve some levels as renderer-only transformations
+```
+
+Do not allocate by guesswork before this gate.
+
+---
+
+## 9. Milestone 4D — publication
+
+After the palette decision:
+
+- allocate provisional visual owners;
+- generate ASCII and PNG artifacts;
+- publish semantic manifests and lookup indexes;
+- publish the exact dither-mask specification;
+- generate catalogs and atlases by style;
+- record reproducible statistics and provenance.
+
+---
+
+## 10. Later milestones
+
+```text
+5   junctions
+6   curated curve/arc extension if justified
+7   terminals / specials
+8   vocabulary optimization
+9   font compiler
+10  drawing API / solver
+11  interactive editor
+12  GraphSCII v1 freeze / release
+```
+
+---
+
+## 11. Current commands
 
 From `geometric-glyph-lab/`:
 
@@ -302,31 +303,28 @@ From `geometric-glyph-lab/`:
 npm run generate
 npm run verify
 npm run verify:curves
+npm run verify:fills
 npm run check
 ```
 
-The published straight pipeline remains authoritative while Milestone 4 is research-only. New fill/dither codepoints must not be assigned before the 4C decision gate.
+The published straight allocation remains authoritative. Solid and dither visuals stay research-only until the 4C allocation gate.
 
 ---
 
-## 11. Guiding rule
+## 12. Guiding rule
 
 Prefer **geometry reuse + derived appearance** over independent hand-authored glyph families.
 
-For this phase:
-
 ```text
-mathematical straight boundary
+mathematical boundary
         ↓
-side region
+semantic side / appearance
         ↓
-solid / dither brightness mask
-        ↓
-canonical 8×16 bitmap
+deterministic raster
         ↓
 global exact dedup
         ↓
 canonical visual owner + preserved semantic aliases
 ```
 
-Do not spend a new codepoint when an existing bitmap renders the requested definition exactly. Do not discard source geometry merely because an intermediate visual representation deduplicates.
+Do not spend a new codepoint when an existing bitmap already renders the requested definition exactly.
