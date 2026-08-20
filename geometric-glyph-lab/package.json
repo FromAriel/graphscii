@@ -11,6 +11,7 @@
     "verify:prebuilt": "node scripts/verify-prebuilt.mjs",
     "verify:curves": "node scripts/verify-curves.mjs",
     "verify:fills": "node scripts/verify-fills.mjs",
+    "verify:dithers": "node scripts/verify-dithers.mjs",
     "verify:fill-registry": "node scripts/verify-fill-registry.mjs",
     "generate:base": "node scripts/generate-artifacts.mjs",
     "generate:semantic": "node scripts/generate-semantic-registry.mjs",
@@ -20,7 +21,7 @@
     "verify:artifacts": "node scripts/verify-artifacts.mjs",
     "verify:semantic": "node scripts/verify-semantic-registry.mjs",
     "verify:catalog": "node scripts/verify-straight-catalog.mjs",
-    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:fills && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog && npm run verify:fill-registry"
+    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:fills && npm run verify:dithers && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog && npm run verify:fill-registry"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
