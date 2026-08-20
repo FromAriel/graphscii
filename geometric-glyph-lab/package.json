@@ -20,6 +20,7 @@
     "verify:vocabulary-atlases": "node scripts/verify-vocabulary-atlases.mjs",
     "verify:vocabulary-master-atlas": "node scripts/verify-vocabulary-master-atlas.mjs",
     "verify:renderer-only-resolution": "node scripts/verify-renderer-only-resolution.mjs",
+    "verify:graphics-publication": "node scripts/verify-graphics-publication.mjs",
     "generate:base": "node scripts/generate-artifacts.mjs",
     "generate:semantic": "node scripts/generate-semantic-registry.mjs",
     "generate:catalog": "node scripts/generate-straight-catalog.mjs",
@@ -31,11 +32,12 @@
     "generate:vocabulary-atlases": "node scripts/generate-vocabulary-atlases.mjs",
     "generate:vocabulary-master-atlas": "node scripts/generate-vocabulary-master-atlas.mjs",
     "generate:renderer-only-resolution": "node scripts/generate-renderer-only-resolution.mjs",
-    "generate": "npm run generate:base && npm run generate:semantic && npm run generate:catalog && npm run generate:fills && npm run generate:dithers && npm run generate:palette && npm run generate:vocabulary && npm run generate:vocabulary-artifacts && npm run generate:vocabulary-atlases && npm run generate:vocabulary-master-atlas && npm run generate:renderer-only-resolution",
+    "generate:graphics-publication": "node scripts/generate-graphics-publication.mjs",
+    "generate": "npm run generate:base && npm run generate:semantic && npm run generate:catalog && npm run generate:fills && npm run generate:dithers && npm run generate:palette && npm run generate:vocabulary && npm run generate:vocabulary-artifacts && npm run generate:vocabulary-atlases && npm run generate:vocabulary-master-atlas && npm run generate:renderer-only-resolution && npm run generate:graphics-publication",
     "verify:artifacts": "node scripts/verify-artifacts.mjs",
     "verify:semantic": "node scripts/verify-semantic-registry.mjs",
     "verify:catalog": "node scripts/verify-straight-catalog.mjs",
-    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:fills && npm run verify:dithers && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog && npm run verify:fill-registry && npm run verify:dither-research && npm run verify:palette && npm run verify:vocabulary && npm run verify:vocabulary-artifacts && npm run verify:vocabulary-atlases && npm run verify:vocabulary-master-atlas && npm run verify:renderer-only-resolution"
+    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:fills && npm run verify:dithers && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog && npm run verify:fill-registry && npm run verify:dither-research && npm run verify:palette && npm run verify:vocabulary && npm run verify:vocabulary-artifacts && npm run verify:vocabulary-atlases && npm run verify:vocabulary-master-atlas && npm run verify:renderer-only-resolution && npm run verify:graphics-publication"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
