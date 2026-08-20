@@ -96,7 +96,7 @@ function buildReport(stats, comparisons) {
     "",
     "## Address-space consequence",
     "",
-    `Keeping all five styles would require **${stats.combinedStraightSolidAndDitherVisuals.toLocaleString("en-US")}** distinct visual owners including the published straight vocabulary. This exceeds the preferred 4,096-slot U+E000..U+EFFF window, so Milestone 4C must prune the palette, move some styles to renderer-only transformations, or deliberately expand the address space before any fill/dither codepoint allocation.",
+    `Keeping all five styles would require **${stats.combinedStraightSolidAndDitherVisuals.toLocaleString("en-US")}** distinct visual owners including the published straight vocabulary. This exceeds the preferred 4,096-slot U+E000..U+EFFF window, so Milestone 4C must prune the palette, move some styles to renderer-only transformations, or deliberately expand the address space before any fill/dither codepoint allocation.`,
     "",
   );
 
