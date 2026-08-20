@@ -1,0 +1,16 @@
+{
+  "schema": "graphscii-straight-fill-research",
+  "schemaVersion": 1,
+  "status": "research-unallocated",
+  "sourceStraightDefinitions": 832,
+  "semanticFillCandidates": 1664,
+  "uniqueFillRasters": 1347,
+  "straightReuseCandidates": 100,
+  "straightReuseVisuals": 88,
+  "fillDuplicateCandidates": 305,
+  "newFillVisuals": 1259,
+  "publishedStraightVisuals": 746,
+  "combinedStraightAndFillVisuals": 2005,
+  "boundaryStrokeAlwaysOn": true,
+  "codepointsAllocated": false
+}

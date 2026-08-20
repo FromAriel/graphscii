@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "verify:prebuilt": "node scripts/verify-prebuilt.mjs",
     "verify:curves": "node scripts/verify-curves.mjs",
+    "verify:fills": "node scripts/verify-fills.mjs",
     "generate:base": "node scripts/generate-artifacts.mjs",
     "generate:semantic": "node scripts/generate-semantic-registry.mjs",
     "generate:catalog": "node scripts/generate-straight-catalog.mjs",
@@ -17,7 +18,7 @@
     "verify:artifacts": "node scripts/verify-artifacts.mjs",
     "verify:semantic": "node scripts/verify-semantic-registry.mjs",
     "verify:catalog": "node scripts/verify-straight-catalog.mjs",
-    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog"
+    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:fills && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
