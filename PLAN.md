@@ -347,8 +347,8 @@ Execution order:
 4D.2  5,796 canonical ASCII/PNG artifacts             COMPLETE
 4D.3  categorized visual/text atlases                  COMPLETE
 4D.4  master text atlas + page atlas + layout map          COMPLETE
-4D.5  renderer-only resolution registry                     NEXT
-4D.6  graphscii-graphics-v0 publication snapshot
+4D.5  renderer-only resolution registry                     COMPLETE
+4D.6  graphscii-graphics-v0 publication snapshot              NEXT
 ```
 
 ### 4D.1 — canonical allocation registry — COMPLETE
@@ -457,7 +457,9 @@ Each encoded glyph entry exposes its codepoint, glyph ID, class/style, bitmap ke
 
 The master page atlas separately mirrors Unicode/codepoint neighborhoods, while `master-layout-map.md` gives the compact category/range/count overview.
 
-### 4D.5 — renderer-only resolution — NEXT
+### 4D.5 — renderer-only resolution — COMPLETE
+
+Completion note: [`docs/milestone-4d5-renderer-only-resolution.md`](docs/milestone-4d5-renderer-only-resolution.md)
 
 Preserve dense 87.5%, sparse 12.5%, and the 62 demoted half-tone visual owners as explicit semantic outputs.
 
@@ -470,7 +472,7 @@ renderer-only-derived
 
 The 62 demoted half-tone owners also retain their exact Hamming-distance-1 fallback relationship without pretending that fallback is raster-identical.
 
-### 4D.6 — publication
+### 4D.6 — publication — NEXT
 
 Publish:
 
@@ -539,10 +541,12 @@ npm run generate:vocabulary-atlases
 npm run verify:vocabulary-atlases
 npm run generate:vocabulary-master-atlas
 npm run verify:vocabulary-master-atlas
+npm run generate:renderer-only-resolution
+npm run verify:renderer-only-resolution
 npm run check
 ```
 
-The published straight allocation remains authoritative. Milestone 4D.1 has provisionally allocated the selected 5,796-owner graphics vocabulary through U+F6A3; Milestone 4D.4 has added the deterministic master text atlas, 23-page codepoint atlas, five category text atlases, and master layout map on top of the verified 4D.3 atlas layer. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D.5 is next.
+The published straight allocation remains authoritative. Milestone 4D.5 now persists all 3,392 renderer-only semantic resolutions as dense, sparse, and demoted-half publication artifacts: 414 exact encoded reuses and 2,978 derived aliases across 2,555 unique derived bitmaps, with every demoted-half fallback independently verified at Hamming distance 1. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D.6 publication is next.
 
 ---
 

@@ -1,6 +1,6 @@
 # Milestone 4D — Published GraphSCII Graphics Vocabulary v0
 
-Status: **IN PROGRESS — 4D.1 THROUGH 4D.4 COMPLETE; 4D.5 NEXT**
+Status: **IN PROGRESS — 4D.1 THROUGH 4D.5 COMPLETE; 4D.6 NEXT**
 
 Milestone 4D turns the completed 4C palette decision into the first complete addressable GraphSCII graphics vocabulary.
 
@@ -367,7 +367,9 @@ The master atlas must make category boundaries visually obvious with headings, s
 
 ---
 
-## 6. Milestone 4D.5 — renderer-only resolution registry — NEXT
+## 6. Milestone 4D.5 — renderer-only resolution registry — COMPLETE
+
+Completion note: [`milestone-4d5-renderer-only-resolution.md`](milestone-4d5-renderer-only-resolution.md)
 
 Renderer-only semantics remain part of GraphSCII even though they do not all own codepoints.
 
@@ -429,7 +431,7 @@ artifacts/vocabulary/renderer-only/
 
 ---
 
-## 7. Milestone 4D.6 — publication snapshot
+## 7. Milestone 4D.6 — publication snapshot — NEXT
 
 After allocation, artifacts, atlases, and renderer-only resolution all reproduce deterministically, publish the vocabulary snapshot.
 
@@ -535,12 +537,12 @@ PASS
 Execute 4D in slices:
 
 ```text
-4D.1  canonical allocation registry                 NEXT
-4D.2  5,796 canonical ASCII/PNG artifacts
-4D.3  category atlases
-4D.4  master text atlas + page atlas + layout map
-4D.5  renderer-only resolution registry
-4D.6  graphscii-graphics-v0 publication snapshot
+4D.1  canonical allocation registry                 COMPLETE
+4D.2  5,796 canonical ASCII/PNG artifacts             COMPLETE
+4D.3  category atlases                                COMPLETE
+4D.4  master text atlas + page atlas + layout map      COMPLETE
+4D.5  renderer-only resolution registry               COMPLETE
+4D.6  graphscii-graphics-v0 publication snapshot      NEXT
 ```
 
 Do not jump directly to the font compiler. Each later slice must consume the same canonical registry generated in 4D.1.
