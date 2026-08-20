@@ -346,8 +346,8 @@ Execution order:
 4D.1  canonical allocation registry                 COMPLETE
 4D.2  5,796 canonical ASCII/PNG artifacts             COMPLETE
 4D.3  categorized visual/text atlases                  COMPLETE
-4D.4  master text atlas + page atlas + layout map          NEXT
-4D.5  renderer-only resolution registry
+4D.4  master text atlas + page atlas + layout map          COMPLETE
+4D.5  renderer-only resolution registry                     NEXT
 4D.6  graphscii-graphics-v0 publication snapshot
 ```
 
@@ -419,7 +419,9 @@ reserve layout
 
 Encoded categories should have paged PNG and text views in canonical codepoint order.
 
-### 4D.4 — master text atlas — REQUIRED PUBLICATION ARTIFACT — NEXT
+### 4D.4 — master text atlas — COMPLETE
+
+Completion note: [`docs/milestone-4d4-master-atlases.md`](docs/milestone-4d4-master-atlases.md)
 
 The complete vocabulary must also exist as one combined, human-readable text atlas, neatly separated and categorized.
 
@@ -455,7 +457,7 @@ Each encoded glyph entry exposes its codepoint, glyph ID, class/style, bitmap ke
 
 The master page atlas separately mirrors Unicode/codepoint neighborhoods, while `master-layout-map.md` gives the compact category/range/count overview.
 
-### 4D.5 — renderer-only resolution
+### 4D.5 — renderer-only resolution — NEXT
 
 Preserve dense 87.5%, sparse 12.5%, and the 62 demoted half-tone visual owners as explicit semantic outputs.
 
@@ -535,10 +537,12 @@ npm run generate:vocabulary-artifacts
 npm run verify:vocabulary-artifacts
 npm run generate:vocabulary-atlases
 npm run verify:vocabulary-atlases
+npm run generate:vocabulary-master-atlas
+npm run verify:vocabulary-master-atlas
 npm run check
 ```
 
-The published straight allocation remains authoritative. Milestone 4D.1 has provisionally allocated the selected 5,796-owner graphics vocabulary through U+F6A3; Milestone 4D.3 has added deterministic categorized, combined, renderer-only, and reserve-layout atlases on top of the 5,796 canonical owners. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D.4 is next.
+The published straight allocation remains authoritative. Milestone 4D.1 has provisionally allocated the selected 5,796-owner graphics vocabulary through U+F6A3; Milestone 4D.4 has added the deterministic master text atlas, 23-page codepoint atlas, five category text atlases, and master layout map on top of the verified 4D.3 atlas layer. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D.5 is next.
 
 ---
 

@@ -1,6 +1,6 @@
 # Milestone 4D — Published GraphSCII Graphics Vocabulary v0
 
-Status: **IN PROGRESS — 4D.1, 4D.2, AND 4D.3 COMPLETE; 4D.4 NEXT**
+Status: **IN PROGRESS — 4D.1 THROUGH 4D.4 COMPLETE; 4D.5 NEXT**
 
 Milestone 4D turns the completed 4C palette decision into the first complete addressable GraphSCII graphics vocabulary.
 
@@ -246,7 +246,9 @@ Page ordering must follow canonical codepoint order, never filesystem enumeratio
 
 ---
 
-## 5. Milestone 4D.4 — master text atlas and master layout map — NEXT
+## 5. Milestone 4D.4 — master text atlas and master layout map — COMPLETE
+
+Completion note: [`milestone-4d4-master-atlases.md`](milestone-4d4-master-atlases.md)
 
 Milestone 4D must include a **master text atlas** combining the entire encoded vocabulary into one human-readable, categorized reference.
 
@@ -365,7 +367,7 @@ The master atlas must make category boundaries visually obvious with headings, s
 
 ---
 
-## 6. Milestone 4D.5 — renderer-only resolution registry
+## 6. Milestone 4D.5 — renderer-only resolution registry — NEXT
 
 Renderer-only semantics remain part of GraphSCII even though they do not all own codepoints.
 
