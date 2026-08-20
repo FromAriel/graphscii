@@ -21,7 +21,11 @@
   },
   "demandMethod": {
     "pairIntersections": "strict-interior exact rational segment intersections",
-    "tripleDemand": "unordered triples of straight definitions concurrent at one exact hub",
+    "selectableRays": "each concurrent straight contributes hub-to-endpoint rays",
+    "pairAndTripleRaySubsets": [
+      3,
+      4
+    ],
     "topologyGate": [
       "LRT",
       "LRB",
@@ -30,6 +34,7 @@
       "LRTB"
     ],
     "onePortPerParticipatingEdge": true,
+    "semanticIdentity": "sorted boundary-port tuple; exact hub is demand metadata",
     "theoreticalReferenceSemanticCount": 22528
   },
   "coverageTaxonomy": {
@@ -62,33 +67,36 @@
     "totalPossiblePairs": 345696,
     "interiorIntersectingPairs": 129550,
     "exactHubCount": 70707,
-    "validPairDemandCompositions": 15330,
+    "pairSourcesWithDemand": 105546,
+    "pairDemandEvents": 257082,
     "tripleCombinationsConsidered": 92190,
-    "validTripleDemandCompositions": 2168,
-    "uniqueDemandSemantics": 15872,
-    "totalDemandMultiplicity": 17498,
-    "centerHubDemand": 134,
-    "centerHubDemandSharePercent": 0.765802,
+    "tripleSourcesWithDemand": 81310,
+    "tripleDemandEvents": 671160,
+    "uniqueDemandSemantics": 22428,
+    "theoreticalSemanticCoveragePercent": 99.556108,
+    "totalDemandMultiplicity": 928242,
+    "centerHubDemand": 35982,
+    "centerHubDemandSharePercent": 3.87636,
     "topologies": {
       "LRT": {
-        "semanticCount": 0,
-        "weightedDemand": 0
+        "semanticCount": 2048,
+        "weightedDemand": 263632
       },
       "LRB": {
-        "semanticCount": 0,
-        "weightedDemand": 0
+        "semanticCount": 2048,
+        "weightedDemand": 263632
       },
       "LTB": {
-        "semanticCount": 0,
-        "weightedDemand": 0
+        "semanticCount": 1024,
+        "weightedDemand": 141488
       },
       "RTB": {
-        "semanticCount": 0,
-        "weightedDemand": 0
+        "semanticCount": 1024,
+        "weightedDemand": 141488
       },
       "LRTB": {
-        "semanticCount": 15872,
-        "weightedDemand": 17498
+        "semanticCount": 16284,
+        "weightedDemand": 118002
       }
     }
   },

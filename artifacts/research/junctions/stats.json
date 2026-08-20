@@ -2,44 +2,47 @@
   "format": "graphscii",
   "formatVersion": 1,
   "schema": "graphscii-junction-demand-stats",
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "status": "5A.1-allocation-free",
   "straightSemanticDefinitions": 832,
   "straightVisualOwners": 746,
   "totalPossiblePairs": 345696,
   "interiorIntersectingPairs": 129550,
   "exactHubCount": 70707,
-  "validPairDemandCompositions": 15330,
+  "pairSourcesWithDemand": 105546,
+  "pairDemandEvents": 257082,
   "tripleCombinationsConsidered": 92190,
-  "validTripleDemandCompositions": 2168,
-  "uniqueDemandSemantics": 15872,
-  "totalDemandMultiplicity": 17498,
-  "centerHubKey": "7/2,15/2",
-  "centerHubDemand": 134,
-  "centerHubDemandSharePercent": 0.765802,
+  "tripleSourcesWithDemand": 81310,
+  "tripleDemandEvents": 671160,
+  "uniqueDemandSemantics": 22428,
+  "totalDemandMultiplicity": 928242,
   "theoreticalReferenceSemantics": 22528,
+  "theoreticalSemanticCoveragePercent": 99.556108,
+  "centerHubKey": "7/2,15/2",
+  "centerHubDemand": 35982,
+  "centerHubDemandSharePercent": 3.87636,
   "junctionAllocations": 0,
   "reserveSlots": 604,
   "topologies": {
     "LRT": {
-      "semanticCount": 0,
-      "weightedDemand": 0
+      "semanticCount": 2048,
+      "weightedDemand": 263632
     },
     "LRB": {
-      "semanticCount": 0,
-      "weightedDemand": 0
+      "semanticCount": 2048,
+      "weightedDemand": 263632
     },
     "LTB": {
-      "semanticCount": 0,
-      "weightedDemand": 0
+      "semanticCount": 1024,
+      "weightedDemand": 141488
     },
     "RTB": {
-      "semanticCount": 0,
-      "weightedDemand": 0
+      "semanticCount": 1024,
+      "weightedDemand": 141488
     },
     "LRTB": {
-      "semanticCount": 15872,
-      "weightedDemand": 17498
+      "semanticCount": 16284,
+      "weightedDemand": 118002
     }
   }
 }
