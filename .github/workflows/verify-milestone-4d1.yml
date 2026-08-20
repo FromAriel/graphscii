@@ -1,0 +1,69 @@
+name: Verify Milestone 4D.1 canonical vocabulary
+
+on:
+  push:
+    branches:
+      - milestone-4d-publication-plan
+
+permissions:
+  contents: write
+
+concurrency:
+  group: graphscii-milestone-4d1
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out implementation branch
+        uses: actions/checkout@v4
+        with:
+          ref: milestone-4d-publication-plan
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        working-directory: geometric-glyph-lab
+        run: npm install
+
+      - name: Typecheck source
+        working-directory: geometric-glyph-lab
+        run: npm run check
+
+      - name: Refresh prebuilt core modules
+        working-directory: geometric-glyph-lab
+        shell: bash
+        run: |
+          rm -rf .prebuilt
+          npx tsc --noEmit false --outDir .prebuilt --rootDir src
+          cp .prebuilt/core/*.js dist/core/
+          rm -rf .prebuilt
+
+      - name: Generate deterministic artifacts
+        working-directory: geometric-glyph-lab
+        run: npm run generate
+
+      - name: Verify complete project
+        working-directory: geometric-glyph-lab
+        run: npm run verify
+
+      - name: Commit deterministic Milestone 4D.1 outputs
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            geometric-glyph-lab/dist/core/index.js \
+            geometric-glyph-lab/dist/core/vocabulary.js \
+            artifacts/manifest/vocabulary
+          if git diff --cached --quiet; then
+            echo "Milestone 4D.1 outputs already match deterministic generation."
+            exit 0
+          fi
+          git commit -m "Generate Milestone 4D.1 canonical vocabulary registry"
+          git push origin HEAD:milestone-4d-publication-plan
