@@ -1,0 +1,75 @@
+name: Verify Milestone 4C palette optimizer
+
+on:
+  push:
+    branches:
+      - milestone-4c-palette-optimizer
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: graphscii-milestone-4c-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: milestone-4c-palette-optimizer
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        working-directory: geometric-glyph-lab
+        run: npm install
+
+      - name: Typecheck source
+        working-directory: geometric-glyph-lab
+        run: npm run check
+
+      - name: Refresh prebuilt browser/core modules
+        working-directory: geometric-glyph-lab
+        shell: bash
+        run: |
+          rm -rf .prebuilt
+          npx tsc --noEmit false --outDir .prebuilt --rootDir src
+          cp .prebuilt/*.js dist/
+          cp .prebuilt/core/*.js dist/core/
+          rm -rf .prebuilt
+
+      - name: Generate all deterministic artifacts
+        working-directory: geometric-glyph-lab
+        run: npm run generate
+
+      - name: Verify full project
+        working-directory: geometric-glyph-lab
+        run: npm run verify
+
+      - name: Commit deterministic Milestone 4C outputs
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            geometric-glyph-lab/dist/core/palette.js \
+            geometric-glyph-lab/dist/core/index.js \
+            artifacts/research/palette \
+            spec/straight-fill-palette-v0.json
+          if git diff --cached --quiet; then
+            echo "Milestone 4C generated outputs already match deterministic generation."
+            exit 0
+          fi
+          git commit -m "Generate Milestone 4C palette decision artifacts"
+          git push origin HEAD:milestone-4c-palette-optimizer
