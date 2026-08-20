@@ -87,7 +87,7 @@ demoted half 50%
   unique desired fallback bitmaps               62
 ```
 
-The global unique-derived count is **2,555**, not the simple sum of every group count, because exact bitmap identity remains global across renderer-only styles as well.
+The three measured group-level unique-derived counts happen to sum to **2,555** in this vocabulary. The verifier nevertheless computes the global unique bitmap set independently, so future cross-style bitmap collisions cannot be double-counted.
 
 ## Demoted-half fallback invariant
 
