@@ -332,24 +332,159 @@ The semantic vocabulary remains richer than the encoded font. Dense, sparse, and
 
 ---
 
-## 10. Milestone 4D — filled/dither publication — NEXT
+## 10. Milestone 4D — published graphics vocabulary v0 — NEXT
 
-Materialize the 4C decision into the canonical addressable vocabulary.
+Detailed implementation plan:
 
-Definition of done:
+[`docs/milestone-4d-publication-plan.md`](docs/milestone-4d-publication-plan.md)
 
-- preserve the existing 746 published straight codepoints exactly;
-- assign provisional codepoints to the 1,259 solid, 1,269 medium, 1,315 light, and 1,207 retained half-tone visual owners according to the 4C planned ranges;
-- never assign a new codepoint to an exact raster duplicate;
-- preserve renderer-only metadata for dense, sparse, and the 62 demoted 50% visual owners;
-- build one global visual registry spanning straight + selected fill/dither owners;
-- build semantic indexes from every selected or renderer-only definition to its exact owner or renderer fallback;
-- generate ASCII and PNG artifacts for all 5,796 encoded PUA graphics;
-- generate style/family atlases and machine-readable catalogs;
-- verify the final PUA end is `U+F6A3` and the reserve remains exactly 604 slots `U+F6A4..U+F8FF`;
-- record reproducible publication provenance.
+Milestone 4D materializes the 4C decision into the first complete addressable GraphSCII graphics vocabulary. It defines what the eventual font must contain, but does not yet build the TTF/OTF.
 
-Milestone 4D is the first point at which the selected fill/dither visuals receive provisional Unicode assignments.
+Execution order:
+
+```text
+4D.1  canonical allocation registry                 NEXT
+4D.2  5,796 canonical ASCII/PNG artifacts
+4D.3  categorized visual/text atlases
+4D.4  master text atlas + page atlas + layout map
+4D.5  renderer-only resolution registry
+4D.6  graphscii-graphics-v0 publication snapshot
+```
+
+### 4D.1 — canonical allocation registry
+
+Freeze one global encoded registry spanning the 5,796 addressable graphics.
+
+Hard gates:
+
+```text
+encoded owners                    5,796
+unique bitmap owners              5,796
+unique codepoints                 5,796
+first codepoint                  U+E000
+last allocated codepoint         U+F6A3
+reserve                          U+F6A4..U+F8FF
+reserve slots                       604
+straight codepoints unchanged        YES
+```
+
+Expected registry tree:
+
+```text
+artifacts/manifest/vocabulary/
+├── registry.json
+├── stats.json
+└── indexes/
+    ├── by-codepoint.json
+    ├── by-bitmap.json
+    ├── by-alias.json
+    ├── by-owner.json
+    ├── by-boundary-side-style.json
+    └── renderer-only.json
+```
+
+### 4D.2 — canonical per-glyph artifacts
+
+Generate deterministic source artifacts for all 5,796 encoded owners:
+
+```text
+artifacts/vocabulary/glyphs/
+├── ascii/    5,796 files
+└── png/      5,796 files
+```
+
+The canonical bitmap registry remains the source of truth for both.
+
+### 4D.3 — categorized atlases
+
+Generate category atlases for:
+
+```text
+straight
+solid 100%
+medium 75%
+half 50%
+light 25%
+renderer-only reference
+reserve layout
+```
+
+Encoded categories should have paged PNG and text views in canonical codepoint order.
+
+### 4D.4 — master text atlas — REQUIRED PUBLICATION ARTIFACT
+
+The complete vocabulary must also exist as one combined, human-readable text atlas, neatly separated and categorized.
+
+Required master outputs:
+
+```text
+artifacts/vocabulary/atlases/
+├── master-text-atlas.md
+├── master-text-atlas.txt
+├── master-page-atlas.md
+├── master-page-atlas.txt
+├── master-layout-map.md
+├── straight-text-atlas.md
+├── solid-text-atlas.md
+├── medium-text-atlas.md
+├── half-text-atlas.md
+└── light-text-atlas.md
+```
+
+Master category order:
+
+```text
+1. STRAIGHT
+2. SOLID 100%
+3. MEDIUM 75%
+4. HALF 50%
+5. LIGHT 25%
+6. RENDERER-ONLY REFERENCE
+7. RESERVED PUA MAP
+```
+
+Each encoded glyph entry exposes its codepoint, glyph ID, class/style, bitmap key, representative semantic alias, alias count, and inline 8×16 ASCII bitmap.
+
+The master page atlas separately mirrors Unicode/codepoint neighborhoods, while `master-layout-map.md` gives the compact category/range/count overview.
+
+### 4D.5 — renderer-only resolution
+
+Preserve dense 87.5%, sparse 12.5%, and the 62 demoted half-tone visual owners as explicit semantic outputs.
+
+Renderer-only definitions must distinguish:
+
+```text
+encoded-exact-reuse
+renderer-only-derived
+```
+
+The 62 demoted half-tone owners also retain their exact Hamming-distance-1 fallback relationship without pretending that fallback is raster-identical.
+
+### 4D.6 — publication
+
+Publish:
+
+```text
+graphscii-graphics-v0
+```
+
+with deterministic registry, artifacts, atlases, master text atlas, renderer-only metadata, and provenance.
+
+Fresh-build publication gate:
+
+```text
+delete generated 4D outputs
+        ↓
+npm run generate
+        ↓
+npm run verify
+        ↓
+byte-stable regenerated registry/artifacts/atlases
+        ↓
+PASS
+```
+
+The 604-slot reserve remains protected. No later family may consume it without a separately measured allocation decision.
 
 ---
 
