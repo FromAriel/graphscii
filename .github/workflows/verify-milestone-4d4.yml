@@ -104,7 +104,7 @@ jobs:
           path.write_text(text)
           PY
 
-      - name: Fix master layout emphasis
+      - name: Normalize master markdown emphasis
         shell: bash
         run: |
           python - <<'PY'
@@ -112,12 +112,21 @@ jobs:
 
           path = Path("geometric-glyph-lab/scripts/vocabulary-master-atlas.mjs")
           text = path.read_text()
-          old = 'unique derived bitmaps.`,\n'
-          new = 'unique derived bitmaps**.`,\n'
-          if old in text:
-              text = text.replace(old, new, 1)
-          elif new not in text:
-              raise SystemExit("Could not locate master layout renderer-only emphasis")
+
+          bad_master = '    `Derived aliases: **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")}** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")}** unique derived bitmaps**.`,\n'
+          good_master = '    `Derived aliases: **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")}** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")}** unique derived bitmaps.`,\n'
+          if bad_master in text:
+              text = text.replace(bad_master, good_master, 1)
+          elif good_master not in text:
+              raise SystemExit("Could not normalize master-text renderer-only summary")
+
+          bad_layout = '    `Renderer-only semantics remain outside the PUA allocation: **${state.atlasStats.rendererOnly.semanticAliases.toLocaleString("en-US")} aliases**, including **${state.atlasStats.rendererOnly.exactReuseAliases.toLocaleString("en-US")} exact encoded reuses** and **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")} derived aliases** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")} unique derived bitmaps.`,\n'
+          good_layout = '    `Renderer-only semantics remain outside the PUA allocation: **${state.atlasStats.rendererOnly.semanticAliases.toLocaleString("en-US")} aliases**, including **${state.atlasStats.rendererOnly.exactReuseAliases.toLocaleString("en-US")} exact encoded reuses** and **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")} derived aliases** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")} unique derived bitmaps**.`,\n'
+          if bad_layout in text:
+              text = text.replace(bad_layout, good_layout, 1)
+          elif good_layout not in text:
+              raise SystemExit("Could not normalize master-layout renderer-only summary")
+
           path.write_text(text)
           PY
 
@@ -155,5 +164,5 @@ jobs:
             echo "Milestone 4D.4 master outputs already match deterministic generation."
             exit 0
           fi
-          git commit -m "Polish Milestone 4D.4 master atlases"
+          git commit -m "Finalize Milestone 4D.4 master atlases"
           git push origin HEAD:milestone-4d-publication-plan
