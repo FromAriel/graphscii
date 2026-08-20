@@ -1,0 +1,58 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-vocabulary-atlas-stats",
+  "schemaVersion": 1,
+  "status": "provisional-graphics-v0",
+  "page": {
+    "slots": 256,
+    "columns": 16,
+    "rows": 16,
+    "cellWidth": 8,
+    "cellHeight": 16,
+    "pixelWidth": 128,
+    "pixelHeight": 256
+  },
+  "encodedOwners": 5796,
+  "categories": {
+    "straight": {
+      "owners": 746,
+      "pages": 3
+    },
+    "solid": {
+      "owners": 1259,
+      "pages": 5
+    },
+    "medium": {
+      "owners": 1269,
+      "pages": 5
+    },
+    "half": {
+      "owners": 1207,
+      "pages": 5
+    },
+    "light": {
+      "owners": 1315,
+      "pages": 6
+    }
+  },
+  "combined": {
+    "owners": 5796,
+    "pages": 23
+  },
+  "rendererOnly": {
+    "semanticAliases": 3392,
+    "exactReuseAliases": 414,
+    "derivedAliases": 2978,
+    "uniqueDerivedBitmaps": 2555,
+    "pages": 10
+  },
+  "reserve": {
+    "start": "U+00F6A4",
+    "end": "U+00F8FF",
+    "slots": 604,
+    "pages": 3,
+    "pngPages": 0
+  },
+  "generatedFiles": 126
+}
