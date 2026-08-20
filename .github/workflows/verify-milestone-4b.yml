@@ -6,11 +6,11 @@ on:
       - milestone-4b-dither-sweep
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: graphscii-milestone-4b-verify
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   verify:
@@ -20,6 +20,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: milestone-4b-dither-sweep
+          fetch-depth: 0
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -36,6 +37,20 @@ jobs:
         working-directory: geometric-glyph-lab
         run: npm run check
 
+      - name: Refresh prebuilt browser modules
+        working-directory: geometric-glyph-lab
+        shell: bash
+        run: |
+          rm -rf .prebuilt
+          npx tsc --noEmit false --outDir .prebuilt --rootDir src
+          cp .prebuilt/*.js dist/
+          cp .prebuilt/core/*.js dist/core/
+          rm -rf .prebuilt
+
+      - name: Generate all deterministic artifacts
+        working-directory: geometric-glyph-lab
+        run: npm run generate
+
       - name: Verify dither sweep
         working-directory: geometric-glyph-lab
         run: npm run verify:dithers
@@ -43,3 +58,16 @@ jobs:
       - name: Verify full project
         working-directory: geometric-glyph-lab
         run: npm run verify
+
+      - name: Commit deterministic Milestone 4B outputs
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- geometric-glyph-lab/dist/core geometric-glyph-lab/dist/*.js artifacts/research/dithers spec/straight-fill-dither-research.json
+          if git diff --cached --quiet; then
+            echo "Milestone 4B generated outputs already match deterministic generation."
+            exit 0
+          fi
+          git commit -m "Generate Milestone 4B dither research artifacts"
+          git push origin HEAD:milestone-4b-dither-sweep
