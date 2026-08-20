@@ -345,8 +345,8 @@ Execution order:
 ```text
 4D.1  canonical allocation registry                 COMPLETE
 4D.2  5,796 canonical ASCII/PNG artifacts             COMPLETE
-4D.3  categorized visual/text atlases                  NEXT
-4D.4  master text atlas + page atlas + layout map
+4D.3  categorized visual/text atlases                  COMPLETE
+4D.4  master text atlas + page atlas + layout map          NEXT
 4D.5  renderer-only resolution registry
 4D.6  graphscii-graphics-v0 publication snapshot
 ```
@@ -401,7 +401,9 @@ Exactly **11,592** per-glyph files are present. Every ASCII artifact is an exact
 
 The canonical bitmap registry remains the source of truth for both forms.
 
-### 4D.3 — categorized atlases — NEXT
+### 4D.3 — categorized atlases — COMPLETE
+
+Completion note: [`docs/milestone-4d3-categorized-atlases.md`](docs/milestone-4d3-categorized-atlases.md)
 
 Generate category atlases for:
 
@@ -417,7 +419,7 @@ reserve layout
 
 Encoded categories should have paged PNG and text views in canonical codepoint order.
 
-### 4D.4 — master text atlas — REQUIRED PUBLICATION ARTIFACT
+### 4D.4 — master text atlas — REQUIRED PUBLICATION ARTIFACT — NEXT
 
 The complete vocabulary must also exist as one combined, human-readable text atlas, neatly separated and categorized.
 
@@ -531,10 +533,12 @@ npm run generate:vocabulary
 npm run verify:vocabulary
 npm run generate:vocabulary-artifacts
 npm run verify:vocabulary-artifacts
+npm run generate:vocabulary-atlases
+npm run verify:vocabulary-atlases
 npm run check
 ```
 
-The published straight allocation remains authoritative. Milestone 4D.1 has provisionally allocated the selected 5,796-owner graphics vocabulary through U+F6A3; Milestone 4D.2 has materialized all 5,796 ASCII and PNG owners. The 604-slot U+F6A4..U+F8FF reserve remains untouched.
+The published straight allocation remains authoritative. Milestone 4D.1 has provisionally allocated the selected 5,796-owner graphics vocabulary through U+F6A3; Milestone 4D.3 has added deterministic categorized, combined, renderer-only, and reserve-layout atlases on top of the 5,796 canonical owners. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D.4 is next.
 
 ---
 
