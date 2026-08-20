@@ -115,7 +115,7 @@ function masterTextMarkdown(state) {
     "",
     `Exact encoded reuse aliases: **${state.atlasStats.rendererOnly.exactReuseAliases.toLocaleString("en-US")}**. These semantics deliberately do not duplicate an encoded visual in the atlas.`,
     "",
-    `Derived aliases: **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")}** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")}** unique derived bitmaps.`,
+    `Derived aliases: **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")}** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")}** unique derived bitmaps**.`,
     "",
   );
   state.rendererPages.forEach((page, pageIndex) => {
