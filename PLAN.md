@@ -101,7 +101,7 @@ See:
 
 ---
 
-## 5. Current direction — straight filled geometry + brightness dithers
+## 5. Current direction — straight filled geometry + tonal dithers
 
 Detailed design:
 
@@ -131,15 +131,24 @@ final = boundary-stroke OR (selected-side-region AND fill-mask)
 
 Dither masks are **phase locked** to the cell coordinate system. No random or per-glyph phase shifts are allowed.
 
-Measured research palette:
+Research styles now measured:
 
 ```text
 solid       100.0%
 dense        87.5%
 medium       75.0%
+half         50.0%
 light        25.0%
 sparse       12.5%
 ```
+
+The full BMP Private Use Area is now the intended graphics address space:
+
+```text
+U+E000..U+F8FF = 6,400 slots
+```
+
+Printable ASCII remains at `U+0020..U+007E` and consumes no PUA slots.
 
 ---
 
@@ -162,33 +171,19 @@ Measured result:
 ```text
 semantic solid fills                 1,664
 unique fill rasters                  1,347
-
 fill candidates reusing straight       100
 straight visuals reused                  88
 fill candidates reusing earlier fill    305
 new fill visual owners               1,259
-
 published straight visuals             746
 combined straight + solid visuals     2,005
 ```
 
-Important consequences:
-
-- The full solid block emerges automatically from the geometry.
-- Progressive horizontal and vertical fills emerge automatically.
-- Slopes, wedges, and silhouette-like filled edges emerge from the diagonal/corner-crossing boundaries.
-- 88 already-published straight visuals can also serve as fill outputs without consuming another visual slot.
-- **No fill codepoints have been allocated yet.**
+No fill codepoints have been allocated yet.
 
 Machine fixture:
 
 `spec/straight-fill-solid-research.json`
-
-Regression command:
-
-```powershell
-npm run verify:fills
-```
 
 ---
 
@@ -199,8 +194,6 @@ Completion note:
 [`docs/milestone-4a1-fill-registry.md`](docs/milestone-4a1-fill-registry.md)
 
 The 1,664 solid fill semantics and their 1,347 unique fill rasters are persistent generated artifacts.
-
-`npm run generate` writes:
 
 ```text
 artifacts/manifest/fills/
@@ -214,19 +207,7 @@ artifacts/manifest/fills/
     └── by-straight-candidate.json
 ```
 
-Frozen lookup counts:
-
-```text
-by-alias                 1,664
-by-bitmap                1,347
-by-boundary-side         1,664
-by-straight-candidate      832
-by-owner                 1,347
-```
-
 All 1,259 novel fill visuals remain research-only and unallocated.
-
-The first unused provisional PUA codepoint remains `U+00E2EA`.
 
 ---
 
@@ -236,7 +217,7 @@ Completion note:
 
 [`docs/milestone-4b-dither-sweep.md`](docs/milestone-4b-dither-sweep.md)
 
-Every one of the 1,664 mathematical side semantics was rendered under all five styles from the original mathematical boundary + selected side:
+Five styles were swept across all 1,664 side semantics:
 
 ```text
 1,664 × 5 = 8,320 styled semantic candidates
@@ -247,114 +228,135 @@ Measured exact-dedup result:
 ```text
 styled semantic candidates               8,320
 unique styled rasters                    6,500
-
 published straight visuals                 746
 novel solid visual owners                1,259
 novel dither visual owners               5,077
-
 combined straight + solid + dither       7,082
 ```
 
-Per-style new visual owners:
-
-```text
-solid       1,259
-dense       1,227
-medium      1,246
-light       1,315
-sparse      1,289
-```
-
-Dither-only reuse accounting:
-
-```text
-semantic candidates                     6,656
-reuse published straights                 539
-reuse solid visual owners                 139
-same-style duplicate candidates           840
-cross-style dither reuses                   61
-```
-
-Research artifacts are deterministic and persisted at:
+Research artifacts:
 
 ```text
 artifacts/research/dithers/
 spec/straight-fill-dither-research.json
 ```
 
-Ten static style/side atlases are generated, and the browser Straight Fill Explorer now supports all five fill styles plus a live 832-definition style/side atlas.
-
-Verification commands:
-
-```powershell
-npm run verify:dithers
-npm run verify:dither-research
-```
-
-Both are included in `npm run verify`.
-
-**No fill or dither codepoints were allocated.**
+No fill or dither codepoints were allocated in 4B.
 
 ---
 
-## 9. Milestone 4C — palette and address-space decision — NEXT
+## 9. Milestone 4C — palette and address-space decision — COMPLETE
 
-The 4B result creates a hard address-space constraint.
+Completion note:
 
-Current preferred PUA window:
+[`docs/milestone-4c-palette-decision.md`](docs/milestone-4c-palette-decision.md)
 
-```text
-U+E000..U+EFFF = 4,096 slots
-```
-
-Measured all-five-style vocabulary:
+Milestone 4C added a true 50% phase-locked checkerboard and exhaustively evaluated every 3-style and 4-style palette containing solid from:
 
 ```text
-straight + solid + dither visuals     7,082
-single-window capacity                4,096
-                                      -----
-over budget                           2,986
+100% / 87.5% / 75% / 50% / 25% / 12.5%
 ```
 
-Therefore keeping every visual from all five styles **cannot fit in one 4K PUA window**.
+Exactly 20 candidate palettes were measured with global raster dedup.
 
-4C must use the 4B statistics, Hamming distributions, and atlases to evaluate useful retained subsets and deliberately choose among:
+### Selected encoded tonal palette
 
 ```text
-prune one or more brightness levels
-reserve some styles as renderer-only transformations
-expand into another Private Use range
-combine pruning with an expanded address-space policy
+solid      100%
+medium      75%
+half        50%
+light       25%
 ```
 
-4C should calculate the exact globally deduplicated visual cost of candidate retained palettes rather than estimating from per-style totals.
+This gives exact quarter-step tonal spacing.
 
-The primary decision question is now:
+Dense 87.5% and sparse 12.5% remain supported semantic **renderer-only** styles.
 
-> Which appearance levels deserve addressable glyph identity, and which should remain derived rendering operations?
+### Exact cost and compression
 
-Do not allocate new codepoints before this gate is resolved.
+The selected four-level palette costs:
+
+```text
+exact globally deduplicated visuals    5,858
+```
+
+That is 58 above the 5,800 graphics target. The optimizer found exactly 62 globally novel 50% owners that are only one pixel away from an already encoded straight/solid/75%/25% visual.
+
+Those 62 owners, representing 64 semantic definitions, remain renderer-only.
+
+Final planned encoded population:
+
+```text
+straight                              746
+solid                               1,259
+75% medium                          1,269
+25% light                           1,315
+50% half retained                  1,207
+                                    -----
+encoded PUA graphics               5,796
+BMP PUA reserve                      604
+```
+
+Printable ASCII remains outside the PUA:
+
+```text
+95 printable ASCII + 5,796 PUA graphics = 5,891 physical glyphs minimum
+```
+
+### Planned PUA layout
+
+These are planned ranges; 4C does not yet assign new fill/dither codepoints:
+
+```text
+U+E000..U+E2E9      746   published straight visuals
+U+E2EA..U+E7D4    1,259   solid fill visuals
+U+E7D5..U+ECC9    1,269   75% medium visuals
+U+ECCA..U+F1EC    1,315   25% light visuals
+U+F1ED..U+F6A3    1,207   retained 50% half visuals
+U+F6A4..U+F8FF      604   reserve
+```
+
+Persistent decision artifacts:
+
+```text
+artifacts/research/palette/
+├── decision.json
+├── candidate-palettes.json
+├── half-demotions.json
+└── report.md
+
+spec/straight-fill-palette-v0.json
+```
+
+The semantic vocabulary remains richer than the encoded font. Dense, sparse, and the 62 demoted half-tone owners can still resolve to existing codepoints on exact bitmap matches or be generated by the renderer.
 
 ---
 
-## 10. Milestone 4D — publication
+## 10. Milestone 4D — filled/dither publication — NEXT
 
-After the 4C decision:
+Materialize the 4C decision into the canonical addressable vocabulary.
 
-- allocate provisional visual owners for the retained addressable vocabulary;
-- extend the global semantic registry across straight, solid, and retained dither semantics;
-- generate ASCII and PNG artifacts for newly allocated owners;
-- publish semantic manifests and lookup indexes;
-- publish the exact retained dither-mask specification;
-- generate catalogs and atlases by style;
-- record reproducible statistics and provenance.
+Definition of done:
+
+- preserve the existing 746 published straight codepoints exactly;
+- assign provisional codepoints to the 1,259 solid, 1,269 medium, 1,315 light, and 1,207 retained half-tone visual owners according to the 4C planned ranges;
+- never assign a new codepoint to an exact raster duplicate;
+- preserve renderer-only metadata for dense, sparse, and the 62 demoted 50% visual owners;
+- build one global visual registry spanning straight + selected fill/dither owners;
+- build semantic indexes from every selected or renderer-only definition to its exact owner or renderer fallback;
+- generate ASCII and PNG artifacts for all 5,796 encoded PUA graphics;
+- generate style/family atlases and machine-readable catalogs;
+- verify the final PUA end is `U+F6A3` and the reserve remains exactly 604 slots `U+F6A4..U+F8FF`;
+- record reproducible publication provenance.
+
+Milestone 4D is the first point at which the selected fill/dither visuals receive provisional Unicode assignments.
 
 ---
 
 ## 11. Later milestones
 
 ```text
-5   junctions
+5   junctions / reserve-budget strategy
 6   curated curve/arc extension if justified
 7   terminals / specials
 8   vocabulary optimization
@@ -363,6 +365,8 @@ After the 4C decision:
 11  interactive editor
 12  GraphSCII v1 freeze / release
 ```
+
+The 604-slot reserve is intentionally protected until later families are measured.
 
 ---
 
@@ -380,10 +384,12 @@ npm run verify:fill-registry
 npm run generate:dithers
 npm run verify:dithers
 npm run verify:dither-research
+npm run generate:palette
+npm run verify:palette
 npm run check
 ```
 
-The published straight allocation remains authoritative. Solid and dither visuals remain research-only until the 4C allocation gate.
+The published straight allocation remains authoritative. The 4C fill/dither ranges are planned but unallocated until Milestone 4D publication.
 
 ---
 
@@ -404,3 +410,5 @@ canonical visual owner + preserved semantic aliases
 ```
 
 Do not spend a new codepoint when an existing bitmap already renders the requested definition exactly.
+
+When address-space pressure remains after exact dedup, prefer deterministic renderer fallback for low-distinctiveness derived appearances before discarding semantic capability.
