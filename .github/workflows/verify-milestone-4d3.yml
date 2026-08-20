@@ -43,15 +43,44 @@ jobs:
         working-directory: geometric-glyph-lab
         run: npm run verify
 
-      - name: Commit deterministic Milestone 4D.3 outputs
+      - name: Advance Milestone 4D roadmap
         shell: bash
         run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          plan = Path("PLAN.md")
+          text = plan.read_text()
+          replacements = [
+              ("4D.3  categorized visual/text atlases                  NEXT", "4D.3  categorized visual/text atlases                  COMPLETE"),
+              ("4D.4  master text atlas + page atlas + layout map", "4D.4  master text atlas + page atlas + layout map          NEXT"),
+              ("### 4D.3 — categorized atlases — NEXT", "### 4D.3 — categorized atlases — COMPLETE\n\nCompletion note: [`docs/milestone-4d3-categorized-atlases.md`](docs/milestone-4d3-categorized-atlases.md)"),
+              ("### 4D.4 — master text atlas — REQUIRED PUBLICATION ARTIFACT", "### 4D.4 — master text atlas — REQUIRED PUBLICATION ARTIFACT — NEXT"),
+              ("npm run verify:vocabulary-artifacts\nnpm run check", "npm run verify:vocabulary-artifacts\nnpm run generate:vocabulary-atlases\nnpm run verify:vocabulary-atlases\nnpm run check"),
+              ("Milestone 4D.2 has materialized all 5,796 ASCII and PNG owners. The 604-slot U+F6A4..U+F8FF reserve remains untouched.", "Milestone 4D.3 has added deterministic categorized, combined, renderer-only, and reserve-layout atlases on top of the 5,796 canonical owners. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D.4 is next."),
+          ]
+          for old, new in replacements:
+              text = text.replace(old, new)
+          plan.write_text(text)
+
+          detailed = Path("docs/milestone-4d-publication-plan.md")
+          text = detailed.read_text()
+          replacements = [
+              ("Status: **IN PROGRESS — 4D.1 AND 4D.2 COMPLETE; 4D.3 NEXT**", "Status: **IN PROGRESS — 4D.1, 4D.2, AND 4D.3 COMPLETE; 4D.4 NEXT**"),
+              ("## 4. Milestone 4D.3 — category atlases — NEXT", "## 4. Milestone 4D.3 — category atlases — COMPLETE\n\nCompletion note: [`milestone-4d3-categorized-atlases.md`](milestone-4d3-categorized-atlases.md)"),
+              ("## 5. Milestone 4D.4 — master text atlas and master layout map", "## 5. Milestone 4D.4 — master text atlas and master layout map — NEXT"),
+          ]
+          for old, new in replacements:
+              text = text.replace(old, new)
+          detailed.write_text(text)
+          PY
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- artifacts/vocabulary/atlases
+          git add -- PLAN.md docs/milestone-4d-publication-plan.md
           if git diff --cached --quiet; then
-            echo "Milestone 4D.3 atlas outputs already match deterministic generation."
+            echo "Milestone 4D.3 roadmap already finalized."
             exit 0
           fi
-          git commit -m "Generate Milestone 4D.3 categorized atlases"
+          git commit -m "Complete Milestone 4D.3 categorized atlases"
           git push origin HEAD:milestone-4d-publication-plan
