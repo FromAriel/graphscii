@@ -31,6 +31,79 @@ jobs:
         working-directory: geometric-glyph-lab
         run: npm install
 
+      - name: Apply permanent 4D.3 atlas ownership boundary
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("geometric-glyph-lab/scripts/vocabulary-atlases.mjs")
+          text = path.read_text()
+
+          old_generate = '''export async function generateVocabularyAtlases(repoRoot) {
+            const { registry, rendererOnly } = await loadCanonicalInputs(repoRoot);
+            const outputRoot = path.join(repoRoot, "artifacts", "vocabulary", "atlases");
+            const built = buildAtlasFiles(registry, rendererOnly);
+            await rm(outputRoot, { recursive: true, force: true });
+            await mkdir(outputRoot, { recursive: true });
+            await writeFiles(outputRoot, built.files);
+            return built.stats;
+          }'''.replace("          ", "")
+
+          new_generate = '''export async function generateVocabularyAtlases(repoRoot) {
+            const { registry, rendererOnly } = await loadCanonicalInputs(repoRoot);
+            const outputRoot = path.join(repoRoot, "artifacts", "vocabulary", "atlases");
+            const built = buildAtlasFiles(registry, rendererOnly);
+            await mkdir(outputRoot, { recursive: true });
+            const managedDirectories = [
+              ...CATEGORY_DEFINITIONS.map((definition) => definition.id),
+              "combined",
+              "renderer-only",
+              "reserve-layout",
+            ];
+            for (const directory of managedDirectories) {
+              await rm(path.join(outputRoot, directory), { recursive: true, force: true });
+            }
+            await rm(path.join(outputRoot, "stats.json"), { force: true });
+            await writeFiles(outputRoot, built.files);
+            return built.stats;
+          }'''.replace("          ", "")
+
+          old_verify = '''  const expectedNames = [...expected.files.keys()].sort();
+            const actualNames = await listFilesRecursive(outputRoot);
+            if (JSON.stringify(actualNames) !== JSON.stringify(expectedNames)) {
+              throw new Error(`Milestone 4D.3 atlas file list mismatch: expected ${expectedNames.length}, got ${actualNames.length}.`);
+            }'''.replace("          ", "")
+
+          new_verify = '''  const expectedNames = [...expected.files.keys()].sort();
+            const managedDirectories = new Set([
+              ...CATEGORY_DEFINITIONS.map((definition) => definition.id),
+              "combined",
+              "renderer-only",
+              "reserve-layout",
+            ]);
+            const actualNames = (await listFilesRecursive(outputRoot)).filter((relative) => {
+              if (relative === "stats.json") return true;
+              const [topLevel] = relative.split("/");
+              return managedDirectories.has(topLevel);
+            });
+            if (JSON.stringify(actualNames) !== JSON.stringify(expectedNames)) {
+              throw new Error(`Milestone 4D.3 managed atlas file list mismatch: expected ${expectedNames.length}, got ${actualNames.length}.`);
+            }'''.replace("          ", "")
+
+          if old_generate in text:
+              text = text.replace(old_generate, new_generate)
+          elif new_generate not in text:
+              raise SystemExit("Could not locate Milestone 4D.3 generation ownership block")
+
+          if old_verify in text:
+              text = text.replace(old_verify, new_verify)
+          elif new_verify not in text:
+              raise SystemExit("Could not locate Milestone 4D.3 verification ownership block")
+
+          path.write_text(text)
+          PY
+
       - name: Typecheck source
         working-directory: geometric-glyph-lab
         run: npm run check
@@ -49,6 +122,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- \
+            geometric-glyph-lab/scripts/vocabulary-atlases.mjs \
             artifacts/vocabulary/atlases/master-text-atlas.md \
             artifacts/vocabulary/atlases/master-text-atlas.txt \
             artifacts/vocabulary/atlases/master-page-atlas.md \
