@@ -332,7 +332,7 @@ The semantic vocabulary remains richer than the encoded font. Dense, sparse, and
 
 ---
 
-## 10. Milestone 4D — published graphics vocabulary v0 — NEXT
+## 10. Milestone 4D — published graphics vocabulary v0 — IN PROGRESS
 
 Detailed implementation plan:
 
@@ -343,17 +343,19 @@ Milestone 4D materializes the 4C decision into the first complete addressable Gr
 Execution order:
 
 ```text
-4D.1  canonical allocation registry                 NEXT
-4D.2  5,796 canonical ASCII/PNG artifacts
+4D.1  canonical allocation registry                 COMPLETE
+4D.2  5,796 canonical ASCII/PNG artifacts             NEXT
 4D.3  categorized visual/text atlases
 4D.4  master text atlas + page atlas + layout map
 4D.5  renderer-only resolution registry
 4D.6  graphscii-graphics-v0 publication snapshot
 ```
 
-### 4D.1 — canonical allocation registry
+### 4D.1 — canonical allocation registry — COMPLETE
 
-Freeze one global encoded registry spanning the 5,796 addressable graphics.
+Completion note: [`docs/milestone-4d1-canonical-allocation-registry.md`](docs/milestone-4d1-canonical-allocation-registry.md)
+
+One global encoded registry now spans the 5,796 addressable graphics.
 
 Hard gates:
 
@@ -521,6 +523,8 @@ npm run verify:dithers
 npm run verify:dither-research
 npm run generate:palette
 npm run verify:palette
+npm run generate:vocabulary
+npm run verify:vocabulary
 npm run check
 ```
 

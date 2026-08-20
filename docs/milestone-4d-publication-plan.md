@@ -1,6 +1,6 @@
 # Milestone 4D — Published GraphSCII Graphics Vocabulary v0
 
-Status: **PLANNED — NEXT IMPLEMENTATION MILESTONE**
+Status: **IN PROGRESS — 4D.1 COMPLETE; 4D.2 NEXT**
 
 Milestone 4D turns the completed 4C palette decision into the first complete addressable GraphSCII graphics vocabulary.
 
@@ -68,9 +68,9 @@ Hard invariant:
 
 ---
 
-## 2. Milestone 4D.1 — canonical allocation registry
+## 2. Milestone 4D.1 — canonical allocation registry — COMPLETE
 
-4D.1 is the immediate next implementation slice.
+Completion note: [`milestone-4d1-canonical-allocation-registry.md`](milestone-4d1-canonical-allocation-registry.md)
 
 Create one global canonical encoded vocabulary covering all 5,796 addressable GraphSCII graphics.
 
@@ -141,7 +141,7 @@ new allocations in reserve        = 0
 
 ---
 
-## 3. Milestone 4D.2 — canonical per-glyph artifacts
+## 3. Milestone 4D.2 — canonical per-glyph artifacts — NEXT
 
 Generate deterministic font-facing source artifacts for every encoded owner.
 
