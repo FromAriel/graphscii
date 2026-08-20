@@ -35,7 +35,7 @@ jobs:
         working-directory: geometric-glyph-lab
         run: npm run check
 
-      - name: Generate deterministic artifacts
+      - name: Regenerate deterministic artifacts
         working-directory: geometric-glyph-lab
         run: npm run generate
 
@@ -43,15 +43,21 @@ jobs:
         working-directory: geometric-glyph-lab
         run: npm run verify
 
-      - name: Commit deterministic Milestone 4D.2 outputs
+      - name: Advance roadmap to Milestone 4D.3
+        working-directory: geometric-glyph-lab
+        run: node scripts/finalize-4d2-docs.mjs
+
+      - name: Commit completed Milestone 4D.2
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- artifacts/vocabulary/glyphs
-          if git diff --cached --quiet; then
-            echo "Milestone 4D.2 glyph artifacts already match deterministic generation."
-            exit 0
-          fi
-          git commit -m "Generate Milestone 4D.2 canonical glyph artifacts"
+          git add -- \
+            artifacts/vocabulary/glyphs \
+            PLAN.md \
+            docs/milestone-4d-publication-plan.md
+          git rm -- \
+            .github/workflows/verify-milestone-4d2.yml \
+            geometric-glyph-lab/scripts/finalize-4d2-docs.mjs
+          git commit -m "Complete Milestone 4D.2 canonical glyph artifacts"
           git push origin HEAD:milestone-4d-publication-plan
