@@ -153,7 +153,10 @@ function makeRange(family, count, start) {
     };
 }
 export function buildPaletteDecision(straightResult = generate(ALL_FAMILIES)) {
-    generateStraightSolidFills(straightResult);
+    const solidResult = generateStraightSolidFills(straightResult);
+    if (solidResult.candidates.length !== 1664 || solidResult.visuals.length !== 1259) {
+        throw new Error("Milestone 4C requires the frozen 1,664 solid semantics / 1,259 novel solid visual baseline.");
+    }
     const straightKeys = new Set(straightResult.glyphs.map((glyph) => glyph.bitmapKey));
     const styleMaps = new Map();
     for (const style of PALETTE_RESEARCH_STYLE_ORDER) {

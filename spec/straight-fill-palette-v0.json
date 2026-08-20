@@ -1,0 +1,109 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "straight-fill-palette-v0",
+  "schemaVersion": 1,
+  "status": "decision-complete-unallocated",
+  "bmpPrivateUseArea": {
+    "puaStart": "U+00E000",
+    "puaEnd": "U+00F8FF",
+    "puaSlots": 6400,
+    "graphicsTarget": 5800,
+    "reserveTarget": 600,
+    "printableAsciiStart": "U+000020",
+    "printableAsciiEnd": "U+00007E",
+    "printableAsciiCount": 95,
+    "printableAsciiConsumesPua": false
+  },
+  "encodedToneStyles": [
+    "solid",
+    "medium",
+    "half",
+    "light"
+  ],
+  "rendererOnlyToneStyles": [
+    "dense",
+    "sparse"
+  ],
+  "halfToneMask": {
+    "density": 0.5,
+    "phase": "cell-locked-8x8-repeat-y-mod-8",
+    "rows": [
+      "#-#-#-#-",
+      "-#-#-#-#",
+      "#-#-#-#-",
+      "-#-#-#-#",
+      "#-#-#-#-",
+      "-#-#-#-#",
+      "#-#-#-#-",
+      "-#-#-#-#"
+    ]
+  },
+  "selectedCounts": {
+    "encodedStyles": [
+      "solid",
+      "medium",
+      "half",
+      "light"
+    ],
+    "rendererOnlyStyles": [
+      "dense",
+      "sparse"
+    ],
+    "exactUncompressedVisuals": 5858,
+    "halfOnlyVisualsBeforeCompression": 1269,
+    "halfOnePixelDemotedVisuals": 62,
+    "halfOnePixelDemotedSemantics": 64,
+    "allocatedVisuals": 5796,
+    "puaReserve": 604,
+    "physicalGlyphsIncludingPrintableAscii": 5891,
+    "compressionRule": "50% visuals that are globally novel but exactly one pixel from an already encoded straight/solid/75%/25% visual remain renderer-only; every other selected-style visual is encoded",
+    "rationale": "100%, 75%, 50%, and 25% give evenly spaced quarter-step tone levels. Exact materialization costs 5,858 visuals; demoting the 62 one-pixel-near 50% owners reduces the encoded graphics vocabulary to 5,796 and leaves 604 BMP PUA slots reserved. Dense 87.5% and sparse 12.5% remain semantic renderer-only styles with exact reuse whenever their raster already has an encoded owner."
+  },
+  "incrementalAllocatedVisuals": {
+    "straight": 746,
+    "solid": 1259,
+    "medium": 1269,
+    "light": 1315,
+    "half": 1207
+  },
+  "plannedAllocation": [
+    {
+      "family": "straight",
+      "count": 746,
+      "startCodepoint": "U+00E000",
+      "endCodepoint": "U+00E2E9"
+    },
+    {
+      "family": "solid",
+      "count": 1259,
+      "startCodepoint": "U+00E2EA",
+      "endCodepoint": "U+00E7D4"
+    },
+    {
+      "family": "medium",
+      "count": 1269,
+      "startCodepoint": "U+00E7D5",
+      "endCodepoint": "U+00ECC9"
+    },
+    {
+      "family": "light",
+      "count": 1315,
+      "startCodepoint": "U+00ECCA",
+      "endCodepoint": "U+00F1EC"
+    },
+    {
+      "family": "half",
+      "count": 1207,
+      "startCodepoint": "U+00F1ED",
+      "endCodepoint": "U+00F6A3"
+    },
+    {
+      "family": "reserve",
+      "count": 604,
+      "startCodepoint": "U+00F6A4",
+      "endCodepoint": "U+00F8FF"
+    }
+  ],
+  "allocationGate": "Milestone 4D; these ranges are planned but fill/dither codepoints remain unassigned until publication"
+}

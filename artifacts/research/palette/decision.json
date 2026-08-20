@@ -1,0 +1,952 @@
+{
+  "status": "decision-complete-unallocated",
+  "capacity": {
+    "puaStart": "U+00E000",
+    "puaEnd": "U+00F8FF",
+    "puaSlots": 6400,
+    "graphicsTarget": 5800,
+    "reserveTarget": 600,
+    "printableAsciiStart": "U+000020",
+    "printableAsciiEnd": "U+00007E",
+    "printableAsciiCount": 95,
+    "printableAsciiConsumesPua": false
+  },
+  "researchStyles": [
+    {
+      "style": "solid",
+      "density": 1
+    },
+    {
+      "style": "dense",
+      "density": 0.875
+    },
+    {
+      "style": "medium",
+      "density": 0.75
+    },
+    {
+      "style": "half",
+      "density": 0.5
+    },
+    {
+      "style": "light",
+      "density": 0.25
+    },
+    {
+      "style": "sparse",
+      "density": 0.125
+    }
+  ],
+  "candidatePalettes": [
+    {
+      "styles": [
+        "solid",
+        "dense",
+        "medium"
+      ],
+      "styleCount": 3,
+      "densities": [
+        1,
+        0.875,
+        0.75
+      ],
+      "densityGaps": [
+        0.125,
+        0.125
+      ],
+      "maxDensityGap": 0.125,
+      "densityGapSpread": 0,
+      "exactVisuals": 4478,
+      "puaReserve": 1922,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "dense",
+        "sparse"
+      ],
+      "styleCount": 3,
+      "densities": [
+        1,
+        0.875,
+        0.125
+      ],
+      "densityGaps": [
+        0.125,
+        0.75
+      ],
+      "maxDensityGap": 0.75,
+      "densityGapSpread": 0.625,
+      "exactVisuals": 4544,
+      "puaReserve": 1856,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "dense",
+        "light"
+      ],
+      "styleCount": 3,
+      "densities": [
+        1,
+        0.875,
+        0.25
+      ],
+      "densityGaps": [
+        0.125,
+        0.625
+      ],
+      "maxDensityGap": 0.625,
+      "densityGapSpread": 0.5,
+      "exactVisuals": 4556,
+      "puaReserve": 1844,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "dense",
+        "half"
+      ],
+      "styleCount": 3,
+      "densities": [
+        1,
+        0.875,
+        0.5
+      ],
+      "densityGaps": [
+        0.125,
+        0.375
+      ],
+      "maxDensityGap": 0.375,
+      "densityGapSpread": 0.25,
+      "exactVisuals": 4573,
+      "puaReserve": 1827,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "medium",
+        "half"
+      ],
+      "styleCount": 3,
+      "densities": [
+        1,
+        0.75,
+        0.5
+      ],
+      "densityGaps": [
+        0.25,
+        0.25
+      ],
+      "maxDensityGap": 0.25,
+      "densityGapSpread": 0,
+      "exactVisuals": 4576,
+      "puaReserve": 1824,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "medium",
+        "sparse"
+      ],
+      "styleCount": 3,
+      "densities": [
+        1,
+        0.75,
+        0.125
+      ],
+      "densityGaps": [
+        0.25,
+        0.625
+      ],
+      "maxDensityGap": 0.625,
+      "densityGapSpread": 0.375,
+      "exactVisuals": 4584,
+      "puaReserve": 1816,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "medium",
+        "light"
+      ],
+      "styleCount": 3,
+      "densities": [
+        1,
+        0.75,
+        0.25
+      ],
+      "densityGaps": [
+        0.25,
+        0.5
+      ],
+      "maxDensityGap": 0.5,
+      "densityGapSpread": 0.25,
+      "exactVisuals": 4589,
+      "puaReserve": 1811,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "light",
+        "sparse"
+      ],
+      "styleCount": 3,
+      "densities": [
+        1,
+        0.25,
+        0.125
+      ],
+      "densityGaps": [
+        0.75,
+        0.125
+      ],
+      "maxDensityGap": 0.75,
+      "densityGapSpread": 0.625,
+      "exactVisuals": 4620,
+      "puaReserve": 1780,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "half",
+        "light"
+      ],
+      "styleCount": 3,
+      "densities": [
+        1,
+        0.5,
+        0.25
+      ],
+      "densityGaps": [
+        0.5,
+        0.25
+      ],
+      "maxDensityGap": 0.5,
+      "densityGapSpread": 0.25,
+      "exactVisuals": 4633,
+      "puaReserve": 1767,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "half",
+        "sparse"
+      ],
+      "styleCount": 3,
+      "densities": [
+        1,
+        0.5,
+        0.125
+      ],
+      "densityGaps": [
+        0.5,
+        0.375
+      ],
+      "maxDensityGap": 0.5,
+      "densityGapSpread": 0.125,
+      "exactVisuals": 4658,
+      "puaReserve": 1742,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "dense",
+        "medium",
+        "half"
+      ],
+      "styleCount": 4,
+      "densities": [
+        1,
+        0.875,
+        0.75,
+        0.5
+      ],
+      "densityGaps": [
+        0.125,
+        0.125,
+        0.25
+      ],
+      "maxDensityGap": 0.25,
+      "densityGapSpread": 0.125,
+      "exactVisuals": 5780,
+      "puaReserve": 620,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "dense",
+        "medium",
+        "sparse"
+      ],
+      "styleCount": 4,
+      "densities": [
+        1,
+        0.875,
+        0.75,
+        0.125
+      ],
+      "densityGaps": [
+        0.125,
+        0.125,
+        0.625
+      ],
+      "maxDensityGap": 0.625,
+      "densityGapSpread": 0.5,
+      "exactVisuals": 5788,
+      "puaReserve": 612,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "dense",
+        "medium",
+        "light"
+      ],
+      "styleCount": 4,
+      "densities": [
+        1,
+        0.875,
+        0.75,
+        0.25
+      ],
+      "densityGaps": [
+        0.125,
+        0.125,
+        0.5
+      ],
+      "maxDensityGap": 0.5,
+      "densityGapSpread": 0.375,
+      "exactVisuals": 5793,
+      "puaReserve": 607,
+      "meetsGraphicsTarget": true
+    },
+    {
+      "styles": [
+        "solid",
+        "dense",
+        "light",
+        "sparse"
+      ],
+      "styleCount": 4,
+      "densities": [
+        1,
+        0.875,
+        0.25,
+        0.125
+      ],
+      "densityGaps": [
+        0.125,
+        0.625,
+        0.125
+      ],
+      "maxDensityGap": 0.625,
+      "densityGapSpread": 0.5,
+      "exactVisuals": 5845,
+      "puaReserve": 555,
+      "meetsGraphicsTarget": false
+    },
+    {
+      "styles": [
+        "solid",
+        "dense",
+        "half",
+        "light"
+      ],
+      "styleCount": 4,
+      "densities": [
+        1,
+        0.875,
+        0.5,
+        0.25
+      ],
+      "densityGaps": [
+        0.125,
+        0.375,
+        0.25
+      ],
+      "maxDensityGap": 0.375,
+      "densityGapSpread": 0.25,
+      "exactVisuals": 5855,
+      "puaReserve": 545,
+      "meetsGraphicsTarget": false
+    },
+    {
+      "styles": [
+        "solid",
+        "medium",
+        "half",
+        "light"
+      ],
+      "styleCount": 4,
+      "densities": [
+        1,
+        0.75,
+        0.5,
+        0.25
+      ],
+      "densityGaps": [
+        0.25,
+        0.25,
+        0.25
+      ],
+      "maxDensityGap": 0.25,
+      "densityGapSpread": 0,
+      "exactVisuals": 5858,
+      "puaReserve": 542,
+      "meetsGraphicsTarget": false
+    },
+    {
+      "styles": [
+        "solid",
+        "medium",
+        "light",
+        "sparse"
+      ],
+      "styleCount": 4,
+      "densities": [
+        1,
+        0.75,
+        0.25,
+        0.125
+      ],
+      "densityGaps": [
+        0.25,
+        0.5,
+        0.125
+      ],
+      "maxDensityGap": 0.5,
+      "densityGapSpread": 0.375,
+      "exactVisuals": 5878,
+      "puaReserve": 522,
+      "meetsGraphicsTarget": false
+    },
+    {
+      "styles": [
+        "solid",
+        "dense",
+        "half",
+        "sparse"
+      ],
+      "styleCount": 4,
+      "densities": [
+        1,
+        0.875,
+        0.5,
+        0.125
+      ],
+      "densityGaps": [
+        0.125,
+        0.375,
+        0.375
+      ],
+      "maxDensityGap": 0.375,
+      "densityGapSpread": 0.25,
+      "exactVisuals": 5880,
+      "puaReserve": 520,
+      "meetsGraphicsTarget": false
+    },
+    {
+      "styles": [
+        "solid",
+        "medium",
+        "half",
+        "sparse"
+      ],
+      "styleCount": 4,
+      "densities": [
+        1,
+        0.75,
+        0.5,
+        0.125
+      ],
+      "densityGaps": [
+        0.25,
+        0.25,
+        0.375
+      ],
+      "maxDensityGap": 0.375,
+      "densityGapSpread": 0.125,
+      "exactVisuals": 5883,
+      "puaReserve": 517,
+      "meetsGraphicsTarget": false
+    },
+    {
+      "styles": [
+        "solid",
+        "half",
+        "light",
+        "sparse"
+      ],
+      "styleCount": 4,
+      "densities": [
+        1,
+        0.5,
+        0.25,
+        0.125
+      ],
+      "densityGaps": [
+        0.5,
+        0.25,
+        0.125
+      ],
+      "maxDensityGap": 0.5,
+      "densityGapSpread": 0.375,
+      "exactVisuals": 5922,
+      "puaReserve": 478,
+      "meetsGraphicsTarget": false
+    }
+  ],
+  "selected": {
+    "encodedStyles": [
+      "solid",
+      "medium",
+      "half",
+      "light"
+    ],
+    "rendererOnlyStyles": [
+      "dense",
+      "sparse"
+    ],
+    "exactUncompressedVisuals": 5858,
+    "halfOnlyVisualsBeforeCompression": 1269,
+    "halfOnePixelDemotedVisuals": 62,
+    "halfOnePixelDemotedSemantics": 64,
+    "allocatedVisuals": 5796,
+    "puaReserve": 604,
+    "physicalGlyphsIncludingPrintableAscii": 5891,
+    "compressionRule": "50% visuals that are globally novel but exactly one pixel from an already encoded straight/solid/75%/25% visual remain renderer-only; every other selected-style visual is encoded",
+    "rationale": "100%, 75%, 50%, and 25% give evenly spaced quarter-step tone levels. Exact materialization costs 5,858 visuals; demoting the 62 one-pixel-near 50% owners reduces the encoded graphics vocabulary to 5,796 and leaves 604 BMP PUA slots reserved. Dense 87.5% and sparse 12.5% remain semantic renderer-only styles with exact reuse whenever their raster already has an encoded owner."
+  },
+  "incrementalAllocatedVisuals": {
+    "straight": 746,
+    "solid": 1259,
+    "medium": 1269,
+    "light": 1315,
+    "half": 1207
+  },
+  "plannedAllocation": [
+    {
+      "family": "straight",
+      "count": 746,
+      "startCodepoint": "U+00E000",
+      "endCodepoint": "U+00E2E9"
+    },
+    {
+      "family": "solid",
+      "count": 1259,
+      "startCodepoint": "U+00E2EA",
+      "endCodepoint": "U+00E7D4"
+    },
+    {
+      "family": "medium",
+      "count": 1269,
+      "startCodepoint": "U+00E7D5",
+      "endCodepoint": "U+00ECC9"
+    },
+    {
+      "family": "light",
+      "count": 1315,
+      "startCodepoint": "U+00ECCA",
+      "endCodepoint": "U+00F1EC"
+    },
+    {
+      "family": "half",
+      "count": 1207,
+      "startCodepoint": "U+00F1ED",
+      "endCodepoint": "U+00F6A3"
+    },
+    {
+      "family": "reserve",
+      "count": 604,
+      "startCodepoint": "U+00F6A4",
+      "endCodepoint": "U+00F8FF"
+    }
+  ],
+  "halfDemotions": [
+    {
+      "bitmapKey": "0000000000000000000000000000030e",
+      "nearestAllocatedBitmapKey": "0000000000000000000000000000030f",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000000000000000031e",
+      "nearestAllocatedBitmapKey": "0000000000000000000000000000031f",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000000000000000073a",
+      "nearestAllocatedBitmapKey": "00000000000000000000000000000738",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000000000000000077a",
+      "nearestAllocatedBitmapKey": "00000000000000000000000000000778",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000000000000000c0b0",
+      "nearestAllocatedBitmapKey": "0000000000000000000000000000c0f0",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000000000000000c0b8",
+      "nearestAllocatedBitmapKey": "0000000000000000000000000000c0f8",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000000000000000e0bc",
+      "nearestAllocatedBitmapKey": "0000000000000000000000000000e0fc",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000000000000000e0be",
+      "nearestAllocatedBitmapKey": "0000000000000000000000000000e0fe",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "00000000000000000000000000010306",
+      "nearestAllocatedBitmapKey": "00000000000000000000000000010307",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000000000000001070a",
+      "nearestAllocatedBitmapKey": "00000000000000000000000000010708",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000000000000001071a",
+      "nearestAllocatedBitmapKey": "00000000000000000000000000010718",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "000000000000000000000000008040a0",
+      "nearestAllocatedBitmapKey": "000000000000000000000000008040e0",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "000000000000000000000000008060b0",
+      "nearestAllocatedBitmapKey": "000000000000000000000000008060f0",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "000000000000000000000000008060b8",
+      "nearestAllocatedBitmapKey": "000000000000000000000000008060f8",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "00000000000000000000000001020306",
+      "nearestAllocatedBitmapKey": "00000000000000000000000001020304",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000000000000102050a",
+      "nearestAllocatedBitmapKey": "00000000000000000000000001020508",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "00000000000000000000000080c040a0",
+      "nearestAllocatedBitmapKey": "00000000000000000000000080c040e0",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "00000000000000000000000080c060b0",
+      "nearestAllocatedBitmapKey": "00000000000000000000000080c060f0",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "00000000000000000000000103020506",
+      "nearestAllocatedBitmapKey": "00000000000000000000000103020504",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "00000000000000000000008040c060a0",
+      "nearestAllocatedBitmapKey": "00000000000000000000008040c060e0",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "00000000000000000000010103020506",
+      "nearestAllocatedBitmapKey": "00000000000000000000010103020504",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "00000000000000000000808040c060a0",
+      "nearestAllocatedBitmapKey": "00000000000000000000808040c060e0",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "00000000000000000001010203020506",
+      "nearestAllocatedBitmapKey": "00000000000000000001010203020504",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000008080c040c060a0",
+      "nearestAllocatedBitmapKey": "0000000000000000008080c040c060e0",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "00000000000000000101030203020506",
+      "nearestAllocatedBitmapKey": "00000000000000000101030203020504",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0000000000000000808040c040c060a0",
+      "nearestAllocatedBitmapKey": "0000000000000000808040c040c060e0",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "05060302010000000000000000000000",
+      "nearestAllocatedBitmapKey": "05040302010000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "05060302010100000000000000000000",
+      "nearestAllocatedBitmapKey": "05040302010100000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "05060302030101000000000000000000",
+      "nearestAllocatedBitmapKey": "05040302030101000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "05060302030201010000000000000000",
+      "nearestAllocatedBitmapKey": "05040302030201010000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "05060502030203010100000000000000",
+      "nearestAllocatedBitmapKey": "05040502030203010100000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "05060502030203010101000000000000",
+      "nearestAllocatedBitmapKey": "05040502030203010101000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "05060502030203020101010000000000",
+      "nearestAllocatedBitmapKey": "05040502030203020101010000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "05060502030203020301010100000000",
+      "nearestAllocatedBitmapKey": "05040502030203020301010100000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0d060301000000000000000000000000",
+      "nearestAllocatedBitmapKey": "0d070301000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0d060502010000000000000000000000",
+      "nearestAllocatedBitmapKey": "0d040502010000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "0d060502030100000000000000000000",
+      "nearestAllocatedBitmapKey": "0d040502030100000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "150a0502010000000000000000000000",
+      "nearestAllocatedBitmapKey": "15080502010000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "150e0301000000000000000000000000",
+      "nearestAllocatedBitmapKey": "150f0301000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "350e0300000000000000000000000000",
+      "nearestAllocatedBitmapKey": "350f0300000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "351a0701000000000000000000000000",
+      "nearestAllocatedBitmapKey": "35180701000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "50a04080000000000000000000000000",
+      "nearestAllocatedBitmapKey": "50e04080000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "50a060c0408000000000000000000000",
+      "nearestAllocatedBitmapKey": "50e060c0408000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "50a060c0800000000000000000000000",
+      "nearestAllocatedBitmapKey": "50e060c0800000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "54b86080000000000000000000000000",
+      "nearestAllocatedBitmapKey": "54f86080000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "56b86080000000000000000000000000",
+      "nearestAllocatedBitmapKey": "56f86080000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "56b8c000000000000000000000000000",
+      "nearestAllocatedBitmapKey": "56f8c000000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "57bcc000000000000000000000000000",
+      "nearestAllocatedBitmapKey": "57fcc000000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 2
+    },
+    {
+      "bitmapKey": "58b04080000000000000000000000000",
+      "nearestAllocatedBitmapKey": "58f04080000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "58b060c0800000000000000000000000",
+      "nearestAllocatedBitmapKey": "58f060c0800000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "5cb0c000000000000000000000000000",
+      "nearestAllocatedBitmapKey": "5cf0c000000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "60a040c0408080000000000000000000",
+      "nearestAllocatedBitmapKey": "60e040c0408080000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "60a040c040c080800000000000000000",
+      "nearestAllocatedBitmapKey": "60e040c040c080800000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "60a040c0800000000000000000000000",
+      "nearestAllocatedBitmapKey": "60e040c0800000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "60a040c0808000000000000000000000",
+      "nearestAllocatedBitmapKey": "60e040c0808000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "60a060c040c040808000000000000000",
+      "nearestAllocatedBitmapKey": "60e060c040c040808000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "60a060c040c040808080000000000000",
+      "nearestAllocatedBitmapKey": "60e060c040c040808080000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "60a060c040c040c04080808000000000",
+      "nearestAllocatedBitmapKey": "60e060c040c040c04080808000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "60a060c040c040c08080800000000000",
+      "nearestAllocatedBitmapKey": "60e060c040c040c08080800000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "751a0701000000000000000000000000",
+      "nearestAllocatedBitmapKey": "75180701000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "751e0300000000000000000000000000",
+      "nearestAllocatedBitmapKey": "751f0300000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 1
+    },
+    {
+      "bitmapKey": "d53e0300000000000000000000000000",
+      "nearestAllocatedBitmapKey": "d53f0300000000000000000000000000",
+      "hammingDistance": 1,
+      "semanticAliasCount": 2
+    }
+  ]
+}
