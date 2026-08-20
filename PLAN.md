@@ -332,7 +332,7 @@ The semantic vocabulary remains richer than the encoded font. Dense, sparse, and
 
 ---
 
-## 10. Milestone 4D — published graphics vocabulary v0 — IN PROGRESS
+## 10. Milestone 4D — published graphics vocabulary v0 — COMPLETE
 
 Detailed implementation plan:
 
@@ -348,7 +348,7 @@ Execution order:
 4D.3  categorized visual/text atlases                  COMPLETE
 4D.4  master text atlas + page atlas + layout map          COMPLETE
 4D.5  renderer-only resolution registry                     COMPLETE
-4D.6  graphscii-graphics-v0 publication snapshot              NEXT
+4D.6  graphscii-graphics-v0 publication snapshot              COMPLETE
 ```
 
 ### 4D.1 — canonical allocation registry — COMPLETE
@@ -472,7 +472,9 @@ renderer-only-derived
 
 The 62 demoted half-tone owners also retain their exact Hamming-distance-1 fallback relationship without pretending that fallback is raster-identical.
 
-### 4D.6 — publication — NEXT
+### 4D.6 — publication — COMPLETE
+
+Completion note: [`docs/milestone-4d6-graphics-publication.md`](docs/milestone-4d6-graphics-publication.md)
 
 Publish:
 
@@ -543,10 +545,12 @@ npm run generate:vocabulary-master-atlas
 npm run verify:vocabulary-master-atlas
 npm run generate:renderer-only-resolution
 npm run verify:renderer-only-resolution
+npm run generate:graphics-publication
+npm run verify:graphics-publication
 npm run check
 ```
 
-The published straight allocation remains authoritative. Milestone 4D.5 now persists all 3,392 renderer-only semantic resolutions as dense, sparse, and demoted-half publication artifacts: 414 exact encoded reuses and 2,978 derived aliases across 2,555 unique derived bitmaps, with every demoted-half fallback independently verified at Hamming distance 1. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D.6 publication is next.
+The published straight allocation remains authoritative. Milestone 4D.5 now persists all 3,392 renderer-only semantic resolutions as dense, sparse, and demoted-half publication artifacts: 414 exact encoded reuses and 2,978 derived aliases across 2,555 unique derived bitmaps, with every demoted-half fallback independently verified at Hamming distance 1. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D is complete. The deterministic `graphscii-graphics-v0` publication now freezes the 5,796-owner encoded vocabulary, renderer-only resolution layer, master atlases, SHA-256 integrity digests, and the untouched 604-slot reserve after a byte-stable delete-and-regenerate verification gate. Milestone 5 junction research is next.
 
 ---
 

@@ -1,6 +1,6 @@
 # Milestone 4D — Published GraphSCII Graphics Vocabulary v0
 
-Status: **IN PROGRESS — 4D.1 THROUGH 4D.5 COMPLETE; 4D.6 NEXT**
+Status: **COMPLETE — 4D.1 THROUGH 4D.6 FRESH-BUILD VERIFIED**
 
 Milestone 4D turns the completed 4C palette decision into the first complete addressable GraphSCII graphics vocabulary.
 
@@ -431,7 +431,9 @@ artifacts/vocabulary/renderer-only/
 
 ---
 
-## 7. Milestone 4D.6 — publication snapshot — NEXT
+## 7. Milestone 4D.6 — publication snapshot — COMPLETE
+
+Completion note: [`milestone-4d6-graphics-publication.md`](milestone-4d6-graphics-publication.md)
 
 After allocation, artifacts, atlases, and renderer-only resolution all reproduce deterministically, publish the vocabulary snapshot.
 
@@ -542,7 +544,7 @@ Execute 4D in slices:
 4D.3  category atlases                                COMPLETE
 4D.4  master text atlas + page atlas + layout map      COMPLETE
 4D.5  renderer-only resolution registry               COMPLETE
-4D.6  graphscii-graphics-v0 publication snapshot      NEXT
+4D.6  graphscii-graphics-v0 publication snapshot      COMPLETE
 ```
 
 Do not jump directly to the font compiler. Each later slice must consume the same canonical registry generated in 4D.1.
