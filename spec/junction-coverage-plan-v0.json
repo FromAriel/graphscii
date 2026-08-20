@@ -1,0 +1,143 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-coverage-plan",
+  "schemaVersion": 1,
+  "status": "planned-allocation-free",
+  "publicationInput": "graphscii-graphics-v0",
+  "canonicalCell": {
+    "width": 8,
+    "height": 16
+  },
+  "frozenInput": {
+    "straightSemanticDefinitions": 832,
+    "straightVisualOwners": 746,
+    "encodedGraphics": 5796,
+    "allocatedStart": "U+00E000",
+    "allocatedEnd": "U+00F6A3",
+    "reserveStart": "U+00F6A4",
+    "reserveEnd": "U+00F8FF",
+    "reserveSlots": 604,
+    "junctionAllocationsDuring5A": 0
+  },
+  "primaryQuestion": "Where does the existing GraphSCII straight language need junctions most, and what smallest encoded junction basis gives the widest useful coverage per codepoint?",
+  "demandModel": {
+    "primarySource": "compositions-of-832-straight-mathematical-definitions",
+    "retainTopologies": [
+      "LRT",
+      "LRB",
+      "LTB",
+      "RTB",
+      "LRTB"
+    ],
+    "requireInteriorMeeting": true,
+    "recordDemandMultiplicity": true,
+    "measureHubDensity": true,
+    "measureTheoreticalOnePortPerEdgeReferenceUniverse": true,
+    "theoreticalReferenceSemanticCount": 22528
+  },
+  "coverageDimensions": [
+    "topology",
+    "hub-position",
+    "hub-zone",
+    "edge-participation",
+    "exact-boundary-port",
+    "normalized-port-band",
+    "branch-angle-sector",
+    "pairwise-angular-separation",
+    "shape-character",
+    "symmetry-orientation-class",
+    "straight-composition-demand-multiplicity",
+    "graphics-v0-exact-reuse-status"
+  ],
+  "junctionGeometryModels": [
+    "mathematical-intersection-hub",
+    "symmetric-half-pixel-center-hub",
+    "central-2x2-hub-kernel"
+  ],
+  "validityGates": [
+    "canonical-8x16-dimensions",
+    "all-declared-boundary-ports-on",
+    "no-undeclared-boundary-ports-on",
+    "connected-foreground",
+    "hub-connected-to-every-spoke",
+    "deterministic-bitmap-serialization"
+  ],
+  "deduplication": {
+    "globalAgainstGraphicsV0": true,
+    "globalAcrossJunctionCandidates": true,
+    "oneBitmapOneVisualOwner": true,
+    "graphicsV0ExactReuseCost": 0
+  },
+  "optimizationViews": [
+    "demand-maximizing",
+    "breadth-maximizing",
+    "balanced-pareto"
+  ],
+  "budgetSweep": {
+    "min": 0,
+    "max": 604,
+    "step": 1,
+    "highlight": [
+      64,
+      128,
+      192,
+      256,
+      320,
+      384,
+      448,
+      512,
+      604
+    ],
+    "reserveRetentionScenarios": [
+      {
+        "junctionBudget": 192,
+        "reserveRemaining": 412
+      },
+      {
+        "junctionBudget": 256,
+        "reserveRemaining": 348
+      },
+      {
+        "junctionBudget": 320,
+        "reserveRemaining": 284
+      },
+      {
+        "junctionBudget": 384,
+        "reserveRemaining": 220
+      }
+    ]
+  },
+  "execution": [
+    {
+      "slice": "5A.1",
+      "name": "straight-composition demand map and coverage taxonomy",
+      "status": "next"
+    },
+    {
+      "slice": "5A.2",
+      "name": "deterministic junction raster and hub model sweep",
+      "status": "planned"
+    },
+    {
+      "slice": "5A.3",
+      "name": "exhaustive candidate generation and global exact dedup",
+      "status": "planned"
+    },
+    {
+      "slice": "5A.4",
+      "name": "demand breadth and Pareto budget optimization",
+      "status": "planned"
+    },
+    {
+      "slice": "5A.5",
+      "name": "research atlases and measured recommendation",
+      "status": "planned"
+    },
+    {
+      "slice": "5B",
+      "name": "junction budget and allocation decision",
+      "status": "planned"
+    }
+  ]
+}
