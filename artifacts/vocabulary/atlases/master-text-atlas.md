@@ -121926,7 +121926,7 @@ Renderer-only semantic aliases: **3,392**
 
 Exact encoded reuse aliases: **414**. These semantics deliberately do not duplicate an encoded visual in the atlas.
 
-Derived aliases: **2,978** across **2,555** unique derived bitmaps**.
+Derived aliases: **2,978** across **2,555** unique derived bitmaps.
 
 ## Renderer-only page 1
 

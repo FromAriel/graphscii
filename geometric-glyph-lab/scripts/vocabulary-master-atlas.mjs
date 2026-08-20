@@ -115,7 +115,7 @@ function masterTextMarkdown(state) {
     "",
     `Exact encoded reuse aliases: **${state.atlasStats.rendererOnly.exactReuseAliases.toLocaleString("en-US")}**. These semantics deliberately do not duplicate an encoded visual in the atlas.`,
     "",
-    `Derived aliases: **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")}** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")}** unique derived bitmaps**.`,
+    `Derived aliases: **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")}** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")}** unique derived bitmaps.`,
     "",
   );
   state.rendererPages.forEach((page, pageIndex) => {
@@ -265,7 +265,7 @@ function masterLayoutMap(state) {
     "",
     `Minimum physical font population when printable ASCII is included: **${(state.registry.owners.length + 95).toLocaleString("en-US")} glyphs**.`,
     "",
-    `Renderer-only semantics remain outside the PUA allocation: **${state.atlasStats.rendererOnly.semanticAliases.toLocaleString("en-US")} aliases**, including **${state.atlasStats.rendererOnly.exactReuseAliases.toLocaleString("en-US")} exact encoded reuses** and **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")} derived aliases** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")} unique derived bitmaps.`,
+    `Renderer-only semantics remain outside the PUA allocation: **${state.atlasStats.rendererOnly.semanticAliases.toLocaleString("en-US")} aliases**, including **${state.atlasStats.rendererOnly.exactReuseAliases.toLocaleString("en-US")} exact encoded reuses** and **${state.atlasStats.rendererOnly.derivedAliases.toLocaleString("en-US")} derived aliases** across **${state.atlasStats.rendererOnly.uniqueDerivedBitmaps.toLocaleString("en-US")} unique derived bitmaps**.`,
     "",
     "The master text atlas is intentionally ordered STRAIGHT → SOLID → MEDIUM → HALF → LIGHT for conceptual readability. The actual allocation range places LIGHT before HALF, as shown above; codepoints are authoritative.",
   ];

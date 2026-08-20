@@ -16,6 +16,6 @@ Encoded PUA graphics: **5,796**
 
 Minimum physical font population when printable ASCII is included: **5,891 glyphs**.
 
-Renderer-only semantics remain outside the PUA allocation: **3,392 aliases**, including **414 exact encoded reuses** and **2,978 derived aliases** across **2,555 unique derived bitmaps.
+Renderer-only semantics remain outside the PUA allocation: **3,392 aliases**, including **414 exact encoded reuses** and **2,978 derived aliases** across **2,555 unique derived bitmaps**.
 
 The master text atlas is intentionally ordered STRAIGHT → SOLID → MEDIUM → HALF → LIGHT for conceptual readability. The actual allocation range places LIGHT before HALF, as shown above; codepoints are authoritative.
