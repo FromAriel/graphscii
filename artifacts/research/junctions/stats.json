@@ -1,0 +1,45 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-demand-stats",
+  "schemaVersion": 1,
+  "status": "5A.1-allocation-free",
+  "straightSemanticDefinitions": 832,
+  "straightVisualOwners": 746,
+  "totalPossiblePairs": 345696,
+  "interiorIntersectingPairs": 129550,
+  "exactHubCount": 70707,
+  "validPairDemandCompositions": 15330,
+  "tripleCombinationsConsidered": 92190,
+  "validTripleDemandCompositions": 2168,
+  "uniqueDemandSemantics": 15872,
+  "totalDemandMultiplicity": 17498,
+  "centerHubKey": "7/2,15/2",
+  "centerHubDemand": 134,
+  "centerHubDemandSharePercent": 0.765802,
+  "theoreticalReferenceSemantics": 22528,
+  "junctionAllocations": 0,
+  "reserveSlots": 604,
+  "topologies": {
+    "LRT": {
+      "semanticCount": 0,
+      "weightedDemand": 0
+    },
+    "LRB": {
+      "semanticCount": 0,
+      "weightedDemand": 0
+    },
+    "LTB": {
+      "semanticCount": 0,
+      "weightedDemand": 0
+    },
+    "RTB": {
+      "semanticCount": 0,
+      "weightedDemand": 0
+    },
+    "LRTB": {
+      "semanticCount": 15872,
+      "weightedDemand": 17498
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-coverage-research",
+  "schemaVersion": 1,
+  "status": "5A.1-demand-map-complete-allocation-free",
+  "canonicalCell": {
+    "width": 8,
+    "height": 16
+  },
+  "frozenInput": {
+    "publication": "graphscii-graphics-v0",
+    "straightSemanticDefinitions": 832,
+    "straightVisualOwners": 746,
+    "encodedGraphics": 5796,
+    "allocatedEnd": "U+00F6A3",
+    "reserveStart": "U+00F6A4",
+    "reserveEnd": "U+00F8FF",
+    "reserveSlots": 604,
+    "junctionAllocations": 0
+  },
+  "demandMethod": {
+    "pairIntersections": "strict-interior exact rational segment intersections",
+    "tripleDemand": "unordered triples of straight definitions concurrent at one exact hub",
+    "topologyGate": [
+      "LRT",
+      "LRB",
+      "LTB",
+      "RTB",
+      "LRTB"
+    ],
+    "onePortPerParticipatingEdge": true,
+    "theoreticalReferenceSemanticCount": 22528
+  },
+  "coverageTaxonomy": {
+    "hubGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "normalizedPortBandsPerEdge": 4,
+    "branchAngleSectors": 16,
+    "pairwiseSeparationBucketsDegrees": [
+      "00-15",
+      "15-30",
+      "30-60",
+      "60-90",
+      "90-120",
+      "120-150",
+      "150-180"
+    ],
+    "shapeClasses": [
+      "T-like",
+      "Y-like",
+      "cross-like",
+      "X-like",
+      "mixed-angle",
+      "strongly-asymmetric",
+      "near-degenerate"
+    ]
+  },
+  "measured": {
+    "totalPossiblePairs": 345696,
+    "interiorIntersectingPairs": 129550,
+    "exactHubCount": 70707,
+    "validPairDemandCompositions": 15330,
+    "tripleCombinationsConsidered": 92190,
+    "validTripleDemandCompositions": 2168,
+    "uniqueDemandSemantics": 15872,
+    "totalDemandMultiplicity": 17498,
+    "centerHubDemand": 134,
+    "centerHubDemandSharePercent": 0.765802,
+    "topologies": {
+      "LRT": {
+        "semanticCount": 0,
+        "weightedDemand": 0
+      },
+      "LRB": {
+        "semanticCount": 0,
+        "weightedDemand": 0
+      },
+      "LTB": {
+        "semanticCount": 0,
+        "weightedDemand": 0
+      },
+      "RTB": {
+        "semanticCount": 0,
+        "weightedDemand": 0
+      },
+      "LRTB": {
+        "semanticCount": 15872,
+        "weightedDemand": 17498
+      }
+    }
+  },
+  "next": "5A.2 deterministic junction raster and hub-model sweep"
+}

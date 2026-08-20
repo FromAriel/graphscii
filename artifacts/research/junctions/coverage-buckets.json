@@ -1,0 +1,885 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-coverage-buckets",
+  "schemaVersion": 1,
+  "taxonomy": {
+    "topology": [
+      "LRT",
+      "LRB",
+      "LTB",
+      "RTB",
+      "LRTB"
+    ],
+    "hubGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "normalizedPortBandsPerEdge": 4,
+    "branchAngleSectors": 16,
+    "angleSectorDegrees": 22.5
+  },
+  "buckets": {
+    "topology": [
+      {
+        "key": "LRTB",
+        "semanticCount": 15872,
+        "weightedDemand": 17498
+      }
+    ],
+    "hubZone": [
+      {
+        "key": "z00",
+        "semanticCount": 872,
+        "weightedDemand": 1070
+      },
+      {
+        "key": "z01",
+        "semanticCount": 786,
+        "weightedDemand": 786
+      },
+      {
+        "key": "z02",
+        "semanticCount": 901,
+        "weightedDemand": 1000
+      },
+      {
+        "key": "z03",
+        "semanticCount": 415,
+        "weightedDemand": 514
+      },
+      {
+        "key": "z10",
+        "semanticCount": 898,
+        "weightedDemand": 919
+      },
+      {
+        "key": "z11",
+        "semanticCount": 2596,
+        "weightedDemand": 2887
+      },
+      {
+        "key": "z12",
+        "semanticCount": 1886,
+        "weightedDemand": 2036
+      },
+      {
+        "key": "z13",
+        "semanticCount": 300,
+        "weightedDemand": 300
+      },
+      {
+        "key": "z20",
+        "semanticCount": 956,
+        "weightedDemand": 1034
+      },
+      {
+        "key": "z21",
+        "semanticCount": 2183,
+        "weightedDemand": 2384
+      },
+      {
+        "key": "z22",
+        "semanticCount": 1791,
+        "weightedDemand": 1998
+      },
+      {
+        "key": "z23",
+        "semanticCount": 326,
+        "weightedDemand": 326
+      },
+      {
+        "key": "z30",
+        "semanticCount": 612,
+        "weightedDemand": 753
+      },
+      {
+        "key": "z31",
+        "semanticCount": 465,
+        "weightedDemand": 465
+      },
+      {
+        "key": "z32",
+        "semanticCount": 562,
+        "weightedDemand": 604
+      },
+      {
+        "key": "z33",
+        "semanticCount": 323,
+        "weightedDemand": 422
+      }
+    ],
+    "exactPort": [
+      {
+        "key": "B0",
+        "semanticCount": 1930,
+        "weightedDemand": 2743
+      },
+      {
+        "key": "B1",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "B2",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "B3",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "B4",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "B5",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "B6",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "B7",
+        "semanticCount": 1930,
+        "weightedDemand": 2743
+      },
+      {
+        "key": "L0",
+        "semanticCount": 1090,
+        "weightedDemand": 1903
+      },
+      {
+        "key": "L1",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L10",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L11",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L12",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L13",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L14",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L15",
+        "semanticCount": 1090,
+        "weightedDemand": 1903
+      },
+      {
+        "key": "L2",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L3",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L4",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L5",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L6",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L7",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L8",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "L9",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R0",
+        "semanticCount": 1090,
+        "weightedDemand": 1903
+      },
+      {
+        "key": "R1",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R10",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R11",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R12",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R13",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R14",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R15",
+        "semanticCount": 1090,
+        "weightedDemand": 1903
+      },
+      {
+        "key": "R2",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R3",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R4",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R5",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R6",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R7",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R8",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "R9",
+        "semanticCount": 978,
+        "weightedDemand": 978
+      },
+      {
+        "key": "T0",
+        "semanticCount": 1930,
+        "weightedDemand": 2743
+      },
+      {
+        "key": "T1",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "T2",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "T3",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "T4",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "T5",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "T6",
+        "semanticCount": 2002,
+        "weightedDemand": 2002
+      },
+      {
+        "key": "T7",
+        "semanticCount": 1930,
+        "weightedDemand": 2743
+      }
+    ],
+    "normalizedPortBand": [
+      {
+        "key": "B:band-0",
+        "semanticCount": 3932,
+        "weightedDemand": 4745
+      },
+      {
+        "key": "B:band-1",
+        "semanticCount": 4004,
+        "weightedDemand": 4004
+      },
+      {
+        "key": "B:band-2",
+        "semanticCount": 4004,
+        "weightedDemand": 4004
+      },
+      {
+        "key": "B:band-3",
+        "semanticCount": 3932,
+        "weightedDemand": 4745
+      },
+      {
+        "key": "L:band-0",
+        "semanticCount": 4024,
+        "weightedDemand": 4837
+      },
+      {
+        "key": "L:band-1",
+        "semanticCount": 3912,
+        "weightedDemand": 3912
+      },
+      {
+        "key": "L:band-2",
+        "semanticCount": 3912,
+        "weightedDemand": 3912
+      },
+      {
+        "key": "L:band-3",
+        "semanticCount": 4024,
+        "weightedDemand": 4837
+      },
+      {
+        "key": "R:band-0",
+        "semanticCount": 4024,
+        "weightedDemand": 4837
+      },
+      {
+        "key": "R:band-1",
+        "semanticCount": 3912,
+        "weightedDemand": 3912
+      },
+      {
+        "key": "R:band-2",
+        "semanticCount": 3912,
+        "weightedDemand": 3912
+      },
+      {
+        "key": "R:band-3",
+        "semanticCount": 4024,
+        "weightedDemand": 4837
+      },
+      {
+        "key": "T:band-0",
+        "semanticCount": 3932,
+        "weightedDemand": 4745
+      },
+      {
+        "key": "T:band-1",
+        "semanticCount": 4004,
+        "weightedDemand": 4004
+      },
+      {
+        "key": "T:band-2",
+        "semanticCount": 4004,
+        "weightedDemand": 4004
+      },
+      {
+        "key": "T:band-3",
+        "semanticCount": 3932,
+        "weightedDemand": 4745
+      }
+    ],
+    "branchAngleSector": [
+      {
+        "key": "sector-00",
+        "semanticCount": 2700,
+        "weightedDemand": 2700
+      },
+      {
+        "key": "sector-01",
+        "semanticCount": 2376,
+        "weightedDemand": 2376
+      },
+      {
+        "key": "sector-02",
+        "semanticCount": 3078,
+        "weightedDemand": 3078
+      },
+      {
+        "key": "sector-03",
+        "semanticCount": 5064,
+        "weightedDemand": 6690
+      },
+      {
+        "key": "sector-04",
+        "semanticCount": 8008,
+        "weightedDemand": 8008
+      },
+      {
+        "key": "sector-05",
+        "semanticCount": 5064,
+        "weightedDemand": 6690
+      },
+      {
+        "key": "sector-06",
+        "semanticCount": 3078,
+        "weightedDemand": 3078
+      },
+      {
+        "key": "sector-07",
+        "semanticCount": 2376,
+        "weightedDemand": 2376
+      },
+      {
+        "key": "sector-08",
+        "semanticCount": 2700,
+        "weightedDemand": 2700
+      },
+      {
+        "key": "sector-09",
+        "semanticCount": 2376,
+        "weightedDemand": 2376
+      },
+      {
+        "key": "sector-10",
+        "semanticCount": 3078,
+        "weightedDemand": 3078
+      },
+      {
+        "key": "sector-11",
+        "semanticCount": 5064,
+        "weightedDemand": 6690
+      },
+      {
+        "key": "sector-12",
+        "semanticCount": 8008,
+        "weightedDemand": 8008
+      },
+      {
+        "key": "sector-13",
+        "semanticCount": 5064,
+        "weightedDemand": 6690
+      },
+      {
+        "key": "sector-14",
+        "semanticCount": 3078,
+        "weightedDemand": 3078
+      },
+      {
+        "key": "sector-15",
+        "semanticCount": 2376,
+        "weightedDemand": 2376
+      }
+    ],
+    "pairwiseAngularSeparation": [
+      {
+        "key": "00-15",
+        "semanticCount": 1488,
+        "weightedDemand": 4740
+      },
+      {
+        "key": "120-150",
+        "semanticCount": 13596,
+        "weightedDemand": 13596
+      },
+      {
+        "key": "15-30",
+        "semanticCount": 2780,
+        "weightedDemand": 2780
+      },
+      {
+        "key": "150-180",
+        "semanticCount": 36012,
+        "weightedDemand": 42516
+      },
+      {
+        "key": "30-60",
+        "semanticCount": 13596,
+        "weightedDemand": 13596
+      },
+      {
+        "key": "60-90",
+        "semanticCount": 13712,
+        "weightedDemand": 13712
+      },
+      {
+        "key": "90-120",
+        "semanticCount": 14048,
+        "weightedDemand": 14048
+      }
+    ],
+    "shapeCharacter": [
+      {
+        "key": "cross-like",
+        "semanticCount": 2184,
+        "weightedDemand": 2184
+      },
+      {
+        "key": "mixed-angle",
+        "semanticCount": 8682,
+        "weightedDemand": 8682
+      },
+      {
+        "key": "near-degenerate",
+        "semanticCount": 744,
+        "weightedDemand": 2370
+      },
+      {
+        "key": "strongly-asymmetric",
+        "semanticCount": 4262,
+        "weightedDemand": 4262
+      }
+    ],
+    "symmetryOrientationClass": [
+      {
+        "key": "LRTB:cross-like:z00",
+        "semanticCount": 128,
+        "weightedDemand": 128
+      },
+      {
+        "key": "LRTB:cross-like:z01",
+        "semanticCount": 187,
+        "weightedDemand": 187
+      },
+      {
+        "key": "LRTB:cross-like:z02",
+        "semanticCount": 166,
+        "weightedDemand": 166
+      },
+      {
+        "key": "LRTB:cross-like:z03",
+        "semanticCount": 61,
+        "weightedDemand": 61
+      },
+      {
+        "key": "LRTB:cross-like:z10",
+        "semanticCount": 131,
+        "weightedDemand": 131
+      },
+      {
+        "key": "LRTB:cross-like:z11",
+        "semanticCount": 216,
+        "weightedDemand": 216
+      },
+      {
+        "key": "LRTB:cross-like:z12",
+        "semanticCount": 201,
+        "weightedDemand": 201
+      },
+      {
+        "key": "LRTB:cross-like:z13",
+        "semanticCount": 52,
+        "weightedDemand": 52
+      },
+      {
+        "key": "LRTB:cross-like:z20",
+        "semanticCount": 133,
+        "weightedDemand": 133
+      },
+      {
+        "key": "LRTB:cross-like:z21",
+        "semanticCount": 214,
+        "weightedDemand": 214
+      },
+      {
+        "key": "LRTB:cross-like:z22",
+        "semanticCount": 198,
+        "weightedDemand": 198
+      },
+      {
+        "key": "LRTB:cross-like:z23",
+        "semanticCount": 55,
+        "weightedDemand": 55
+      },
+      {
+        "key": "LRTB:cross-like:z30",
+        "semanticCount": 104,
+        "weightedDemand": 104
+      },
+      {
+        "key": "LRTB:cross-like:z31",
+        "semanticCount": 153,
+        "weightedDemand": 153
+      },
+      {
+        "key": "LRTB:cross-like:z32",
+        "semanticCount": 135,
+        "weightedDemand": 135
+      },
+      {
+        "key": "LRTB:cross-like:z33",
+        "semanticCount": 50,
+        "weightedDemand": 50
+      },
+      {
+        "key": "LRTB:mixed-angle:z00",
+        "semanticCount": 373,
+        "weightedDemand": 373
+      },
+      {
+        "key": "LRTB:mixed-angle:z01",
+        "semanticCount": 498,
+        "weightedDemand": 498
+      },
+      {
+        "key": "LRTB:mixed-angle:z02",
+        "semanticCount": 483,
+        "weightedDemand": 483
+      },
+      {
+        "key": "LRTB:mixed-angle:z03",
+        "semanticCount": 164,
+        "weightedDemand": 164
+      },
+      {
+        "key": "LRTB:mixed-angle:z10",
+        "semanticCount": 531,
+        "weightedDemand": 531
+      },
+      {
+        "key": "LRTB:mixed-angle:z11",
+        "semanticCount": 1486,
+        "weightedDemand": 1486
+      },
+      {
+        "key": "LRTB:mixed-angle:z12",
+        "semanticCount": 1064,
+        "weightedDemand": 1064
+      },
+      {
+        "key": "LRTB:mixed-angle:z13",
+        "semanticCount": 181,
+        "weightedDemand": 181
+      },
+      {
+        "key": "LRTB:mixed-angle:z20",
+        "semanticCount": 512,
+        "weightedDemand": 512
+      },
+      {
+        "key": "LRTB:mixed-angle:z21",
+        "semanticCount": 1277,
+        "weightedDemand": 1277
+      },
+      {
+        "key": "LRTB:mixed-angle:z22",
+        "semanticCount": 981,
+        "weightedDemand": 981
+      },
+      {
+        "key": "LRTB:mixed-angle:z23",
+        "semanticCount": 180,
+        "weightedDemand": 180
+      },
+      {
+        "key": "LRTB:mixed-angle:z30",
+        "semanticCount": 254,
+        "weightedDemand": 254
+      },
+      {
+        "key": "LRTB:mixed-angle:z31",
+        "semanticCount": 279,
+        "weightedDemand": 279
+      },
+      {
+        "key": "LRTB:mixed-angle:z32",
+        "semanticCount": 300,
+        "weightedDemand": 300
+      },
+      {
+        "key": "LRTB:mixed-angle:z33",
+        "semanticCount": 119,
+        "weightedDemand": 119
+      },
+      {
+        "key": "LRTB:near-degenerate:z00",
+        "semanticCount": 82,
+        "weightedDemand": 280
+      },
+      {
+        "key": "LRTB:near-degenerate:z01",
+        "semanticCount": 2,
+        "weightedDemand": 2
+      },
+      {
+        "key": "LRTB:near-degenerate:z02",
+        "semanticCount": 44,
+        "weightedDemand": 143
+      },
+      {
+        "key": "LRTB:near-degenerate:z03",
+        "semanticCount": 40,
+        "weightedDemand": 139
+      },
+      {
+        "key": "LRTB:near-degenerate:z10",
+        "semanticCount": 11,
+        "weightedDemand": 32
+      },
+      {
+        "key": "LRTB:near-degenerate:z11",
+        "semanticCount": 146,
+        "weightedDemand": 437
+      },
+      {
+        "key": "LRTB:near-degenerate:z12",
+        "semanticCount": 73,
+        "weightedDemand": 223
+      },
+      {
+        "key": "LRTB:near-degenerate:z20",
+        "semanticCount": 36,
+        "weightedDemand": 114
+      },
+      {
+        "key": "LRTB:near-degenerate:z21",
+        "semanticCount": 96,
+        "weightedDemand": 297
+      },
+      {
+        "key": "LRTB:near-degenerate:z22",
+        "semanticCount": 100,
+        "weightedDemand": 307
+      },
+      {
+        "key": "LRTB:near-degenerate:z30",
+        "semanticCount": 57,
+        "weightedDemand": 198
+      },
+      {
+        "key": "LRTB:near-degenerate:z32",
+        "semanticCount": 17,
+        "weightedDemand": 59
+      },
+      {
+        "key": "LRTB:near-degenerate:z33",
+        "semanticCount": 40,
+        "weightedDemand": 139
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z00",
+        "semanticCount": 289,
+        "weightedDemand": 289
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z01",
+        "semanticCount": 99,
+        "weightedDemand": 99
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z02",
+        "semanticCount": 208,
+        "weightedDemand": 208
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z03",
+        "semanticCount": 150,
+        "weightedDemand": 150
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z10",
+        "semanticCount": 225,
+        "weightedDemand": 225
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z11",
+        "semanticCount": 748,
+        "weightedDemand": 748
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z12",
+        "semanticCount": 548,
+        "weightedDemand": 548
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z13",
+        "semanticCount": 67,
+        "weightedDemand": 67
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z20",
+        "semanticCount": 275,
+        "weightedDemand": 275
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z21",
+        "semanticCount": 596,
+        "weightedDemand": 596
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z22",
+        "semanticCount": 512,
+        "weightedDemand": 512
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z23",
+        "semanticCount": 91,
+        "weightedDemand": 91
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z30",
+        "semanticCount": 197,
+        "weightedDemand": 197
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z31",
+        "semanticCount": 33,
+        "weightedDemand": 33
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z32",
+        "semanticCount": 110,
+        "weightedDemand": 110
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z33",
+        "semanticCount": 114,
+        "weightedDemand": 114
+      }
+    ]
+  }
+}
