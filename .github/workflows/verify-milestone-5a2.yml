@@ -68,6 +68,7 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
 
           detailed = Path("docs/milestone-5-junction-coverage-plan.md")
           text = detailed.read_text()
@@ -76,73 +77,66 @@ jobs:
               "Status: **IN PROGRESS — 5A.1 + 5A.2 COMPLETE; 5A.3 NEXT**",
               1,
           )
-          old_execution = '''5A.1  straight-composition demand map + coverage taxonomy       NEXT
-          5A.2  deterministic junction raster/hub model sweep
-          5A.3  exhaustive candidate generation + global exact dedup
-          5A.4  demand/breadth/Pareto budget optimization, K=0..604
-          5A.5  research atlases + measured recommendation'''
-          new_execution = '''5A.1  straight-composition demand map + coverage taxonomy       COMPLETE
+          text = text.replace(
+              "Status: **IN PROGRESS — 5A.1 NEXT**",
+              "Status: **IN PROGRESS — 5A.1 + 5A.2 COMPLETE; 5A.3 NEXT**",
+              1,
+          )
+
+          execution = """5A.1  straight-composition demand map + coverage taxonomy       COMPLETE
           5A.2  deterministic raster + generic 600-lattice sweep           COMPLETE
           5A.3  exhaustive candidate generation + global exact dedup       NEXT
           5A.4  demand/breadth/Pareto budget optimization, K=0..604
-          5A.5  research atlases + measured recommendation'''
-          if old_execution in text:
-              text = text.replace(old_execution, new_execution, 1)
-          elif new_execution not in text:
-              raise SystemExit("Could not advance detailed Milestone 5 execution block")
+          5A.5  research atlases + measured recommendation
 
-          start = text.find("## 13. 5A.1 definition of done")
-          end = text.find("## 14. Guiding rule")
-          if start != -1 and end != -1 and start < end:
-              replacement = '''## 13. Current execution state
+          5B    selected junction budget/allocation decision
+          5C    junction registry + provisional codepoint allocation
+          5D    canonical junction artifacts + master atlas integration
+          5E    graphics publication update + reserve accounting"""
+          pattern = r"(## 12\. Execution slices\n\n```text\n).*?(\n```\n\n## 13\.)"
+          match = re.search(pattern, text, flags=re.S)
+          if not match:
+              raise SystemExit("Could not locate detailed execution section")
+          text = text[:match.start()] + match.group(1) + execution + match.group(2) + text[match.end():]
 
-### 5A.1 — COMPLETE
+          state_section = """## 13. Current execution state
 
-The straight-composition demand map measured 22,428 of 22,528 theoretical one-port-per-edge junction semantics (99.556108%) with 928,242 weighted demand events. All 6,144 three-port semantics occur; the 100 zero-demand blind spots are four-port LRTB breadth-protection cases.
+          ### 5A.1 — COMPLETE
 
-### 5A.2 — COMPLETE
+          The straight-composition demand map measured 22,428 of 22,528 theoretical one-port-per-edge junction semantics (99.556108%) with 928,242 weighted demand events. All 6,144 three-port semantics occur; the 100 zero-demand blind spots are four-port LRTB breadth-protection cases.
 
-The raster sweep now uses boundary-safe inward ingress from every declared port. All 22,428 demanded semantics pass every validity gate under all four tested geometry models.
+          ### 5A.2 — COMPLETE
 
-The 600-entry generic theory is now a first-class optimization input. Four frozen baselines were measured:
+          Boundary-safe inward ingress removes accidental neighboring edge activation. All 22,428 demanded semantics pass every validity gate under all four tested raster models.
 
-```text
-strategy                      exact demand   avg breadth Δ   p95 breadth Δ
-pure demand-top                 21.358223%       0.560884        1.000000
-even topology-balanced          15.088953%       0.204765        0.400000
-even space-proportional          7.981755%       0.163349        0.285714
-hybrid even + demand            17.255414%       0.174906        0.285714
-```
+          The 600-entry generic theory is now a first-class optimization input:
 
-The pure frequency list leaves severe four-port coverage holes. The even lattice dramatically improves geometric breadth, and the hybrid retains much of that breadth while recovering substantial measured demand. The next optimizer must therefore carry both empirical demand and generic evenly spaced coverage rather than selecting by frequency alone.
+          ```text
+          strategy                      exact demand   avg breadth Δ   p95 breadth Δ
+          pure demand-top                 21.358223%       0.560884        1.000000
+          even topology-balanced          15.088953%       0.204765        0.400000
+          even space-proportional          7.981755%       0.163349        0.285714
+          hybrid even + demand            17.255414%       0.174906        0.285714
+          ```
 
-Completion note: [`docs/milestone-5a2-generic-lattice.md`](docs/milestone-5a2-generic-lattice.md)
+          The pure frequency list leaves severe four-port coverage holes. The even lattice dramatically improves geometric breadth, and the hybrid retains much of that breadth while recovering substantial measured demand. The next optimizer therefore carries both empirical demand and generic evenly spaced coverage.
 
-### 5A.3 — NEXT
+          Completion note: [`docs/milestone-5a2-generic-lattice.md`](docs/milestone-5a2-generic-lattice.md)
 
-Exhaustively materialize boundary-safe junction candidates from the measured semantic universe and geometry models, globally exact-deduplicate them against `graphscii-graphics-v0` and one another, attach both demand and generic-lattice coverage sets to every visual owner, and produce the owner population that 5A.4 will optimize across budgets 0..604.
+          ### 5A.3 — NEXT
 
-'''
-              text = text[:start] + replacement + text[end:]
+          Exhaustively materialize boundary-safe junction candidates from the measured semantic universe and geometry models, globally exact-deduplicate them against `graphscii-graphics-v0` and one another, attach both demand and generic-lattice coverage sets to every visual owner, and produce the owner population that 5A.4 will optimize across budgets 0..604.
+
+          """
+          match = re.search(r"## 13\..*?(?=## 14\. Guiding rule)", text, flags=re.S)
+          if not match:
+              raise SystemExit("Could not locate detailed current-state section")
+          text = text[:match.start()] + state_section + text[match.end():]
           detailed.write_text(text)
 
           plan = Path("PLAN.md")
           text = plan.read_text()
-          old_block = '''## 11. Later milestones
-
-          ```text
-          5   junctions / reserve-budget strategy
-          6   curated curve/arc extension if justified
-          7   terminals / specials
-          8   vocabulary optimization
-          9   font compiler
-          10  drawing API / solver
-          11  interactive editor
-          12  GraphSCII v1 freeze / release
-          ```
-
-          The 604-slot reserve is intentionally protected until later families are measured.'''
-          new_block = '''## 11. Milestone 5 — junction coverage and reserve-budget strategy — IN PROGRESS
+          milestone_section = """## 11. Milestone 5 — junction coverage and reserve-budget strategy — IN PROGRESS
 
           Detailed plan: [`docs/milestone-5-junction-coverage-plan.md`](docs/milestone-5-junction-coverage-plan.md)
 
@@ -172,29 +166,27 @@ Exhaustively materialize boundary-safe junction candidates from the measured sem
           10  drawing API / solver
           11  interactive editor
           12  GraphSCII v1 freeze / release
-          ```'''
-          if old_block in text:
-              text = text.replace(old_block, new_block, 1)
-          elif new_block not in text:
-              raise SystemExit("Could not advance root Milestone 5 roadmap block")
+          ```
+          """
+          match = re.search(r"## 11\..*?(?=---\n\n## 12\. Current commands)", text, flags=re.S)
+          if not match:
+              raise SystemExit("Could not locate root Milestone 11 section")
+          text = text[:match.start()] + milestone_section + "\n" + text[match.end():]
 
-          old_commands = '''npm run generate:graphics-publication
-          npm run verify:graphics-publication
-          npm run check'''
-          new_commands = '''npm run generate:graphics-publication
+          geometry_commands = """npm run generate:graphics-publication
           npm run verify:graphics-publication
           npm run generate:junction-demand
           npm run verify:junction-demand
           npm run generate:junction-blind-spots
           npm run verify:junction-blind-spots
           npm run generate:junction-geometry
-          npm run verify:junction-geometry
-          npm run check'''
-          if old_commands in text:
-              text = text.replace(old_commands, new_commands, 1)
-          elif new_commands not in text:
-              raise SystemExit("Could not advance root command list")
-
+          npm run verify:junction-geometry"""
+          if "npm run generate:junction-geometry" not in text:
+              text = text.replace(
+                  "npm run generate:graphics-publication\nnpm run verify:graphics-publication",
+                  geometry_commands,
+                  1,
+              )
           text = text.replace(
               "Milestone 5 junction research is next.",
               "Milestone 5A.1 and 5A.2 are complete; exhaustive boundary-safe junction candidate generation and global exact dedup in Milestone 5A.3 is next.",
