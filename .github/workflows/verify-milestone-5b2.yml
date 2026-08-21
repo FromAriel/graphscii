@@ -47,7 +47,9 @@ jobs:
         run: npm run verify
 
       - name: Print diagonal connector measurements
-        run: cat artifacts/research/junctions/diagonal-stats.json
+        run: |
+          cat artifacts/research/junctions/diagonal-stats.json
+          cat artifacts/research/junctions/diagonal-selection.json
 
       - name: Commit deterministic Milestone 5B.2 outputs
         if: github.event_name == 'push'
@@ -60,9 +62,12 @@ jobs:
             artifacts/research/junctions/diagonal-owners.json \
             artifacts/research/junctions/diagonal-stats.json \
             artifacts/research/junctions/diagonal-report.md \
-            spec/diagonal-junction-basis-v0.json
+            artifacts/research/junctions/diagonal-selection.json \
+            artifacts/research/junctions/diagonal-selection-report.md \
+            spec/diagonal-junction-basis-v0.json \
+            spec/generic-connector-basis-v0-selection.json
           if ! git diff --cached --quiet; then
-            git commit -m "Generate Milestone 5B.2 diagonal connector artifacts"
+            git commit -m "Generate final Milestone 5B.2 connector selection artifacts"
             git push origin HEAD:milestone-5-junction-coverage-plan
           else
             echo "Milestone 5B.2 generated outputs already match."
