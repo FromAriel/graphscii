@@ -25,48 +25,6 @@ jobs:
           ref: milestone-5e-graphics-v1-publication
           fetch-depth: 0
 
-      - name: Correct connector semantics envelope if needed
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          p = Path('geometric-glyph-lab/scripts/vocabulary-publication-v1.mjs')
-          s = p.read_text()
-          pattern = re.compile(
-              r'  if \(!Array\.isArray\(semantics\) \|\| semantics\.length !== EXPECTED_CONNECTOR_SEMANTICS\) \{\n'
-              r'    throw new Error\(`Milestone 5E requires \$\{EXPECTED_CONNECTOR_SEMANTICS\} connector semantics\.`\);\n'
-              r'  \}\n'
-          )
-          replacement = '''  if (
-            semantics?.schema !== "graphscii-generic-connector-semantics-v1" ||
-            semantics?.semanticCount !== EXPECTED_CONNECTOR_SEMANTICS ||
-            !Array.isArray(semantics.semantics) ||
-            semantics.semantics.length !== EXPECTED_CONNECTOR_SEMANTICS
-          ) {
-            throw new Error(`Milestone 5E requires ${EXPECTED_CONNECTOR_SEMANTICS} connector semantics.`);
-          }
-          '''
-          s2, count = pattern.subn(replacement, s)
-          if count == 1:
-              p.write_text(s2)
-          elif 'semantics?.semanticCount !== EXPECTED_CONNECTOR_SEMANTICS' not in s:
-              raise SystemExit(f'Expected exactly one semantics fixture replacement, found {count}.')
-          PY
-
-      - name: Persist source correction
-        if: github.event_name == 'push'
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- geometric-glyph-lab/scripts/vocabulary-publication-v1.mjs
-          if ! git diff --cached --quiet; then
-            git commit -m "Fix graphics-v1 connector semantics fixture"
-            git push origin HEAD:milestone-5e-graphics-v1-publication
-          fi
-
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -91,18 +49,159 @@ jobs:
       - name: Print graphics-v1 publication
         run: cat artifacts/publications/graphscii-graphics-v1.json
 
-      - name: Commit deterministic publication outputs
+      - name: Finalize Milestone 5 roadmap and cleanup
         if: github.event_name == 'push'
         shell: bash
         run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          plan = Path('PLAN.md')
+          text = plan.read_text()
+          start = text.index('## 11. Milestone 5 — junction coverage and reserve-budget strategy — IN PROGRESS')
+          end = text.index('Later milestones remain:', start)
+          replacement = '''## 11. Milestone 5 — generic connector vocabulary — COMPLETE
+
+Detailed research plan: [`docs/milestone-5-junction-coverage-plan.md`](docs/milestone-5-junction-coverage-plan.md)
+
+```text
+5A.1  straight-composition demand map + taxonomy              COMPLETE
+5A.2  boundary-safe geometry + generic lattice research       COMPLETE
+5A.3  exhaustive candidate generation + exact dedup           COMPLETE / SUPERSEDED
+5B.1  640-semantic orthogonal generic basis                   COMPLETE
+5B.2  deterministic 60-semantic diagonal generic basis        COMPLETE
+5C    connector registry + provisional allocation             COMPLETE
+5D    canonical connector artifacts + atlas integration       COMPLETE
+5E    graphscii-graphics-v1 publication + reserve accounting  COMPLETE
+```
+
+Final selected generic connector language:
+
+```text
+orthogonal semantic connectors          640
+diagonal semantic connectors             60
+connector semantic aliases total         700
+novel orthogonal visual owners            544
+novel diagonal visual owners               57
+novel connector owners total              601
+```
+
+Final GraphSCII graphics-v1 population:
+
+```text
+graphics-v0 owners                     5,796
+connector owners                         601
+                                       -----
+encoded PUA graphics                    6,397
+printable ASCII                            95
+minimum eventual physical glyphs        6,492
+```
+
+Final address map:
+
+```text
+U+E000..U+F6A3    5,796   unchanged graphics-v0 owners
+U+F6A4..U+F8FC      601   generic connector owners
+U+F8FD..U+F8FF        3   protected reserve
+```
+
+Published snapshot:
+
+```text
+graphscii-graphics-v1
+```
+
+Completion notes:
+
+- [`docs/milestone-5b1-orthogonal-generic-connectors.md`](docs/milestone-5b1-orthogonal-generic-connectors.md)
+- [`docs/milestone-5b2-diagonal-generic-connectors.md`](docs/milestone-5b2-diagonal-generic-connectors.md)
+- [`docs/milestone-5c-connector-allocation.md`](docs/milestone-5c-connector-allocation.md)
+- [`docs/milestone-5e-graphics-v1-publication.md`](docs/milestone-5e-graphics-v1-publication.md)
+
+The exhaustive junction search remains preserved as research evidence, but the final vocabulary deliberately uses the smaller rule-generated orthogonal and diagonal basis because it is deterministic, explainable, and directly selectable by drawing rules. Exact bitmap dedup determines storage cost.
+
+'''
+          plan.write_text(text[:start] + replacement + text[end:])
+
+          detail = Path('docs/milestone-5-junction-coverage-plan.md')
+          d = detail.read_text()
+          d = d.replace(
+              'Status: **IN PROGRESS — 5A.1 + 5A.2 COMPLETE; 5A.3 NEXT**',
+              'Status: **COMPLETE — GENERIC CONNECTOR BASIS FROZEN AND PUBLISHED AS `graphscii-graphics-v1`**'
+          )
+          s12 = d.index('## 12. Execution slices')
+          s14 = d.index('## 14. Guiding rule', s12)
+          replacement12 = '''## 12. Execution slices
+
+```text
+5A.1  straight-composition demand map + coverage taxonomy       COMPLETE
+5A.2  deterministic raster + generic lattice research            COMPLETE
+5A.3  exhaustive candidate generation + global exact dedup        COMPLETE / SUPERSEDED
+5B.1  orthogonal generic connector basis                          COMPLETE
+5B.2  deterministic diagonal generic connector basis              COMPLETE
+5C    connector registry + provisional codepoint allocation       COMPLETE
+5D    canonical connector artifacts + atlas integration           COMPLETE
+5E    graphics-v1 publication + final reserve accounting          COMPLETE
+```
+
+## 13. Final execution state
+
+Milestone 5 began by measuring the full junction problem, then intentionally stopped short of encoding that combinatorial universe. The research showed that a rule-generated generic basis was preferable to a large opaque optimizer result.
+
+### Research retained
+
+```text
+measured theoretical junction semantics     22,528
+demanded by straight composition            22,428
+weighted demand events                      928,242
+exhaustive semantic/model candidates         90,112
+exact visual owners in exhaustive sweep      82,377
+```
+
+These artifacts remain useful evidence but do not define the encoded vocabulary.
+
+### Curated generic basis selected
+
+```text
+orthogonal semantics                            640
+orthogonal novel owners                         544
+diagonal semantics                               60
+diagonal novel owners                            57
+connector semantics total                       700
+connector novel owners total                    601
+```
+
+The orthogonal family is all 128 `(x,y)` intersections with a full four-arm cross and each of the four one-arm-removed forms. The diagonal family is the deterministic axis-squash X basis plus its fixed symmetric three-leg samples.
+
+### Published allocation
+
+```text
+base graphics-v0 owners                      5,796
+new generic connector owners                   601
+encoded graphics-v1 owners                   6,397
+connector allocation                 U+F6A4..U+F8FC
+final protected reserve               U+F8FD..U+F8FF
+final reserve slots                               3
+```
+
+Publication: `graphscii-graphics-v1`.
+
+Completion note: [`docs/milestone-5e-graphics-v1-publication.md`](docs/milestone-5e-graphics-v1-publication.md)
+
+'''
+          detail.write_text(d[:s12] + replacement12 + d[s14:])
+          PY
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/verify-milestone-5e.yml
+          if [ -f .github/workflows/finalize-milestone-5e.yml ]; then
+            git rm .github/workflows/finalize-milestone-5e.yml
+          fi
           git add -- \
+            PLAN.md \
+            docs/milestone-5-junction-coverage-plan.md \
             artifacts/publications/graphscii-graphics-v1.json \
             artifacts/publications/graphscii-graphics-v1.md
-          if ! git diff --cached --quiet; then
-            git commit -m "Publish GraphSCII graphics vocabulary v1"
-            git push origin HEAD:milestone-5e-graphics-v1-publication
-          else
-            echo "graphics-v1 publication already matches."
-          fi
+          git commit -m "Complete Milestone 5 graphics-v1 publication"
+          git push origin HEAD:milestone-5e-graphics-v1-publication
