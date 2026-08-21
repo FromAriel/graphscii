@@ -13,7 +13,7 @@ import {
 } from "./geometry";
 import { CanvasRenderer } from "./renderer";
 import { GlyphRegistry } from "./registry";
-import { GraphSolver } from "./solver";
+import { BridgeGraphSolver as GraphSolver } from "./bridge-solver";
 import type {
   BezierObject,
   DrawingObject,
