@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GraphSCII Draw — Slice 1</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <h1>GraphSCII Draw</h1>
+        <p>Slice 1 — deterministic node-graph drawing</p>
+      </div>
+      <div class="status-stack">
+        <span id="overlap-status" class="pill">Exact node semantics only</span>
+        <span id="status" class="status" aria-live="polite">Loading GraphSCII…</span>
+      </div>
+    </header>
+
+    <section class="toolbar" aria-label="Drawing tools">
+      <div class="tool-group" role="group" aria-label="Tools">
+        <button type="button" data-tool="freehand" aria-pressed="true">Freehand</button>
+        <button type="button" data-tool="line" aria-pressed="false">Line</button>
+        <button type="button" data-tool="bezier" aria-pressed="false">Bezier</button>
+        <button type="button" data-tool="ellipse" aria-pressed="false">Ellipse</button>
+      </div>
+
+      <div class="tool-group">
+        <label class="check">
+          <input id="show-nodes" type="checkbox" checked>
+          <span>Show nodes</span>
+        </label>
+        <button id="undo" type="button" disabled>Undo</button>
+        <button id="clear" type="button" disabled>Clear</button>
+      </div>
+    </section>
+
+    <section class="canvas-panel" aria-label="GraphSCII drawing canvas">
+      <div class="canvas-help">
+        <strong>The only geometry is node → node.</strong>
+        Pointer coordinates only choose GraphSCII nodes; committed artwork stores exact cell ports and direct GraphSCII semantics.
+      </div>
+      <div class="canvas-wrap">
+        <div class="canvas-stack">
+          <canvas id="glyph-canvas" aria-hidden="true"></canvas>
+          <canvas
+            id="overlay-canvas"
+            tabindex="0"
+            aria-label="GraphSCII node drawing canvas. Choose a tool and draw using pointer input."
+          ></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h2>Slice 1 contract</h2>
+      <p>
+        Freehand, line, Bezier, and ellipse all end as the same thing: an ordered path of legal GraphSCII node-to-node segments.
+        There is no bitmap matcher, glyph resolver, Hamming score, supersampling pass, or continuity repair.
+      </p>
+      <p>
+        Multi-segment cells are intentionally marked instead of approximated. Exact connector composition is the next slice.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>
