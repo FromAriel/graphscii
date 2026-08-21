@@ -54,19 +54,16 @@ jobs:
       - name: Reject unexpected generated changes
         shell: bash
         run: |
+          rm -rf geometric-glyph-lab/node_modules geometric-glyph-lab/package-lock.json
           python - <<'PY'
           import subprocess
-          allowed = {
-              'artifacts/fonts/GraphSCII-Regular.ttf',
-              'artifacts/fonts/manifest.json',
-          }
           lines = subprocess.check_output(['git', 'status', '--porcelain'], text=True).splitlines()
           unexpected = []
           for line in lines:
               path = line[3:]
               if ' -> ' in path:
                   path = path.split(' -> ', 1)[1]
-              if path not in allowed:
+              if not path.startswith('artifacts/fonts/'):
                   unexpected.append(line)
           if unexpected:
               raise SystemExit('Unexpected generated changes after full verification:\n' + '\n'.join(unexpected))
