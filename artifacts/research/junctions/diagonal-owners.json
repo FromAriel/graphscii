@@ -1,0 +1,2276 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-diagonal-connector-owners",
+  "schemaVersion": 1,
+  "status": "5B.2-research-only-unallocated",
+  "ownerCount": 107,
+  "ownerIdentity": "exact canonical 8x16 bitmap key",
+  "owners": [
+    {
+      "ownerId": "DJ000",
+      "bitmapKey": "000000000000001fff00000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV14:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV14"
+      ],
+      "slopes": [
+        "7:1"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ001",
+      "bitmapKey": "00000000000000f8ff00000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV14:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV14"
+      ],
+      "slopes": [
+        "7:1"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ002",
+      "bitmapKey": "00000000000000ff0000000000000000",
+      "exactGraphicsV0GlyphId": 119,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": false,
+      "semanticAliasCount": 5,
+      "semanticAliases": [
+        "D:DV15:FULL",
+        "D:DV15:MISSING_NE",
+        "D:DV15:MISSING_NW",
+        "D:DV15:MISSING_SE",
+        "D:DV15:MISSING_SW"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 4,
+      "rules": [
+        "DV15"
+      ],
+      "slopes": [
+        "1:0"
+      ],
+      "includesBarLikeRule": true,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ003",
+      "bitmapKey": "00000000000000ff1f00000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV14:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV14"
+      ],
+      "slopes": [
+        "7:1"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ004",
+      "bitmapKey": "00000000000000fff800000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV14:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV14"
+      ],
+      "slopes": [
+        "7:1"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ005",
+      "bitmapKey": "00000000000000ffff00000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV14:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV14"
+      ],
+      "slopes": [
+        "7:1"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ006",
+      "bitmapKey": "000000000000031c3cc3000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV12:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV12"
+      ],
+      "slopes": [
+        "7:3"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ007",
+      "bitmapKey": "000000000000033cc300000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV13:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV13"
+      ],
+      "slopes": [
+        "7:2"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ008",
+      "bitmapKey": "000000000000c0383cc3000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV12:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV12"
+      ],
+      "slopes": [
+        "7:3"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ009",
+      "bitmapKey": "000000000000c03cc300000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV13:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV13"
+      ],
+      "slopes": [
+        "7:2"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ010",
+      "bitmapKey": "000000000000c33c0300000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV13:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV13"
+      ],
+      "slopes": [
+        "7:2"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ011",
+      "bitmapKey": "000000000000c33c1c03000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV12:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV12"
+      ],
+      "slopes": [
+        "7:3"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ012",
+      "bitmapKey": "000000000000c33c38c0000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV12:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV12"
+      ],
+      "slopes": [
+        "7:3"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ013",
+      "bitmapKey": "000000000000c33c3cc3000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV12:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV12"
+      ],
+      "slopes": [
+        "7:3"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ014",
+      "bitmapKey": "000000000000c33cc000000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV13:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV13"
+      ],
+      "slopes": [
+        "7:2"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ015",
+      "bitmapKey": "000000000000c33cc300000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV13:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV13"
+      ],
+      "slopes": [
+        "7:2"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ016",
+      "bitmapKey": "00000000000106181866810000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV10:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV10"
+      ],
+      "slopes": [
+        "7:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ017",
+      "bitmapKey": "00000000000106186681000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV11:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV11"
+      ],
+      "slopes": [
+        "7:4"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ018",
+      "bitmapKey": "00000000008060181866810000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV10:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV10"
+      ],
+      "slopes": [
+        "7:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ019",
+      "bitmapKey": "00000000008060186681000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV11:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV11"
+      ],
+      "slopes": [
+        "7:4"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ020",
+      "bitmapKey": "00000000008166180601000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV11:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV11"
+      ],
+      "slopes": [
+        "7:4"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ021",
+      "bitmapKey": "00000000008166181806010000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV10:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV10"
+      ],
+      "slopes": [
+        "7:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ022",
+      "bitmapKey": "00000000008166181860800000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV10:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV10"
+      ],
+      "slopes": [
+        "7:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ023",
+      "bitmapKey": "00000000008166181866810000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV10:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV10"
+      ],
+      "slopes": [
+        "7:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ024",
+      "bitmapKey": "00000000008166186080000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV11:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV11"
+      ],
+      "slopes": [
+        "7:4"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ025",
+      "bitmapKey": "00000000008166186681000000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV11:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV11"
+      ],
+      "slopes": [
+        "7:4"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ026",
+      "bitmapKey": "00000000010204181824428100000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV08:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV08"
+      ],
+      "slopes": [
+        "1:1"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ027",
+      "bitmapKey": "00000000010204182442810000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV09:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV09"
+      ],
+      "slopes": [
+        "7:6"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ028",
+      "bitmapKey": "00000000804020181824428100000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV08:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV08"
+      ],
+      "slopes": [
+        "1:1"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ029",
+      "bitmapKey": "00000000804020182442810000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV09:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV09"
+      ],
+      "slopes": [
+        "7:6"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ030",
+      "bitmapKey": "00000000814224180402010000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV09:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV09"
+      ],
+      "slopes": [
+        "7:6"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ031",
+      "bitmapKey": "00000000814224181804020100000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV08:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV08"
+      ],
+      "slopes": [
+        "1:1"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ032",
+      "bitmapKey": "00000000814224181820408000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV08:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV08"
+      ],
+      "slopes": [
+        "1:1"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ033",
+      "bitmapKey": "00000000814224181824428100000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV08:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV08"
+      ],
+      "slopes": [
+        "1:1"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ034",
+      "bitmapKey": "00000000814224182040800000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV09:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV09"
+      ],
+      "slopes": [
+        "7:6"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ035",
+      "bitmapKey": "00000000814224182442810000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV09:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV09"
+      ],
+      "slopes": [
+        "7:6"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ036",
+      "bitmapKey": "00000001020404181824244281000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV06:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV06"
+      ],
+      "slopes": [
+        "7:9"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ037",
+      "bitmapKey": "00000001020408181824428100000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV07:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV07"
+      ],
+      "slopes": [
+        "7:8"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ038",
+      "bitmapKey": "00000080402010181824428100000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV07:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV07"
+      ],
+      "slopes": [
+        "7:8"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ039",
+      "bitmapKey": "00000080402020181824244281000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV06:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV06"
+      ],
+      "slopes": [
+        "7:9"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ040",
+      "bitmapKey": "00000081422418180804020100000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV07:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV07"
+      ],
+      "slopes": [
+        "7:8"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ041",
+      "bitmapKey": "00000081422418181020408000000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV07:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV07"
+      ],
+      "slopes": [
+        "7:8"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ042",
+      "bitmapKey": "00000081422418181824428100000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV07:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV07"
+      ],
+      "slopes": [
+        "7:8"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ043",
+      "bitmapKey": "00000081422424181804040201000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV06:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV06"
+      ],
+      "slopes": [
+        "7:9"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ044",
+      "bitmapKey": "00000081422424181820204080000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV06:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV06"
+      ],
+      "slopes": [
+        "7:9"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ045",
+      "bitmapKey": "00000081422424181824244281000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV06:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV06"
+      ],
+      "slopes": [
+        "7:9"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ046",
+      "bitmapKey": "00000102020408181818244242810000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV04:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV04"
+      ],
+      "slopes": [
+        "7:11"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ047",
+      "bitmapKey": "00000102020408181824424281000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV05:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV05"
+      ],
+      "slopes": [
+        "7:10"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ048",
+      "bitmapKey": "00008040402010181818244242810000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV04:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV04"
+      ],
+      "slopes": [
+        "7:11"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ049",
+      "bitmapKey": "00008040402010181824424281000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV05:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV05"
+      ],
+      "slopes": [
+        "7:10"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ050",
+      "bitmapKey": "00008142422418180804020201000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV05:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV05"
+      ],
+      "slopes": [
+        "7:10"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ051",
+      "bitmapKey": "00008142422418181020404080000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV05:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV05"
+      ],
+      "slopes": [
+        "7:10"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ052",
+      "bitmapKey": "00008142422418181808040202010000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV04:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV04"
+      ],
+      "slopes": [
+        "7:11"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ053",
+      "bitmapKey": "00008142422418181810204040800000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV04:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV04"
+      ],
+      "slopes": [
+        "7:11"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ054",
+      "bitmapKey": "00008142422418181818244242810000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV04:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV04"
+      ],
+      "slopes": [
+        "7:11"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ055",
+      "bitmapKey": "00008142422418181824424281000000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV05:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV05"
+      ],
+      "slopes": [
+        "7:10"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ056",
+      "bitmapKey": "00010202040408181818242442428100",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV02:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV02"
+      ],
+      "slopes": [
+        "7:13"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ057",
+      "bitmapKey": "00010202040408181824244242810000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV03:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV03"
+      ],
+      "slopes": [
+        "7:12"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ058",
+      "bitmapKey": "00804040202010181818242442428100",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV02:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV02"
+      ],
+      "slopes": [
+        "7:13"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ059",
+      "bitmapKey": "00804040202010181824244242810000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV03:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV03"
+      ],
+      "slopes": [
+        "7:12"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ060",
+      "bitmapKey": "00814242242418180804040202010000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV03:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV03"
+      ],
+      "slopes": [
+        "7:12"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ061",
+      "bitmapKey": "00814242242418181020204040800000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV03:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV03"
+      ],
+      "slopes": [
+        "7:12"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ062",
+      "bitmapKey": "00814242242418181808040402020100",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV02:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV02"
+      ],
+      "slopes": [
+        "7:13"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ063",
+      "bitmapKey": "00814242242418181810202040408000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV02:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV02"
+      ],
+      "slopes": [
+        "7:13"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ064",
+      "bitmapKey": "00814242242418181818242442428100",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV02:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV02"
+      ],
+      "slopes": [
+        "7:13"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ065",
+      "bitmapKey": "00814242242418181824244242810000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV03:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV03"
+      ],
+      "slopes": [
+        "7:12"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ066",
+      "bitmapKey": "01010202040404080814141422224141",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH01:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH01"
+      ],
+      "slopes": [
+        "2:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ067",
+      "bitmapKey": "01010202040408181818242442428181",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 2,
+      "semanticAliases": [
+        "D:DH00:MISSING_NE",
+        "D:DV00:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 2,
+      "rules": [
+        "DH00",
+        "DV00"
+      ],
+      "slopes": [
+        "7:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ068",
+      "bitmapKey": "01020204040808181824244242818100",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV01:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV01"
+      ],
+      "slopes": [
+        "1:2"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ069",
+      "bitmapKey": "02020404040408080808141414142222",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH03:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH03"
+      ],
+      "slopes": [
+        "4:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ070",
+      "bitmapKey": "02020404040808181818182424244242",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH02:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH02"
+      ],
+      "slopes": [
+        "1:3"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ071",
+      "bitmapKey": "04040404080808080808080814141414",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH05:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH05"
+      ],
+      "slopes": [
+        "2:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ072",
+      "bitmapKey": "04040408080808181818181818242424",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH04:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH04"
+      ],
+      "slopes": [
+        "1:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ073",
+      "bitmapKey": "08080808080808080808080808080808",
+      "exactGraphicsV0GlyphId": 282,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": false,
+      "semanticAliasCount": 5,
+      "semanticAliases": [
+        "D:DH07:FULL",
+        "D:DH07:MISSING_NE",
+        "D:DH07:MISSING_NW",
+        "D:DH07:MISSING_SE",
+        "D:DH07:MISSING_SW"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 4,
+      "rules": [
+        "DH07"
+      ],
+      "slopes": [
+        "0:1"
+      ],
+      "includesBarLikeRule": true,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ074",
+      "bitmapKey": "08080808080808181818181818181818",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH06:MISSING_NE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH06"
+      ],
+      "slopes": [
+        "1:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ075",
+      "bitmapKey": "10101010080808080808080814141414",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH05:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH05"
+      ],
+      "slopes": [
+        "2:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ076",
+      "bitmapKey": "10101010101010181818181818181818",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH06:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH06"
+      ],
+      "slopes": [
+        "1:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ077",
+      "bitmapKey": "14141414080808080808080804040404",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH05:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH05"
+      ],
+      "slopes": [
+        "2:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ078",
+      "bitmapKey": "14141414080808080808080810101010",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH05:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH05"
+      ],
+      "slopes": [
+        "2:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ079",
+      "bitmapKey": "14141414080808080808080814141414",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH05:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DH05"
+      ],
+      "slopes": [
+        "2:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ080",
+      "bitmapKey": "18181818181818181808080808080808",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH06:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH06"
+      ],
+      "slopes": [
+        "1:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ081",
+      "bitmapKey": "18181818181818181810101010101010",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH06:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH06"
+      ],
+      "slopes": [
+        "1:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ082",
+      "bitmapKey": "18181818181818181818181818181818",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH06:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DH06"
+      ],
+      "slopes": [
+        "1:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ083",
+      "bitmapKey": "20201010101008080808141414142222",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH03:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH03"
+      ],
+      "slopes": [
+        "4:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ084",
+      "bitmapKey": "20202010101010181818181818242424",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH04:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH04"
+      ],
+      "slopes": [
+        "1:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ085",
+      "bitmapKey": "22221414141408080808040404040202",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH03:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH03"
+      ],
+      "slopes": [
+        "4:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ086",
+      "bitmapKey": "22221414141408080808101010102020",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH03:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH03"
+      ],
+      "slopes": [
+        "4:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ087",
+      "bitmapKey": "22221414141408080808141414142222",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH03:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DH03"
+      ],
+      "slopes": [
+        "4:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ088",
+      "bitmapKey": "24242418181818181808080808040404",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH04:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH04"
+      ],
+      "slopes": [
+        "1:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ089",
+      "bitmapKey": "24242418181818181810101010202020",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH04:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH04"
+      ],
+      "slopes": [
+        "1:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ090",
+      "bitmapKey": "24242418181818181818181818242424",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH04:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DH04"
+      ],
+      "slopes": [
+        "1:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ091",
+      "bitmapKey": "40402020101010080814141422224141",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH01:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH01"
+      ],
+      "slopes": [
+        "2:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ092",
+      "bitmapKey": "40402020201010181818182424244242",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH02:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH02"
+      ],
+      "slopes": [
+        "1:3"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ093",
+      "bitmapKey": "41412222141414080804040402020101",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH01:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH01"
+      ],
+      "slopes": [
+        "2:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ094",
+      "bitmapKey": "41412222141414080810101020204040",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH01:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH01"
+      ],
+      "slopes": [
+        "2:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ095",
+      "bitmapKey": "41412222141414080814141422224141",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH01:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DH01"
+      ],
+      "slopes": [
+        "2:5"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ096",
+      "bitmapKey": "42422424241818181808080404040202",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH02:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH02"
+      ],
+      "slopes": [
+        "1:3"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ097",
+      "bitmapKey": "42422424241818181810102020204040",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH02:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DH02"
+      ],
+      "slopes": [
+        "1:3"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ098",
+      "bitmapKey": "42422424241818181818182424244242",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DH02:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DH02"
+      ],
+      "slopes": [
+        "1:3"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ099",
+      "bitmapKey": "80404020201010181824244242818100",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV01:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV01"
+      ],
+      "slopes": [
+        "1:2"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ100",
+      "bitmapKey": "80804040202010181818242442428181",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 2,
+      "semanticAliases": [
+        "D:DH00:MISSING_NW",
+        "D:DV00:MISSING_NW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 2,
+      "rules": [
+        "DH00",
+        "DV00"
+      ],
+      "slopes": [
+        "7:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ101",
+      "bitmapKey": "81424224241818180804040202010100",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV01:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV01"
+      ],
+      "slopes": [
+        "1:2"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ102",
+      "bitmapKey": "81424224241818181020204040808000",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV01:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 1,
+      "rules": [
+        "DV01"
+      ],
+      "slopes": [
+        "1:2"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ103",
+      "bitmapKey": "81424224241818181824244242818100",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 1,
+      "semanticAliases": [
+        "D:DV01:FULL"
+      ],
+      "fullXAliasCount": 1,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DV01"
+      ],
+      "slopes": [
+        "1:2"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ104",
+      "bitmapKey": "81814242242418181808040402020101",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 2,
+      "semanticAliases": [
+        "D:DH00:MISSING_SE",
+        "D:DV00:MISSING_SE"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 2,
+      "rules": [
+        "DH00",
+        "DV00"
+      ],
+      "slopes": [
+        "7:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ105",
+      "bitmapKey": "81814242242418181810202040408080",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 2,
+      "semanticAliases": [
+        "D:DH00:MISSING_SW",
+        "D:DV00:MISSING_SW"
+      ],
+      "fullXAliasCount": 0,
+      "threeLegAliasCount": 2,
+      "rules": [
+        "DH00",
+        "DV00"
+      ],
+      "slopes": [
+        "7:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    },
+    {
+      "ownerId": "DJ106",
+      "bitmapKey": "81814242242418181818242442428181",
+      "exactGraphicsV0GlyphId": null,
+      "exactOrthogonalOwner": false,
+      "incrementalNovel": true,
+      "semanticAliasCount": 2,
+      "semanticAliases": [
+        "D:DH00:FULL",
+        "D:DV00:FULL"
+      ],
+      "fullXAliasCount": 2,
+      "threeLegAliasCount": 0,
+      "rules": [
+        "DH00",
+        "DV00"
+      ],
+      "slopes": [
+        "7:15"
+      ],
+      "includesBarLikeRule": false,
+      "connected": true
+    }
+  ]
+}
