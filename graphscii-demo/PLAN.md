@@ -1,1190 +1,763 @@
-# GraphSCII Draw Demo Plan
+# GraphSCII Draw — Deterministic Node-Graph Plan
 
-## Purpose
+## Status
 
-Build a browser-based drawing program that uses the GraphSCII reference font and canonical registry as its native rendering system.
+This plan **replaces the previous drawing-plan architecture in full**.
 
-The program should feel like a small vector drawing application: the user can draw freehand strokes, straight lines, cubic Bézier curves, and ellipses, then edit those objects. Internally, however, the visible artwork is always resolved into actual GraphSCII characters.
+The previous plan treated GraphSCII as a target for continuous vector geometry, rasterization, supersampling, Hamming matching, candidate scoring, and neighbor repair. That is not the intended drawing model and must not be used as the basis for GraphSCII Draw.
 
-The central product rule is:
+GraphSCII Draw is a **discrete node-graph drawing system**.
 
-> **GraphSCII is the document's visible rendering model, not merely an export format.**
+The central rule is:
 
-The user draws continuous geometry, the application rasterizes that geometry into GraphSCII's logical 8×16 cell space, and the solver continuously chooses the best GraphSCII glyphs. This avoids a late conversion step where a vector drawing looks good until export and then degrades.
+> **The only geometry that exists in a GraphSCII drawing is a legal connection from one GraphSCII node to another GraphSCII node.**
 
-The app should remain useful as a static web application with no required backend.
-
----
-
-## 1. Core processing model
-
-The drawing pipeline is:
-
-```text
-USER INPUT
-freehand / line / Bézier / ellipse
-        │
-        ▼
-EDITABLE GEOMETRY MODEL
-continuous coordinates and object properties
-        │
-        ▼
-SUPERSAMPLED TARGET RASTER
-ideal coverage for the affected area
-        │
-        ▼
-GRAPHSCII CELL TARGETS
-8×16 logical-pixel targets per character cell
-        │
-        ▼
-GRAPHSCII SOLVER
-semantic filtering + bitmap scoring + continuity scoring
-        │
-        ▼
-GRAPHSCII CHARACTER GRID
-actual Unicode PUA codepoints
-        │
-        ▼
-GraphSCII-Regular.ttf
-        │
-        ▼
-SCREEN
-```
-
-The canonical GraphSCII registry remains the computational source of truth. The TTF is used to display the selected codepoints, not as the source from which glyph bitmaps are repeatedly recovered during drawing.
+Everything else follows from that rule.
 
 ---
 
-## 2. Coordinate system and document dimensions
+## 1. The world is the GraphSCII node graph
 
-Every GraphSCII cell is exactly 8×16 logical binary pixels.
-
-If a document is 100×50 GraphSCII cells, the underlying logical drawing area is:
+A GraphSCII cell exposes the existing boundary ports:
 
 ```text
-width:  100 × 8  = 800 logical pixels
-height:  50 × 16 = 800 logical pixels
+Top:    T0..T7
+Bottom: B0..B7
+Left:   L0..L15
+Right:  R0..R15
 ```
 
-Vector objects are stored in continuous logical-pixel coordinates, not character coordinates. A line may therefore have endpoints such as:
+These ports are the drawing nodes.
+
+The application does not treat the 8×16 bitmap pixels as drawing coordinates. The pixels belong to the already-generated glyph artwork, not to the editor's geometry model.
+
+The application also does not store arbitrary floating-point drawing coordinates such as:
 
 ```text
-(183.4, 221.7) → (619.2, 478.8)
+(183.4, 221.7)
 ```
 
-This allows normal smooth drawing behavior while preserving exact conversion into GraphSCII cells.
+as graphical truth.
 
-The character grid is derived from the geometry rather than forcing the user to construct shapes one cell at a time.
+Pointer coordinates exist only long enough to determine which GraphSCII node the user is selecting.
+
+Once a node has been selected, the pointer coordinates are irrelevant to the drawing.
+
+Conceptually:
+
+```text
+physical pointer position
+        ↓
+currently selected GraphSCII node
+        ↓
+node identity
+```
+
+The GraphSCII node identity is the geometry.
 
 ---
 
-## 3. Initial tool set
+## 2. A line segment is exactly NODE → NODE
 
-The first complete tool palette should be intentionally small:
+A legal line segment connects two ports on different edges of one GraphSCII cell.
 
-- Select
-- Freehand
-- Straight line
-- Cubic Bézier
-- Ellipse
-- Eraser
-
-The MVP should not attempt to become a full Photoshop or Illustrator clone.
-
-Later tools can include rectangle, polygon, bucket fill, text, direct glyph painting, image import, gradients, and airbrush behavior.
-
----
-
-## 4. Freehand tool
-
-Pointer movement produces sampled points.
-
-The app should not simply create one tiny line segment for every browser pointer event. Instead:
+The existing straight vocabulary already defines the complete set of these connections:
 
 ```text
-raw pointer samples
-        ↓
-distance filtering
-        ↓
-stroke smoothing
-        ↓
-polyline / spline representation
-        ↓
-rasterization
-        ↓
-GraphSCII resolution
+L ↔ R
+T ↔ B
+L ↔ T
+L ↔ B
+R ↔ T
+R ↔ B
 ```
 
-A lightweight Catmull-Rom spline or similarly predictable smoothing method is sufficient.
+The current straight semantic population is:
 
-The original stroke remains an editable object. Suggested object structure:
+```text
+L ↔ R      16 × 16 = 256
+T ↔ B       8 ×  8 =  64
+L ↔ T      16 ×  8 = 128
+L ↔ B      16 ×  8 = 128
+R ↔ T      16 ×  8 = 128
+R ↔ B      16 ×  8 = 128
+                         ---
+                         832 legal straight semantics
+```
+
+Therefore a line segment needs only:
 
 ```ts
-interface FreehandStroke {
-  type: "freehand";
-  points: Point[];
-  width: number;
-  smoothing: number;
-  tone: GraphSCIITone;
+interface GraphSCIISegment {
+  cellX: number;
+  cellY: number;
+  from: Port;
+  to: Port;
 }
 ```
 
-The GraphSCII cells are a rendered representation of that stroke, not the only surviving source data.
-
-Freehand preview must update while the pointer is moving.
-
----
-
-## 5. Straight-line tool
-
-Interaction:
+For example:
 
 ```text
-pointer down  → set start anchor
-pointer drag  → live GraphSCII preview
-pointer up    → commit line object
+cell (12, 7)
+L13 → R4
 ```
 
-Planned modifiers:
-
-- Shift: angle snapping
-- Alt: draw from center when appropriate
-- optional later modifier: endpoint/grid snapping
-
-Initial angle snapping can use 45-degree increments. Finer snapping can be added later.
-
-The user should see the resolved GraphSCII result during the drag, not only a vector preview.
-
----
-
-## 6. Cubic Bézier tool
-
-The geometry model uses ordinary cubic Bézier curves:
+means exactly one thing:
 
 ```text
-P0 = start anchor
-P1 = first control point
-P2 = second control point
-P3 = end anchor
+straight:L13>R4
 ```
 
-The editor should display anchors and handles on the overlay canvas while the GraphSCII result updates continuously underneath.
+The renderer performs a direct semantic lookup and emits the corresponding GraphSCII codepoint.
 
-A simple first interaction model:
+There is no candidate search.
 
-1. click start anchor;
-2. click end anchor;
-3. drag first control handle;
-4. drag second control handle;
-5. commit.
+There is no visual comparison.
 
-A later version may adopt a more Illustrator-like click-and-drag path workflow.
+There is no scoring.
 
-Bézier paths must remain editable after creation.
+There is no fallback.
 
 ---
 
-## 7. Ellipse tool
+## 3. Continuity is guaranteed by shared nodes
 
-Ellipse objects should be stored using a geometry model that already supports future rotation:
+Adjacent cells continue through corresponding ports:
+
+```text
+R0..R15 ↔ neighboring L0..L15
+L0..L15 ↔ neighboring R0..R15
+B0..B7  ↔ neighboring T0..T7
+T0..T7  ↔ neighboring B0..B7
+```
+
+If a path leaves one cell through `R7`, the next cell begins through `L7`.
+
+If a path leaves through `B3`, the cell below begins through `T3`.
+
+The shared port is not something to verify after rendering. It is the path itself.
+
+Example:
+
+```text
+cell A                  cell B
+
+L12 ─────────→ R7   |   L7 ─────────→ R2
+                    ^
+                    |
+              same continuation
+```
+
+A continuous GraphSCII path therefore cannot contain a visual break unless the underlying font or lookup table is incorrect.
+
+No continuity scoring or repair pass is needed.
+
+---
+
+## 4. A stroke is an ordered node path
+
+A stroke is simply an ordered sequence of legal node-to-node segments.
+
+Conceptually:
+
+```text
+N0 → N1 → N2 → N3 → N4 → N5
+```
+
+becomes:
+
+```text
+segment 0: N0 → N1
+segment 1: N1 → N2
+segment 2: N2 → N3
+segment 3: N3 → N4
+segment 4: N4 → N5
+```
+
+The document stores this node path.
+
+It does not store a hidden higher-resolution line that must later be approximated.
+
+Suggested structure:
 
 ```ts
-interface EllipseObject {
-  type: "ellipse";
-  center: Point;
-  radiusX: number;
-  radiusY: number;
-  rotation: number;
-  strokeWidth: number;
-  strokeTone: GraphSCIITone;
-  fillEnabled: boolean;
-  fillTone: GraphSCIITone;
+interface GraphSCIIPath {
+  id: string;
+  segments: GraphSCIISegment[];
+  closed: boolean;
+  fill: null | GraphSCIIFill;
 }
 ```
 
-The MVP can expose axis-aligned ellipses only, while preserving `rotation` in the model for later use.
-
-Interaction is bounding-box drag with a live GraphSCII preview.
+The GraphSCII path is the editable object and the rendered object.
 
 ---
 
-## 8. GraphSCII tonal and dithering system
+## 5. Pointer behavior
 
-This is a first-class part of the drawing model, not a cosmetic post-process.
+The pointer should behave as though it is constrained to the GraphSCII node graph.
 
-GraphSCII v1 contains four canonical tonal classes:
+The visible cursor may move smoothly on screen, but the drawing cursor snaps to GraphSCII nodes.
+
+Basic interaction:
 
 ```text
-solid   100%
-medium   75%
-half     50%
-light    25%
+pointer down
+    ↓
+select start node
+    ↓
+move pointer
+    ↓
+select next legal node
+    ↓
+commit NODE → NODE segment
+    ↓
+that node becomes the new current node
+    ↓
+repeat until pointer up
 ```
 
-The application must expose these exact four strengths as drawing choices.
+The editor should show the currently selected node clearly so the user can see exactly where the next segment will connect.
+
+The node hit area can be larger than the visual point to make drawing comfortable. That is only UI hit testing. It must not create another geometry system.
+
+If browser pointer events skip across screen positions, the input layer may interpolate pointer motion only to determine which node regions were crossed. It must still emit only node-selection events. No interpolated pixels, vectors, or raster geometry are stored.
+
+---
+
+## 6. Legal movement rule
+
+From the current node inside the active cell, the next segment must terminate on a node belonging to a different edge of that cell.
+
+Examples:
+
+```text
+L11 → R5    legal
+L11 → T3    legal
+L11 → B6    legal
+T4  → B2    legal
+T4  → R9    legal
+```
+
+Same-edge segments are not part of the v1 straight language:
+
+```text
+L4 → L12    not legal
+T2 → T6     not legal
+```
+
+This is not a condition to approximate or repair.
+
+It is simply not a legal GraphSCII move.
+
+The UI should not offer illegal destination nodes for the current segment.
+
+---
+
+## 7. Direct lookup only
+
+The runtime should load or generate a compact direct lookup table for the 832 straight semantic definitions.
+
+Conceptual API:
+
+```ts
+function straightCodepoint(from: Port, to: Port): number;
+```
+
+Both directions must resolve:
+
+```text
+L13 → R4
+R4  → L13
+```
+
+The visual owner may be shared by multiple semantic aliases because GraphSCII globally deduplicates exact bitmaps. That does not change the drawing rule.
+
+The editor selects the semantic connection first. The semantic connection then identifies its visual owner/codepoint.
+
+Required principle:
+
+> **Semantics select the glyph. Pixels never select the glyph.**
+
+---
+
+## 8. Filled shapes use the same boundary path
+
+A filled object is not a separate geometry model.
+
+It is:
+
+```text
+closed GraphSCII node path
++
+which side of the directed boundary is inside
++
+fill tone
+```
 
 Suggested type:
 
 ```ts
 type GraphSCIITone = 100 | 75 | 50 | 25;
+type FillSide = "left" | "right";
+
+interface GraphSCIIFill {
+  side: FillSide;
+  tone: GraphSCIITone;
+}
 ```
 
-### 8.1 UI control
-
-The toolbar should include a compact tonal-density control near the stroke/fill controls.
-
-Possible appearance:
-
-```text
-Fill: [████] 100%
-Fill: [▓▓▓▓]  75%
-Fill: [▒▒▒▒]  50%
-Fill: [░░░░]  25%
-```
-
-Clicking the button cycles through:
-
-```text
-100 → 75 → 50 → 25 → 100
-```
-
-A popover may also expose all four choices directly.
-
-### 8.2 Mouse-wheel shortcut
-
-When the canvas is focused, `Alt + mouse wheel` should change the active GraphSCII tonal strength.
-
-Recommended behavior:
-
-```text
-Alt + wheel up:
-25 → 50 → 75 → 100
-
-Alt + wheel down:
-100 → 75 → 50 → 25
-```
-
-The value clamps at the ends rather than wrapping during wheel use. The toolbar button may wrap when clicked.
-
-This shortcut should call `preventDefault()` only while the canvas is the active drawing surface and Alt is held, so ordinary page scrolling remains untouched otherwise.
-
-Do not use Ctrl+wheel as the default because browsers commonly reserve it for page zoom and trackpad pinch gestures.
-
-The shortcut should be documented in the tooltips and help panel and should be configurable later.
-
-### 8.3 Fill versus no fill
-
-`No fill` is separate from tone strength.
-
-The four GraphSCII tonal values mean how a filled region is represented. They should not be overloaded to mean transparency or absence of fill.
-
-For an ellipse, for example:
-
-```text
-fillEnabled = false
-```
-
-means outline only.
-
-Whereas:
-
-```text
-fillEnabled = true
-fillTone = 25
-```
-
-means a light GraphSCII dithered fill.
-
-### 8.4 Tone on freehand and strokes
-
-Tone can also be used by stroke-producing tools.
-
-A 100% stroke produces solid logical coverage. A 75%, 50%, or 25% stroke requests the corresponding GraphSCII phase-locked dither treatment within the stroke's raster footprint.
-
-This creates a useful drawing vocabulary beyond simple solid lines: light construction lines, shaded hatching, ghosted strokes, and tonal texture can all use the same control.
-
-### 8.5 Phase locking
-
-GraphSCII's dither masks are phase-locked to the canonical cell coordinate system. The drawing program must preserve that rule.
-
-A filled region crossing multiple cells must not restart with a randomly shifted dither phase in every cell. The intended global geometry should resolve into GraphSCII fill glyphs whose dither structure remains visually coherent.
-
-This is especially important for large ellipses, later polygons, and bucket fills.
-
-### 8.6 Tone as solver metadata
-
-The solver should know the requested tonal class.
-
-For example, if a filled ellipse has `fillTone = 50`, candidate selection should prefer the GraphSCII half-density vocabulary for interior and partially covered cells rather than treating all 6,397 glyphs as equally appropriate.
-
-The requested tone therefore participates in semantic filtering before bitmap similarity scoring.
-
----
-
-## 9. GraphSCII glyph solver
-
-Each GraphSCII graphical glyph is exactly one 8×16 binary bitmap: 128 bits.
-
-The baseline matcher can represent a glyph as four 32-bit words:
-
-```text
-4 × uint32 = 128 bits
-```
-
-For a binary target cell and candidate glyph, the simplest error measure is:
-
-```text
-error = popcount(target XOR glyph)
-```
-
-The lowest Hamming error wins.
-
-A brute-force comparison against 6,397 glyphs is already practical for small dirty regions, but the full solver should exploit GraphSCII semantics.
-
-Recommended three-stage selection:
-
-```text
-semantic candidate filtering
-        ↓
-cheap bitmap/Hamming ranking
-        ↓
-coverage + neighbor continuity ranking
-```
-
----
-
-## 10. Semantic filtering
-
-GraphSCII contains useful structural information rather than being an opaque font full of unrelated images.
-
-The solver should use metadata when possible.
-
-Examples:
-
-- line geometry can prefer straight-line and connector classes;
-- a path entering at `L11` and leaving at `T4` can prefer candidates with compatible boundary ports;
-- a 50% filled shape can prefer half-density fill owners;
-- a 25% filled shape can prefer light-density fill owners;
-- a solid interior can prefer 100% solid fill owners.
-
-Semantic filtering should reduce the candidate set while preserving an escape path to broader visual matching when necessary.
-
----
-
-## 11. Supersampling and coverage-aware rasterization
-
-The ideal geometry should not immediately be collapsed to hard binary pixels.
-
-Small changes to a curve can otherwise make pixels flicker abruptly between on and off.
-
-Use approximately 4× supersampling internally for affected regions.
-
-Each logical GraphSCII pixel receives a coverage value from 0 to 1.
+A boundary segment remains the same node pair.
 
 Example:
 
 ```text
-0.00
-0.18
-0.52
-0.91
-1.00
+L11 → R5
 ```
 
-The final GraphSCII glyph remains binary, but the solver has more information about which binary pattern best approximates the intended continuous geometry.
+For an unfilled path, use the straight semantic.
 
-Recommended matching strategy:
-
-1. convert coverage into a cheap binary target;
-2. Hamming-rank all semantically allowed candidates;
-3. keep the best ~32;
-4. run coverage-aware error over those candidates;
-5. keep the best ~4;
-6. use neighbor/connectivity scoring to choose the winner.
-
-This avoids expensive floating-point comparison against all 6,397 glyphs for every cell.
-
----
-
-## 12. Neighbor and connectivity optimization
-
-Cells should not always be optimized independently.
-
-A glyph with one extra mismatched pixel may be visually superior if it joins perfectly to the adjacent cell, while the independently best bitmap may leave a visible discontinuity.
-
-Suggested final score:
+For a filled path, use:
 
 ```text
-score =
-    pixelError
-  + coverageError × A
-  + boundaryMismatch × B
-  + connectivityMismatch × C
-  + toneMismatch × D
+same node pair
++
+selected interior side
++
+selected tone
 ```
 
-Exact weights should be tuned empirically.
+and directly select the corresponding GraphSCII side-fill semantic.
 
-A practical local relaxation pass can retain the top 4 candidates for each dirty cell and reconsider adjacent selections. There is no need for an enormous global optimizer in the first implementation.
+Conceptual API:
+
+```ts
+function fillBoundaryCodepoint(
+  from: Port,
+  to: Port,
+  inside: FillSide,
+  tone: GraphSCIITone,
+): number;
+```
+
+The existing GraphSCII fill data already derives fill boundaries from the straight definitions plus side A/B. The drawing app should expose the simpler user-facing idea of left/right of the directed segment and normalize that deterministically to the existing semantic alias.
+
+There is no shape matching.
 
 ---
 
-## 13. Dirty-region recomputation
+## 9. Interior fill cells
 
-Never re-solve the whole document after every pointer movement.
+Once a closed path has an inside, cells wholly inside that boundary use one full-cell tone glyph.
 
-Each object change produces a dirty bounding box covering:
+Required full-cell tones:
 
 ```text
-old object bounds
-union
-new object bounds
-plus one-cell safety margin
+100%   full solid
+ 75%   full medium dither
+ 50%   full half dither
+ 25%   full light dither
 ```
 
-Only cells intersecting that dirty region are rasterized and solved again.
+The 100%, 75%, and 50% exact full-cell bitmaps already exist in the current vocabulary.
 
-This should make interactive preview practical even with brute-force candidate comparisons.
+The exact full-cell 25% light pattern is currently missing and must be added before 25% filled objects are considered complete.
+
+Planned correction:
+
+```text
+U+F8FD = full-cell 25% phase-locked light fill
+```
+
+This consumes one of the three protected reserve slots and leaves two reserve slots.
+
+The new glyph must use the same canonical phase-locked 25% mask as the existing light side-fill family, then all affected manifests, indexes, atlases, publication counts, font artifacts, and verification gates must be regenerated and updated deliberately.
+
+Until that change is made, the drawing app must not fake a full 25% interior cell with a visually similar glyph.
 
 ---
 
-## 14. Document model
+## 10. Determining the filled interior
 
-Save both the editable geometry and the exact resolved GraphSCII grid.
+For a closed path, filling needs only two classifications:
+
+```text
+boundary cell
+interior cell
+```
+
+Boundary cells already contain exact node-pair segments and therefore use exact boundary-fill semantics.
+
+Whole cells enclosed by the closed path use the selected full-tone glyph.
+
+The fill algorithm may use an ordinary cell-level flood fill or scan fill over the character-cell grid to determine which whole cells lie inside the closed boundary.
+
+This calculation decides **which cells are inside**. It does not select glyphs by visual resemblance.
+
+The output rule remains deterministic:
+
+```text
+boundary segment + side + tone → exact boundary-fill semantic
+whole interior cell + tone     → exact full-tone glyph
+outside cell                   → empty
+```
+
+---
+
+## 11. Junctions and overlapping paths
+
+A cell normally contains one legal straight segment.
+
+If multiple paths occupy the same cell, their combined semantic state may be represented only when GraphSCII already contains an exact published connector semantic for that state.
+
+The runtime should use a direct connector lookup table.
+
+Conceptual rule:
+
+```text
+exact supported multi-segment state
+        → exact connector semantic
+
+unsupported multi-segment state
+        → illegal edit
+```
+
+Do not approximate an unsupported junction.
+
+Do not search the 6,397 glyphs.
+
+Do not choose the closest-looking connector.
+
+If a second stroke would create an unsupported cell state, the UI should refuse that insertion or keep the new stroke uncommitted until the user chooses another legal node route.
+
+This keeps the drawing language exact.
+
+---
+
+## 12. Empty cells
+
+An empty drawing cell is simply empty.
+
+Use the GraphSCII font's normal space character:
+
+```text
+U+0020 SPACE
+```
+
+Empty cells do not enter any graphical lookup process.
+
+---
+
+## 13. Initial tool set
+
+The first implementation should prove the node model before adding convenience tools.
+
+### MVP tools
+
+```text
+Node Pen
+Select/Edit Path
+Fill On/Off
+Fill Side Left/Right
+Fill Tone 100/75/50/25
+Eraser
+```
+
+### Node Pen
+
+Draws an ordered sequence of legal node-to-node segments.
+
+### Select/Edit Path
+
+Allows a path's nodes to be selected and moved to other legal nodes. Editing a node directly updates the affected node-pair semantics.
+
+### Fill
+
+May be enabled only on a closed path. The user chooses inside side and tone.
+
+### Eraser
+
+Removes paths or selected segments semantically. It does not erase bitmap pixels.
+
+---
+
+## 14. Future shape tools
+
+Rectangle, polygon, ellipse, Bézier-like, and other convenience tools may be added later, but they must obey one absolute rule:
+
+> **They must produce GraphSCII node paths directly.**
+
+They must not store an arbitrary vector shape and then solve it into GraphSCII afterward.
+
+A future ellipse tool therefore produces an ellipse-like closed sequence of legal GraphSCII node connections and stores that node sequence as the object.
+
+Once created, there is no hidden mathematical ellipse underneath the GraphSCII path.
+
+The same rule applies to every future shape helper.
+
+---
+
+## 15. Document model
+
+The native document should preserve semantic GraphSCII paths, not higher-resolution source geometry.
 
 Conceptual structure:
 
-```text
-GraphSCII Drawing
-├── format/version
-├── document dimensions
-├── vector objects
-│   ├── freehand strokes
-│   ├── lines
-│   ├── Béziers
-│   └── ellipses
-├── rendering settings
-├── tonal/dither settings
-├── manual glyph locks
-└── resolved GraphSCII character grid
+```ts
+interface GraphSCIIDocument {
+  format: "graphscii-draw";
+  version: 1;
+  widthCells: number;
+  heightCells: number;
+  paths: GraphSCIIPath[];
+}
 ```
 
-Why keep both representations:
+A cached resolved character grid may be stored for fast loading or export, but it is derived data.
 
-- vector objects preserve editability;
-- the resolved character grid records the exact visible result;
-- manual glyph overrides can coexist with regenerated geometry;
-- export is immediate;
-- files remain inspectable and testable.
+The authoritative editable content is the node graph.
 
-Suggested native extension:
+Recommended native extension:
 
 ```text
 .graphscii
 ```
 
-Use JSON initially.
+---
+
+## 16. Rendering model
+
+Rendering is a deterministic compilation step:
+
+```text
+GraphSCII node paths
+        ↓
+cell semantic states
+        ↓
+direct semantic lookup
+        ↓
+GraphSCII Unicode codepoints
+        ↓
+GraphSCII-Regular.ttf
+        ↓
+screen
+```
+
+There is no offscreen target raster.
+
+There is no glyph solver.
+
+There is no supersampling.
+
+There is no Hamming distance.
+
+There is no coverage calculation.
+
+There is no neighbor scoring.
+
+There is no continuity repair.
+
+There is no visual fallback.
 
 ---
 
-## 15. Manual glyph override
+## 17. UI layers
 
-Automatic solving should not prevent hand tuning.
-
-A cell can eventually be switched from:
-
-```text
-AUTO
-```
-
-to:
-
-```text
-LOCKED
-```
-
-A locked cell stores an explicit GraphSCII codepoint and is not replaced by automatic solving until unlocked.
-
-This is important for artists who want to perfect junctions or deliberately choose a visually unusual glyph.
-
-Dirty-region updates must respect locked cells.
-
----
-
-## 16. Undo and redo
-
-Undo/redo should operate on semantic drawing operations, not full-canvas image snapshots.
-
-Examples:
-
-```text
-AddEllipse
-MoveEllipse
-ChangeFillTone
-ChangeStrokeTone
-ChangeStrokeWidth
-MoveBezierHandle
-DeleteObject
-LockGlyph
-UnlockGlyph
-```
-
-After an undo or redo, only the affected dirty region is solved again.
-
-Changing tone from 100% to 25% on a selected object should be one undoable operation.
-
----
-
-## 17. Rendering architecture
-
-Use the canonical registry for solving and `GraphSCII-Regular.ttf` for display.
+The browser implementation can still use Canvas 2D for presentation and interaction.
 
 Recommended layers:
 
 ```text
-Offscreen target raster
-        ↓
-GraphSCII output canvas
-        ↓
-interaction overlay canvas
+GraphSCII glyph canvas
++
+node/interaction overlay
 ```
 
-The output canvas renders resolved GraphSCII codepoints.
+The glyph canvas displays the exact resolved GraphSCII characters.
 
-The overlay canvas renders temporary UI only:
-
-- selection outlines;
-- Bézier handles;
-- anchor points;
-- bounding boxes;
-- guides;
-- cursor feedback;
-- grid overlays.
-
-The target raster is not normally shown to the user.
-
-Do not depend on browser text flow/layout for the drawing surface. Explicit Canvas 2D placement gives deterministic cell positioning, faster dirty-region rendering, and easier overlays.
-
----
-
-## 18. Font loading
-
-Ship the existing GraphSCII reference font as a static application asset.
-
-Conceptually:
-
-```css
-@font-face {
-  font-family: "GraphSCII";
-  src: url("./GraphSCII-Regular.ttf") format("truetype");
-}
-```
-
-Wait for the font to load before declaring the drawing surface ready.
-
-Tests should verify that the browser renderer's placement maintains the expected fixed cell advance.
-
-The canonical raster registry remains authoritative even if the browser visually antialiases the font at some zoom levels.
-
----
-
-## 19. Worker boundary
-
-Design the solver as a module that can run in a Web Worker.
-
-Main thread responsibilities:
+The overlay may display:
 
 ```text
-pointer/keyboard input
-geometry editing
-UI state
-canvas presentation
+visible node points
+current selected node
+legal next nodes
+selected paths
+fill-side indicator
+selection handles
+cell boundaries when requested
 ```
 
-Worker responsibilities:
+These overlays are editor UI only and are never part of the GraphSCII artwork.
+
+---
+
+## 18. Zoom
+
+Zoom changes presentation only.
+
+It must never change node identity or document geometry.
+
+At high zoom the editor should make the node lattice easy to inspect.
+
+Useful modes:
 
 ```text
-rasterize dirty geometry
-build cell targets
-candidate selection
-coverage scoring
-neighbor reconciliation
-return resolved codepoints
+Art view   — final GraphSCII glyphs only
+Node view  — GraphSCII glyphs + selectable node points
+Cell view  — node view + character-cell boundaries
 ```
 
-The first prototype may initially run the solver on the main thread if performance is already adequate, but the API boundary should make worker migration straightforward.
+A pixel-editing mode is intentionally not part of GraphSCII Draw's core model.
 
 ---
 
-## 20. Zoom and inspection modes
+## 19. Required runtime indexes
 
-Zoom must not change document geometry.
+The drawing app should consume small purpose-built direct indexes rather than scanning the full registry.
 
-Suggested zoom levels:
+Minimum runtime lookups:
 
 ```text
-25%
-50%
-100%
-200%
-400%
-800%
+straight:        fromPort + toPort → semantic owner/codepoint
+fill boundary:   fromPort + toPort + side + tone → semantic owner/codepoint
+connector:       exact supported connector state → semantic owner/codepoint
+full tone:       tone → full-cell codepoint
 ```
 
-Provide three view modes:
+These may be generated from the canonical GraphSCII artifacts at build time.
 
-### Art view
-
-Only the finished GraphSCII rendering.
-
-### Cell view
-
-Show GraphSCII character boundaries.
-
-### Pixel view
-
-At high zoom, show the canonical 8×16 logical-pixel structure of each cell.
-
-These modes make the app useful both as an art tool and as a GraphSCII development/debugging tool.
+The editor should never need to iterate over all 6,397 glyphs during ordinary drawing.
 
 ---
 
-## 21. Vector-guide overlay
+## 20. Verification requirements
 
-Expose a prominent toggle:
+The implementation is not complete until these invariants are mechanically tested.
+
+### Straight coverage
+
+Every one of the 832 legal straight semantics must resolve by direct node-pair lookup.
+
+Both directions must resolve to the same semantic visual owner.
+
+### Shared-boundary continuity
+
+For every path transition:
 
 ```text
-Vector Guides: On / Off
+Rk → neighboring Lk
+Lk → neighboring Rk
+Bk → neighboring Tk
+Tk → neighboring Bk
 ```
 
-When off, the user sees only the actual GraphSCII artwork.
+must be exact.
 
-When on, the ideal vector geometry, anchors, handles, and construction guides appear over the resolved character result.
+### No solver dependency
 
-This makes the translation from continuous geometry into GraphSCII immediately understandable.
+The drawing runtime must contain no Hamming matcher, visual candidate ranker, coverage scorer, or neighbor-relaxation system.
 
----
+### Fill-boundary coverage
 
-## 22. Glyph inspector
+Every supported straight node pair must resolve for both fill sides at every published tone.
 
-Hovering or selecting a cell should eventually show information such as:
+### Full-tone coverage
+
+Exactly one intended full-cell glyph must exist for each:
 
 ```text
-Codepoint: U+Exxx
-GraphSCII owner ID
-bitmap preview
-pixel density
-semantic aliases
-boundary ports
-solver score
-current mode: auto/locked
-requested tone
+100
+75
+50
+25
 ```
 
-This is valuable for debugging the solver and demonstrates the GraphSCII standard itself.
+The 25% test must fail until the missing full light glyph is intentionally added.
+
+### Illegal-state rejection
+
+Unsupported same-edge segments and unsupported multi-segment junction states must be rejected rather than approximated.
+
+### Round trip
+
+Save a `.graphscii` document, reload it, and reproduce exactly the same node paths and Unicode grid.
 
 ---
 
-## 23. Stroke width
+## 21. Implementation order
 
-Stroke width is measured in logical GraphSCII pixels rather than CSS pixels.
+### Step 1 — Runtime node graph
 
-Initial choices can be integer values such as:
+Build the canonical port/node types and direct 832-entry straight lookup.
+
+Verify all connections and both orientations.
+
+### Step 2 — Node canvas
+
+Display GraphSCII cells with an optional node overlay.
+
+Implement pointer-to-node selection and visible snapping.
+
+### Step 3 — Node Pen
+
+Implement pointer-down, node transition, direct segment commit, shared-boundary continuation, pointer-up.
+
+At this milestone the user must be able to draw continuous GraphSCII line art with no raster solver anywhere in the application.
+
+### Step 4 — Editing and erasing
+
+Select paths, move nodes only to legal nodes, delete paths/segments, and support undo/redo over semantic operations.
+
+### Step 5 — Add the missing full 25% glyph
+
+Allocate the planned full light tile, regenerate the canonical publication/font artifacts, and pass all verification gates.
+
+### Step 6 — Closed-path fills
+
+Add fill enabled/disabled, fill side, fill tone, exact boundary-fill lookup, and whole-cell interior fill.
+
+### Step 7 — Exact connector composition
+
+Add direct lookup for supported multi-segment connector states and reject unsupported ones.
+
+### Step 8 — Save/export
+
+Save semantic `.graphscii` documents and export the exact Unicode character grid.
+
+### Step 9 — Convenience tools
+
+Only after the node pen and fills are correct, consider rectangle, polygon, ellipse-like, or other node-path construction helpers.
+
+---
+
+## 22. Explicitly rejected architecture
+
+The following ideas belong to the superseded plan and must not re-enter the implementation unless the GraphSCII standard itself is intentionally changed later:
 
 ```text
-1 px
-2 px
-3 px
-4 px
-...
+continuous vector geometry as document truth
+floating-point drawing coordinates as document truth
+supersampled target rasters
+per-cell bitmap targets
+glyph fitting
+shape matching
+Hamming-distance glyph selection
+coverage-aware candidate scoring
+semantic candidate filtering followed by visual matching
+neighbor continuity scoring
+local relaxation
+broad visual fallback
+repairing broken lines after glyph selection
+dithered stroke raster footprints
 ```
 
-Rasterization converts width into logical coverage, and the solver chooses the GraphSCII vocabulary that best represents that stroke.
-
-Stroke width and tone are independent properties.
-
-Examples:
-
-```text
-1 px at 100% tone
-4 px at 100% tone
-4 px at 50% tone
-```
-
-are all distinct drawing states.
+If the implementation starts needing any of those mechanisms to draw an ordinary GraphSCII line, the implementation has departed from this plan.
 
 ---
 
-## 24. Erasing
+## 23. Final rule
 
-Two concepts are useful:
+The entire drawing system can be summarized as:
 
-### Object deletion
-
-Select an editable object and delete it.
-
-### Brush erase
-
-Paint subtractive geometry through the raster/object system.
-
-For the first vertical slice, prioritize object deletion plus a simple eraser stroke implementation. More sophisticated destructive pixel/glyph editing can come later.
-
----
-
-## 25. UI layout
-
-Keep the application visually simple and artwork-first.
-
-Conceptual desktop layout:
-
-```text
-┌──────────────────────────────────────────────────────────────┐
-│ GraphSCII Draw   New Open Save Export   Undo Redo    100%   │
-├─────────┬──────────────────────────────────────┬─────────────┤
-│ Select  │                                      │ Stroke      │
-│ Pencil  │                                      │ Width: 1    │
-│ Line    │            DRAWING CANVAS            │ Tone: 100%  │
-│ Bézier  │                                      │ Fill: On    │
-│ Ellipse │                                      │ Fill: 50%   │
-│ Eraser  │                                      │ Grid: Off   │
-│         │                                      │ Pixels: Off │
-├─────────┴──────────────────────────────────────┴─────────────┤
-│ Cell 43,18   U+Exxx   100×50 cells   Alt+Wheel: tone       │
-└──────────────────────────────────────────────────────────────┘
-```
-
-The tonal control should be immediately visible rather than buried in a settings dialog.
-
----
-
-## 26. Input and shortcut plan
-
-Initial shortcuts:
-
-```text
-V              Select
-P              Freehand/Pencil
-L              Line
-B              Bézier
-E              Ellipse
-X              Eraser
-Delete         Delete selected object
-Ctrl/Cmd+Z     Undo
-Ctrl/Cmd+Y     Redo
-Shift          Angle constraint where applicable
-Alt+Wheel      Adjust active GraphSCII tone
-```
-
-Potential later shortcuts:
-
-```text
-[ / ]          stroke width
-G              toggle cell grid
-Shift+G        toggle pixel view
-Space+drag     pan
-+ / -          zoom
-```
-
-Accessibility requires every mouse-wheel-only convenience to have an equivalent button and keyboard path. `Alt+Wheel` is an accelerator, not the sole method of changing tone.
-
----
-
-## 27. Export formats
-
-### GraphSCII text
-
-Export the actual Unicode PUA grid.
-
-This is the most direct expression of GraphSCII as an interchange format.
-
-### PNG
-
-Rasterized final image.
-
-### Editable GraphSCII drawing
-
-Save the full JSON-based `.graphscii` document with geometry, settings, locks, and resolved glyphs.
-
-### HTML
-
-Later, export a self-contained or compact HTML presentation using the GraphSCII font and character grid.
-
-### SVG
-
-Later, either place GraphSCII characters as text or convert compiled glyphs to paths.
-
-### Clipboard
-
-A selected rectangular region can be copied as actual GraphSCII Unicode text.
-
----
-
-## 28. Recommended implementation stack
-
-Use a static, dependency-light web architecture:
-
-```text
-TypeScript
-Vite
-Canvas 2D
-GraphSCII-Regular.ttf
-canonical registry.json
-Web Worker-compatible solver
-IndexedDB and/or browser File System APIs for local saves
-```
-
-React is not required for the drawing engine. The core editor is inherently imperative, and plain TypeScript with a small component/UI layer may be easier to reason about and test.
-
-No server, account, database, or cloud service is required for the MVP.
-
-This makes GitHub Pages an appropriate deployment target.
-
----
-
-## 29. Suggested module layout
-
-```text
-graphscii-demo/
-├── PLAN.md
-├── package.json
-├── index.html
-├── public/
-│   └── GraphSCII-Regular.ttf
-└── src/
-    ├── main.ts
-    ├── app/
-    │   ├── state.ts
-    │   ├── commands.ts
-    │   └── shortcuts.ts
-    ├── document/
-    │   ├── model.ts
-    │   ├── serialization.ts
-    │   └── migrations.ts
-    ├── geometry/
-    │   ├── freehand.ts
-    │   ├── line.ts
-    │   ├── bezier.ts
-    │   ├── ellipse.ts
-    │   └── bounds.ts
-    ├── raster/
-    │   ├── supersample.ts
-    │   ├── coverage.ts
-    │   └── dither.ts
-    ├── graphscii/
-    │   ├── registry.ts
-    │   ├── bitmap.ts
-    │   ├── candidates.ts
-    │   ├── scoring.ts
-    │   ├── continuity.ts
-    │   └── solver.ts
-    ├── renderer/
-    │   ├── glyph-canvas.ts
-    │   ├── overlay-canvas.ts
-    │   └── viewport.ts
-    ├── tools/
-    │   ├── select.ts
-    │   ├── freehand.ts
-    │   ├── line.ts
-    │   ├── bezier.ts
-    │   ├── ellipse.ts
-    │   └── eraser.ts
-    └── worker/
-        └── solver-worker.ts
-```
-
-This is a proposed organization, not a requirement. Keep modules small and testable rather than forcing the exact directory structure if implementation experience suggests something better.
-
----
-
-## 30. MVP vertical slice
-
-The first shippable demo should include:
-
-### Document
-
-- new document;
-- configurable width/height in GraphSCII cells;
-- local save/load;
-- exact resolved glyph grid preserved.
-
-### Drawing
-
-- freehand;
-- straight line;
-- cubic Bézier;
-- ellipse;
-- eraser/delete.
-
-### Editing
-
-- select object;
-- move object;
-- delete object;
-- edit Bézier handles;
-- undo/redo.
-
-### Tone and dithering
-
-- 100%, 75%, 50%, and 25% canonical GraphSCII tones;
-- visible tone button/control;
-- separate fill-enabled toggle;
-- `Alt+Wheel` tone adjustment;
-- selected-object tone editing;
-- phase-locked dither behavior across cell boundaries;
-- tone included in undo/redo and serialization.
-
-### GraphSCII rendering
-
-- load the canonical registry;
-- represent canonical glyphs as 128-bit bitmaps;
-- dirty-cell rasterization;
-- nearest-glyph matching;
-- semantic tone filtering;
-- coverage-aware refinement;
-- basic neighbor continuity scoring;
-- render actual GraphSCII codepoints using `GraphSCII-Regular.ttf`.
-
-### Inspection
-
-- Art view;
-- Cell view;
-- Pixel view;
-- vector-guide toggle;
-- basic glyph inspector.
-
-### Export
-
-- GraphSCII Unicode text;
-- PNG;
-- editable JSON/`.graphscii`.
-
----
-
-## 31. Implementation milestones
-
-### Milestone A — bootable canvas
-
-- Vite/TypeScript app starts;
-- GraphSCII font loads;
-- registry loads;
-- fixed cell grid renders known GraphSCII characters;
-- zoom/pan foundation works.
-
-**Gate:** known registry codepoints render in the expected cells with deterministic placement.
-
-### Milestone B — exact bitmap matcher
-
-- load all 6,397 canonical graphical bitmaps;
-- encode each as 128 bits;
-- build Hamming matcher;
-- feed arbitrary 8×16 targets into solver;
-- return correct nearest candidates deterministically.
-
-**Gate:** exact registry bitmap input always resolves to its canonical owner with zero bitmap error.
-
-### Milestone C — geometry rasterization
-
-- line rasterizer;
-- ellipse rasterizer;
-- Bézier rasterizer;
-- freehand smoothing;
-- supersampled coverage targets;
-- dirty-region tracking.
-
-**Gate:** moving one object recomputes only intersecting cells and updates interactively.
-
-### Milestone D — GraphSCII tonal classes
-
-- implement 100/75/50/25 tone property;
-- integrate GraphSCII's phase-locked dither semantics;
-- add toolbar tone control;
-- add `Alt+Wheel` control;
-- separate fill-enabled state from density;
-- serialize tone with objects.
-
-**Gate:** a filled ellipse can be switched among all four GraphSCII tones and each state resolves reproducibly without random dither phase changes.
-
-### Milestone E — continuity solver
-
-- semantic candidate filtering;
-- boundary-port scoring;
-- top-N candidate retention;
-- local neighbor reconciliation.
-
-**Gate:** representative multi-cell lines, curves, and ellipse edges do not develop avoidable single-cell breaks when a connectivity-compatible candidate is available.
-
-### Milestone F — editing
-
-- selection;
-- move;
-- Bézier handles;
-- object deletion;
-- undo/redo;
-- selected-object stroke/fill tone changes.
-
-**Gate:** edit operations regenerate only dirty regions and undo exactly.
-
-### Milestone G — save/export
-
-- `.graphscii` JSON;
-- GraphSCII text export;
-- PNG export;
-- clipboard export.
-
-**Gate:** save → reload produces the identical resolved GraphSCII grid before additional edits.
-
-### Milestone H — demo polish
-
-- tooltips and keyboard shortcuts;
-- accessibility labels;
-- keyboard-accessible tone selection;
-- glyph inspector;
-- Art/Cell/Pixel modes;
-- vector-guide toggle;
-- performance tuning;
-- GitHub Pages build.
-
-**Gate:** the demo can be used end-to-end without developer tools and every core operation has visible feedback.
-
----
-
-## 32. Testing and verification
-
-The project should inherit GraphSCII's verification philosophy.
-
-Important automated tests:
-
-### Registry tests
-
-- 6,397 PUA graphical owners load;
-- canonical codepoint mapping is preserved;
-- each bitmap is exactly 8×16;
-- tonal classes are indexed correctly.
-
-### Solver tests
-
-- exact bitmap → exact owner;
-- deterministic result for identical input;
-- tone filter does not select an incompatible density when a canonical matching fill owner exists;
-- locked cells remain unchanged;
-- neighbor scoring is deterministic.
-
-### Geometry tests
-
-- line bounds;
-- ellipse bounds;
-- Bézier bounds;
-- dirty-region union;
-- supersampling reproducibility.
-
-### Dither tests
-
-- 100/75/50/25 values survive serialization;
-- phase remains stable when a shape crosses character-cell boundaries;
-- changing tone changes only the expected dirty region;
-- undo/redo restores the exact prior tone and glyph grid;
-- `Alt+Wheel` clamps correctly and does not alter page scroll unless the shortcut is active on the canvas.
-
-### Save/load tests
-
-- save/reload preserves geometry;
-- save/reload preserves tone;
-- save/reload preserves locked cells;
-- save/reload preserves exact glyph grid.
-
-### Export tests
-
-- Unicode text export has the expected number of rows/cells;
-- PNG dimensions are deterministic for a specified scale;
-- copied GraphSCII text round-trips back into the grid.
-
----
-
-## 33. Accessibility requirements
-
-The demo should be keyboard-operable even though freehand drawing is naturally pointer-oriented.
-
-Requirements:
-
-- all toolbar controls have accessible names;
-- tool state is exposed programmatically;
-- selected tone is announced as `100 percent`, `75 percent`, `50 percent`, or `25 percent` rather than only through texture;
-- tone can be changed without a mouse wheel;
-- visible focus states;
-- shortcuts documented in an accessible help surface;
-- no critical meaning communicated only by dither appearance;
-- reduced-motion preference respected for UI transitions;
-- canvas has an accessible textual status region announcing selection/tool/cell changes where practical.
-
----
-
-## 34. Performance target
-
-The MVP should feel interactive on ordinary desktop hardware.
-
-Target behavior:
-
-- pointer movement remains responsive while drawing;
-- only dirty cells are solved;
-- full-grid redraw is avoided during ordinary editing;
-- top-N expensive coverage/continuity scoring occurs only after cheap semantic/Hamming pruning;
-- solver can be moved into a worker if main-thread latency becomes visible.
-
-A useful target is to keep ordinary drag-preview work within a single animation-frame budget whenever possible, but correctness and deterministic output take priority over premature micro-optimization.
-
----
-
-## 35. Future directions
-
-Once the vertical slice is solid, likely extensions include:
-
-- filled rectangles and polygons;
-- bucket fill;
-- direct glyph brush;
-- pixel-target editing mode;
-- image import and GraphSCII conversion;
-- grayscale image conversion using the four canonical dither strengths;
-- airbrush/shading tools;
-- layers;
-- transformations;
-- rotation;
-- text using printable ASCII support;
-- palette/color extensions at the document/rendering level;
-- HTML/SVG export;
-- animation;
-- collaborative or embedded editor variants.
-
-A particularly useful eventual interaction model is three editing levels:
-
-```text
-VECTOR MODE
-continuous editable geometry
-        ↓
-PIXEL MODE
-edit desired logical raster
-        ↓
-GLYPH MODE
-edit/lock actual GraphSCII characters
-```
-
-This mirrors GraphSCII's own geometry → bitmap → encoded-glyph structure.
-
----
-
-## 36. Definition of success
-
-The demo succeeds when a user can open the web app, draw a smooth line or curve without thinking about character codes, change its tonal strength from solid through the canonical GraphSCII dither levels, and immediately see an honest rendering made from actual GraphSCII characters.
-
-The critical demonstration should be something like:
-
-1. draw a large ellipse;
-2. enable fill;
-3. switch fill through 100%, 75%, 50%, and 25%;
-4. use `Alt+Wheel` to change density interactively;
-5. draw a Bézier curve across the ellipse;
-6. zoom into Cell and Pixel views;
-7. inspect the GraphSCII glyphs selected along the boundaries;
-8. copy or export the result as actual GraphSCII Unicode text;
-9. save the editable `.graphscii` document and reopen it with the exact same resolved grid.
-
-At that point GraphSCII is no longer only a font and static graphical vocabulary. It is functioning as a live graphical interchange system underneath an ordinary-feeling drawing application.
+> **Pick a node. Pick the next legal node. Draw the exact GraphSCII segment between them. Continue from that node. For a closed filled path, choose which side is inside and replace the boundary with the corresponding fill semantics; fill whole interior cells with the selected full dither tile. Never solve for a glyph that the node graph has already determined.**
