@@ -14,8 +14,9 @@
     "verify:assets": "node scripts/verify-demo.mjs",
     "verify:semantic": "node scripts/verify-semantic-engine.mjs",
     "verify:runtime": "node scripts/verify-runtime-engine.mjs",
+    "verify:launcher": "python scripts/verify-launcher.py",
     "verify:browser": "playwright test",
-    "verify": "npm run verify:assets && npm run verify:semantic && npm run verify:runtime && npm run check && npm run build && npm run verify:browser"
+    "verify": "npm run verify:assets && npm run verify:semantic && npm run verify:runtime && npm run check && npm run build && npm run verify:launcher && npm run verify:browser"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
