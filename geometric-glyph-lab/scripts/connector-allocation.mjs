@@ -236,8 +236,13 @@ export async function buildConnectorAllocationDocuments(repoRoot) {
     if (!semantic) throw new Error(`Missing selected diagonal semantic ${semanticId}.`);
     const sourceOwner = diagonalOwnerByBitmap.get(semantic.bitmapKey);
     if (!sourceOwner) throw new Error(`Missing diagonal owner for ${semanticId}.`);
-    if (!baseByBitmap.has(semantic.bitmapKey) && !orthOwnerByBitmap.get(semantic.bitmapKey)?.novel) {
-      throw new Error(`Selected diagonal semantic ${semanticId} has inconsistent reuse metadata.`);
+    const reusesBase = baseByBitmap.has(semantic.bitmapKey);
+    const reusesOrthogonal = orthOwnerByBitmap.has(semantic.bitmapKey);
+    if (sourceOwner.incrementalNovel && (reusesBase || reusesOrthogonal)) {
+      throw new Error(`Selected diagonal semantic ${semanticId} is marked novel but reuses an earlier owner.`);
+    }
+    if (!sourceOwner.incrementalNovel && !reusesBase && !reusesOrthogonal) {
+      throw new Error(`Selected diagonal semantic ${semanticId} is marked reuse but has no earlier owner.`);
     }
     if (sourceOwner.incrementalNovel) addNovelBitmap(semantic.bitmapKey, "connector-diagonal", sourceOwner.ownerId);
     addAlias(semantic.bitmapKey, semantic.id);
