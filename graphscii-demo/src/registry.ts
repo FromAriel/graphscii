@@ -1,6 +1,10 @@
 import type { GraphGlyph, GraphSCIITone, RegistryJson } from "./types";
 
 const EXPECTED_OWNER_COUNT = 6397;
+const STRAIGHT_START = 0xe000;
+const STRAIGHT_END = 0xe2e9;
+const CONNECTOR_START = 0xf6a4;
+const CONNECTOR_END = 0xf8fc;
 
 // These are the phase-locked masks frozen by GraphSCII's dither.ts/palette.ts sources.
 // x=0 is bit 0, matching the registry bitmap serialization. The 8-row masks repeat
@@ -18,6 +22,15 @@ function isStrokeCanonicalClass(canonicalClass: string): boolean {
   return canonicalClass === "straight"
     || canonicalClass === "connector-orthogonal"
     || canonicalClass === "connector-diagonal";
+}
+
+export function isStrokeCodepoint(codepointValue: number): boolean {
+  return (codepointValue >= STRAIGHT_START && codepointValue <= STRAIGHT_END)
+    || (codepointValue >= CONNECTOR_START && codepointValue <= CONNECTOR_END);
+}
+
+function isStrokeGlyph(glyph: GraphGlyph): boolean {
+  return isStrokeCanonicalClass(glyph.canonicalClass) && isStrokeCodepoint(glyph.codepointValue);
 }
 
 function toneMask(tone: GraphSCIITone): Uint8Array {
@@ -75,16 +88,21 @@ export class GlyphRegistry {
 
   private constructor(glyphs: GraphGlyph[]) {
     this.glyphs = glyphs;
-    this.strokeGlyphs = glyphs.filter((glyph) => isStrokeCanonicalClass(glyph.canonicalClass));
+    this.strokeGlyphs = glyphs.filter(isStrokeGlyph);
     this.byPixelCount = Array.from({ length: 129 }, () => [] as GraphGlyph[]);
     this.strokeByPixelCount = Array.from({ length: 129 }, () => [] as GraphGlyph[]);
     this.byCodepoint = new Map<number, GraphGlyph>();
     for (const glyph of glyphs) {
       this.byPixelCount[glyph.onCount]!.push(glyph);
-      if (isStrokeCanonicalClass(glyph.canonicalClass)) this.strokeByPixelCount[glyph.onCount]!.push(glyph);
+      if (isStrokeGlyph(glyph)) this.strokeByPixelCount[glyph.onCount]!.push(glyph);
       this.byCodepoint.set(glyph.codepointValue, glyph);
     }
     if (this.strokeGlyphs.length === 0) throw new Error("GraphSCII registry contains no stroke glyph families.");
+    for (const glyph of this.strokeGlyphs) {
+      if (!isStrokeCodepoint(glyph.codepointValue)) {
+        throw new Error(`Stroke glyph escaped the permitted allocation ranges: U+${glyph.codepointValue.toString(16).toUpperCase()}.`);
+      }
+    }
     this.toneMasks = {
       100: toneMask(100),
       75: toneMask(75),
@@ -123,7 +141,11 @@ export class GlyphRegistry {
       for (let count = low; count <= high; count += 1) candidates.push(...buckets[count]!);
       radius += 8;
     }
-    return candidates.length > 0 ? candidates : fallback;
+    const result = candidates.length > 0 ? candidates : fallback;
+    if (policy === "stroke" && result.some((glyph) => !isStrokeCodepoint(glyph.codepointValue))) {
+      throw new Error("Stroke candidate pool contains a non-stroke GraphSCII allocation.");
+    }
+    return result;
   }
 }
 
