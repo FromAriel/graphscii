@@ -19,9 +19,11 @@ GraphSCII Draw is intentionally GraphSCII-native rather than a vector editor wit
 - Connector resolution only for genuine multi-object authored T/X-style junctions
 - Single authored strokes never gain connector semantics merely because they self-cross inside one character cell
 - Deterministic DDA fitting of authored strokes to GraphSCII cell boundaries before glyph lookup
+- Exact diagonal cell-corner travel without inventing an extra orthogonal cell
 - First-visit fragment covering that preserves revisited freehand cells instead of deleting authored loops
 - Deterministic terminal projection for sub-cell same-edge U-turns that have no exact straight owner
 - Fail-closed conversion issues for geometry that GraphSCII v1 cannot encode exactly
+- Synchronous committed-document resolution before text or PNG export, preventing stale-frame exports
 - Undo/redo
 - GraphSCII character-cell inspection
 - Editable `.graphscii` JSON save/open
@@ -54,9 +56,13 @@ GraphSCII-Regular.ttf
 
 For an ordinary open stroke, each retained GraphSCII cell is required to finish with exactly two boundary ports. Revisited cells split the stroke into deterministic straight fragments rather than authorizing a connector or globally erasing a loop. A connector is eligible only when multiple authored objects create a genuine three- or four-arm junction.
 
+When a centerline passes exactly through a character-cell corner, the canonical geometry engine may move directly between the two diagonally touching cells. The seam validator accepts that only when the same authored object carries the mathematically exact diagonal counterpart port and both retained source segments meet at the same physical corner. It does not insert a third orthogonal cell just to satisfy row/column seam bookkeeping.
+
 A tiny U-turn can enter and leave the same edge of one 8×16 character cell. GraphSCII v1 has no straight owner for a same-edge pair such as `R5 ↔ R8`. The fitter preserves that authored cell and projects only the fragment terminal to the nearest different boundary edge, after which the result must still resolve through the published straight table.
 
 Filled ellipses use the published fill grammar directly. Unsupported overlaps or partial-fill cases that have no exact GraphSCII v1 semantic are reported as conversion issues rather than silently substituted with visually similar glyphs.
+
+Text and PNG export synchronously resolve the committed editable document immediately before generating output. This prevents a pointer-up followed by an immediate export click from observing an older animation-frame solver state.
 
 ## One-command launch
 
@@ -99,8 +105,16 @@ npm run dev
 
 ## Verify and build
 
+The full verification command is:
+
 ```powershell
 npm run verify
+```
+
+The browser gate uses Playwright Chromium. On a machine where its browser binary has not yet been installed, run once:
+
+```powershell
+npx playwright install chromium
 ```
 
 The verification chain is:
@@ -115,11 +129,15 @@ verify:runtime
 TypeScript strict check
       ↓
 production Vite build
+      ↓
+verify:browser (Playwright Chromium)
 ```
 
-The gates verify the frozen 6,397-owner vocabulary, the 1,664 straight connection-pair rules, exact fill semantics, orthogonal and selected diagonal connector semantics, fitted shared-port invariants, and the actual runtime solver.
+The gates verify the frozen 6,397-owner vocabulary, the 1,664 straight connection-pair rules, exact fill semantics, orthogonal and selected diagonal connector semantics, fitted shared-port invariants, exact corner traversal in both directions, and the actual runtime solver.
 
 The main freehand regression is the original supplied 379-point failing drawing. Its authored centerline touches 397 GraphSCII cells. The runtime gate requires the real solver to emit exactly 397 registered **straight** owners, with zero conversion issues, zero fill/connector glyphs, and exactly the same occupied-cell count in Unicode text export. The historical invalid export occupied 424 cells because the old heuristic path spilled beyond the authored footprint.
+
+The Chromium smoke gate exercises the built application through the UI rather than importing the solver behind it. It boots with the real frozen font/registry, draws a self-crossing freehand stroke through pointer events, immediately exports GraphSCII text, verifies undo and redo, saves the editable `.graphscii` document, creates a new blank document, reopens the saved bytes, verifies the reopened text output, and exports a valid PNG.
 
 ## Display and export
 
