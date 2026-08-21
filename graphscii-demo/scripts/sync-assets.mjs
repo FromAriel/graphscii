@@ -16,6 +16,22 @@ const assets = [
     source: path.join(repoRoot, "artifacts", "manifest", "vocabulary-v1", "registry.json"),
     target: path.join(outputDir, "registry.json"),
   },
+  {
+    source: path.join(repoRoot, "artifacts", "manifest", "indexes", "by-connection-pair.json"),
+    target: path.join(outputDir, "by-connection-pair.json"),
+  },
+  {
+    source: path.join(repoRoot, "artifacts", "research", "junctions", "orthogonal-connectors.json"),
+    target: path.join(outputDir, "orthogonal-connectors.json"),
+  },
+  {
+    source: path.join(repoRoot, "artifacts", "research", "junctions", "diagonal-connectors.json"),
+    target: path.join(outputDir, "diagonal-connectors.json"),
+  },
+  {
+    source: path.join(repoRoot, "artifacts", "research", "junctions", "diagonal-selection.json"),
+    target: path.join(outputDir, "diagonal-selection.json"),
+  },
 ];
 
 await mkdir(outputDir, { recursive: true });
@@ -30,4 +46,4 @@ for (const asset of assets) {
   await copyFile(asset.source, asset.target);
 }
 
-console.log("GraphSCII demo assets synchronized from the frozen repository artifacts.");
+console.log("GraphSCII demo assets synchronized from the frozen registry and published drawing-rule artifacts.");
