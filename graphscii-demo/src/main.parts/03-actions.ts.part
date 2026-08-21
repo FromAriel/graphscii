@@ -4,8 +4,13 @@
 }
 
 function exportText(): void {
-  downloadBlob("graphscii-drawing.txt", new Blob([solver.toText()], { type: "text/plain;charset=utf-8" }));
-  setStatus("Exported GraphSCII Unicode text. View it with GraphSCII-Regular.ttf.");
+  try {
+    const text = solver.toText();
+    downloadBlob("graphscii-drawing.txt", new Blob([text], { type: "text/plain;charset=utf-8" }));
+    setStatus("Exported GraphSCII Unicode text. View it with GraphSCII-Regular.ttf.");
+  } catch (error) {
+    setStatus(error instanceof Error ? `Text export failed: ${error.message}` : "Text export failed.");
+  }
 }
 
 function applySelectedWidth(): void {
