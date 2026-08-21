@@ -59,6 +59,6 @@ npm run generate:connector-allocation
 npm run verify:connector-allocation
 ```
 
-The complete project `check → generate → verify` chain passed before the generated allocation registry, 1,202 per-glyph connector artifacts, and three paged connector atlases were committed.
+The complete project `check → generate → verify` chain passed before the generated allocation registry, 1,202 per-glyph connector artifacts, and three paged connector atlases were committed. The deterministic generated artifact commit is `f252a57efb94526e42d7bfd72d65854f2ae756d8`.
 
 Milestone 5C therefore freezes the provisional connector allocation at **601 new owners**, with exactly **3 BMP PUA slots remaining**. The next slice is publication/update work: fold the v1 extension into the formal graphics publication and reserve accounting without renumbering any existing owner.
