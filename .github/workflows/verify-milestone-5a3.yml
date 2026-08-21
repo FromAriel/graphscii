@@ -64,7 +64,6 @@ jobs:
             spec/junction-candidate-research-v0.json
 
       - name: Commit deterministic Milestone 5A.3 outputs
-        if: github.event_name == 'push'
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
