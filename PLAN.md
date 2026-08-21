@@ -8,25 +8,17 @@
 >
 > **Canonical cell:** **8 columns × 16 rows**
 >
-> The original long-form plan is preserved at [`docs/PLAN-v0.md`](docs/PLAN-v0.md). Detailed milestone plans and completion notes live under `docs/`.
+> **Current published bitmap vocabulary:** `graphscii-graphics-v1`
+
+The original long-form plan is preserved at [`docs/PLAN-v0.md`](docs/PLAN-v0.md). Detailed milestone plans, research reports, and completion notes remain under `docs/` and `artifacts/`.
 
 ---
 
-## 1. What GraphSCII is
+## 1. Core contract
 
 GraphSCII is a fixed-cell graphics language encoded as Unicode glyphs and machine-readable tile data.
 
-Each canonical visual is one deterministic **8×16 binary bitmap**. Multiple mathematical or appearance definitions may share the same visual owner when they rasterize identically.
-
-Global rule:
-
-> **One bitmap key gets at most one canonical glyph/codepoint.**
-
-Semantic geometry is preserved even when its current visual form deduplicates, because later derived operations can distinguish definitions that temporarily share pixels.
-
----
-
-## 2. Frozen cell contract
+Every canonical visual is one deterministic **8×16 binary bitmap**.
 
 ```text
 width  = 8 pixels
@@ -35,7 +27,7 @@ x = 0..7   left → right
 y = 0..15  top → bottom
 ```
 
-Ports:
+Boundary ports:
 
 ```text
 T0..T7
@@ -44,222 +36,56 @@ L0..L15
 R0..R15
 ```
 
-Bitmap identity remains 16 row bytes, top-to-bottom, `x=0` as bit 0, serialized as 32 lowercase hexadecimal characters.
+Bitmap identity is 16 row bytes, top-to-bottom, with `x=0` as bit 0, serialized as 32 lowercase hexadecimal characters.
 
-ASCII:
+Global ownership rule:
 
-```text
-# = filled
-- = empty
-```
+> **One bitmap key gets at most one canonical glyph/codepoint.**
 
-Normative details: [`docs/format.md`](docs/format.md).
+Different mathematical or semantic definitions may alias the same owner when they rasterize identically. Exact bitmap reuse is global across every encoded family.
+
+Normative format details: [`docs/format.md`](docs/format.md).
 
 ---
 
-## 3. Straight vocabulary — COMPLETE AND PUBLISHED
+## 2. Straight vocabulary — COMPLETE AND PUBLISHED
 
-Frozen fixture:
+Frozen straight language:
 
 ```text
 mathematical straight definitions    832
-unique straight visuals              746
+unique straight visual owners        746
 duplicate definitions                 86
 maximum aliases                        4
 ```
 
-Current provisional allocation:
+Published allocation:
 
 ```text
 glyph IDs    0..745
-Unicode      U+00E000..U+00E2E9
+Unicode      U+E000..U+E2E9
 ```
 
-Published snapshot:
-
-```text
-straight-v0
-snapshot commit 5806d99d73ab635bdbd0b1ff661ed810aeaa995d
-```
-
-The **832 mathematical definitions**, not only the 746 deduplicated stroke owners, remain authoritative input for derived geometry.
+The 832 mathematical definitions remain authoritative input for derived geometry even when multiple definitions share one raster owner.
 
 ---
 
-## 4. Curve research — PRESERVED, EXPANSION PAUSED
+## 3. Curve research — PRESERVED, EXPANSION PAUSED
 
-Milestone 3A produced a deterministic cubic Bézier curve engine and single-curve explorer with five tangent classes, three strengths, fixed-point rasterization, validity checks, and exact reuse detection against the straight vocabulary.
+Milestone 3A produced the deterministic cubic Bézier curve engine and explorer. The broad curve sweep demonstrated severe address-space pressure, so curves are preserved as research rather than included in the current encoded vocabulary.
 
-That work remains in the repository and is useful for future curated extensions.
-
-The broad curve vocabulary is no longer the immediate direction because the research sweep demonstrated severe codepoint pressure. Curves may return later after the straight fill+dither vocabulary is resolved.
-
-See:
+References:
 
 - [`docs/milestone-3-curve-plan.md`](docs/milestone-3-curve-plan.md)
 - [`docs/milestone-3a-curve-engine.md`](docs/milestone-3a-curve-engine.md)
 
----
-
-## 5. Current direction — straight filled geometry + tonal dithers
-
-Detailed design:
-
-[`docs/milestone-4-straight-fill-dither-plan.md`](docs/milestone-4-straight-fill-dither-plan.md)
-
-Architecture:
-
-```text
-832 mathematical straight boundaries
-        ↓
-select side A / side B
-        ↓
-solid or phase-locked dither mask
-        ↓
-boundary stroke forced ON
-        ↓
-canonical 8×16 bitmap
-        ↓
-GLOBAL exact raster dedup
-```
-
-Generic appearance rule:
-
-```text
-final = boundary-stroke OR (selected-side-region AND fill-mask)
-```
-
-Dither masks are **phase locked** to the cell coordinate system. No random or per-glyph phase shifts are allowed.
-
-Research styles now measured:
-
-```text
-solid       100.0%
-dense        87.5%
-medium       75.0%
-half         50.0%
-light        25.0%
-sparse       12.5%
-```
-
-The full BMP Private Use Area is now the intended graphics address space:
-
-```text
-U+E000..U+F8FF = 6,400 slots
-```
-
-Printable ASCII remains at `U+0020..U+007E` and consumes no PUA slots.
+Future curve work must be curated rather than exhaustive.
 
 ---
 
-## 6. Milestone 4A — solid straight half-fills — COMPLETE
+## 4. Fill and tonal vocabulary — COMPLETE
 
-Implementation/completion note:
-
-[`docs/milestone-4a-straight-solid-fills.md`](docs/milestone-4a-straight-solid-fills.md)
-
-Each of the 832 oriented straight definitions produces two semantic solid fills:
-
-```text
-832 × 2 = 1,664 semantic fill candidates
-```
-
-The selected side is determined by the exact integer oriented cross product against the mathematical line. The existing Bresenham stroke is cloned first, so all boundary pixels remain ON.
-
-Measured result:
-
-```text
-semantic solid fills                 1,664
-unique fill rasters                  1,347
-fill candidates reusing straight       100
-straight visuals reused                  88
-fill candidates reusing earlier fill    305
-new fill visual owners               1,259
-published straight visuals             746
-combined straight + solid visuals     2,005
-```
-
-No fill codepoints have been allocated yet.
-
-Machine fixture:
-
-`spec/straight-fill-solid-research.json`
-
----
-
-## 7. Milestone 4A.1 — persistent fill registry — COMPLETE
-
-Completion note:
-
-[`docs/milestone-4a1-fill-registry.md`](docs/milestone-4a1-fill-registry.md)
-
-The 1,664 solid fill semantics and their 1,347 unique fill rasters are persistent generated artifacts.
-
-```text
-artifacts/manifest/fills/
-├── registry.json
-├── stats.json
-└── indexes/
-    ├── by-alias.json
-    ├── by-bitmap.json
-    ├── by-boundary-side.json
-    ├── by-owner.json
-    └── by-straight-candidate.json
-```
-
-All 1,259 novel fill visuals remain research-only and unallocated.
-
----
-
-## 8. Milestone 4B — phase-locked dither sweep — COMPLETE
-
-Completion note:
-
-[`docs/milestone-4b-dither-sweep.md`](docs/milestone-4b-dither-sweep.md)
-
-Five styles were swept across all 1,664 side semantics:
-
-```text
-1,664 × 5 = 8,320 styled semantic candidates
-```
-
-Measured exact-dedup result:
-
-```text
-styled semantic candidates               8,320
-unique styled rasters                    6,500
-published straight visuals                 746
-novel solid visual owners                1,259
-novel dither visual owners               5,077
-combined straight + solid + dither       7,082
-```
-
-Research artifacts:
-
-```text
-artifacts/research/dithers/
-spec/straight-fill-dither-research.json
-```
-
-No fill or dither codepoints were allocated in 4B.
-
----
-
-## 9. Milestone 4C — palette and address-space decision — COMPLETE
-
-Completion note:
-
-[`docs/milestone-4c-palette-decision.md`](docs/milestone-4c-palette-decision.md)
-
-Milestone 4C added a true 50% phase-locked checkerboard and exhaustively evaluated every 3-style and 4-style palette containing solid from:
-
-```text
-100% / 87.5% / 75% / 50% / 25% / 12.5%
-```
-
-Exactly 20 candidate palettes were measured with global raster dedup.
-
-### Selected encoded tonal palette
+The selected encoded tonal palette is:
 
 ```text
 solid      100%
@@ -268,23 +94,9 @@ half        50%
 light       25%
 ```
 
-This gives exact quarter-step tonal spacing.
+Dense 87.5% and sparse 12.5% remain renderer-only semantic styles.
 
-Dense 87.5% and sparse 12.5% remain supported semantic **renderer-only** styles.
-
-### Exact cost and compression
-
-The selected four-level palette costs:
-
-```text
-exact globally deduplicated visuals    5,858
-```
-
-That is 58 above the 5,800 graphics target. The optimizer found exactly 62 globally novel 50% owners that are only one pixel away from an already encoded straight/solid/75%/25% visual.
-
-Those 62 owners, representing 64 semantic definitions, remain renderer-only.
-
-Final planned encoded population:
+The selected graphics-v0 population was:
 
 ```text
 straight                              746
@@ -293,298 +105,343 @@ solid                               1,259
 25% light                           1,315
 50% half retained                  1,207
                                     -----
-encoded PUA graphics               5,796
-BMP PUA reserve                      604
+encoded graphics-v0                5,796
 ```
 
-Printable ASCII remains outside the PUA:
+Renderer-only layer:
 
 ```text
-95 printable ASCII + 5,796 PUA graphics = 5,891 physical glyphs minimum
+semantic aliases                    3,392
+exact encoded reuses                  414
+derived aliases                     2,978
+unique derived bitmaps              2,555
+encoded codepoints consumed             0
 ```
 
-### Planned PUA layout
+Completion/publication references:
 
-These are planned ranges; 4C does not yet assign new fill/dither codepoints:
+- [`docs/milestone-4-straight-fill-dither-plan.md`](docs/milestone-4-straight-fill-dither-plan.md)
+- [`docs/milestone-4c-palette-decision.md`](docs/milestone-4c-palette-decision.md)
+- [`docs/milestone-4d-publication-plan.md`](docs/milestone-4d-publication-plan.md)
+- [`docs/milestone-4d6-graphics-publication.md`](docs/milestone-4d6-graphics-publication.md)
 
-```text
-U+E000..U+E2E9      746   published straight visuals
-U+E2EA..U+E7D4    1,259   solid fill visuals
-U+E7D5..U+ECC9    1,269   75% medium visuals
-U+ECCA..U+F1EC    1,315   25% light visuals
-U+F1ED..U+F6A3    1,207   retained 50% half visuals
-U+F6A4..U+F8FF      604   reserve
-```
-
-Persistent decision artifacts:
-
-```text
-artifacts/research/palette/
-├── decision.json
-├── candidate-palettes.json
-├── half-demotions.json
-└── report.md
-
-spec/straight-fill-palette-v0.json
-```
-
-The semantic vocabulary remains richer than the encoded font. Dense, sparse, and the 62 demoted half-tone owners can still resolve to existing codepoints on exact bitmap matches or be generated by the renderer.
-
----
-
-## 10. Milestone 4D — published graphics vocabulary v0 — COMPLETE
-
-Detailed implementation plan:
-
-[`docs/milestone-4d-publication-plan.md`](docs/milestone-4d-publication-plan.md)
-
-Milestone 4D materializes the 4C decision into the first complete addressable GraphSCII graphics vocabulary. It defines what the eventual font must contain, but does not yet build the TTF/OTF.
-
-Execution order:
-
-```text
-4D.1  canonical allocation registry                 COMPLETE
-4D.2  5,796 canonical ASCII/PNG artifacts             COMPLETE
-4D.3  categorized visual/text atlases                  COMPLETE
-4D.4  master text atlas + page atlas + layout map          COMPLETE
-4D.5  renderer-only resolution registry                     COMPLETE
-4D.6  graphscii-graphics-v0 publication snapshot              COMPLETE
-```
-
-### 4D.1 — canonical allocation registry — COMPLETE
-
-Completion note: [`docs/milestone-4d1-canonical-allocation-registry.md`](docs/milestone-4d1-canonical-allocation-registry.md)
-
-One global encoded registry now spans the 5,796 addressable graphics.
-
-Hard gates:
-
-```text
-encoded owners                    5,796
-unique bitmap owners              5,796
-unique codepoints                 5,796
-first codepoint                  U+E000
-last allocated codepoint         U+F6A3
-reserve                          U+F6A4..U+F8FF
-reserve slots                       604
-straight codepoints unchanged        YES
-```
-
-Expected registry tree:
-
-```text
-artifacts/manifest/vocabulary/
-├── registry.json
-├── stats.json
-└── indexes/
-    ├── by-codepoint.json
-    ├── by-bitmap.json
-    ├── by-alias.json
-    ├── by-owner.json
-    ├── by-boundary-side-style.json
-    └── renderer-only.json
-```
-
-### 4D.2 — canonical per-glyph artifacts — COMPLETE
-
-Completion note: [`docs/milestone-4d2-canonical-glyph-artifacts.md`](docs/milestone-4d2-canonical-glyph-artifacts.md)
-
-The complete encoded vocabulary is now materialized directly from the canonical registry:
-
-```text
-artifacts/vocabulary/glyphs/
-├── ascii/    5,796 files
-└── png/      5,796 files
-```
-
-Exactly **11,592** per-glyph files are present. Every ASCII artifact is an exact 8×16 `#`/`-` raster and every PNG is an exact 8×16 deterministic RGBA rendering of the same registry bitmap. The generator clears only this glyph-artifact tree before rebuilding, and the verifier checks every filename and every file byte against the corresponding owner bitmap key.
-
-The canonical bitmap registry remains the source of truth for both forms.
-
-### 4D.3 — categorized atlases — COMPLETE
-
-Completion note: [`docs/milestone-4d3-categorized-atlases.md`](docs/milestone-4d3-categorized-atlases.md)
-
-Generate category atlases for:
-
-```text
-straight
-solid 100%
-medium 75%
-half 50%
-light 25%
-renderer-only reference
-reserve layout
-```
-
-Encoded categories should have paged PNG and text views in canonical codepoint order.
-
-### 4D.4 — master text atlas — COMPLETE
-
-Completion note: [`docs/milestone-4d4-master-atlases.md`](docs/milestone-4d4-master-atlases.md)
-
-The complete vocabulary must also exist as one combined, human-readable text atlas, neatly separated and categorized.
-
-Required master outputs:
-
-```text
-artifacts/vocabulary/atlases/
-├── master-text-atlas.md
-├── master-text-atlas.txt
-├── master-page-atlas.md
-├── master-page-atlas.txt
-├── master-layout-map.md
-├── straight-text-atlas.md
-├── solid-text-atlas.md
-├── medium-text-atlas.md
-├── half-text-atlas.md
-└── light-text-atlas.md
-```
-
-Master category order:
-
-```text
-1. STRAIGHT
-2. SOLID 100%
-3. MEDIUM 75%
-4. HALF 50%
-5. LIGHT 25%
-6. RENDERER-ONLY REFERENCE
-7. RESERVED PUA MAP
-```
-
-Each encoded glyph entry exposes its codepoint, glyph ID, class/style, bitmap key, representative semantic alias, alias count, and inline 8×16 ASCII bitmap.
-
-The master page atlas separately mirrors Unicode/codepoint neighborhoods, while `master-layout-map.md` gives the compact category/range/count overview.
-
-### 4D.5 — renderer-only resolution — COMPLETE
-
-Completion note: [`docs/milestone-4d5-renderer-only-resolution.md`](docs/milestone-4d5-renderer-only-resolution.md)
-
-Preserve dense 87.5%, sparse 12.5%, and the 62 demoted half-tone visual owners as explicit semantic outputs.
-
-Renderer-only definitions must distinguish:
-
-```text
-encoded-exact-reuse
-renderer-only-derived
-```
-
-The 62 demoted half-tone owners also retain their exact Hamming-distance-1 fallback relationship without pretending that fallback is raster-identical.
-
-### 4D.6 — publication — COMPLETE
-
-Completion note: [`docs/milestone-4d6-graphics-publication.md`](docs/milestone-4d6-graphics-publication.md)
-
-Publish:
+Published base snapshot:
 
 ```text
 graphscii-graphics-v0
-```
-
-with deterministic registry, artifacts, atlases, master text atlas, renderer-only metadata, and provenance.
-
-Fresh-build publication gate:
-
-```text
-delete generated 4D outputs
-        ↓
-npm run generate
-        ↓
-npm run verify
-        ↓
-byte-stable regenerated registry/artifacts/atlases
-        ↓
-PASS
-```
-
-The 604-slot reserve remains protected. No later family may consume it without a separately measured allocation decision.
-
----
-
-## 11. Milestone 5 — junction coverage and reserve-budget strategy — IN PROGRESS
-
-Detailed plan: [`docs/milestone-5-junction-coverage-plan.md`](docs/milestone-5-junction-coverage-plan.md)
-
-```text
-5A.1  straight-composition demand map + taxonomy             COMPLETE
-5A.2  boundary-safe geometry + generic 600-lattice sweep     COMPLETE
-5A.3  exhaustive candidate generation + exact dedup          NEXT
-5A.4  demand/breadth/Pareto optimization, K=0..604
-5A.5  research atlases + measured recommendation
-5B    junction budget/allocation decision
-5C    junction registry + provisional allocation
-5D    canonical junction artifacts + master-atlas integration
-5E    publication update + reserve accounting
-```
-
-Measured 5A.1 demand covers **22,428 / 22,528** theoretical junction semantics with **928,242** weighted demand events. Measured 5A.2 shows that a pure top-600 frequency list has poor geometric breadth, while evenly spaced dyadic port lattices and a hybrid lattice+demand basis cover the connection space far more uniformly. The generic lattice is therefore a permanent optimization input, not a fallback experiment.
-
-The 5A.2 working experiment uses 600 semantic connector slots while allocating **zero** codepoints. The full **604-slot U+F6A4..U+F8FF reserve remains protected**.
-
-Later milestones remain:
-
-```text
-6   curated curve/arc extension if justified
-7   terminals / specials
-8   vocabulary optimization
-9   font compiler
-10  drawing API / solver
-11  interactive editor
-12  GraphSCII v1 freeze / release
+U+E000..U+F6A3
+5,796 encoded owners
 ```
 
 ---
 
-## 12. Current commands
+## 5. Milestone 5 — generic connector vocabulary — COMPLETE
+
+Milestone 5 began with broad empirical junction research, then deliberately replaced exhaustive enumeration with a small, deterministic, easily reasoned-about connector language.
+
+Detailed research history: [`docs/milestone-5-junction-coverage-plan.md`](docs/milestone-5-junction-coverage-plan.md)
+
+Execution result:
+
+```text
+5A.1  straight-composition demand map + taxonomy              COMPLETE
+5A.2  boundary-safe geometry + generic lattice research       COMPLETE
+5A.3  exhaustive candidate generation + exact dedup           COMPLETE / SUPERSEDED
+5B.1  orthogonal generic connector basis                      COMPLETE
+5B.2  deterministic diagonal generic connector basis          COMPLETE
+5C    connector registry + provisional allocation             COMPLETE
+5D    canonical connector artifacts + atlas integration       COMPLETE
+5E    graphscii-graphics-v1 publication + reserve accounting  COMPLETE
+```
+
+### 5.1 Research retained
+
+The broad search remains available as evidence:
+
+```text
+theoretical one-port-per-edge semantics      22,528
+demanded by straight composition             22,428
+weighted demand events                       928,242
+exhaustive semantic/model candidates          90,112
+exact visual owners in exhaustive sweep       82,377
+```
+
+Those numbers no longer define the encoded vocabulary. They established that exhaustive allocation was the wrong abstraction for the practical connector layer.
+
+### 5.2 Final orthogonal connector rule
+
+At every one of the 128 `(x,y)` positions in the 8×16 cell, GraphSCII supports five semantic arm masks:
+
+```text
+NESW   full four-arm cross
+ESW    missing north
+NSW    missing east
+NEW    missing south
+NSE    missing west
+```
+
+Raw semantic language:
+
+```text
+128 positions × 5 masks = 640 semantics
+```
+
+Exact global dedup result:
+
+```text
+640 semantics
+548 exact raster owners
+4 graphics-v0 exact reuses
+544 novel orthogonal owners
+```
+
+Completion note: [`docs/milestone-5b1-orthogonal-generic-connectors.md`](docs/milestone-5b1-orthogonal-generic-connectors.md)
+
+### 5.3 Final diagonal connector rule
+
+The diagonal language is generated from the 8×16 geometry itself rather than sampled randomly.
+
+Full-X rules:
+
+```text
+16 vertical-squash rules    DV00..DV15
+ 8 horizontal-squash rules  DH00..DH07
+                           --------------
+24 deterministic full X rules
+```
+
+Nine evenly distributed squash rules also receive all four missing-leg variants:
+
+```text
+DV00 DV03 DV06 DV08 DV11 DV14
+DH02 DH04 DH06
+```
+
+Final diagonal semantics:
+
+```text
+24 full-X semantics
+36 three-leg semantics
+----------------------
+60 diagonal semantics
+```
+
+Exact global dedup result:
+
+```text
+60 selected diagonal semantics
+59 exact raster owners
+2 graphics-v0 exact reuses
+57 novel diagonal owners
+```
+
+Completion note: [`docs/milestone-5b2-diagonal-generic-connectors.md`](docs/milestone-5b2-diagonal-generic-connectors.md)
+
+### 5.4 Final connector population
+
+```text
+orthogonal semantic aliases              640
+diagonal semantic aliases                 60
+connector semantic aliases total         700
+
+novel orthogonal owners                   544
+novel diagonal owners                      57
+novel connector owners total              601
+```
+
+Milestone 5C allocated those 601 owners deterministically and generated canonical connector ASCII/PNG artifacts and three paged connector atlases.
+
+Completion note: [`docs/milestone-5c-connector-allocation.md`](docs/milestone-5c-connector-allocation.md)
+
+---
+
+## 6. Published GraphSCII graphics-v1 vocabulary
+
+Formal publication:
+
+```text
+graphscii-graphics-v1
+```
+
+Publication manifest:
+
+```text
+artifacts/publications/graphscii-graphics-v1.json
+```
+
+Final encoded population:
+
+```text
+straight                              746
+solid 100%                          1,259
+medium 75%                         1,269
+light 25%                          1,315
+half 50%                           1,207
+orthogonal connectors                544
+diagonal connectors                   57
+                                    -----
+encoded PUA graphics               6,397
+```
+
+With printable ASCII:
+
+```text
+6,397 PUA graphics + 95 printable ASCII = 6,492 minimum physical glyphs
+```
+
+Final BMP PUA address map:
+
+```text
+U+E000..U+E2E9      746   straight
+U+E2EA..U+E7D4    1,259   solid 100%
+U+E7D5..U+ECC9    1,269   medium 75%
+U+ECCA..U+F1EC    1,315   light 25%
+U+F1ED..U+F6A3    1,207   half 50%
+U+F6A4..U+F8FC      601   generic connectors
+U+F8FD..U+F8FF        3   protected reserve
+```
+
+Hard publication fixtures:
+
+```text
+encoded owners                     6,397
+connector semantic aliases           700
+combined addressable aliases       11,516
+last allocated codepoint          U+F8FC
+reserve slots                            3
+straight codepoints unchanged          YES
+```
+
+Completion note: [`docs/milestone-5e-graphics-v1-publication.md`](docs/milestone-5e-graphics-v1-publication.md)
+
+Milestone summary: [`docs/milestone-5-complete.md`](docs/milestone-5-complete.md)
+
+---
+
+## 7. Current canonical artifacts
+
+Primary machine-readable sources:
+
+```text
+artifacts/manifest/vocabulary-v1/
+├── registry.json
+├── semantics.json
+├── stats.json
+├── report.md
+└── indexes/
+    ├── by-codepoint.json
+    ├── by-bitmap.json
+    └── by-connector-alias.json
+```
+
+Connector glyph artifacts:
+
+```text
+artifacts/vocabulary/connectors/glyphs/
+├── ascii/    601 files
+└── png/      601 files
+```
+
+Connector atlases:
+
+```text
+artifacts/vocabulary/atlases/connectors/
+├── index.json
+├── page-00.png / page-00.md   256 owners
+├── page-01.png / page-01.md   256 owners
+└── page-02.png / page-02.md    89 owners
+```
+
+The graphics-v1 publication freezes SHA-256 digests for the registry, allocation stats, connector semantics, connector alias index, connector atlas index, layout map, allocation spec, inherited renderer-only index, and graphics-v0 base publication.
+
+---
+
+## 8. Current generation and verification commands
 
 From `geometric-glyph-lab/`:
 
 ```powershell
+npm run check
 npm run generate
 npm run verify
-npm run verify:curves
-npm run verify:fills
-npm run generate:fills
-npm run verify:fill-registry
-npm run generate:dithers
-npm run verify:dithers
-npm run verify:dither-research
-npm run generate:palette
-npm run verify:palette
+
 npm run generate:vocabulary
 npm run verify:vocabulary
-npm run generate:vocabulary-artifacts
-npm run verify:vocabulary-artifacts
-npm run generate:vocabulary-atlases
-npm run verify:vocabulary-atlases
-npm run generate:vocabulary-master-atlas
-npm run verify:vocabulary-master-atlas
-npm run generate:renderer-only-resolution
-npm run verify:renderer-only-resolution
-npm run generate:graphics-publication
-npm run verify:graphics-publication
-npm run generate:junction-demand
-npm run verify:junction-demand
-npm run generate:junction-blind-spots
-npm run verify:junction-blind-spots
-npm run generate:junction-geometry
-npm run verify:junction-geometry
-npm run check
+npm run generate:connector-allocation
+npm run verify:connector-allocation
+npm run generate:graphics-publication-v1
+npm run verify:graphics-publication-v1
 ```
 
-The published straight allocation remains authoritative. Milestone 4D.5 now persists all 3,392 renderer-only semantic resolutions as dense, sparse, and demoted-half publication artifacts: 414 exact encoded reuses and 2,978 derived aliases across 2,555 unique derived bitmaps, with every demoted-half fallback independently verified at Hamming distance 1. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D is complete. The deterministic `graphscii-graphics-v0` publication now freezes the 5,796-owner encoded vocabulary, renderer-only resolution layer, master atlases, SHA-256 integrity digests, and the untouched 604-slot reserve after a byte-stable delete-and-regenerate verification gate. Milestone 5A.1 and 5A.2 are complete; exhaustive boundary-safe junction candidate generation and global exact dedup in Milestone 5A.3 is next.
+The aggregate `generate` and `verify` commands include the earlier straight/fill/dither research, the connector research and basis generators, the v1 connector allocation, and the formal graphics-v1 publication gate.
 
 ---
 
-## 13. Guiding rule
+## 9. Address-space policy from here
+
+The BMP PUA is effectively full:
+
+```text
+capacity       6,400
+allocated      6,397
+reserve            3
+```
+
+Therefore:
+
+1. No new broad enumerated glyph family should be added to the BMP PUA.
+2. The final three slots remain protected unless a tiny exceptional semantic is explicitly justified.
+3. Future appearance or geometry expansions should prefer renderer-derived output, semantic composition, exact reuse, or a separately versioned address-space strategy.
+4. Curves remain research-only unless a very small curated basis justifies consuming the final reserve or another encoding strategy is selected.
+
+---
+
+## 10. Next major implementation direction
+
+The bitmap vocabulary itself is now frozen enough to support a real font/compiler layer.
+
+The next major engineering milestone should be **Milestone 9 — font compiler**, unless a deliberate decision is made first to revisit terminals/specials or another tiny curated extension.
+
+A font-build slice should consume `graphscii-graphics-v1` rather than regenerate geometry independently.
+
+Initial font/compiler objectives:
+
+```text
+consume the canonical v1 registry
+include U+0020..U+007E printable ASCII
+include all 6,397 allocated PUA graphics
+preserve exact 8×16 pixel geometry
+use deterministic metrics and naming
+emit reproducible TTF/OTF output
+verify cmap coverage and glyph count
+raster-roundtrip selected/all glyphs back to the canonical bitmap contract
+publish font-build provenance and digests
+```
+
+The compiler must not silently renumber the PUA registry.
+
+---
+
+## 11. Later milestones
+
+```text
+6   curated curve/arc extension if independently justified    PAUSED
+7   terminals / specials                                      DEFERRED
+8   vocabulary optimization                                   SATISFIED BY v1 freeze
+9   font compiler                                             NEXT MAJOR DIRECTION
+10  drawing API / solver
+11  interactive editor
+12  GraphSCII v1 font/release freeze
+```
+
+---
+
+## 12. Guiding rule
 
 Prefer **geometry reuse + derived appearance** over independent hand-authored glyph families.
 
 ```text
-mathematical boundary
-        ↓
-semantic side / appearance
+mathematical or semantic definition
         ↓
 deterministic raster
         ↓
@@ -595,4 +452,4 @@ canonical visual owner + preserved semantic aliases
 
 Do not spend a new codepoint when an existing bitmap already renders the requested definition exactly.
 
-When address-space pressure remains after exact dedup, prefer deterministic renderer fallback for low-distinctiveness derived appearances before discarding semantic capability.
+The published bitmap registry is now the source of truth for downstream font, drawing, and editor work.
