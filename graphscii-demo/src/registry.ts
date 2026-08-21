@@ -4,11 +4,20 @@ const EXPECTED_OWNER_COUNT = 6397;
 const EXPECTED_STRAIGHT_COUNT = 746;
 const EXPECTED_FILL_COUNT = 5050;
 const EXPECTED_PAIR_COUNT = 1664;
+const EXPECTED_FILL_RULE_COUNT = 6656;
 const EXPECTED_ORTHOGONAL_SEMANTICS = 640;
 const EXPECTED_DIAGONAL_SEMANTICS = 60;
 const STRAIGHT_START = 0xe000;
 const STRAIGHT_END = 0xe2e9;
+const CONNECTOR_START = 0xf6a4;
 const FILL_CLASSES = new Set(["solid-100", "medium-75", "half-50", "light-25"]);
+
+const STYLE_BY_TONE: Record<GraphSCIITone, "solid" | "medium" | "half" | "light"> = {
+  100: "solid",
+  75: "medium",
+  50: "half",
+  25: "light",
+};
 
 // Frozen GraphSCII phase-locked dither masks. x=0 is bit 0.
 const MASK_ROWS_8: Record<GraphSCIITone, readonly number[]> = {
@@ -33,6 +42,15 @@ interface ConnectionPairIndexJson {
   index: string;
   entryCount: number;
   entries: Record<string, PairEntry>;
+}
+
+interface FillRulesJson {
+  format: string;
+  schema: string;
+  entryCount: number;
+  fallbackCount: number;
+  styleCounts: Record<string, number>;
+  entries: Record<string, number>;
 }
 
 interface OrthogonalSemanticJson {
@@ -164,6 +182,10 @@ async function fetchJson<T>(url: URL): Promise<T> {
   return await response.json() as T;
 }
 
+function emptyBuckets(): GraphGlyph[][] {
+  return Array.from({ length: 129 }, () => [] as GraphGlyph[]);
+}
+
 function candidatesNearPixelCount(
   buckets: GraphGlyph[][],
   fallback: GraphGlyph[],
@@ -183,6 +205,10 @@ function candidatesNearPixelCount(
   return candidates.length > 0 ? candidates : fallback;
 }
 
+function familyFromAuthoredPorts(start: string, end: string): string {
+  return `${start[0] ?? ""}${end[0] ?? ""}`;
+}
+
 export class GlyphRegistry {
   readonly glyphs: GraphGlyph[];
   readonly straightGlyphs: GraphGlyph[];
@@ -192,14 +218,22 @@ export class GlyphRegistry {
 
   private readonly byGlyphId = new Map<number, GraphGlyph>();
   private readonly byBitmap = new Map<string, GraphGlyph>();
-  private readonly straightByPixelCount = Array.from({ length: 129 }, () => [] as GraphGlyph[]);
-  private readonly fillByPixelCount = Array.from({ length: 129 }, () => [] as GraphGlyph[]);
+  private readonly straightByPixelCount = emptyBuckets();
+  private readonly fillByTone: Record<GraphSCIITone, GraphGlyph[]> = { 100: [], 75: [], 50: [], 25: [] };
+  private readonly fillByTonePixelCount: Record<GraphSCIITone, GraphGlyph[][]> = {
+    100: emptyBuckets(),
+    75: emptyBuckets(),
+    50: emptyBuckets(),
+    25: emptyBuckets(),
+  };
   private readonly pairEntries: Record<string, PairEntry>;
+  private readonly fillRuleEntries: Record<string, number>;
   private readonly connectorByBoundarySignature = new Map<string, GraphGlyph[]>();
 
   private constructor(
     glyphs: GraphGlyph[],
     pairIndex: ConnectionPairIndexJson,
+    fillRules: FillRulesJson,
     orthogonal: OrthogonalConnectorsJson,
     diagonal: DiagonalConnectorsJson,
     diagonalSelection: DiagonalSelectionJson,
@@ -209,6 +243,7 @@ export class GlyphRegistry {
       && glyph.codepointValue >= STRAIGHT_START && glyph.codepointValue <= STRAIGHT_END);
     this.fillGlyphs = glyphs.filter((glyph) => FILL_CLASSES.has(glyph.canonicalClass));
     this.pairEntries = pairIndex.entries;
+    this.fillRuleEntries = fillRules.entries;
 
     if (this.straightGlyphs.length !== EXPECTED_STRAIGHT_COUNT) {
       throw new Error(`Expected ${EXPECTED_STRAIGHT_COUNT} straight GraphSCII owners; found ${this.straightGlyphs.length}.`);
@@ -218,6 +253,17 @@ export class GlyphRegistry {
     }
     if (pairIndex.index !== "by-connection-pair" || pairIndex.entryCount !== EXPECTED_PAIR_COUNT) {
       throw new Error("GraphSCII straight connection-pair index is not the published 1,664-entry table.");
+    }
+    if (fillRules.schema !== "graphscii-demo-fill-rules-v1"
+      || fillRules.entryCount !== EXPECTED_FILL_RULE_COUNT
+      || Object.keys(fillRules.entries ?? {}).length !== EXPECTED_FILL_RULE_COUNT
+      || fillRules.fallbackCount !== 64) {
+      throw new Error("GraphSCII runtime fill rules are not the verified 6,656-entry encoded boundary/side/style grammar.");
+    }
+    for (const style of ["solid", "medium", "half", "light"]) {
+      if (fillRules.styleCounts?.[style] !== 1664) {
+        throw new Error(`GraphSCII runtime fill grammar has the wrong ${style} rule count.`);
+      }
     }
     if (orthogonal.schema !== "graphscii-orthogonal-connectors" || orthogonal.semantics.length !== EXPECTED_ORTHOGONAL_SEMANTICS) {
       throw new Error("GraphSCII orthogonal connector rule table is not the published 640-semantic grammar.");
@@ -235,7 +281,31 @@ export class GlyphRegistry {
       this.byBitmap.set(glyph.bitmapKey, glyph);
     }
     for (const glyph of this.straightGlyphs) this.straightByPixelCount[glyph.onCount]!.push(glyph);
-    for (const glyph of this.fillGlyphs) this.fillByPixelCount[glyph.onCount]!.push(glyph);
+
+    const toneByStyle: Record<string, GraphSCIITone> = { solid: 100, medium: 75, half: 50, light: 25 };
+    const seenByTone: Record<GraphSCIITone, Set<number>> = {
+      100: new Set<number>(),
+      75: new Set<number>(),
+      50: new Set<number>(),
+      25: new Set<number>(),
+    };
+    for (const [ruleKey, glyphId] of Object.entries(this.fillRuleEntries)) {
+      const style = ruleKey.slice(ruleKey.lastIndexOf(":") + 1);
+      const tone = toneByStyle[style];
+      if (!tone) throw new Error(`Unknown GraphSCII encoded fill style in runtime rule: ${style}.`);
+      const glyph = this.byGlyphId.get(glyphId);
+      if (!glyph || glyph.codepointValue >= CONNECTOR_START) {
+        throw new Error(`GraphSCII fill rule ${ruleKey} did not resolve inside the pre-connector vocabulary.`);
+      }
+      if (!seenByTone[tone].has(glyph.codepointValue)) {
+        seenByTone[tone].add(glyph.codepointValue);
+        this.fillByTone[tone].push(glyph);
+        this.fillByTonePixelCount[tone][glyph.onCount]!.push(glyph);
+      }
+    }
+    for (const tone of [100, 75, 50, 25] as const) {
+      if (this.fillByTone[tone].length === 0) throw new Error(`GraphSCII fill grammar produced no ${tone}% candidates.`);
+    }
 
     const addConnectorRule = (points: BoundaryPoint[], bitmapKey: string, semanticId: string): void => {
       const normalized = normalizePoints(points);
@@ -274,9 +344,10 @@ export class GlyphRegistry {
   static async load(url: string): Promise<GlyphRegistry> {
     const registryUrl = new URL(url, window.location.href);
     const baseUrl = new URL("./", registryUrl);
-    const [registry, pairIndex, orthogonal, diagonal, diagonalSelection] = await Promise.all([
+    const [registry, pairIndex, fillRules, orthogonal, diagonal, diagonalSelection] = await Promise.all([
       fetchJson<RegistryJson>(registryUrl),
       fetchJson<ConnectionPairIndexJson>(new URL("by-connection-pair.json", baseUrl)),
+      fetchJson<FillRulesJson>(new URL("fill-rules.json", baseUrl)),
       fetchJson<OrthogonalConnectorsJson>(new URL("orthogonal-connectors.json", baseUrl)),
       fetchJson<DiagonalConnectorsJson>(new URL("diagonal-connectors.json", baseUrl)),
       fetchJson<DiagonalSelectionJson>(new URL("diagonal-selection.json", baseUrl)),
@@ -292,7 +363,7 @@ export class GlyphRegistry {
     if (codepoints.size !== EXPECTED_OWNER_COUNT || bitmaps.size !== EXPECTED_OWNER_COUNT) {
       throw new Error("GraphSCII registry violates unique codepoint/bitmap ownership.");
     }
-    return new GlyphRegistry(glyphs, pairIndex, orthogonal, diagonal, diagonalSelection);
+    return new GlyphRegistry(glyphs, pairIndex, fillRules, orthogonal, diagonal, diagonalSelection);
   }
 
   straightCandidatesForBoundaryPoints(points: readonly BoundaryPoint[]): GraphGlyph[] {
@@ -315,6 +386,34 @@ export class GlyphRegistry {
     return [...results.values()];
   }
 
+  fillCandidatesForBoundaryPoints(points: readonly BoundaryPoint[], tone: GraphSCIITone): GraphGlyph[] {
+    const normalized = normalizePoints(points);
+    if (normalized.length !== 2) return [];
+    const firstLabels = labelsForBoundaryPoint(normalized[0]!);
+    const secondLabels = labelsForBoundaryPoint(normalized[1]!);
+    const style = STYLE_BY_TONE[tone];
+    const results = new Map<number, GraphGlyph>();
+
+    for (const first of firstLabels) {
+      for (const second of secondLabels) {
+        const entry = this.pairEntries[`${first}>${second}`];
+        if (!entry) continue;
+        const authoredStart = entry.reversed ? second : first;
+        const authoredEnd = entry.reversed ? first : second;
+        const family = familyFromAuthoredPorts(authoredStart, authoredEnd);
+        for (const side of ["A", "B"] as const) {
+          const ruleKey = `${family}:${authoredStart}>${authoredEnd}:side${side}:${style}`;
+          const glyphId = this.fillRuleEntries[ruleKey];
+          if (!Number.isInteger(glyphId)) continue;
+          const glyph = this.byGlyphId.get(glyphId);
+          if (!glyph) throw new Error(`GraphSCII fill rule ${ruleKey} resolved to missing glyph ${glyphId}.`);
+          results.set(glyph.codepointValue, glyph);
+        }
+      }
+    }
+    return [...results.values()];
+  }
+
   connectorCandidatesForBoundaryPoints(points: readonly BoundaryPoint[]): GraphGlyph[] {
     const normalized = normalizePoints(points);
     if (normalized.length < 3) return [];
@@ -325,8 +424,8 @@ export class GlyphRegistry {
     return candidatesNearPixelCount(this.straightByPixelCount, this.straightGlyphs, target, initialRadius);
   }
 
-  fillCandidatesNearPixelCount(target: number, initialRadius = 10): GraphGlyph[] {
-    return candidatesNearPixelCount(this.fillByPixelCount, this.fillGlyphs, target, initialRadius);
+  fillCandidatesNearPixelCount(target: number, tone: GraphSCIITone, initialRadius = 10): GraphGlyph[] {
+    return candidatesNearPixelCount(this.fillByTonePixelCount[tone], this.fillByTone[tone], target, initialRadius);
   }
 }
 
