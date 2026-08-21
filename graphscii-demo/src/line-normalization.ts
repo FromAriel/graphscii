@@ -1,7 +1,7 @@
 import {
   CELL_HEIGHT,
   CELL_WIDTH,
-  maxJunctionArms,
+  portPoint,
   type GeometryGrid,
   type ObjectCellGeometry,
   type PortEdge,
@@ -284,43 +284,138 @@ function removeMatchingNeighborPort(
   neighborCell?.byObject.get(objectId)?.ports.delete(oppositePort(port));
 }
 
+function squaredDistanceToLine(point: Point, a: Point, b: Point): number {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const denominator = dx * dx + dy * dy;
+  if (denominator <= EPSILON) return Number.POSITIVE_INFINITY;
+  const cross = dx * (a.y - point.y) - (a.x - point.x) * dy;
+  return (cross * cross) / denominator;
+}
+
+function pairFitScore(
+  first: PortName,
+  second: PortName,
+  objectCell: ObjectCellGeometry,
+  column: number,
+  row: number,
+): number {
+  const a = portPoint(first);
+  const b = portPoint(second);
+  let score = 0;
+  let sampleCount = 0;
+  for (const segment of objectCell.segments) {
+    const samples = [
+      segment.a,
+      { x: (segment.a.x + segment.b.x) / 2, y: (segment.a.y + segment.b.y) / 2 },
+      segment.b,
+    ];
+    for (const sample of samples) {
+      const local = {
+        x: sample.x - column * CELL_WIDTH,
+        y: sample.y - row * CELL_HEIGHT,
+      };
+      score += squaredDistanceToLine(local, a, b);
+      sampleCount += 1;
+    }
+  }
+  return sampleCount > 0 ? score / sampleCount : Number.POSITIVE_INFINITY;
+}
+
+function fitSingleObjectMultiPortCells(
+  grid: GeometryGrid,
+  objects: readonly DrawingObject[],
+  columns: number,
+  rows: number,
+  terminalPorts: ReadonlySet<string>,
+): boolean {
+  const objectsById = new Map(objects.map((object) => [object.id, object]));
+  let changed = false;
+
+  for (const [key, cell] of [...grid.cells.entries()]) {
+    if (cell.byObject.size !== 1) continue;
+    const column = key % columns;
+    const row = Math.floor(key / columns);
+    const [entry] = [...cell.byObject.entries()];
+    if (!entry) continue;
+    const [objectId, objectCell] = entry;
+    const object = objectsById.get(objectId);
+    if (!object || (object.type === "ellipse" && object.fillEnabled)) continue;
+
+    const ports = [...objectCell.ports];
+    if (ports.length <= 2) continue;
+    const required = ports.filter((port) => terminalPorts.has(terminalKey(key, port)));
+    let best: { first: PortName; second: PortName; score: number; key: string } | null = null;
+
+    for (let firstIndex = 0; firstIndex < ports.length; firstIndex += 1) {
+      for (let secondIndex = firstIndex + 1; secondIndex < ports.length; secondIndex += 1) {
+        const first = ports[firstIndex]!;
+        const second = ports[secondIndex]!;
+        if (portEdge(first) === portEdge(second)) continue;
+        if (required.some((port) => port !== first && port !== second)) continue;
+        const pairKey = [first, second].sort().join(">");
+        const score = pairFitScore(first, second, objectCell, column, row);
+        if (!best || score < best.score - 1e-12 || (Math.abs(score - best.score) <= 1e-12 && pairKey < best.key)) {
+          best = { first, second, score, key: pairKey };
+        }
+      }
+    }
+
+    if (!best) continue;
+    const keep = new Set<PortName>([best.first, best.second]);
+    for (const port of [...objectCell.ports]) {
+      if (keep.has(port)) continue;
+      removeMatchingNeighborPort(grid, objectId, column, row, port, columns, rows);
+      objectCell.ports.delete(port);
+      changed = true;
+    }
+  }
+
+  return changed;
+}
+
 function pruneNonterminalSpurs(
   grid: GeometryGrid,
   objects: readonly DrawingObject[],
   columns: number,
   rows: number,
   terminalPorts: Set<string>,
-): void {
+): boolean {
   const objectsById = new Map(objects.map((object) => [object.id, object]));
+  let changedAny = false;
   const maximumPasses = Math.max(1, columns * rows * 2);
 
   for (let pass = 0; pass < maximumPasses; pass += 1) {
     let changed = false;
     for (const [key, cell] of [...grid.cells.entries()]) {
+      if (cell.byObject.size !== 1) continue;
       const column = key % columns;
       const row = Math.floor(key / columns);
       for (const [objectId, objectCell] of [...cell.byObject.entries()]) {
         const object = objectsById.get(objectId);
         if (!object || (object.type === "ellipse" && object.fillEnabled)) continue;
-        if (objectCell.ports.size !== 1 || maxJunctionArms(objectCell.segments) >= 3) continue;
+        if (objectCell.ports.size !== 1) continue;
         const port = [...objectCell.ports][0]!;
         if (terminalPorts.has(terminalKey(key, port))) continue;
 
         removeMatchingNeighborPort(grid, objectId, column, row, port, columns, rows);
         cell.byObject.delete(objectId);
         changed = true;
+        changedAny = true;
       }
     }
     if (!changed) break;
     rebuildCellPorts(grid);
   }
+  return changedAny;
 }
 
 /**
  * Fit authored centerlines to GraphSCII's one-port-per-edge cell language before
  * any glyph is chosen. This is the only approximation stage for stroke geometry:
  * crossings are merged as shared seam facts, endpoint caps are projected along
- * the authored tangent, and unrepresentable one-cell U-turn spurs are removed.
+ * the authored tangent, single-object revisits are fitted to one straight cell
+ * traversal, and nonterminal one-port spurs are removed.
  */
 export function fitStrokeGeometry(
   grid: GeometryGrid,
@@ -335,8 +430,16 @@ export function fitStrokeGeometry(
   const terminalPorts = new Set<string>();
   addEndpointCaps(grid, objects, columns, rows, terminalPorts);
   rebuildCellPorts(grid);
-  pruneNonterminalSpurs(grid, objects, columns, rows, terminalPorts);
-  rebuildCellPorts(grid);
+
+  const maximumPasses = Math.max(1, columns * rows * 2);
+  for (let pass = 0; pass < maximumPasses; pass += 1) {
+    const fitChanged = fitSingleObjectMultiPortCells(grid, objects, columns, rows, terminalPorts);
+    rebuildCellPorts(grid);
+    const pruneChanged = pruneNonterminalSpurs(grid, objects, columns, rows, terminalPorts);
+    rebuildCellPorts(grid);
+    if (!fitChanged && !pruneChanged) break;
+  }
+
   return { terminalPorts };
 }
 
@@ -392,8 +495,8 @@ export function validateFittedSharedPorts(
   return errors;
 }
 
-// Kept as a compatibility alias for the regression harness; the implementation
-// is the complete pre-semantic stroke fitter above, not the old backtrack patch.
+// Kept as a compatibility alias for older callers; the implementation is the
+// complete pre-semantic stroke fitter above, not the removed backtrack patch.
 export function normalizeStraightBacktracks(
   grid: GeometryGrid,
   objects: readonly DrawingObject[],
