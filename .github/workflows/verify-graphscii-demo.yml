@@ -22,7 +22,7 @@ permissions:
 jobs:
   verify-demo:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: graphscii-demo
@@ -40,6 +40,9 @@ jobs:
 
       - name: Install demo dependencies
         run: npm install --no-audit --no-fund
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
 
       - name: Verify GraphSCII Draw demo
         run: npm run verify
