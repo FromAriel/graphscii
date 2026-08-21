@@ -42,13 +42,13 @@ jobs:
         working-directory: geometric-glyph-lab
         run: npm run generate
 
-      - name: Report Milestone 5A.3 artifact sizes
+      - name: Report Milestone 5A.3 shard sizes
         shell: bash
         run: |
-          wc -c \
-            artifacts/research/junctions/candidates.json \
-            artifacts/research/junctions/unique-rasters.json \
-            artifacts/research/junctions/candidate-stats.json
+          echo "Largest candidate/owner shards:"
+          find artifacts/research/junctions/candidates artifacts/research/junctions/unique-rasters -type f -printf '%s %p\n' | sort -nr | head -10
+          echo "Manifest sizes:"
+          wc -c artifacts/research/junctions/candidates.json artifacts/research/junctions/unique-rasters.json artifacts/research/junctions/candidate-stats.json
 
       - name: Verify complete project
         working-directory: geometric-glyph-lab
@@ -72,7 +72,9 @@ jobs:
           git add -- \
             artifacts/research/junctions/candidate-stats.json \
             artifacts/research/junctions/candidates.json \
+            artifacts/research/junctions/candidates \
             artifacts/research/junctions/unique-rasters.json \
+            artifacts/research/junctions/unique-rasters \
             artifacts/research/junctions/exact-reuse.json \
             artifacts/research/junctions/classifications.json \
             artifacts/research/junctions/candidate-report.md \
