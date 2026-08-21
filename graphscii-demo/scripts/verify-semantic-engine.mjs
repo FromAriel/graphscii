@@ -8,8 +8,9 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const demoRoot = path.resolve(scriptDir, "..");
 const repoRoot = path.resolve(demoRoot, "..");
 const geometryPath = path.join(demoRoot, "src", "geometry-engine.ts");
+const connectorTopologyPath = path.join(demoRoot, "src", "connector-topology.ts");
 const solverPath = path.join(demoRoot, "src", "solver.ts");
-const registryPath = path.join(demoRoot, "src", "registry.ts");
+const registryPath = path.join(demoRoot, "src", "semantic-registry.ts");
 const syncPath = path.join(demoRoot, "scripts", "sync-assets.mjs");
 const fixturePath = path.join(demoRoot, "fixtures", "regressions", "failing-freehand.graphscii.gz.b64");
 const invalidOutputPath = path.join(demoRoot, "fixtures", "regressions", "failing-freehand-invalid-output.txt.gz.b64");
@@ -19,8 +20,9 @@ function decodeFixture(encoded) {
   return gunzipSync(Buffer.from(encoded.trim(), "base64")).toString("utf8");
 }
 
-const [geometrySource, solverSource, registrySource, syncSource, fixtureEncoded, invalidOutputEncoded, pairIndex] = await Promise.all([
+const [geometrySource, connectorTopologySource, solverSource, registrySource, syncSource, fixtureEncoded, invalidOutputEncoded, pairIndex] = await Promise.all([
   readFile(geometryPath, "utf8"),
+  readFile(connectorTopologyPath, "utf8"),
   readFile(solverPath, "utf8"),
   readFile(registryPath, "utf8"),
   readFile(syncPath, "utf8"),
@@ -42,8 +44,14 @@ for (const forbidden of [
 ]) {
   if (solverSource.includes(forbidden)) throw new Error(`Exact solver contains forbidden heuristic path: ${forbidden}.`);
 }
-for (const required of ["buildGeometryGrid", "validateSharedPorts", "resolveStraight", "resolveFillForInterior", "resolveConnector"]) {
+for (const required of ["buildGeometryGrid", "validateSharedPorts", "resolveStraight", "resolveFillForInterior", "resolveConnector", "junctionTopology"]) {
   if (!solverSource.includes(required)) throw new Error(`Exact solver is missing required semantic path: ${required}.`);
+}
+if (!registrySource.includes("connectorsBySignature") || !registrySource.includes("rule.family === family")) {
+  throw new Error("Connector registry is not preserving same-port semantic aliases by connector family.");
+}
+if (registrySource.includes("Connector signature ${signature} is ambiguous")) {
+  throw new Error("Connector registry regressed to rejecting valid cross-family signature aliases at startup.");
 }
 const fillMethodStart = registrySource.indexOf("resolveFillForInterior(");
 const fillMethodEnd = registrySource.indexOf("resolveFullFill(", fillMethodStart);
@@ -59,12 +67,20 @@ if (!syncSource.includes("by-boundary-side-style.json") || !syncSource.includes(
   throw new Error("Runtime asset sync is not copying the canonical fill semantic indexes directly.");
 }
 
-const compiled = ts.transpileModule(geometrySource, {
-  compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 },
-}).outputText;
-if (/from\s+["']\.\/types["']/u.test(compiled)) throw new Error("geometry-engine runtime unexpectedly retained a type-only import.");
-const geometry = await import(`data:text/javascript;base64,${Buffer.from(compiled, "utf8").toString("base64")}`);
+function compileModule(sourceText, label) {
+  const compiled = ts.transpileModule(sourceText, {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 },
+  }).outputText;
+  if (/from\s+["']\.\/(types|geometry-engine)["']/u.test(compiled)) {
+    throw new Error(`${label} runtime unexpectedly retained a type-only local import.`);
+  }
+  return import(`data:text/javascript;base64,${Buffer.from(compiled, "utf8").toString("base64")}`);
+}
+
+const geometry = await compileModule(geometrySource, "geometry-engine");
+const connectorTopology = await compileModule(connectorTopologySource, "connector-topology");
 const { buildGeometryGrid, validateSharedPorts, maxJunctionArms } = geometry;
+const { junctionTopology } = connectorTopology;
 
 function expect(condition, message) {
   if (!condition) throw new Error(message);
@@ -95,6 +111,8 @@ const xSegments = [
 ];
 expect(maxJunctionArms(tSegments) === 3, "Authored T junction did not classify as three arms.");
 expect(maxJunctionArms(xSegments) === 4, "Authored X junction did not classify as four arms.");
+expect(junctionTopology(tSegments)?.family === "orthogonal", "Authored T junction did not resolve to the orthogonal connector family.");
+expect(junctionTopology(xSegments)?.family === "diagonal", "Authored X junction did not resolve to the diagonal connector family.");
 
 expect(fixture?.format === "GraphSCII-Drawing" && fixture?.objects?.length === 1 && fixture.objects[0]?.type === "freehand", "Regression fixture is not the supplied failing freehand drawing.");
 expect(fixture.columns === 64 && fixture.rows === 32, "Regression fixture dimensions changed.");
@@ -117,5 +135,6 @@ expect(checkedStraightCells >= 250, `Regression fixture exercised only ${checked
 
 console.log(
   `GraphSCII exact semantic engine verified: shared seams are single events; reverse geometry is invariant; `
-  + `T/X classify as 3/4 arms; failing freehand fixture exercises ${checkedStraightCells} published two-port cells with zero seam mismatches.`,
+  + `T/X classify as orthogonal/diagonal 3/4-arm junctions; failing freehand fixture exercises ${checkedStraightCells} `
+  + `published two-port cells with zero seam mismatches.`,
 );
