@@ -29,9 +29,10 @@ async function saveDrawing(page) {
   const saved = await savePromise;
   const savedPath = await saved.path();
   expect(savedPath).toBeTruthy();
-  const savedDocument = JSON.parse(await readFile(savedPath, "utf8"));
+  const savedBytes = await readFile(savedPath);
+  const savedDocument = JSON.parse(savedBytes.toString("utf8"));
   await expect(page.getByRole("status")).toHaveText("Saved editable GraphSCII drawing.");
-  return { savedPath, savedDocument };
+  return { savedBytes, savedDocument };
 }
 
 async function drawSelfCrossingFreehand(page) {
@@ -70,7 +71,7 @@ test("GraphSCII Draw boots, draws, exports, undoes, redoes, saves, reopens, and 
 
   await drawSelfCrossingFreehand(page);
 
-  const { savedPath, savedDocument } = await saveDrawing(page);
+  const { savedBytes, savedDocument } = await saveDrawing(page);
   expect(savedDocument.format).toBe("GraphSCII-Drawing");
   expect(savedDocument.objects).toHaveLength(1);
   expect(savedDocument.objects[0].type).toBe("freehand");
@@ -97,7 +98,11 @@ test("GraphSCII Draw boots, draws, exports, undoes, redoes, saves, reopens, and 
   const blankText = await downloadText(page);
   expect(graphSciiCount(blankText)).toBe(0);
 
-  await page.locator("#load-file").setInputFiles(savedPath);
+  await page.locator("#load-file").setInputFiles({
+    name: "drawing.graphscii",
+    mimeType: "application/json",
+    buffer: savedBytes,
+  });
   await expect(page.getByRole("status")).toHaveText("Opened drawing.graphscii.");
   const reopenedText = await downloadText(page);
   expect(graphSciiCount(reopenedText)).toBe(initialOccupied);
