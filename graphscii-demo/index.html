@@ -18,7 +18,7 @@
         <p>Slice 1 — exact edge-crossing node paths</p>
       </div>
       <div class="status-stack">
-        <span id="overlap-status" class="pill">Continuous shared-node path</span>
+        <span id="overlap-status" class="pill">Continuous shared-port path</span>
         <span id="status" class="status" aria-live="polite">Loading GraphSCII…</span>
       </div>
     </header>
@@ -44,8 +44,8 @@
 
     <section class="canvas-panel" aria-label="GraphSCII drawing canvas">
       <div class="canvas-help">
-        <strong>The mouse chooses edge crossings; the crossings choose nodes.</strong>
-        Every boundary node is snapped once, mated exactly into the adjacent cell, and rendered with the corresponding GraphSCII font glyph.
+        <strong>The mouse chooses edge crossings; the crossings choose GraphSCII bitmap ports.</strong>
+        Side ports are the 16 exact 8×16 bitmap rows; top/bottom ports are the 8 exact bitmap columns. Every crossing is snapped once and mated exactly into the adjacent cell.
       </div>
       <div class="canvas-wrap">
         <div class="canvas-stack">
@@ -58,12 +58,12 @@
     <section class="notes">
       <h2>Slice 1 contract</h2>
       <p>
-        The real pointer trajectory determines which cell edges are crossed. Each crossing snaps to the nearest node on that exact edge.
-        The adjacent cell receives the exact mating L/R or T/B node; that crossing is never independently re-quantized.
+        The real pointer trajectory determines which cell edges are crossed. Each crossing snaps to the corresponding 3px GraphSCII bitmap row/column slot.
+        The adjacent cell receives the exact mating L/R or T/B port; that crossing is never independently re-quantized.
       </p>
       <p>
-        Freehand, line, Bezier, and ellipse all use the same crossing compiler. Immediate cell backtracking is erased before glyphs are emitted.
-        Every consecutive stored segment is required to share the exact same canonical node with the next segment.
+        Perpendicular corner ports are not collapsed. A corner traversal such as L15→B0 is a real GraphSCII semantic and emits its required one-pixel corner glyph.
+        Freehand, line, Bezier, and ellipse all use the same crossing compiler.
       </p>
       <p>
         Debug Export records the exact pointer/coalesced-event path, every raw boundary crossing, every final GraphSCII segment,
@@ -72,7 +72,7 @@
     </section>
   </main>
 
-  <script src="./draw-v5.js?v=20260821-1519"></script>
-  <script src="./debug-export-v1.js?v=20260821-1542"></script>
+  <script src="./draw-v6.js?v=20260821-1618"></script>
+  <script src="./debug-export-v2.js?v=20260821-1618"></script>
 </body>
 </html>
