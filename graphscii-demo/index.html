@@ -15,10 +15,10 @@
     <header class="topbar">
       <div>
         <h1>GraphSCII Draw</h1>
-        <p>Slice 1 — deterministic node-graph drawing</p>
+        <p>Slice 1 — exact edge-crossing node paths</p>
       </div>
       <div class="status-stack">
-        <span id="overlap-status" class="pill">Exact node semantics only</span>
+        <span id="overlap-status" class="pill">Continuous shared-node path</span>
         <span id="status" class="status" aria-live="polite">Loading GraphSCII…</span>
       </div>
     </header>
@@ -43,17 +43,13 @@
 
     <section class="canvas-panel" aria-label="GraphSCII drawing canvas">
       <div class="canvas-help">
-        <strong>The only geometry is node → node.</strong>
-        Pointer coordinates only choose GraphSCII nodes; committed artwork stores exact cell ports and direct GraphSCII semantics.
+        <strong>The mouse chooses edge crossings; the crossings choose nodes.</strong>
+        Every boundary node is snapped once, mated exactly into the adjacent cell, and rendered with the corresponding GraphSCII font glyph.
       </div>
       <div class="canvas-wrap">
         <div class="canvas-stack">
           <canvas id="glyph-canvas" aria-hidden="true"></canvas>
-          <canvas
-            id="overlay-canvas"
-            tabindex="0"
-            aria-label="GraphSCII node drawing canvas. Choose a tool and draw using pointer input."
-          ></canvas>
+          <canvas id="overlay-canvas" tabindex="0" aria-label="GraphSCII node drawing canvas"></canvas>
         </div>
       </div>
     </section>
@@ -61,16 +57,16 @@
     <section class="notes">
       <h2>Slice 1 contract</h2>
       <p>
-        Freehand, line, Bezier, and ellipse all end as the same thing: an ordered path of legal GraphSCII node-to-node segments.
-        There is no bitmap matcher, glyph resolver, Hamming score, supersampling pass, or continuity repair.
+        The real pointer trajectory determines which cell edges are crossed. Each crossing snaps to the nearest node on that exact edge.
+        The adjacent cell receives the exact mating L/R or T/B node; that crossing is never independently re-quantized.
       </p>
       <p>
-        Pointer jitter/backtracking is cancelled at the cell-crossing level before nodes are quantized. The editor renders each stored semantic directly as its exact canonical 8×16 cell bitmap.
+        Freehand, line, Bezier, and ellipse all use the same crossing compiler. Immediate cell backtracking is erased before glyphs are emitted.
+        Every consecutive stored segment is required to share the exact same canonical node with the next segment.
       </p>
     </section>
   </main>
 
-  <script src="./draw-core-v3.js?v=20260821-1448"></script>
-  <script src="./draw-ui-v4.js?v=20260821-1448"></script>
+  <script src="./draw-v5.js?v=20260821-1519"></script>
 </body>
 </html>
