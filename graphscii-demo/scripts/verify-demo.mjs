@@ -9,15 +9,19 @@ const repoRoot = path.resolve(demoRoot, "..");
 
 const registryPath = path.join(repoRoot, "artifacts", "manifest", "vocabulary-v1", "registry.json");
 const pairIndexPath = path.join(repoRoot, "artifacts", "manifest", "indexes", "by-connection-pair.json");
+const boundaryStylePath = path.join(repoRoot, "artifacts", "manifest", "vocabulary", "indexes", "by-boundary-side-style.json");
+const aliasPath = path.join(repoRoot, "artifacts", "manifest", "vocabulary", "indexes", "by-alias.json");
 const orthogonalPath = path.join(repoRoot, "artifacts", "research", "junctions", "orthogonal-connectors.json");
 const diagonalPath = path.join(repoRoot, "artifacts", "research", "junctions", "diagonal-connectors.json");
 const diagonalSelectionPath = path.join(repoRoot, "artifacts", "research", "junctions", "diagonal-selection.json");
 const fontPath = path.join(repoRoot, "artifacts", "fonts", "GraphSCII-Regular.ttf");
 const fontManifestPath = path.join(repoRoot, "artifacts", "fonts", "manifest.json");
 
-const [registry, pairIndex, orthogonal, diagonal, diagonalSelection] = await Promise.all([
+const [registry, pairIndex, boundaryStyle, byAlias, orthogonal, diagonal, diagonalSelection] = await Promise.all([
   readFile(registryPath, "utf8").then(JSON.parse),
   readFile(pairIndexPath, "utf8").then(JSON.parse),
+  readFile(boundaryStylePath, "utf8").then(JSON.parse),
+  readFile(aliasPath, "utf8").then(JSON.parse),
   readFile(orthogonalPath, "utf8").then(JSON.parse),
   readFile(diagonalPath, "utf8").then(JSON.parse),
   readFile(diagonalSelectionPath, "utf8").then(JSON.parse),
@@ -61,6 +65,58 @@ for (const [pair, entry] of Object.entries(pairIndex.entries)) {
   if (!straightGlyphIds.has(entry.glyphId)) throw new Error(`Straight connection rule ${pair} does not resolve to a straight owner.`);
 }
 
+if (boundaryStyle?.index !== "by-boundary-side-style"
+  || boundaryStyle?.entryCount !== 9984
+  || Object.keys(boundaryStyle.entries ?? {}).length !== 9984) {
+  throw new Error("GraphSCII fill lookup must be the published 9,984-entry by-boundary-side-style table.");
+}
+if (byAlias?.index !== "by-alias" || byAlias?.entryCount !== 10816 || Object.keys(byAlias.entries ?? {}).length !== 10816) {
+  throw new Error("GraphSCII semantic resolution source must be the published 10,816-entry by-alias table.");
+}
+
+const encodedStyles = new Set(["solid", "medium", "half", "light"]);
+const styleCounts = { solid: 0, medium: 0, half: 0, light: 0 };
+let encodedFillRuleCount = 0;
+let halfFallbackCount = 0;
+for (const [ruleKey, aliasKey] of Object.entries(boundaryStyle.entries)) {
+  const style = ruleKey.slice(ruleKey.lastIndexOf(":") + 1);
+  if (!encodedStyles.has(style)) continue;
+  const semantic = byAlias.entries[aliasKey];
+  if (!semantic) throw new Error(`Fill rule ${ruleKey} has no semantic resolution.`);
+
+  let glyphId = null;
+  if (semantic.resolution === "encoded-owner" && Number.isInteger(semantic.glyphId)) {
+    glyphId = semantic.glyphId;
+  } else if (
+    style === "half"
+    && semantic.resolution === "renderer-only-derived"
+    && Number.isInteger(semantic.fallbackGlyphId)
+  ) {
+    glyphId = semantic.fallbackGlyphId;
+    halfFallbackCount += 1;
+  }
+
+  if (!Number.isInteger(glyphId)) {
+    throw new Error(`Encoded fill rule ${ruleKey} did not resolve to an addressable GraphSCII glyph.`);
+  }
+  const owner = registry.owners[glyphId];
+  if (!owner || owner.glyphId !== glyphId || owner.codepointValue >= 0xf6a4) {
+    throw new Error(`Encoded fill rule ${ruleKey} escaped the frozen pre-connector vocabulary.`);
+  }
+
+  styleCounts[style] += 1;
+  encodedFillRuleCount += 1;
+}
+if (encodedFillRuleCount !== 6656) {
+  throw new Error(`Expected 6,656 encoded boundary/side/style fill rules; found ${encodedFillRuleCount}.`);
+}
+for (const [style, count] of Object.entries(styleCounts)) {
+  if (count !== 1664) throw new Error(`Expected 1,664 ${style} fill rules; found ${count}.`);
+}
+if (halfFallbackCount !== 64) {
+  throw new Error(`Expected the published 64 half-tone one-pixel fallbacks; found ${halfFallbackCount}.`);
+}
+
 if (orthogonal?.schema !== "graphscii-orthogonal-connectors" || !Array.isArray(orthogonal.semantics) || orthogonal.semantics.length !== 640) {
   throw new Error("GraphSCII orthogonal connector grammar must contain exactly 640 published semantics.");
 }
@@ -96,6 +152,7 @@ if (fontManifest.encodedCharacters !== 6492 || fontManifest.puaCharacters !== 63
 
 console.log(
   `GraphSCII demo assets verified: ${registry.owners.length} graphics; `
-  + `${pairIndex.entryCount} straight pair rules; ${orthogonal.semantics.length} orthogonal semantics; `
-  + `${diagonalSelection.selectedSemanticCount} selected diagonal semantics; font ${fontSha256}.`,
+  + `${pairIndex.entryCount} straight pair rules; ${encodedFillRuleCount} encoded fill rules; `
+  + `${orthogonal.semantics.length} orthogonal semantics; ${diagonalSelection.selectedSemanticCount} selected diagonal semantics; `
+  + `font ${fontSha256}.`,
 );
