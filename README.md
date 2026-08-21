@@ -1,124 +1,156 @@
 # GraphSCII
 
-GraphSCII is an 8×16 fixed-cell graphics vocabulary. Each Unicode Private Use Area glyph is a deterministic binary geometric tile intended to compose with neighboring tiles into larger lines, curves, diagrams, silhouettes, textures, and other graphics.
+## Graphical Standard for Computer Information Interchange
 
-The canonical source is geometry → deterministic 8×16 bitmap → deduplicated glyph registry. Font files are compiled outputs, not the source of visual truth.
+**By Ariel Williams**
 
-## Current baseline
+GraphSCII is a fixed-cell graphical character system for drawing with text-addressable 8×16 tiles.
 
-The straight-line generator currently produces:
+Instead of treating characters only as letters, GraphSCII gives software a deterministic vocabulary of lines, filled geometry, tonal patterns, and connectors that can be placed next to one another to form larger graphics.
 
-- 832 mathematical edge-to-edge candidates
-- 746 unique 8×16 bitmaps
-- 86 duplicate candidates retained as aliases
-- maximum 4 aliases for one bitmap
+> **Study it. Draw with it. Modify it. Share it.**  
+> **Keep forks open.**  
+> **Don't commercially exploit it without permission.**  
+> **Indies: just ask.**
 
-The current straight vocabulary has a **provisional** allocation:
+The formal graphical contract is in [`GRAPHSCII-STANDARD.md`](GRAPHSCII-STANDARD.md).
+
+## What is published
+
+The current canonical graphical vocabulary is **`graphscii-graphics-v1`**.
 
 ```text
-glyph IDs   0..745
-Unicode     U+00E000..U+00E2E9
-rule        codepoint = U+E000 + glyphId
+straight visual owners                 746
+solid 100% visual owners             1,259
+medium 75% visual owners             1,269
+light 25% visual owners              1,315
+half 50% visual owners               1,207
+orthogonal connector owners            544
+diagonal connector owners               57
+                                      -----
+encoded PUA graphics                  6,397
 ```
 
-The allocation is explicit in `spec/straight-allocation.json` but is not frozen as a public API until GraphSCII v1.
+The GraphSCII reference font also includes the 95 printable ASCII characters at `U+0020..U+007E`, giving **6,492 encoded characters** plus the mandatory `.notdef` font glyph.
 
-## Generate the artifact tree
+The final GraphSCII v1 BMP PUA allocation ends at `U+F8FC`; `U+F8FD..U+F8FF` remains a protected three-slot reserve.
+
+## The important design rule
+
+Every canonical GraphSCII graphical owner is exactly one deterministic **8×16 binary bitmap**.
+
+```text
+semantic or mathematical definition
+        ↓
+deterministic 8×16 raster
+        ↓
+global exact bitmap deduplication
+        ↓
+one canonical visual owner
+```
+
+If two definitions produce exactly the same pixels, they share one encoded owner. GraphSCII does not spend a second codepoint on the same visual bitmap.
+
+The machine-readable source of truth is:
+
+```text
+artifacts/manifest/vocabulary-v1/registry.json
+```
+
+The frozen publication manifest is:
+
+```text
+artifacts/publications/graphscii-graphics-v1.json
+```
+
+## The GraphSCII font
+
+Milestone 9 adds a deterministic TrueType compiler that consumes the frozen v1 registry rather than independently redrawing the glyphs.
+
+The reference output is:
+
+```text
+artifacts/fonts/GraphSCII-Regular.ttf
+artifacts/fonts/manifest.json
+```
+
+Font identity:
+
+```text
+Family:          GraphSCII
+Full name:       GraphSCII Regular
+PostScript name: GraphSCII-Regular
+Designer:        Ariel Williams
+Standard:        Graphical Standard for Computer Information Interchange
+```
+
+The font uses a 1024-unit em, with each canonical bitmap pixel represented by an exact 64×64 font-unit square. Every generated glyph is decoded back from its TrueType outline during verification and compared against the source 8×16 bitmap.
+
+That means the font is a compiled representation of the standard. **The registry remains the source of visual truth.**
+
+## Build the font
 
 From `geometric-glyph-lab/`:
 
 ```powershell
-npm run generate
+npm run generate:font
+npm run verify:font
 ```
 
-Generation now has three stages:
-
-```text
-base bitmap/artifact generation
-            ↓
-straight semantic registry/index generation
-            ↓
-straight-line Markdown catalog generation
-```
-
-To verify an existing generated tree without rewriting it:
+To regenerate and verify the entire GraphSCII artifact chain:
 
 ```powershell
+npm run generate
 npm run verify
 ```
 
-The generator emits:
+The font build is dependency-free JavaScript and writes deterministic TTF bytes and a manifest containing the source-registry SHA-256, font SHA-256, glyph counts, metrics, provenance, and verification state.
 
-```text
-artifacts/
-├── manifest/
-│   ├── glyphs.json
-│   ├── stats.json
-│   └── indexes/
-│       ├── by-codepoint.json
-│       ├── by-bitmap.json
-│       ├── by-port.json
-│       └── by-connection-pair.json
-├── glyphs/
-│   ├── ascii/
-│   │   └── U+00E000.txt ...
-│   └── png/
-│       └── U+00E000.png ...
-├── classes/
-│   └── straight-lines.md
-└── atlases/
-    ├── all.png
-    ├── page-0.png
-    ├── page-1.png
-    └── page-2.png
-```
+## Licensing
 
-Every current glyph gets one exact 8×16 ASCII bitmap and one native 8×16 transparent PNG. Filled PNG pixels are opaque black; empty pixels are transparent.
+GraphSCII uses a dual-path licensing approach.
 
-`artifacts/classes/straight-lines.md` is generated from the semantic manifest plus the canonical per-glyph ASCII files. It contains all 746 visual glyphs, all 832 mathematical aliases, exact 8×16 ASCII renderings, connectivity semantics, bitmap keys, family membership, and links to each glyph's canonical ASCII/PNG artifacts.
+### Noncommercial public use
 
-The catalog is not hand-maintained. `npm run verify:catalog` regenerates its expected contents in memory and requires byte-for-byte equality.
+Original GraphSCII material is licensed for qualifying noncommercial use under **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International — CC BY-NC-SA 4.0**.
 
-## Programmatic use
+You can study it, draw with it, modify it, fork it, and share it subject to those terms. If you share an adaptation, the ShareAlike requirement keeps that shared adaptation under the same open noncommercial terms.
 
-`artifacts/manifest/glyphs.json` lets software use GraphSCII without reverse-engineering a font file. Each glyph record includes:
+Read the actual terms and scope in [`FONT-LICENSE.txt`](FONT-LICENSE.txt).
 
-- numeric glyph ID and hexadecimal ID
-- Unicode codepoint and character
-- family membership
-- exact 16-row hexadecimal bitmap
-- stable 128-bit bitmap key
-- every geometric alias that rasterized to that bitmap
-- explicit connectivity semantics and alias endpoints
-- paths to its ASCII and PNG artifacts
+### Commercial use
 
-Straight aliases have keys such as:
+Commercial exploitation is **not** granted by the public CC BY-NC-SA license.
 
-```text
-straight:L13>R4
-```
+Businesses and commercial projects must obtain separate written permission from Ariel Williams. There is intentionally no universal fixed price; the commercial terms are negotiated around the real project and scale.
 
-Raster-equivalent aliases remain separate geometric interpretations even though they share one visual glyph. Ports from different aliases are **alternatives**, not simultaneous junction branches.
+See [`COMMERCIAL-LICENSE.md`](COMMERCIAL-LICENSE.md).
 
-Generated lookup indexes let programs resolve:
+### Indies
 
-```text
-codepoint          → glyph ID
-bitmap key         → glyph ID
-port               → matching aliases
-port pair          → glyph ID + candidate alias
-```
+**Indies: just ask.**
 
-Both orientations of a straight connection are materialized, so `L13>R4` and `R4>L13` both resolve directly.
+If you are a solo developer, tiny team, hobbyist, small artist, game-jam creator, or early-stage project and the project is commercial, contact Ariel Williams and describe what you are making. The intended policy is friendly and will often be **free or low-cost** for genuinely small projects.
 
-A renderer can ultimately either emit GraphSCII Unicode characters using the font or copy the canonical PNG/atlas tile directly.
+See [`INDIE-LICENSE.md`](INDIE-LICENSE.md).
 
-## Canonical format and connectivity
+### Printable ASCII provenance
 
-See:
+The reference font's printable ASCII bitmaps are derived from public-domain IBM VGA-style 8×8 material distributed through `dhepper/font8x8`, then doubled vertically into GraphSCII's 8×16 cell.
 
-- [`docs/format.md`](docs/format.md) — frozen GraphSCII v1 bitmap contract
-- [`docs/connectivity.md`](docs/connectivity.md) — straight connectivity and lookup semantics
-- [`docs/milestone-2a-semantic-registry.md`](docs/milestone-2a-semantic-registry.md) — semantic-registry slice
-- [`docs/milestone-2b-straight-catalog.md`](docs/milestone-2b-straight-catalog.md) — generated straight-line catalog slice
+That underlying public-domain material remains public domain. See [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).
+
+## Useful project documents
+
+- [`GRAPHSCII-STANDARD.md`](GRAPHSCII-STANDARD.md) — the GraphSCII v1 graphical and font-facing standard
+- [`FONT-LICENSE.txt`](FONT-LICENSE.txt) — actual noncommercial public-license terms and commercial boundary
+- [`COMMERCIAL-LICENSE.md`](COMMERCIAL-LICENSE.md) — business/commercial licensing explanation
+- [`INDIE-LICENSE.md`](INDIE-LICENSE.md) — friendly indie permission path
+- [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) — public-domain ASCII provenance
 - [`PLAN.md`](PLAN.md) — living architecture and roadmap
+- [`docs/format.md`](docs/format.md) — canonical bitmap serialization details
+- [`docs/connectivity.md`](docs/connectivity.md) — connectivity semantics
+
+## The project in one sentence
+
+**GraphSCII is a deterministic 8×16 graphical standard that lets programs interchange composable computer graphics as characters without losing the exact underlying pixel geometry.**
