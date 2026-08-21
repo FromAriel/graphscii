@@ -46,22 +46,27 @@ There is no:
 - visual fallback
 - neighbor continuity repair
 - line/fill family guessing
+- global route solver
 
 If more than one distinct segment occupies one cell, Slice 1 marks that cell as an unresolved overlap. It does not guess. Exact connector composition is a later slice.
 
 ## Run
 
-Serve the **repository root** so the demo can reach the canonical font in `artifacts/fonts/`:
+Use the included server. It serves the repository root and explicitly sends `.mjs` as JavaScript, avoiding Windows/Python MIME-table differences:
 
 ```powershell
-python -m http.server 5174
+python graphscii-demo/serve.py 8002
 ```
 
 Then open:
 
 ```text
-http://127.0.0.1:5174/graphscii-demo/
+http://127.0.0.1:8002/graphscii-demo/
 ```
+
+You can choose another port by replacing `8002`.
+
+Do **not** serve only the `graphscii-demo` directory: the demo also needs the canonical font under `artifacts/fonts/`.
 
 ## Verify
 
@@ -70,6 +75,7 @@ From the repository root:
 ```powershell
 node graphscii-demo/verify.mjs
 node --check graphscii-demo/app.mjs
+python -m py_compile graphscii-demo/serve.py
 ```
 
 The verifier freezes the direct straight-lookup contract:
