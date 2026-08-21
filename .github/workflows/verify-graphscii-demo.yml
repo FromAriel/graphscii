@@ -36,7 +36,7 @@ jobs:
           node-version: 22
 
       - name: Verify Python launcher
-        run: python -m py_compile launch.py
+        run: python -m py_compile launch.py scripts/verify-launcher.py
 
       - name: Install demo dependencies
         run: npm install --no-audit --no-fund
@@ -46,3 +46,29 @@ jobs:
 
       - name: Verify GraphSCII Draw demo
         run: npm run verify
+
+  verify-launcher-windows:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: graphscii-demo
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install demo dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Verify full Python launcher path on Windows
+        run: python scripts/verify-launcher.py --build
