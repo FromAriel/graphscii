@@ -76,6 +76,8 @@ for (const required of [
   "addEndpointCaps",
   "assertOpenStrokeDegreeTwo",
   "fitStrokeGeometry",
+  "diagonalCornerCounterpart",
+  "hasAuthoredDiagonalCornerCounterpart",
   "validateFittedSharedPorts",
 ]) {
   if (!lineNormalizationSource.includes(required)) throw new Error(`Stroke fitter is missing required stage: ${required}.`);
@@ -153,6 +155,29 @@ expect(validateFittedSharedPorts(forwardGrid, 16, 8, forwardFit.terminalPorts).l
 expect(validateFittedSharedPorts(reverseGrid, 16, 8, reverseFit.terminalPorts).length === 0, "Reverse line produced an impossible fitted shared seam mismatch.");
 expect(JSON.stringify(cellSignature(forwardGrid)) === JSON.stringify(cellSignature(reverseGrid)), "Reversing one line changed its fitted GraphSCII port semantics.");
 
+const exactCornerCases = [
+  { name: "vertical-owner down-right", start: { x: 20, y: 40 }, end: { x: 28, y: 56 } },
+  { name: "vertical-owner down-left", start: { x: 28, y: 40 }, end: { x: 20, y: 56 } },
+  { name: "horizontal-owner down-right", start: { x: 23, y: 33 }, end: { x: 25, y: 63 } },
+  { name: "horizontal-owner down-left", start: { x: 25, y: 33 }, end: { x: 23, y: 63 } },
+];
+for (const cornerCase of exactCornerCases) {
+  const forward = { id: `corner-${cornerCase.name}`, type: "line", start: cornerCase.start, end: cornerCase.end, width: 2, tone: 100 };
+  const reverse = { ...forward, start: cornerCase.end, end: cornerCase.start };
+  const cornerForwardGrid = buildGeometryGrid([forward], 8, 8);
+  const cornerReverseGrid = buildGeometryGrid([reverse], 8, 8);
+  const cornerForwardFit = fitStrokeGeometry(cornerForwardGrid, [forward], 8, 8);
+  const cornerReverseFit = fitStrokeGeometry(cornerReverseGrid, [reverse], 8, 8);
+  const cornerForwardErrors = validateFittedSharedPorts(cornerForwardGrid, 8, 8, cornerForwardFit.terminalPorts);
+  const cornerReverseErrors = validateFittedSharedPorts(cornerReverseGrid, 8, 8, cornerReverseFit.terminalPorts);
+  expect(cornerForwardErrors.length === 0, `${cornerCase.name} exact-corner forward traversal failed seam validation: ${cornerForwardErrors[0] ?? "unknown"}.`);
+  expect(cornerReverseErrors.length === 0, `${cornerCase.name} exact-corner reverse traversal failed seam validation: ${cornerReverseErrors[0] ?? "unknown"}.`);
+  expect(
+    JSON.stringify(cellSignature(cornerForwardGrid)) === JSON.stringify(cellSignature(cornerReverseGrid)),
+    `${cornerCase.name} exact-corner semantics changed when traversal direction reversed.`,
+  );
+}
+
 const tSegments = [
   { a: { x: 0, y: 8 }, b: { x: 7, y: 8 }, objectId: "a", objectType: "line" },
   { a: { x: 3, y: 0 }, b: { x: 3, y: 8 }, objectId: "b", objectType: "line" },
@@ -195,6 +220,7 @@ expect(
 
 console.log(
   `GraphSCII exact semantic engine verified: shared seams are fitted once; reverse geometry is invariant; `
+  + `exact diagonal cell-corner crossings validate in both directions without inventing orthogonal cells; `
   + `open strokes use geometry-engine-equivalent DDA traversal plus a first-visit fragment cover and deterministic terminal caps; `
   + `T/X classify as orthogonal/diagonal 3/4-arm junctions; failing freehand fixture retains all ${checkedStraightCells} `
   + `authored-touched cells as published two-port straights with zero fitted seam mismatches.`,
