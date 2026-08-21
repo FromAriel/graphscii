@@ -9,8 +9,12 @@ const stats = await verifyOrthogonalConnectorArtifacts(repoRoot);
 
 assert.equal(stats.semanticCount, 640);
 assert.equal(stats.uniqueRasterOwners, 548);
-assert.equal(stats.junctionAllocations, 0);
+assert.equal(stats.semanticDuplicatesRemoved, 92);
+assert.equal(stats.graphicsV0ReuseOwners, 4);
+assert.equal(stats.novelOwnersRequired, 544);
 assert.equal(stats.protectedReserveSlots, 604);
+assert.equal(stats.reserveRemainingAfterNovelOwners, 60);
+assert.equal(stats.junctionAllocations, 0);
 assert.equal(stats.fitsReserve, true);
 
 console.log("GraphSCII Milestone 5B.1 orthogonal generic connector basis verified.");
