@@ -1,10 +1,10 @@
 # Milestone 5E — GraphSCII Graphics Vocabulary v1 Publication
 
-Status: **IN IMPLEMENTATION — PUBLICATION GATE NEXT**
+Status: **COMPLETE — FULL-CHAIN VERIFIED AND PUBLISHED**
 
 Milestone 5E turns the verified Milestone 5C connector allocation into the formal `graphscii-graphics-v1` publication snapshot.
 
-## Frozen inputs
+## Frozen population
 
 ```text
 graphics-v0 owners                    5,796
@@ -39,8 +39,6 @@ The final reserve is exactly three BMP PUA slots.
 
 ## Publication outputs
 
-Milestone 5E adds:
-
 ```text
 artifacts/publications/
 ├── graphscii-graphics-v1.json
@@ -57,6 +55,20 @@ The publication manifest freezes:
 - canonical artifact counts,
 - SHA-256 digests of the v1 registry, allocation stats, connector semantics, connector alias index, connector atlas index, v1 master layout map, allocation spec, inherited renderer-only index, and `graphscii-graphics-v0` publication.
 
+Frozen publication digests:
+
+```text
+registry                      92ce5ff5a2b8d9b3a9e4d6aff26278cb69b23df459ec8406e04477afeb61103f
+registry stats                0b6e298de0a6884150be0b1770c0c62216ed126a7ccd1e7309709bdd35145262
+connector semantics           9ad365584304c0bc249317fc784fc4568d7152ce1803f5c0166b288d56c39d2c
+connector alias index         78a7a0715be567675b1fe4e1a5516d6f99ec6daebb9b7711159f32e5aedf88d6
+connector atlas index         09bdead08785f43c36b4b9f5b80043c86ae4a9597cde43e58385dd0d6c9dcd01
+master layout map v1          cdc79f85f1541ad04eab8b62448f2f6ae7439e2dccb45271225b3f3bcf6aa911
+allocation spec               d51b9640c40e333c5c8507e6985cf22581feaa932ed602eb36a67bf3e7582a92
+renderer-only index           df36d6bde741976714b27ac3cec286680d83a5a03dc782c3820ff115c87dcdd1
+base graphics-v0 publication  c935284d0f9873416ae835f60dc7754692cafc3e58dcc0a4fa8f7c8c760add81
+```
+
 ## Permanent commands
 
 ```text
@@ -66,9 +78,9 @@ npm run verify:graphics-publication-v1
 
 Both commands are part of the aggregate `npm run generate` / `npm run verify` chain.
 
-## Completion gate
+## Verification result
 
-Milestone 5E is complete only when a clean CI checkout passes:
+The clean CI checkout passed:
 
 ```text
 npm install
@@ -77,9 +89,13 @@ npm run generate
 npm run verify
 ```
 
-and the generated `graphscii-graphics-v1.json` and `.md` are committed byte-for-byte from that verified run.
+The full-chain verification run was GitHub Actions run `32453875746`. The persisted source correction was then regenerated successfully and the deterministic publication artifacts were committed as:
 
-Hard publication fixtures:
+```text
+e9d3106f655ffb83850712b8af94d0f68c530a00  Publish GraphSCII graphics vocabulary v1
+```
+
+Hard publication fixtures are therefore frozen as:
 
 ```text
 encoded graphics                    6,397
@@ -93,4 +109,4 @@ reserve slots                            3
 straight codepoints unchanged          YES
 ```
 
-No TTF/OTF is built in this milestone. The publication freezes the complete addressable bitmap vocabulary that a later font-build milestone will consume.
+No TTF/OTF is built in this milestone. `graphscii-graphics-v1` freezes the complete addressable bitmap vocabulary that the later font-build milestone will consume.
