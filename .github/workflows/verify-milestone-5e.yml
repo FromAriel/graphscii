@@ -30,13 +30,16 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
+
           p = Path('geometric-glyph-lab/scripts/vocabulary-publication-v1.mjs')
           s = p.read_text()
-          old = '''  if (!Array.isArray(semantics) || semantics.length !== EXPECTED_CONNECTOR_SEMANTICS) {
-            throw new Error(`Milestone 5E requires ${EXPECTED_CONNECTOR_SEMANTICS} connector semantics.`);
-          }
-          '''
-          new = '''  if (
+          pattern = re.compile(
+              r'  if \(!Array\.isArray\(semantics\) \|\| semantics\.length !== EXPECTED_CONNECTOR_SEMANTICS\) \{\n'
+              r'    throw new Error\(`Milestone 5E requires \$\{EXPECTED_CONNECTOR_SEMANTICS\} connector semantics\.`\);\n'
+              r'  \}\n'
+          )
+          replacement = '''  if (
             semantics?.schema !== "graphscii-generic-connector-semantics-v1" ||
             semantics?.semanticCount !== EXPECTED_CONNECTOR_SEMANTICS ||
             !Array.isArray(semantics.semantics) ||
@@ -45,8 +48,11 @@ jobs:
             throw new Error(`Milestone 5E requires ${EXPECTED_CONNECTOR_SEMANTICS} connector semantics.`);
           }
           '''
-          if old in s:
-              p.write_text(s.replace(old, new))
+          s2, count = pattern.subn(replacement, s)
+          if count == 1:
+              p.write_text(s2)
+          elif 'semantics?.semanticCount !== EXPECTED_CONNECTOR_SEMANTICS' not in s:
+              raise SystemExit(f'Expected exactly one semantics fixture replacement, found {count}.')
           PY
 
       - name: Persist source correction
