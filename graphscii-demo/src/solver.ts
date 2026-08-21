@@ -2,12 +2,12 @@ import {
   CELL_HEIGHT,
   CELL_WIDTH,
   buildGeometryGrid,
-  maxJunctionArms,
   sampleEllipseCellFill,
   validateSharedPorts,
   type PortName,
 } from "./geometry-engine";
-import { GlyphRegistry } from "./registry";
+import { junctionTopology } from "./connector-topology";
+import { GlyphRegistry } from "./semantic-registry";
 import type { CellRect, DrawingObject, EllipseObject } from "./types";
 
 const BLANK_CODEPOINT = 0x20;
@@ -202,19 +202,28 @@ export class GraphSolver {
         if (!cell) continue;
         const ports = sortedPorts(cell.ports);
         const objectIds = [...cell.byObject.keys()].sort();
-        const arms = maxJunctionArms(cell.segments);
+        const junction = junctionTopology(cell.segments);
 
-        if (arms >= 3) {
+        if (junction && junction.arms >= 3) {
           if (ports.length < 3 || ports.length > 4) {
-            this.markIssue(column, row, `junction has ${arms} arms but ${ports.length} boundary ports`, objectIds);
+            this.markIssue(column, row, `junction has ${junction.arms} arms but ${ports.length} boundary ports`, objectIds);
             continue;
           }
-          const connector = this.registry.resolveConnector(ports);
+          if (!junction.family) {
+            this.markIssue(
+              column,
+              row,
+              `junction has ${junction.arms} authored arms but does not match the published orthogonal or diagonal connector topology`,
+              objectIds,
+            );
+            continue;
+          }
+          const connector = this.registry.resolveConnector(ports, junction.family);
           if (!connector) {
             this.markIssue(
               column,
               row,
-              `no published GraphSCII v1 connector semantic matches ${ports.join(", ")}`,
+              `no unambiguous published GraphSCII v1 ${junction.family} connector semantic matches ${ports.join(", ")}`,
               objectIds,
             );
             continue;
