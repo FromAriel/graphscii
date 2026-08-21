@@ -130,10 +130,14 @@ TypeScript strict check
       ↓
 production Vite build
       ↓
+verify:launcher (real Python HTTP server)
+      ↓
 verify:browser (Playwright Chromium)
 ```
 
 The gates verify the frozen 6,397-owner vocabulary, the 1,664 straight connection-pair rules, exact fill semantics, orthogonal and selected diagonal connector semantics, fitted shared-port invariants, exact corner traversal in both directions, and the actual runtime solver.
+
+The launcher gate starts the real `launch.py --no-open` server against the production bundle, reads the 12-hex build fingerprint and fingerprinted URL reported by the launcher, requests the production index and hashed JavaScript asset over HTTP, and requires the no-cache headers plus matching `X-GraphSCII-Build` on both responses. CI also runs a dedicated Windows launcher job with `--build`, proving the primary Windows path can find `npm.cmd`, execute `npm run build`, fingerprint the result, start the Python server, and satisfy the same HTTP contract.
 
 The main freehand regression is the original supplied 379-point failing drawing. Its authored centerline touches 397 GraphSCII cells. The runtime gate requires the real solver to emit exactly 397 registered **straight** owners, with zero conversion issues, zero fill/connector glyphs, and exactly the same occupied-cell count in Unicode text export. The historical invalid export occupied 424 cells because the old heuristic path spilled beyond the authored footprint.
 
