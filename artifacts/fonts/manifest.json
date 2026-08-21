@@ -1,0 +1,48 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-font-build-v1",
+  "schemaVersion": 1,
+  "status": "milestone-9a-reference-ttf",
+  "standard": "Graphical Standard for Computer Information Interchange",
+  "designer": "Ariel Williams",
+  "fontFamily": "GraphSCII",
+  "subfamily": "Regular",
+  "fullName": "GraphSCII Regular",
+  "postScriptName": "GraphSCII-Regular",
+  "version": "1.0",
+  "sourcePublication": "graphscii-graphics-v1",
+  "sourceRegistry": "artifacts/manifest/vocabulary-v1/registry.json",
+  "sourceRegistrySha256": "92ce5ff5a2b8d9b3a9e4d6aff26278cb69b23df459ec8406e04477afeb61103f",
+  "output": "artifacts/fonts/GraphSCII-Regular.ttf",
+  "fontSha256": "b8d49672468f33b4159fcb45433c8102d604039a66d5409ae51f816f97c2f83a",
+  "canonicalCell": "8x16",
+  "unitsPerPixel": 64,
+  "unitsPerEm": 1024,
+  "advanceWidth": 512,
+  "encodedCharacters": 6492,
+  "asciiCharacters": 95,
+  "puaCharacters": 6397,
+  "sfntGlyphs": 6493,
+  "mandatoryNotdefGlyphs": 1,
+  "license": {
+    "nonCommercial": "CC BY-NC-SA 4.0",
+    "commercial": "separate written permission from Ariel Williams required",
+    "indie": "ask Ariel Williams; permissions are intended to be friendly and often free or low-cost",
+    "terms": "FONT-LICENSE.txt",
+    "commercialInfo": "COMMERCIAL-LICENSE.md",
+    "indieInfo": "INDIE-LICENSE.md"
+  },
+  "printableAsciiSource": {
+    "source": "dhepper/font8x8 font8x8_basic.h, IBM VGA-derived",
+    "status": "Public Domain",
+    "transformation": "U+0020..U+007E 8x8 rows doubled vertically to the GraphSCII 8x16 cell",
+    "notice": "THIRD-PARTY-NOTICES.md"
+  },
+  "verification": {
+    "deterministicRebuild": true,
+    "sfntChecksum": "0xB1B0AFBA",
+    "allGlyphRasterRoundTrip": true,
+    "puaRegistryOrderPreserved": true
+  }
+}

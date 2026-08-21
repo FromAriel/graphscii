@@ -396,29 +396,44 @@ Therefore:
 
 ---
 
-## 10. Next major implementation direction
+## 10. Milestone 9 — reference font compiler — ACTIVE
 
-The bitmap vocabulary itself is now frozen enough to support a real font/compiler layer.
+GraphSCII now has a deterministic reference TrueType compiler that consumes the frozen `graphscii-graphics-v1` registry directly.
 
-The next major engineering milestone should be **Milestone 9 — font compiler**, unless a deliberate decision is made first to revisit terminals/specials or another tiny curated extension.
-
-A font-build slice should consume `graphscii-graphics-v1` rather than regenerate geometry independently.
-
-Initial font/compiler objectives:
+### 9A — GraphSCII Regular reference TTF + public standard — COMPLETE
 
 ```text
-consume the canonical v1 registry
-include U+0020..U+007E printable ASCII
-include all 6,397 allocated PUA graphics
-preserve exact 8×16 pixel geometry
-use deterministic metrics and naming
-emit reproducible TTF/OTF output
-verify cmap coverage and glyph count
-raster-roundtrip selected/all glyphs back to the canonical bitmap contract
-publish font-build provenance and digests
+formal standard name       Graphical Standard for Computer Information Interchange
+designer                   Ariel Williams
+font family                GraphSCII
+font                       GraphSCII-Regular.ttf
+printable ASCII            95
+PUA graphics               6,397
+encoded characters         6,492
+sfnt glyphs incl .notdef   6,493
+units per em               1,024
+advance width              512
+font SHA-256               b8d49672468f33b4159fcb45433c8102d604039a66d5409ae51f816f97c2f83a
 ```
 
-The compiler must not silently renumber the PUA registry.
+Milestone 9A also freezes the public documentation/licensing layer:
+
+```text
+GRAPHSCII-STANDARD.md
+FONT-LICENSE.txt
+COMMERCIAL-LICENSE.md
+INDIE-LICENSE.md
+THIRD-PARTY-NOTICES.md
+README.md
+```
+
+The font verifier decodes every generated TrueType glyph back to the canonical 8×16 grid and requires exact bitmap equality. The compiler preserves every v1 PUA assignment and produces deterministic bytes.
+
+Completion note: [`docs/milestone-9a-font-compiler.md`](docs/milestone-9a-font-compiler.md)
+
+### 9B — external compatibility + distribution package — NEXT
+
+Next, validate the reference TTF with independent font tooling and representative Windows/Linux/browser renderers, produce install/distribution packages, add human-visible specimen sheets, and freeze a release-facing font manifest without changing canonical glyph geometry.
 
 ---
 
@@ -428,7 +443,8 @@ The compiler must not silently renumber the PUA registry.
 6   curated curve/arc extension if independently justified    PAUSED
 7   terminals / specials                                      DEFERRED
 8   vocabulary optimization                                   SATISFIED BY v1 freeze
-9   font compiler                                             NEXT MAJOR DIRECTION
+9A  reference TTF + graphical standard                        COMPLETE
+9B  compatibility/distribution validation                     NEXT
 10  drawing API / solver
 11  interactive editor
 12  GraphSCII v1 font/release freeze

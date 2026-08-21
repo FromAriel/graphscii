@@ -1,6 +1,6 @@
 # Milestone 9A — GraphSCII Reference TrueType Compiler
 
-Status: **IN IMPLEMENTATION — CI PUBLICATION GATE NEXT**
+Status: **COMPLETE — FULL-CHAIN VERIFIED REFERENCE TTF**
 
 Milestone 9A turns the frozen `graphscii-graphics-v1` bitmap vocabulary into the first deterministic installable GraphSCII font and freezes the public identity of the standard.
 
@@ -222,3 +222,21 @@ npm run verify:font
 ```
 
 and the resulting `GraphSCII-Regular.ttf` and `manifest.json` are persisted byte-for-byte from that verified build.
+
+
+## Frozen verified result
+
+```text
+font                            artifacts/fonts/GraphSCII-Regular.ttf
+font SHA-256                     b8d49672468f33b4159fcb45433c8102d604039a66d5409ae51f816f97c2f83a
+source registry SHA-256          92ce5ff5a2b8d9b3a9e4d6aff26278cb69b23df459ec8406e04477afeb61103f
+encoded characters               6,492
+sfnt glyphs                      6,493
+units per em                     1,024
+advance width                    512
+all-glyph raster round-trip      PASS
+deterministic byte rebuild       PASS
+full GraphSCII generate/verify    PASS
+```
+
+The verified font is the first reference implementation of **GraphSCII — Graphical Standard for Computer Information Interchange, by Ariel Williams**.
