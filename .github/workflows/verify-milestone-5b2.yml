@@ -4,12 +4,15 @@ on:
   push:
     branches:
       - milestone-5-junction-coverage-plan
+  pull_request:
+    branches:
+      - milestone-4d-publication-plan
 
 permissions:
   contents: write
 
 concurrency:
-  group: graphscii-milestone-5b2
+  group: graphscii-milestone-5b2-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
@@ -47,6 +50,7 @@ jobs:
         run: cat artifacts/research/junctions/diagonal-stats.json
 
       - name: Commit deterministic Milestone 5B.2 outputs
+        if: github.event_name == 'push'
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
