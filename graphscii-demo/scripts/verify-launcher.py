@@ -24,6 +24,16 @@ ASSET_RE = re.compile(r'<script[^>]+src="([^"]+)"', re.IGNORECASE)
 EXPECTED_CACHE_CONTROL = "no-store, no-cache, must-revalidate, max-age=0"
 
 
+def configure_stdio() -> None:
+    # Windows CI commonly gives Python a cp1252 console even though npm/Vite
+    # emits UTF-8 progress glyphs. The verifier mirrors child output only for
+    # diagnostics, so make that mirror explicitly UTF-8 and fail-safe.
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if callable(reconfigure):
+            reconfigure(encoding="utf-8", errors="replace")
+
+
 def args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Verify the GraphSCII Python launcher over real HTTP.")
     parser.add_argument(
@@ -85,6 +95,7 @@ def stop_process(process: subprocess.Popen[str]) -> None:
 
 
 def main() -> int:
+    configure_stdio()
     options = args()
     port = free_port()
     command = [
