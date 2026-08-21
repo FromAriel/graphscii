@@ -1,0 +1,68 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-geometry-model-sweep",
+  "schemaVersion": 2,
+  "status": "5A.2-research-only-unallocated",
+  "boundarySafeIngress": "declared boundary pixel -> immediate interior ingress -> hub",
+  "demandedSemanticCount": 22428,
+  "totalWeightedDemand": 928242,
+  "models": {
+    "mathematical-demand-hub": {
+      "semanticCount": 22428,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21705,
+      "semanticToRasterCompression": 1.03331,
+      "exactGraphicsV0ReuseSemantics": 0,
+      "exactGraphicsV0ReuseUniqueBitmaps": 0,
+      "novelUniqueBitmaps": 21705,
+      "boundaryPortCollisions": 608,
+      "sampleInvalid": []
+    },
+    "symmetric-half-pixel-center": {
+      "semanticCount": 22428,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21399,
+      "semanticToRasterCompression": 1.048086,
+      "exactGraphicsV0ReuseSemantics": 0,
+      "exactGraphicsV0ReuseUniqueBitmaps": 0,
+      "novelUniqueBitmaps": 21399,
+      "boundaryPortCollisions": 608,
+      "sampleInvalid": []
+    },
+    "central-2x2-kernel": {
+      "semanticCount": 22428,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21399,
+      "semanticToRasterCompression": 1.048086,
+      "exactGraphicsV0ReuseSemantics": 0,
+      "exactGraphicsV0ReuseUniqueBitmaps": 0,
+      "novelUniqueBitmaps": 21399,
+      "boundaryPortCollisions": 608,
+      "sampleInvalid": []
+    },
+    "port-centroid-midpoint": {
+      "semanticCount": 22428,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21911,
+      "semanticToRasterCompression": 1.023595,
+      "exactGraphicsV0ReuseSemantics": 0,
+      "exactGraphicsV0ReuseUniqueBitmaps": 0,
+      "novelUniqueBitmaps": 21911,
+      "boundaryPortCollisions": 608,
+      "sampleInvalid": []
+    }
+  }
+}

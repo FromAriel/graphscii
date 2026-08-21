@@ -1,0 +1,31 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-candidates",
+  "schemaVersion": 2,
+  "status": "5A.3-research-only-unallocated-sharded",
+  "candidateCount": 90112,
+  "shardRule": "one deterministic shard per geometry model",
+  "shards": [
+    {
+      "model": "mathematical-demand-hub",
+      "path": "candidates/mathematical-demand-hub.json",
+      "candidateCount": 22528
+    },
+    {
+      "model": "symmetric-half-pixel-center",
+      "path": "candidates/symmetric-half-pixel-center.json",
+      "candidateCount": 22528
+    },
+    {
+      "model": "central-2x2-kernel",
+      "path": "candidates/central-2x2-kernel.json",
+      "candidateCount": 22528
+    },
+    {
+      "model": "port-centroid-midpoint",
+      "path": "candidates/port-centroid-midpoint.json",
+      "candidateCount": 22528
+    }
+  ]
+}

@@ -1,0 +1,1300 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-renderer-only-resolution-group",
+  "schemaVersion": 1,
+  "status": "provisional-graphics-v0",
+  "group": "demoted-half",
+  "label": "Demoted half 50%",
+  "requestedStyle": "half",
+  "stats": {
+    "semanticAliases": 64,
+    "exactEncodedReuses": 0,
+    "derivedAliases": 64,
+    "uniqueDerivedBitmaps": 62,
+    "fallbackAliases": 64,
+    "uniqueFallbackDesiredBitmaps": 62
+  },
+  "entries": [
+    {
+      "aliasKey": "straight-fill:LB:L10>B2:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 530,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L10>B2:sideA:half",
+      "bitmapKey": "00000000000000000000010103020506",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 4181,
+        "codepoint": "U+00F055",
+        "bitmapKey": "00000000000000000000010103020504",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L11>B2:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 538,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L11>B2:sideA:half",
+      "bitmapKey": "00000000000000000000000103020506",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 4193,
+        "codepoint": "U+00F061",
+        "bitmapKey": "00000000000000000000000103020504",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L12>B2:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 546,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L12>B2:sideA:half",
+      "bitmapKey": "00000000000000000000000001020306",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 4205,
+        "codepoint": "U+00F06D",
+        "bitmapKey": "00000000000000000000000001020304",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L12>B3:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 547,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L12>B3:sideA:half",
+      "bitmapKey": "0000000000000000000000000102050a",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 4207,
+        "codepoint": "U+00F06F",
+        "bitmapKey": "00000000000000000000000001020508",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L13>B2:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 554,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L13>B2:sideA:half",
+      "bitmapKey": "00000000000000000000000000010306",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 1664,
+        "codepoint": "U+00E680",
+        "bitmapKey": "00000000000000000000000000010307",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L13>B3:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 555,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L13>B3:sideA:half",
+      "bitmapKey": "0000000000000000000000000001070a",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 4219,
+        "codepoint": "U+00F07B",
+        "bitmapKey": "00000000000000000000000000010708",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L13>B4:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 556,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L13>B4:sideA:half",
+      "bitmapKey": "0000000000000000000000000001071a",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 4221,
+        "codepoint": "U+00F07D",
+        "bitmapKey": "00000000000000000000000000010718",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L14>B3:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 563,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L14>B3:sideA:half",
+      "bitmapKey": "0000000000000000000000000000030e",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 1676,
+        "codepoint": "U+00E68C",
+        "bitmapKey": "0000000000000000000000000000030f",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L14>B4:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 564,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L14>B4:sideA:half",
+      "bitmapKey": "0000000000000000000000000000031e",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 1678,
+        "codepoint": "U+00E68E",
+        "bitmapKey": "0000000000000000000000000000031f",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L14>B5:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 565,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L14>B5:sideA:half",
+      "bitmapKey": "0000000000000000000000000000073a",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 519,
+        "codepoint": "U+00E207",
+        "bitmapKey": "00000000000000000000000000000738",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L14>B6:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 566,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L14>B6:sideA:half",
+      "bitmapKey": "0000000000000000000000000000077a",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 520,
+        "codepoint": "U+00E208",
+        "bitmapKey": "00000000000000000000000000000778",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L8>B2:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 514,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L8>B2:sideA:half",
+      "bitmapKey": "00000000000000000101030203020506",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 4157,
+        "codepoint": "U+00F03D",
+        "bitmapKey": "00000000000000000101030203020504",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LB:L9>B2:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "LB",
+      "straightCandidateId": 522,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "LB:L9>B2:sideA:half",
+      "bitmapKey": "00000000000000000001010203020506",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 4169,
+        "codepoint": "U+00F049",
+        "bitmapKey": "00000000000000000001010203020504",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LR:L0>R2:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LR",
+      "straightCandidateId": 2,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LR:L0>R2:sideB:half",
+      "bitmapKey": "57bcc000000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2009,
+        "codepoint": "U+00E7D9",
+        "bitmapKey": "57fcc000000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LR:L2>R0:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LR",
+      "straightCandidateId": 32,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LR:L2>R0:sideB:half",
+      "bitmapKey": "d53e0300000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2067,
+        "codepoint": "U+00E813",
+        "bitmapKey": "d53f0300000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L10>T2:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 402,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L10>T2:sideB:half",
+      "bitmapKey": "05060502030203020101010000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 4012,
+        "codepoint": "U+00EFAC",
+        "bitmapKey": "05040502030203020101010000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L11>T2:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 410,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L11>T2:sideB:half",
+      "bitmapKey": "05060502030203020301010100000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 4025,
+        "codepoint": "U+00EFB9",
+        "bitmapKey": "05040502030203020301010100000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L2>T5:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 341,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L2>T5:sideB:half",
+      "bitmapKey": "350e0300000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2647,
+        "codepoint": "U+00EA57",
+        "bitmapKey": "350f0300000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L2>T6:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 342,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L2>T6:sideB:half",
+      "bitmapKey": "751e0300000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2649,
+        "codepoint": "U+00EA59",
+        "bitmapKey": "751f0300000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L2>T7:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 343,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L2>T7:sideB:half",
+      "bitmapKey": "d53e0300000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2067,
+        "codepoint": "U+00E813",
+        "bitmapKey": "d53f0300000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L3>T3:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 347,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L3>T3:sideB:half",
+      "bitmapKey": "0d060301000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2654,
+        "codepoint": "U+00EA5E",
+        "bitmapKey": "0d070301000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L3>T4:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 348,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L3>T4:sideB:half",
+      "bitmapKey": "150e0301000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2656,
+        "codepoint": "U+00EA60",
+        "bitmapKey": "150f0301000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L3>T5:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 349,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L3>T5:sideB:half",
+      "bitmapKey": "351a0701000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3928,
+        "codepoint": "U+00EF58",
+        "bitmapKey": "35180701000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L3>T6:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 350,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L3>T6:sideB:half",
+      "bitmapKey": "751a0701000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3929,
+        "codepoint": "U+00EF59",
+        "bitmapKey": "75180701000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L4>T2:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 354,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L4>T2:sideB:half",
+      "bitmapKey": "05060302010000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3934,
+        "codepoint": "U+00EF5E",
+        "bitmapKey": "05040302010000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L4>T3:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 355,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L4>T3:sideB:half",
+      "bitmapKey": "0d060502010000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3936,
+        "codepoint": "U+00EF60",
+        "bitmapKey": "0d040502010000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L4>T4:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 356,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L4>T4:sideB:half",
+      "bitmapKey": "150a0502010000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3938,
+        "codepoint": "U+00EF62",
+        "bitmapKey": "15080502010000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L5>T2:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 362,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L5>T2:sideB:half",
+      "bitmapKey": "05060302010100000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3947,
+        "codepoint": "U+00EF6B",
+        "bitmapKey": "05040302010100000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L5>T3:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 363,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L5>T3:sideB:half",
+      "bitmapKey": "0d060502030100000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3949,
+        "codepoint": "U+00EF6D",
+        "bitmapKey": "0d040502030100000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L6>T2:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 370,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L6>T2:sideB:half",
+      "bitmapKey": "05060302030101000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3960,
+        "codepoint": "U+00EF78",
+        "bitmapKey": "05040302030101000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L7>T2:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 378,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L7>T2:sideB:half",
+      "bitmapKey": "05060302030201010000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3973,
+        "codepoint": "U+00EF85",
+        "bitmapKey": "05040302030201010000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L8>T2:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 386,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L8>T2:sideB:half",
+      "bitmapKey": "05060502030203010100000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3986,
+        "codepoint": "U+00EF92",
+        "bitmapKey": "05040502030203010100000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:LT:L9>T2:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "LT",
+      "straightCandidateId": 394,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "LT:L9>T2:sideB:half",
+      "bitmapKey": "05060502030203010101000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3999,
+        "codepoint": "U+00EF9F",
+        "bitmapKey": "05040502030203010101000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R10>B5:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 789,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R10>B5:sideB:half",
+      "bitmapKey": "00000000000000000000808040c060a0",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3226,
+        "codepoint": "U+00EC9A",
+        "bitmapKey": "00000000000000000000808040c060e0",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R11>B5:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 797,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R11>B5:sideB:half",
+      "bitmapKey": "00000000000000000000008040c060a0",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3239,
+        "codepoint": "U+00ECA7",
+        "bitmapKey": "00000000000000000000008040c060e0",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R12>B4:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 804,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R12>B4:sideB:half",
+      "bitmapKey": "00000000000000000000000080c060b0",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3249,
+        "codepoint": "U+00ECB1",
+        "bitmapKey": "00000000000000000000000080c060f0",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R12>B5:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 805,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R12>B5:sideB:half",
+      "bitmapKey": "00000000000000000000000080c040a0",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3251,
+        "codepoint": "U+00ECB3",
+        "bitmapKey": "00000000000000000000000080c040e0",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R13>B3:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 811,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R13>B3:sideB:half",
+      "bitmapKey": "000000000000000000000000008060b8",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3260,
+        "codepoint": "U+00ECBC",
+        "bitmapKey": "000000000000000000000000008060f8",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R13>B4:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 812,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R13>B4:sideB:half",
+      "bitmapKey": "000000000000000000000000008060b0",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3261,
+        "codepoint": "U+00ECBD",
+        "bitmapKey": "000000000000000000000000008060f0",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R13>B5:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 813,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R13>B5:sideB:half",
+      "bitmapKey": "000000000000000000000000008040a0",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3262,
+        "codepoint": "U+00ECBE",
+        "bitmapKey": "000000000000000000000000008040e0",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R14>B1:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 817,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R14>B1:sideB:half",
+      "bitmapKey": "0000000000000000000000000000e0be",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 1996,
+        "codepoint": "U+00E7CC",
+        "bitmapKey": "0000000000000000000000000000e0fe",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R14>B2:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 818,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R14>B2:sideB:half",
+      "bitmapKey": "0000000000000000000000000000e0bc",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 1997,
+        "codepoint": "U+00E7CD",
+        "bitmapKey": "0000000000000000000000000000e0fc",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R14>B3:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 819,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R14>B3:sideB:half",
+      "bitmapKey": "0000000000000000000000000000c0b8",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 1998,
+        "codepoint": "U+00E7CE",
+        "bitmapKey": "0000000000000000000000000000c0f8",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R14>B4:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 820,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R14>B4:sideB:half",
+      "bitmapKey": "0000000000000000000000000000c0b0",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 1999,
+        "codepoint": "U+00E7CF",
+        "bitmapKey": "0000000000000000000000000000c0f0",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R8>B5:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 773,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R8>B5:sideB:half",
+      "bitmapKey": "0000000000000000808040c040c060a0",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3201,
+        "codepoint": "U+00EC81",
+        "bitmapKey": "0000000000000000808040c040c060e0",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RB:R9>B5:sideB:half",
+      "semanticType": "straight-fill",
+      "family": "RB",
+      "straightCandidateId": 781,
+      "side": "B",
+      "style": "half",
+      "boundarySideStyleKey": "RB:R9>B5:sideB:half",
+      "bitmapKey": "0000000000000000008080c040c060a0",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3213,
+        "codepoint": "U+00EC8D",
+        "bitmapKey": "0000000000000000008080c040c060e0",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R10>T5:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 661,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R10>T5:sideA:half",
+      "bitmapKey": "60a060c040c040c08080800000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3042,
+        "codepoint": "U+00EBE2",
+        "bitmapKey": "60e060c040c040c08080800000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R11>T5:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 669,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R11>T5:sideA:half",
+      "bitmapKey": "60a060c040c040c04080808000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3054,
+        "codepoint": "U+00EBEE",
+        "bitmapKey": "60e060c040c040c04080808000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R2>T0:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 592,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R2>T0:sideA:half",
+      "bitmapKey": "57bcc000000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2009,
+        "codepoint": "U+00E7D9",
+        "bitmapKey": "57fcc000000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R2>T1:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 593,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R2>T1:sideA:half",
+      "bitmapKey": "56b8c000000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2935,
+        "codepoint": "U+00EB77",
+        "bitmapKey": "56f8c000000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R2>T2:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 594,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R2>T2:sideA:half",
+      "bitmapKey": "5cb0c000000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2937,
+        "codepoint": "U+00EB79",
+        "bitmapKey": "5cf0c000000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R3>T1:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 601,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R3>T1:sideA:half",
+      "bitmapKey": "56b86080000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2948,
+        "codepoint": "U+00EB84",
+        "bitmapKey": "56f86080000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R3>T2:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 602,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R3>T2:sideA:half",
+      "bitmapKey": "54b86080000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2950,
+        "codepoint": "U+00EB86",
+        "bitmapKey": "54f86080000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R3>T3:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 603,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R3>T3:sideA:half",
+      "bitmapKey": "58b04080000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2952,
+        "codepoint": "U+00EB88",
+        "bitmapKey": "58f04080000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R3>T4:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 604,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R3>T4:sideA:half",
+      "bitmapKey": "50a04080000000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2954,
+        "codepoint": "U+00EB8A",
+        "bitmapKey": "50e04080000000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R4>T3:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 611,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R4>T3:sideA:half",
+      "bitmapKey": "58b060c0800000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2964,
+        "codepoint": "U+00EB94",
+        "bitmapKey": "58f060c0800000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R4>T4:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 612,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R4>T4:sideA:half",
+      "bitmapKey": "50a060c0800000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2966,
+        "codepoint": "U+00EB96",
+        "bitmapKey": "50e060c0800000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R4>T5:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 613,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R4>T5:sideA:half",
+      "bitmapKey": "60a040c0800000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2968,
+        "codepoint": "U+00EB98",
+        "bitmapKey": "60e040c0800000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R5>T4:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 620,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R5>T4:sideA:half",
+      "bitmapKey": "50a060c0408000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2979,
+        "codepoint": "U+00EBA3",
+        "bitmapKey": "50e060c0408000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R5>T5:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 621,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R5>T5:sideA:half",
+      "bitmapKey": "60a040c0808000000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2981,
+        "codepoint": "U+00EBA5",
+        "bitmapKey": "60e040c0808000000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R6>T5:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 629,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R6>T5:sideA:half",
+      "bitmapKey": "60a040c0408080000000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 2992,
+        "codepoint": "U+00EBB0",
+        "bitmapKey": "60e040c0408080000000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R7>T5:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 637,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R7>T5:sideA:half",
+      "bitmapKey": "60a040c040c080800000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3004,
+        "codepoint": "U+00EBBC",
+        "bitmapKey": "60e040c040c080800000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R8>T5:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 645,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R8>T5:sideA:half",
+      "bitmapKey": "60a060c040c040808000000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3017,
+        "codepoint": "U+00EBC9",
+        "bitmapKey": "60e060c040c040808000000000000000",
+        "hammingDistance": 1
+      }
+    },
+    {
+      "aliasKey": "straight-fill:RT:R9>T5:sideA:half",
+      "semanticType": "straight-fill",
+      "family": "RT",
+      "straightCandidateId": 653,
+      "side": "A",
+      "style": "half",
+      "boundarySideStyleKey": "RT:R9>T5:sideA:half",
+      "bitmapKey": "60a060c040c040808080000000000000",
+      "rendererOnlyReason": "one-pixel-half-demotion",
+      "resolution": "renderer-only-derived",
+      "glyphId": null,
+      "codepoint": null,
+      "fallback": {
+        "glyphId": 3029,
+        "codepoint": "U+00EBD5",
+        "bitmapKey": "60e060c040c040808080000000000000",
+        "hammingDistance": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-visual-owners",
+  "schemaVersion": 2,
+  "status": "5A.3-research-only-unallocated-sharded",
+  "ownerCount": 82377,
+  "ownerIdentity": "exact 8x16 bitmap key across all four junction geometry models",
+  "shardRule": "first lowercase hexadecimal nibble of the 32-character bitmap key",
+  "shards": [
+    {
+      "bitmapPrefix": "0",
+      "path": "unique-rasters/0.json",
+      "ownerCount": 42505
+    },
+    {
+      "bitmapPrefix": "1",
+      "path": "unique-rasters/1.json",
+      "ownerCount": 8900
+    },
+    {
+      "bitmapPrefix": "2",
+      "path": "unique-rasters/2.json",
+      "ownerCount": 8957
+    },
+    {
+      "bitmapPrefix": "3",
+      "path": "unique-rasters/3.json",
+      "ownerCount": 0
+    },
+    {
+      "bitmapPrefix": "4",
+      "path": "unique-rasters/4.json",
+      "ownerCount": 8941
+    },
+    {
+      "bitmapPrefix": "5",
+      "path": "unique-rasters/5.json",
+      "ownerCount": 0
+    },
+    {
+      "bitmapPrefix": "6",
+      "path": "unique-rasters/6.json",
+      "ownerCount": 0
+    },
+    {
+      "bitmapPrefix": "7",
+      "path": "unique-rasters/7.json",
+      "ownerCount": 0
+    },
+    {
+      "bitmapPrefix": "8",
+      "path": "unique-rasters/8.json",
+      "ownerCount": 11325
+    },
+    {
+      "bitmapPrefix": "9",
+      "path": "unique-rasters/9.json",
+      "ownerCount": 585
+    },
+    {
+      "bitmapPrefix": "a",
+      "path": "unique-rasters/a.json",
+      "ownerCount": 582
+    },
+    {
+      "bitmapPrefix": "b",
+      "path": "unique-rasters/b.json",
+      "ownerCount": 0
+    },
+    {
+      "bitmapPrefix": "c",
+      "path": "unique-rasters/c.json",
+      "ownerCount": 582
+    },
+    {
+      "bitmapPrefix": "d",
+      "path": "unique-rasters/d.json",
+      "ownerCount": 0
+    },
+    {
+      "bitmapPrefix": "e",
+      "path": "unique-rasters/e.json",
+      "ownerCount": 0
+    },
+    {
+      "bitmapPrefix": "f",
+      "path": "unique-rasters/f.json",
+      "ownerCount": 0
+    }
+  ]
+}

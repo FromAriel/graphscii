@@ -1,0 +1,2245 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-coverage-buckets",
+  "schemaVersion": 2,
+  "taxonomy": {
+    "topology": [
+      "LRT",
+      "LRB",
+      "LTB",
+      "RTB",
+      "LRTB"
+    ],
+    "hubGrid": {
+      "columns": 4,
+      "rows": 4
+    },
+    "normalizedPortBandsPerEdge": 4,
+    "branchAngleSectors": 16,
+    "angleSectorDegrees": 22.5
+  },
+  "buckets": {
+    "topology": [
+      {
+        "key": "LRB",
+        "semanticCount": 2048,
+        "weightedDemand": 263632
+      },
+      {
+        "key": "LRT",
+        "semanticCount": 2048,
+        "weightedDemand": 263632
+      },
+      {
+        "key": "LRTB",
+        "semanticCount": 16284,
+        "weightedDemand": 118002
+      },
+      {
+        "key": "LTB",
+        "semanticCount": 1024,
+        "weightedDemand": 141488
+      },
+      {
+        "key": "RTB",
+        "semanticCount": 1024,
+        "weightedDemand": 141488
+      }
+    ],
+    "hubZone": [
+      {
+        "key": "z00",
+        "semanticCount": 5113,
+        "weightedDemand": 56589
+      },
+      {
+        "key": "z01",
+        "semanticCount": 6237,
+        "weightedDemand": 49143
+      },
+      {
+        "key": "z02",
+        "semanticCount": 6334,
+        "weightedDemand": 57624
+      },
+      {
+        "key": "z03",
+        "semanticCount": 3360,
+        "weightedDemand": 26994
+      },
+      {
+        "key": "z10",
+        "semanticCount": 7475,
+        "weightedDemand": 60616
+      },
+      {
+        "key": "z11",
+        "semanticCount": 13436,
+        "weightedDemand": 139050
+      },
+      {
+        "key": "z12",
+        "semanticCount": 10339,
+        "weightedDemand": 93516
+      },
+      {
+        "key": "z13",
+        "semanticCount": 4483,
+        "weightedDemand": 28362
+      },
+      {
+        "key": "z20",
+        "semanticCount": 7156,
+        "weightedDemand": 61875
+      },
+      {
+        "key": "z21",
+        "semanticCount": 10545,
+        "weightedDemand": 99987
+      },
+      {
+        "key": "z22",
+        "semanticCount": 9925,
+        "weightedDemand": 94584
+      },
+      {
+        "key": "z23",
+        "semanticCount": 4224,
+        "weightedDemand": 26590
+      },
+      {
+        "key": "z30",
+        "semanticCount": 4116,
+        "weightedDemand": 39810
+      },
+      {
+        "key": "z31",
+        "semanticCount": 4967,
+        "weightedDemand": 34200
+      },
+      {
+        "key": "z32",
+        "semanticCount": 4980,
+        "weightedDemand": 37836
+      },
+      {
+        "key": "z33",
+        "semanticCount": 2882,
+        "weightedDemand": 21466
+      }
+    ],
+    "exactPort": [
+      {
+        "key": "B0",
+        "semanticCount": 2512,
+        "weightedDemand": 117439
+      },
+      {
+        "key": "B1",
+        "semanticCount": 2559,
+        "weightedDemand": 72631
+      },
+      {
+        "key": "B2",
+        "semanticCount": 2560,
+        "weightedDemand": 71222
+      },
+      {
+        "key": "B3",
+        "semanticCount": 2559,
+        "weightedDemand": 71013
+      },
+      {
+        "key": "B4",
+        "semanticCount": 2559,
+        "weightedDemand": 71013
+      },
+      {
+        "key": "B5",
+        "semanticCount": 2560,
+        "weightedDemand": 71222
+      },
+      {
+        "key": "B6",
+        "semanticCount": 2559,
+        "weightedDemand": 72631
+      },
+      {
+        "key": "B7",
+        "semanticCount": 2512,
+        "weightedDemand": 117439
+      },
+      {
+        "key": "L0",
+        "semanticCount": 1342,
+        "weightedDemand": 86535
+      },
+      {
+        "key": "L1",
+        "semanticCount": 1334,
+        "weightedDemand": 40180
+      },
+      {
+        "key": "L10",
+        "semanticCount": 1344,
+        "weightedDemand": 50276
+      },
+      {
+        "key": "L11",
+        "semanticCount": 1333,
+        "weightedDemand": 39248
+      },
+      {
+        "key": "L12",
+        "semanticCount": 1337,
+        "weightedDemand": 48190
+      },
+      {
+        "key": "L13",
+        "semanticCount": 1334,
+        "weightedDemand": 38956
+      },
+      {
+        "key": "L14",
+        "semanticCount": 1334,
+        "weightedDemand": 40180
+      },
+      {
+        "key": "L15",
+        "semanticCount": 1342,
+        "weightedDemand": 86535
+      },
+      {
+        "key": "L2",
+        "semanticCount": 1334,
+        "weightedDemand": 38956
+      },
+      {
+        "key": "L3",
+        "semanticCount": 1337,
+        "weightedDemand": 48190
+      },
+      {
+        "key": "L4",
+        "semanticCount": 1333,
+        "weightedDemand": 39248
+      },
+      {
+        "key": "L5",
+        "semanticCount": 1344,
+        "weightedDemand": 50276
+      },
+      {
+        "key": "L6",
+        "semanticCount": 1343,
+        "weightedDemand": 48394
+      },
+      {
+        "key": "L7",
+        "semanticCount": 1335,
+        "weightedDemand": 41598
+      },
+      {
+        "key": "L8",
+        "semanticCount": 1335,
+        "weightedDemand": 41598
+      },
+      {
+        "key": "L9",
+        "semanticCount": 1343,
+        "weightedDemand": 48394
+      },
+      {
+        "key": "R0",
+        "semanticCount": 1342,
+        "weightedDemand": 86535
+      },
+      {
+        "key": "R1",
+        "semanticCount": 1334,
+        "weightedDemand": 40180
+      },
+      {
+        "key": "R10",
+        "semanticCount": 1344,
+        "weightedDemand": 50276
+      },
+      {
+        "key": "R11",
+        "semanticCount": 1333,
+        "weightedDemand": 39248
+      },
+      {
+        "key": "R12",
+        "semanticCount": 1337,
+        "weightedDemand": 48190
+      },
+      {
+        "key": "R13",
+        "semanticCount": 1334,
+        "weightedDemand": 38956
+      },
+      {
+        "key": "R14",
+        "semanticCount": 1334,
+        "weightedDemand": 40180
+      },
+      {
+        "key": "R15",
+        "semanticCount": 1342,
+        "weightedDemand": 86535
+      },
+      {
+        "key": "R2",
+        "semanticCount": 1334,
+        "weightedDemand": 38956
+      },
+      {
+        "key": "R3",
+        "semanticCount": 1337,
+        "weightedDemand": 48190
+      },
+      {
+        "key": "R4",
+        "semanticCount": 1333,
+        "weightedDemand": 39248
+      },
+      {
+        "key": "R5",
+        "semanticCount": 1344,
+        "weightedDemand": 50276
+      },
+      {
+        "key": "R6",
+        "semanticCount": 1343,
+        "weightedDemand": 48394
+      },
+      {
+        "key": "R7",
+        "semanticCount": 1335,
+        "weightedDemand": 41598
+      },
+      {
+        "key": "R8",
+        "semanticCount": 1335,
+        "weightedDemand": 41598
+      },
+      {
+        "key": "R9",
+        "semanticCount": 1343,
+        "weightedDemand": 48394
+      },
+      {
+        "key": "T0",
+        "semanticCount": 2512,
+        "weightedDemand": 117439
+      },
+      {
+        "key": "T1",
+        "semanticCount": 2559,
+        "weightedDemand": 72631
+      },
+      {
+        "key": "T2",
+        "semanticCount": 2560,
+        "weightedDemand": 71222
+      },
+      {
+        "key": "T3",
+        "semanticCount": 2559,
+        "weightedDemand": 71013
+      },
+      {
+        "key": "T4",
+        "semanticCount": 2559,
+        "weightedDemand": 71013
+      },
+      {
+        "key": "T5",
+        "semanticCount": 2560,
+        "weightedDemand": 71222
+      },
+      {
+        "key": "T6",
+        "semanticCount": 2559,
+        "weightedDemand": 72631
+      },
+      {
+        "key": "T7",
+        "semanticCount": 2512,
+        "weightedDemand": 117439
+      }
+    ],
+    "normalizedPortBand": [
+      {
+        "key": "B:band-0",
+        "semanticCount": 5071,
+        "weightedDemand": 190070
+      },
+      {
+        "key": "B:band-1",
+        "semanticCount": 5119,
+        "weightedDemand": 142235
+      },
+      {
+        "key": "B:band-2",
+        "semanticCount": 5119,
+        "weightedDemand": 142235
+      },
+      {
+        "key": "B:band-3",
+        "semanticCount": 5071,
+        "weightedDemand": 190070
+      },
+      {
+        "key": "L:band-0",
+        "semanticCount": 5347,
+        "weightedDemand": 213861
+      },
+      {
+        "key": "L:band-1",
+        "semanticCount": 5355,
+        "weightedDemand": 179516
+      },
+      {
+        "key": "L:band-2",
+        "semanticCount": 5355,
+        "weightedDemand": 179516
+      },
+      {
+        "key": "L:band-3",
+        "semanticCount": 5347,
+        "weightedDemand": 213861
+      },
+      {
+        "key": "R:band-0",
+        "semanticCount": 5347,
+        "weightedDemand": 213861
+      },
+      {
+        "key": "R:band-1",
+        "semanticCount": 5355,
+        "weightedDemand": 179516
+      },
+      {
+        "key": "R:band-2",
+        "semanticCount": 5355,
+        "weightedDemand": 179516
+      },
+      {
+        "key": "R:band-3",
+        "semanticCount": 5347,
+        "weightedDemand": 213861
+      },
+      {
+        "key": "T:band-0",
+        "semanticCount": 5071,
+        "weightedDemand": 190070
+      },
+      {
+        "key": "T:band-1",
+        "semanticCount": 5119,
+        "weightedDemand": 142235
+      },
+      {
+        "key": "T:band-2",
+        "semanticCount": 5119,
+        "weightedDemand": 142235
+      },
+      {
+        "key": "T:band-3",
+        "semanticCount": 5071,
+        "weightedDemand": 190070
+      }
+    ],
+    "branchAngleSector": [
+      {
+        "key": "sector-00",
+        "semanticCount": 9996,
+        "weightedDemand": 95118
+      },
+      {
+        "key": "sector-01",
+        "semanticCount": 8710,
+        "weightedDemand": 83327
+      },
+      {
+        "key": "sector-02",
+        "semanticCount": 11277,
+        "weightedDemand": 168319
+      },
+      {
+        "key": "sector-03",
+        "semanticCount": 13559,
+        "weightedDemand": 325356
+      },
+      {
+        "key": "sector-04",
+        "semanticCount": 15244,
+        "weightedDemand": 202242
+      },
+      {
+        "key": "sector-05",
+        "semanticCount": 13559,
+        "weightedDemand": 325356
+      },
+      {
+        "key": "sector-06",
+        "semanticCount": 11277,
+        "weightedDemand": 168319
+      },
+      {
+        "key": "sector-07",
+        "semanticCount": 8710,
+        "weightedDemand": 83327
+      },
+      {
+        "key": "sector-08",
+        "semanticCount": 9996,
+        "weightedDemand": 95118
+      },
+      {
+        "key": "sector-09",
+        "semanticCount": 8710,
+        "weightedDemand": 83327
+      },
+      {
+        "key": "sector-10",
+        "semanticCount": 11277,
+        "weightedDemand": 168319
+      },
+      {
+        "key": "sector-11",
+        "semanticCount": 13559,
+        "weightedDemand": 325356
+      },
+      {
+        "key": "sector-12",
+        "semanticCount": 15244,
+        "weightedDemand": 202242
+      },
+      {
+        "key": "sector-13",
+        "semanticCount": 13559,
+        "weightedDemand": 325356
+      },
+      {
+        "key": "sector-14",
+        "semanticCount": 11277,
+        "weightedDemand": 168319
+      },
+      {
+        "key": "sector-15",
+        "semanticCount": 8710,
+        "weightedDemand": 83327
+      }
+    ],
+    "pairwiseAngularSeparation": [
+      {
+        "key": "00-15",
+        "semanticCount": 4902,
+        "weightedDemand": 161608
+      },
+      {
+        "key": "120-150",
+        "semanticCount": 19888,
+        "weightedDemand": 457104
+      },
+      {
+        "key": "15-30",
+        "semanticCount": 12406,
+        "weightedDemand": 121792
+      },
+      {
+        "key": "150-180",
+        "semanticCount": 22424,
+        "weightedDemand": 1130020
+      },
+      {
+        "key": "30-60",
+        "semanticCount": 19612,
+        "weightedDemand": 400556
+      },
+      {
+        "key": "60-90",
+        "semanticCount": 18613,
+        "weightedDemand": 415931
+      },
+      {
+        "key": "90-120",
+        "semanticCount": 19043,
+        "weightedDemand": 451721
+      }
+    ],
+    "shapeCharacter": [
+      {
+        "key": "cross-like",
+        "semanticCount": 2432,
+        "weightedDemand": 6624
+      },
+      {
+        "key": "mixed-angle",
+        "semanticCount": 9986,
+        "weightedDemand": 33048
+      },
+      {
+        "key": "near-degenerate",
+        "semanticCount": 4902,
+        "weightedDemand": 155324
+      },
+      {
+        "key": "strongly-asymmetric",
+        "semanticCount": 16134,
+        "weightedDemand": 71598
+      },
+      {
+        "key": "T-like",
+        "semanticCount": 6040,
+        "weightedDemand": 637528
+      },
+      {
+        "key": "X-like",
+        "semanticCount": 36,
+        "weightedDemand": 48
+      },
+      {
+        "key": "Y-like",
+        "semanticCount": 4864,
+        "weightedDemand": 24072
+      }
+    ],
+    "symmetryOrientationClass": [
+      {
+        "key": "LRB:near-degenerate:z00",
+        "semanticCount": 102,
+        "weightedDemand": 1891
+      },
+      {
+        "key": "LRB:near-degenerate:z01",
+        "semanticCount": 52,
+        "weightedDemand": 479
+      },
+      {
+        "key": "LRB:near-degenerate:z02",
+        "semanticCount": 88,
+        "weightedDemand": 1231
+      },
+      {
+        "key": "LRB:near-degenerate:z03",
+        "semanticCount": 62,
+        "weightedDemand": 909
+      },
+      {
+        "key": "LRB:near-degenerate:z10",
+        "semanticCount": 158,
+        "weightedDemand": 1940
+      },
+      {
+        "key": "LRB:near-degenerate:z11",
+        "semanticCount": 304,
+        "weightedDemand": 4950
+      },
+      {
+        "key": "LRB:near-degenerate:z12",
+        "semanticCount": 197,
+        "weightedDemand": 3537
+      },
+      {
+        "key": "LRB:near-degenerate:z13",
+        "semanticCount": 77,
+        "weightedDemand": 667
+      },
+      {
+        "key": "LRB:near-degenerate:z20",
+        "semanticCount": 95,
+        "weightedDemand": 1997
+      },
+      {
+        "key": "LRB:near-degenerate:z21",
+        "semanticCount": 204,
+        "weightedDemand": 6187
+      },
+      {
+        "key": "LRB:near-degenerate:z22",
+        "semanticCount": 149,
+        "weightedDemand": 4175
+      },
+      {
+        "key": "LRB:near-degenerate:z23",
+        "semanticCount": 53,
+        "weightedDemand": 695
+      },
+      {
+        "key": "LRB:near-degenerate:z30",
+        "semanticCount": 50,
+        "weightedDemand": 2548
+      },
+      {
+        "key": "LRB:near-degenerate:z31",
+        "semanticCount": 77,
+        "weightedDemand": 1803
+      },
+      {
+        "key": "LRB:near-degenerate:z32",
+        "semanticCount": 62,
+        "weightedDemand": 2227
+      },
+      {
+        "key": "LRB:near-degenerate:z33",
+        "semanticCount": 42,
+        "weightedDemand": 1256
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z00",
+        "semanticCount": 224,
+        "weightedDemand": 433
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z01",
+        "semanticCount": 267,
+        "weightedDemand": 478
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z02",
+        "semanticCount": 302,
+        "weightedDemand": 575
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z03",
+        "semanticCount": 113,
+        "weightedDemand": 190
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z10",
+        "semanticCount": 432,
+        "weightedDemand": 768
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z11",
+        "semanticCount": 714,
+        "weightedDemand": 1939
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z12",
+        "semanticCount": 553,
+        "weightedDemand": 1352
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z13",
+        "semanticCount": 241,
+        "weightedDemand": 355
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z20",
+        "semanticCount": 392,
+        "weightedDemand": 827
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z21",
+        "semanticCount": 376,
+        "weightedDemand": 1586
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z22",
+        "semanticCount": 420,
+        "weightedDemand": 1422
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z23",
+        "semanticCount": 206,
+        "weightedDemand": 327
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z30",
+        "semanticCount": 169,
+        "weightedDemand": 390
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z31",
+        "semanticCount": 180,
+        "weightedDemand": 315
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z32",
+        "semanticCount": 190,
+        "weightedDemand": 377
+      },
+      {
+        "key": "LRB:strongly-asymmetric:z33",
+        "semanticCount": 91,
+        "weightedDemand": 198
+      },
+      {
+        "key": "LRB:T-like:z00",
+        "semanticCount": 491,
+        "weightedDemand": 4870
+      },
+      {
+        "key": "LRB:T-like:z01",
+        "semanticCount": 404,
+        "weightedDemand": 2062
+      },
+      {
+        "key": "LRB:T-like:z02",
+        "semanticCount": 460,
+        "weightedDemand": 3001
+      },
+      {
+        "key": "LRB:T-like:z03",
+        "semanticCount": 478,
+        "weightedDemand": 3089
+      },
+      {
+        "key": "LRB:T-like:z10",
+        "semanticCount": 1050,
+        "weightedDemand": 11125
+      },
+      {
+        "key": "LRB:T-like:z11",
+        "semanticCount": 1299,
+        "weightedDemand": 17761
+      },
+      {
+        "key": "LRB:T-like:z12",
+        "semanticCount": 1130,
+        "weightedDemand": 13740
+      },
+      {
+        "key": "LRB:T-like:z13",
+        "semanticCount": 831,
+        "weightedDemand": 5530
+      },
+      {
+        "key": "LRB:T-like:z20",
+        "semanticCount": 1423,
+        "weightedDemand": 16480
+      },
+      {
+        "key": "LRB:T-like:z21",
+        "semanticCount": 1755,
+        "weightedDemand": 35145
+      },
+      {
+        "key": "LRB:T-like:z22",
+        "semanticCount": 1680,
+        "weightedDemand": 28125
+      },
+      {
+        "key": "LRB:T-like:z23",
+        "semanticCount": 922,
+        "weightedDemand": 6214
+      },
+      {
+        "key": "LRB:T-like:z30",
+        "semanticCount": 1168,
+        "weightedDemand": 15686
+      },
+      {
+        "key": "LRB:T-like:z31",
+        "semanticCount": 1617,
+        "weightedDemand": 17840
+      },
+      {
+        "key": "LRB:T-like:z32",
+        "semanticCount": 1482,
+        "weightedDemand": 18357
+      },
+      {
+        "key": "LRB:T-like:z33",
+        "semanticCount": 821,
+        "weightedDemand": 6911
+      },
+      {
+        "key": "LRB:Y-like:z00",
+        "semanticCount": 57,
+        "weightedDemand": 88
+      },
+      {
+        "key": "LRB:Y-like:z01",
+        "semanticCount": 89,
+        "weightedDemand": 125
+      },
+      {
+        "key": "LRB:Y-like:z02",
+        "semanticCount": 94,
+        "weightedDemand": 143
+      },
+      {
+        "key": "LRB:Y-like:z03",
+        "semanticCount": 31,
+        "weightedDemand": 42
+      },
+      {
+        "key": "LRB:Y-like:z10",
+        "semanticCount": 162,
+        "weightedDemand": 266
+      },
+      {
+        "key": "LRB:Y-like:z11",
+        "semanticCount": 471,
+        "weightedDemand": 1049
+      },
+      {
+        "key": "LRB:Y-like:z12",
+        "semanticCount": 329,
+        "weightedDemand": 679
+      },
+      {
+        "key": "LRB:Y-like:z13",
+        "semanticCount": 83,
+        "weightedDemand": 122
+      },
+      {
+        "key": "LRB:Y-like:z20",
+        "semanticCount": 319,
+        "weightedDemand": 654
+      },
+      {
+        "key": "LRB:Y-like:z21",
+        "semanticCount": 626,
+        "weightedDemand": 1912
+      },
+      {
+        "key": "LRB:Y-like:z22",
+        "semanticCount": 541,
+        "weightedDemand": 1505
+      },
+      {
+        "key": "LRB:Y-like:z23",
+        "semanticCount": 142,
+        "weightedDemand": 237
+      },
+      {
+        "key": "LRB:Y-like:z30",
+        "semanticCount": 229,
+        "weightedDemand": 670
+      },
+      {
+        "key": "LRB:Y-like:z31",
+        "semanticCount": 396,
+        "weightedDemand": 928
+      },
+      {
+        "key": "LRB:Y-like:z32",
+        "semanticCount": 361,
+        "weightedDemand": 984
+      },
+      {
+        "key": "LRB:Y-like:z33",
+        "semanticCount": 96,
+        "weightedDemand": 268
+      },
+      {
+        "key": "LRT:near-degenerate:z00",
+        "semanticCount": 58,
+        "weightedDemand": 3302
+      },
+      {
+        "key": "LRT:near-degenerate:z01",
+        "semanticCount": 88,
+        "weightedDemand": 2617
+      },
+      {
+        "key": "LRT:near-degenerate:z02",
+        "semanticCount": 68,
+        "weightedDemand": 3283
+      },
+      {
+        "key": "LRT:near-degenerate:z03",
+        "semanticCount": 42,
+        "weightedDemand": 1422
+      },
+      {
+        "key": "LRT:near-degenerate:z10",
+        "semanticCount": 110,
+        "weightedDemand": 1684
+      },
+      {
+        "key": "LRT:near-degenerate:z11",
+        "semanticCount": 256,
+        "weightedDemand": 7752
+      },
+      {
+        "key": "LRT:near-degenerate:z12",
+        "semanticCount": 192,
+        "weightedDemand": 3792
+      },
+      {
+        "key": "LRT:near-degenerate:z13",
+        "semanticCount": 59,
+        "weightedDemand": 698
+      },
+      {
+        "key": "LRT:near-degenerate:z20",
+        "semanticCount": 155,
+        "weightedDemand": 2204
+      },
+      {
+        "key": "LRT:near-degenerate:z21",
+        "semanticCount": 183,
+        "weightedDemand": 2773
+      },
+      {
+        "key": "LRT:near-degenerate:z22",
+        "semanticCount": 200,
+        "weightedDemand": 3524
+      },
+      {
+        "key": "LRT:near-degenerate:z23",
+        "semanticCount": 78,
+        "weightedDemand": 645
+      },
+      {
+        "key": "LRT:near-degenerate:z30",
+        "semanticCount": 71,
+        "weightedDemand": 1186
+      },
+      {
+        "key": "LRT:near-degenerate:z31",
+        "semanticCount": 32,
+        "weightedDemand": 277
+      },
+      {
+        "key": "LRT:near-degenerate:z32",
+        "semanticCount": 45,
+        "weightedDemand": 571
+      },
+      {
+        "key": "LRT:near-degenerate:z33",
+        "semanticCount": 58,
+        "weightedDemand": 762
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z00",
+        "semanticCount": 247,
+        "weightedDemand": 588
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z01",
+        "semanticCount": 214,
+        "weightedDemand": 481
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z02",
+        "semanticCount": 258,
+        "weightedDemand": 643
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z03",
+        "semanticCount": 123,
+        "weightedDemand": 252
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z10",
+        "semanticCount": 403,
+        "weightedDemand": 810
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z11",
+        "semanticCount": 536,
+        "weightedDemand": 2249
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z12",
+        "semanticCount": 459,
+        "weightedDemand": 1418
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z13",
+        "semanticCount": 220,
+        "weightedDemand": 353
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z20",
+        "semanticCount": 399,
+        "weightedDemand": 732
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z21",
+        "semanticCount": 529,
+        "weightedDemand": 1269
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z22",
+        "semanticCount": 554,
+        "weightedDemand": 1298
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z23",
+        "semanticCount": 213,
+        "weightedDemand": 311
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z30",
+        "semanticCount": 159,
+        "weightedDemand": 288
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z31",
+        "semanticCount": 201,
+        "weightedDemand": 319
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z32",
+        "semanticCount": 215,
+        "weightedDemand": 367
+      },
+      {
+        "key": "LRT:strongly-asymmetric:z33",
+        "semanticCount": 91,
+        "weightedDemand": 154
+      },
+      {
+        "key": "LRT:T-like:z00",
+        "semanticCount": 1313,
+        "weightedDemand": 20568
+      },
+      {
+        "key": "LRT:T-like:z01",
+        "semanticCount": 1793,
+        "weightedDemand": 24673
+      },
+      {
+        "key": "LRT:T-like:z02",
+        "semanticCount": 1621,
+        "weightedDemand": 25766
+      },
+      {
+        "key": "LRT:T-like:z03",
+        "semanticCount": 920,
+        "weightedDemand": 8263
+      },
+      {
+        "key": "LRT:T-like:z10",
+        "semanticCount": 1372,
+        "weightedDemand": 14674
+      },
+      {
+        "key": "LRT:T-like:z11",
+        "semanticCount": 1693,
+        "weightedDemand": 37475
+      },
+      {
+        "key": "LRT:T-like:z12",
+        "semanticCount": 1605,
+        "weightedDemand": 24394
+      },
+      {
+        "key": "LRT:T-like:z13",
+        "semanticCount": 935,
+        "weightedDemand": 6295
+      },
+      {
+        "key": "LRT:T-like:z20",
+        "semanticCount": 924,
+        "weightedDemand": 9938
+      },
+      {
+        "key": "LRT:T-like:z21",
+        "semanticCount": 1019,
+        "weightedDemand": 9407
+      },
+      {
+        "key": "LRT:T-like:z22",
+        "semanticCount": 991,
+        "weightedDemand": 11485
+      },
+      {
+        "key": "LRT:T-like:z23",
+        "semanticCount": 779,
+        "weightedDemand": 5054
+      },
+      {
+        "key": "LRT:T-like:z30",
+        "semanticCount": 363,
+        "weightedDemand": 2981
+      },
+      {
+        "key": "LRT:T-like:z31",
+        "semanticCount": 256,
+        "weightedDemand": 1253
+      },
+      {
+        "key": "LRT:T-like:z32",
+        "semanticCount": 300,
+        "weightedDemand": 1578
+      },
+      {
+        "key": "LRT:T-like:z33",
+        "semanticCount": 359,
+        "weightedDemand": 2132
+      },
+      {
+        "key": "LRT:Y-like:z00",
+        "semanticCount": 312,
+        "weightedDemand": 890
+      },
+      {
+        "key": "LRT:Y-like:z01",
+        "semanticCount": 475,
+        "weightedDemand": 1260
+      },
+      {
+        "key": "LRT:Y-like:z02",
+        "semanticCount": 457,
+        "weightedDemand": 1399
+      },
+      {
+        "key": "LRT:Y-like:z03",
+        "semanticCount": 119,
+        "weightedDemand": 317
+      },
+      {
+        "key": "LRT:Y-like:z10",
+        "semanticCount": 282,
+        "weightedDemand": 508
+      },
+      {
+        "key": "LRT:Y-like:z11",
+        "semanticCount": 715,
+        "weightedDemand": 2105
+      },
+      {
+        "key": "LRT:Y-like:z12",
+        "semanticCount": 510,
+        "weightedDemand": 1249
+      },
+      {
+        "key": "LRT:Y-like:z13",
+        "semanticCount": 138,
+        "weightedDemand": 220
+      },
+      {
+        "key": "LRT:Y-like:z20",
+        "semanticCount": 144,
+        "weightedDemand": 233
+      },
+      {
+        "key": "LRT:Y-like:z21",
+        "semanticCount": 301,
+        "weightedDemand": 570
+      },
+      {
+        "key": "LRT:Y-like:z22",
+        "semanticCount": 300,
+        "weightedDemand": 589
+      },
+      {
+        "key": "LRT:Y-like:z23",
+        "semanticCount": 74,
+        "weightedDemand": 104
+      },
+      {
+        "key": "LRT:Y-like:z30",
+        "semanticCount": 37,
+        "weightedDemand": 47
+      },
+      {
+        "key": "LRT:Y-like:z31",
+        "semanticCount": 57,
+        "weightedDemand": 79
+      },
+      {
+        "key": "LRT:Y-like:z32",
+        "semanticCount": 48,
+        "weightedDemand": 74
+      },
+      {
+        "key": "LRT:Y-like:z33",
+        "semanticCount": 21,
+        "weightedDemand": 28
+      },
+      {
+        "key": "LRTB:cross-like:z00",
+        "semanticCount": 146,
+        "weightedDemand": 341
+      },
+      {
+        "key": "LRTB:cross-like:z01",
+        "semanticCount": 203,
+        "weightedDemand": 434
+      },
+      {
+        "key": "LRTB:cross-like:z02",
+        "semanticCount": 180,
+        "weightedDemand": 382
+      },
+      {
+        "key": "LRTB:cross-like:z03",
+        "semanticCount": 75,
+        "weightedDemand": 191
+      },
+      {
+        "key": "LRTB:cross-like:z10",
+        "semanticCount": 184,
+        "weightedDemand": 444
+      },
+      {
+        "key": "LRTB:cross-like:z11",
+        "semanticCount": 257,
+        "weightedDemand": 850
+      },
+      {
+        "key": "LRTB:cross-like:z12",
+        "semanticCount": 242,
+        "weightedDemand": 675
+      },
+      {
+        "key": "LRTB:cross-like:z13",
+        "semanticCount": 93,
+        "weightedDemand": 211
+      },
+      {
+        "key": "LRTB:cross-like:z20",
+        "semanticCount": 183,
+        "weightedDemand": 457
+      },
+      {
+        "key": "LRTB:cross-like:z21",
+        "semanticCount": 241,
+        "weightedDemand": 617
+      },
+      {
+        "key": "LRTB:cross-like:z22",
+        "semanticCount": 240,
+        "weightedDemand": 690
+      },
+      {
+        "key": "LRTB:cross-like:z23",
+        "semanticCount": 90,
+        "weightedDemand": 212
+      },
+      {
+        "key": "LRTB:cross-like:z30",
+        "semanticCount": 121,
+        "weightedDemand": 276
+      },
+      {
+        "key": "LRTB:cross-like:z31",
+        "semanticCount": 169,
+        "weightedDemand": 375
+      },
+      {
+        "key": "LRTB:cross-like:z32",
+        "semanticCount": 148,
+        "weightedDemand": 303
+      },
+      {
+        "key": "LRTB:cross-like:z33",
+        "semanticCount": 64,
+        "weightedDemand": 166
+      },
+      {
+        "key": "LRTB:mixed-angle:z00",
+        "semanticCount": 502,
+        "weightedDemand": 1300
+      },
+      {
+        "key": "LRTB:mixed-angle:z01",
+        "semanticCount": 741,
+        "weightedDemand": 1665
+      },
+      {
+        "key": "LRTB:mixed-angle:z02",
+        "semanticCount": 709,
+        "weightedDemand": 1727
+      },
+      {
+        "key": "LRTB:mixed-angle:z03",
+        "semanticCount": 233,
+        "weightedDemand": 585
+      },
+      {
+        "key": "LRTB:mixed-angle:z10",
+        "semanticCount": 767,
+        "weightedDemand": 1643
+      },
+      {
+        "key": "LRTB:mixed-angle:z11",
+        "semanticCount": 2348,
+        "weightedDemand": 7318
+      },
+      {
+        "key": "LRTB:mixed-angle:z12",
+        "semanticCount": 1524,
+        "weightedDemand": 3859
+      },
+      {
+        "key": "LRTB:mixed-angle:z13",
+        "semanticCount": 316,
+        "weightedDemand": 691
+      },
+      {
+        "key": "LRTB:mixed-angle:z20",
+        "semanticCount": 757,
+        "weightedDemand": 1719
+      },
+      {
+        "key": "LRTB:mixed-angle:z21",
+        "semanticCount": 1811,
+        "weightedDemand": 4638
+      },
+      {
+        "key": "LRTB:mixed-angle:z22",
+        "semanticCount": 1482,
+        "weightedDemand": 3869
+      },
+      {
+        "key": "LRTB:mixed-angle:z23",
+        "semanticCount": 309,
+        "weightedDemand": 678
+      },
+      {
+        "key": "LRTB:mixed-angle:z30",
+        "semanticCount": 345,
+        "weightedDemand": 848
+      },
+      {
+        "key": "LRTB:mixed-angle:z31",
+        "semanticCount": 479,
+        "weightedDemand": 1026
+      },
+      {
+        "key": "LRTB:mixed-angle:z32",
+        "semanticCount": 461,
+        "weightedDemand": 1028
+      },
+      {
+        "key": "LRTB:mixed-angle:z33",
+        "semanticCount": 181,
+        "weightedDemand": 454
+      },
+      {
+        "key": "LRTB:near-degenerate:z00",
+        "semanticCount": 454,
+        "weightedDemand": 2807
+      },
+      {
+        "key": "LRTB:near-degenerate:z01",
+        "semanticCount": 423,
+        "weightedDemand": 1090
+      },
+      {
+        "key": "LRTB:near-degenerate:z02",
+        "semanticCount": 493,
+        "weightedDemand": 1993
+      },
+      {
+        "key": "LRTB:near-degenerate:z03",
+        "semanticCount": 304,
+        "weightedDemand": 1394
+      },
+      {
+        "key": "LRTB:near-degenerate:z10",
+        "semanticCount": 619,
+        "weightedDemand": 2131
+      },
+      {
+        "key": "LRTB:near-degenerate:z11",
+        "semanticCount": 1514,
+        "weightedDemand": 6097
+      },
+      {
+        "key": "LRTB:near-degenerate:z12",
+        "semanticCount": 924,
+        "weightedDemand": 3708
+      },
+      {
+        "key": "LRTB:near-degenerate:z13",
+        "semanticCount": 316,
+        "weightedDemand": 910
+      },
+      {
+        "key": "LRTB:near-degenerate:z20",
+        "semanticCount": 608,
+        "weightedDemand": 2523
+      },
+      {
+        "key": "LRTB:near-degenerate:z21",
+        "semanticCount": 899,
+        "weightedDemand": 3704
+      },
+      {
+        "key": "LRTB:near-degenerate:z22",
+        "semanticCount": 914,
+        "weightedDemand": 4049
+      },
+      {
+        "key": "LRTB:near-degenerate:z23",
+        "semanticCount": 291,
+        "weightedDemand": 886
+      },
+      {
+        "key": "LRTB:near-degenerate:z30",
+        "semanticCount": 352,
+        "weightedDemand": 1891
+      },
+      {
+        "key": "LRTB:near-degenerate:z31",
+        "semanticCount": 287,
+        "weightedDemand": 687
+      },
+      {
+        "key": "LRTB:near-degenerate:z32",
+        "semanticCount": 335,
+        "weightedDemand": 1070
+      },
+      {
+        "key": "LRTB:near-degenerate:z33",
+        "semanticCount": 286,
+        "weightedDemand": 1192
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z00",
+        "semanticCount": 942,
+        "weightedDemand": 2020
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z01",
+        "semanticCount": 995,
+        "weightedDemand": 1560
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z02",
+        "semanticCount": 1226,
+        "weightedDemand": 2197
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z03",
+        "semanticCount": 445,
+        "weightedDemand": 898
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z10",
+        "semanticCount": 1539,
+        "weightedDemand": 2396
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z11",
+        "semanticCount": 3894,
+        "weightedDemand": 8903
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z12",
+        "semanticCount": 2664,
+        "weightedDemand": 5289
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z13",
+        "semanticCount": 690,
+        "weightedDemand": 1009
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z20",
+        "semanticCount": 1449,
+        "weightedDemand": 2388
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z21",
+        "semanticCount": 2567,
+        "weightedDemand": 5212
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z22",
+        "semanticCount": 2484,
+        "weightedDemand": 5011
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z23",
+        "semanticCount": 621,
+        "weightedDemand": 931
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z30",
+        "semanticCount": 651,
+        "weightedDemand": 1344
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z31",
+        "semanticCount": 673,
+        "weightedDemand": 948
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z32",
+        "semanticCount": 813,
+        "weightedDemand": 1334
+      },
+      {
+        "key": "LRTB:strongly-asymmetric:z33",
+        "semanticCount": 353,
+        "weightedDemand": 710
+      },
+      {
+        "key": "LRTB:X-like:z10",
+        "semanticCount": 8,
+        "weightedDemand": 9
+      },
+      {
+        "key": "LRTB:X-like:z11",
+        "semanticCount": 3,
+        "weightedDemand": 3
+      },
+      {
+        "key": "LRTB:X-like:z12",
+        "semanticCount": 9,
+        "weightedDemand": 12
+      },
+      {
+        "key": "LRTB:X-like:z20",
+        "semanticCount": 8,
+        "weightedDemand": 9
+      },
+      {
+        "key": "LRTB:X-like:z21",
+        "semanticCount": 3,
+        "weightedDemand": 3
+      },
+      {
+        "key": "LRTB:X-like:z22",
+        "semanticCount": 9,
+        "weightedDemand": 12
+      },
+      {
+        "key": "LTB:near-degenerate:z00",
+        "semanticCount": 51,
+        "weightedDemand": 2073
+      },
+      {
+        "key": "LTB:near-degenerate:z01",
+        "semanticCount": 51,
+        "weightedDemand": 706
+      },
+      {
+        "key": "LTB:near-degenerate:z02",
+        "semanticCount": 48,
+        "weightedDemand": 1144
+      },
+      {
+        "key": "LTB:near-degenerate:z03",
+        "semanticCount": 30,
+        "weightedDemand": 624
+      },
+      {
+        "key": "LTB:near-degenerate:z10",
+        "semanticCount": 192,
+        "weightedDemand": 2548
+      },
+      {
+        "key": "LTB:near-degenerate:z11",
+        "semanticCount": 165,
+        "weightedDemand": 3852
+      },
+      {
+        "key": "LTB:near-degenerate:z12",
+        "semanticCount": 95,
+        "weightedDemand": 1732
+      },
+      {
+        "key": "LTB:near-degenerate:z13",
+        "semanticCount": 16,
+        "weightedDemand": 297
+      },
+      {
+        "key": "LTB:near-degenerate:z20",
+        "semanticCount": 174,
+        "weightedDemand": 2470
+      },
+      {
+        "key": "LTB:near-degenerate:z21",
+        "semanticCount": 122,
+        "weightedDemand": 2325
+      },
+      {
+        "key": "LTB:near-degenerate:z22",
+        "semanticCount": 101,
+        "weightedDemand": 2061
+      },
+      {
+        "key": "LTB:near-degenerate:z23",
+        "semanticCount": 17,
+        "weightedDemand": 286
+      },
+      {
+        "key": "LTB:near-degenerate:z30",
+        "semanticCount": 26,
+        "weightedDemand": 1393
+      },
+      {
+        "key": "LTB:near-degenerate:z31",
+        "semanticCount": 24,
+        "weightedDemand": 431
+      },
+      {
+        "key": "LTB:near-degenerate:z32",
+        "semanticCount": 24,
+        "weightedDemand": 605
+      },
+      {
+        "key": "LTB:near-degenerate:z33",
+        "semanticCount": 30,
+        "weightedDemand": 557
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z00",
+        "semanticCount": 66,
+        "weightedDemand": 115
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z01",
+        "semanticCount": 116,
+        "weightedDemand": 204
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z02",
+        "semanticCount": 189,
+        "weightedDemand": 344
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z03",
+        "semanticCount": 38,
+        "weightedDemand": 69
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z10",
+        "semanticCount": 44,
+        "weightedDemand": 58
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z11",
+        "semanticCount": 77,
+        "weightedDemand": 284
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z12",
+        "semanticCount": 205,
+        "weightedDemand": 532
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z13",
+        "semanticCount": 92,
+        "weightedDemand": 127
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z20",
+        "semanticCount": 55,
+        "weightedDemand": 81
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z21",
+        "semanticCount": 78,
+        "weightedDemand": 221
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z22",
+        "semanticCount": 207,
+        "weightedDemand": 526
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z23",
+        "semanticCount": 78,
+        "weightedDemand": 109
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z30",
+        "semanticCount": 53,
+        "weightedDemand": 82
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z31",
+        "semanticCount": 96,
+        "weightedDemand": 141
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z32",
+        "semanticCount": 151,
+        "weightedDemand": 240
+      },
+      {
+        "key": "LTB:strongly-asymmetric:z33",
+        "semanticCount": 33,
+        "weightedDemand": 59
+      },
+      {
+        "key": "LTB:T-like:z00",
+        "semanticCount": 602,
+        "weightedDemand": 10306
+      },
+      {
+        "key": "LTB:T-like:z01",
+        "semanticCount": 643,
+        "weightedDemand": 5417
+      },
+      {
+        "key": "LTB:T-like:z02",
+        "semanticCount": 449,
+        "weightedDemand": 4458
+      },
+      {
+        "key": "LTB:T-like:z03",
+        "semanticCount": 175,
+        "weightedDemand": 1321
+      },
+      {
+        "key": "LTB:T-like:z10",
+        "semanticCount": 848,
+        "weightedDemand": 15609
+      },
+      {
+        "key": "LTB:T-like:z11",
+        "semanticCount": 892,
+        "weightedDemand": 18481
+      },
+      {
+        "key": "LTB:T-like:z12",
+        "semanticCount": 585,
+        "weightedDemand": 6553
+      },
+      {
+        "key": "LTB:T-like:z13",
+        "semanticCount": 185,
+        "weightedDemand": 1045
+      },
+      {
+        "key": "LTB:T-like:z20",
+        "semanticCount": 809,
+        "weightedDemand": 14695
+      },
+      {
+        "key": "LTB:T-like:z21",
+        "semanticCount": 838,
+        "weightedDemand": 12672
+      },
+      {
+        "key": "LTB:T-like:z22",
+        "semanticCount": 562,
+        "weightedDemand": 6616
+      },
+      {
+        "key": "LTB:T-like:z23",
+        "semanticCount": 179,
+        "weightedDemand": 1055
+      },
+      {
+        "key": "LTB:T-like:z30",
+        "semanticCount": 497,
+        "weightedDemand": 6628
+      },
+      {
+        "key": "LTB:T-like:z31",
+        "semanticCount": 530,
+        "weightedDemand": 3720
+      },
+      {
+        "key": "LTB:T-like:z32",
+        "semanticCount": 414,
+        "weightedDemand": 3179
+      },
+      {
+        "key": "LTB:T-like:z33",
+        "semanticCount": 167,
+        "weightedDemand": 1073
+      },
+      {
+        "key": "LTB:Y-like:z00",
+        "semanticCount": 74,
+        "weightedDemand": 183
+      },
+      {
+        "key": "LTB:Y-like:z01",
+        "semanticCount": 104,
+        "weightedDemand": 168
+      },
+      {
+        "key": "LTB:Y-like:z02",
+        "semanticCount": 52,
+        "weightedDemand": 70
+      },
+      {
+        "key": "LTB:Y-like:z03",
+        "semanticCount": 10,
+        "weightedDemand": 16
+      },
+      {
+        "key": "LTB:Y-like:z10",
+        "semanticCount": 143,
+        "weightedDemand": 295
+      },
+      {
+        "key": "LTB:Y-like:z11",
+        "semanticCount": 140,
+        "weightedDemand": 407
+      },
+      {
+        "key": "LTB:Y-like:z12",
+        "semanticCount": 58,
+        "weightedDemand": 118
+      },
+      {
+        "key": "LTB:Y-like:z13",
+        "semanticCount": 22,
+        "weightedDemand": 27
+      },
+      {
+        "key": "LTB:Y-like:z20",
+        "semanticCount": 128,
+        "weightedDemand": 287
+      },
+      {
+        "key": "LTB:Y-like:z21",
+        "semanticCount": 132,
+        "weightedDemand": 339
+      },
+      {
+        "key": "LTB:Y-like:z22",
+        "semanticCount": 66,
+        "weightedDemand": 136
+      },
+      {
+        "key": "LTB:Y-like:z23",
+        "semanticCount": 18,
+        "weightedDemand": 23
+      },
+      {
+        "key": "LTB:Y-like:z30",
+        "semanticCount": 60,
+        "weightedDemand": 125
+      },
+      {
+        "key": "LTB:Y-like:z31",
+        "semanticCount": 85,
+        "weightedDemand": 114
+      },
+      {
+        "key": "LTB:Y-like:z32",
+        "semanticCount": 35,
+        "weightedDemand": 40
+      },
+      {
+        "key": "LTB:Y-like:z33",
+        "semanticCount": 10,
+        "weightedDemand": 16
+      },
+      {
+        "key": "RTB:near-degenerate:z00",
+        "semanticCount": 50,
+        "weightedDemand": 1396
+      },
+      {
+        "key": "RTB:near-degenerate:z01",
+        "semanticCount": 41,
+        "weightedDemand": 715
+      },
+      {
+        "key": "RTB:near-degenerate:z02",
+        "semanticCount": 49,
+        "weightedDemand": 1229
+      },
+      {
+        "key": "RTB:near-degenerate:z03",
+        "semanticCount": 40,
+        "weightedDemand": 1207
+      },
+      {
+        "key": "RTB:near-degenerate:z10",
+        "semanticCount": 52,
+        "weightedDemand": 758
+      },
+      {
+        "key": "RTB:near-degenerate:z11",
+        "semanticCount": 145,
+        "weightedDemand": 3271
+      },
+      {
+        "key": "RTB:near-degenerate:z12",
+        "semanticCount": 160,
+        "weightedDemand": 2914
+      },
+      {
+        "key": "RTB:near-degenerate:z13",
+        "semanticCount": 163,
+        "weightedDemand": 1486
+      },
+      {
+        "key": "RTB:near-degenerate:z20",
+        "semanticCount": 51,
+        "weightedDemand": 1041
+      },
+      {
+        "key": "RTB:near-degenerate:z21",
+        "semanticCount": 105,
+        "weightedDemand": 2093
+      },
+      {
+        "key": "RTB:near-degenerate:z22",
+        "semanticCount": 132,
+        "weightedDemand": 2721
+      },
+      {
+        "key": "RTB:near-degenerate:z23",
+        "semanticCount": 148,
+        "weightedDemand": 1287
+      },
+      {
+        "key": "RTB:near-degenerate:z30",
+        "semanticCount": 38,
+        "weightedDemand": 931
+      },
+      {
+        "key": "RTB:near-degenerate:z31",
+        "semanticCount": 20,
+        "weightedDemand": 431
+      },
+      {
+        "key": "RTB:near-degenerate:z32",
+        "semanticCount": 24,
+        "weightedDemand": 650
+      },
+      {
+        "key": "RTB:near-degenerate:z33",
+        "semanticCount": 26,
+        "weightedDemand": 974
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z00",
+        "semanticCount": 113,
+        "weightedDemand": 219
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z01",
+        "semanticCount": 167,
+        "weightedDemand": 267
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z02",
+        "semanticCount": 105,
+        "weightedDemand": 180
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z03",
+        "semanticCount": 38,
+        "weightedDemand": 66
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z10",
+        "semanticCount": 199,
+        "weightedDemand": 336
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z11",
+        "semanticCount": 162,
+        "weightedDemand": 546
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z12",
+        "semanticCount": 41,
+        "weightedDemand": 78
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z13",
+        "semanticCount": 35,
+        "weightedDemand": 41
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z20",
+        "semanticCount": 184,
+        "weightedDemand": 329
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z21",
+        "semanticCount": 160,
+        "weightedDemand": 436
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z22",
+        "semanticCount": 62,
+        "weightedDemand": 128
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z23",
+        "semanticCount": 35,
+        "weightedDemand": 44
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z30",
+        "semanticCount": 82,
+        "weightedDemand": 144
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z31",
+        "semanticCount": 138,
+        "weightedDemand": 197
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z32",
+        "semanticCount": 91,
+        "weightedDemand": 128
+      },
+      {
+        "key": "RTB:strongly-asymmetric:z33",
+        "semanticCount": 30,
+        "weightedDemand": 53
+      },
+      {
+        "key": "RTB:T-like:z00",
+        "semanticCount": 296,
+        "weightedDemand": 3171
+      },
+      {
+        "key": "RTB:T-like:z01",
+        "semanticCount": 539,
+        "weightedDemand": 4642
+      },
+      {
+        "key": "RTB:T-like:z02",
+        "semanticCount": 682,
+        "weightedDemand": 7631
+      },
+      {
+        "key": "RTB:T-like:z03",
+        "semanticCount": 477,
+        "weightedDemand": 6058
+      },
+      {
+        "key": "RTB:T-like:z10",
+        "semanticCount": 347,
+        "weightedDemand": 2562
+      },
+      {
+        "key": "RTB:T-like:z11",
+        "semanticCount": 837,
+        "weightedDemand": 13505
+      },
+      {
+        "key": "RTB:T-like:z12",
+        "semanticCount": 889,
+        "weightedDemand": 17484
+      },
+      {
+        "key": "RTB:T-like:z13",
+        "semanticCount": 680,
+        "weightedDemand": 8137
+      },
+      {
+        "key": "RTB:T-like:z20",
+        "semanticCount": 333,
+        "weightedDemand": 2764
+      },
+      {
+        "key": "RTB:T-like:z21",
+        "semanticCount": 667,
+        "weightedDemand": 8671
+      },
+      {
+        "key": "RTB:T-like:z22",
+        "semanticCount": 860,
+        "weightedDemand": 16239
+      },
+      {
+        "key": "RTB:T-like:z23",
+        "semanticCount": 628,
+        "weightedDemand": 7364
+      },
+      {
+        "key": "RTB:T-like:z30",
+        "semanticCount": 271,
+        "weightedDemand": 2329
+      },
+      {
+        "key": "RTB:T-like:z31",
+        "semanticCount": 467,
+        "weightedDemand": 3258
+      },
+      {
+        "key": "RTB:T-like:z32",
+        "semanticCount": 555,
+        "weightedDemand": 4578
+      },
+      {
+        "key": "RTB:T-like:z33",
+        "semanticCount": 393,
+        "weightedDemand": 4435
+      },
+      {
+        "key": "RTB:Y-like:z00",
+        "semanticCount": 18,
+        "weightedDemand": 28
+      },
+      {
+        "key": "RTB:Y-like:z01",
+        "semanticCount": 69,
+        "weightedDemand": 100
+      },
+      {
+        "key": "RTB:Y-like:z02",
+        "semanticCount": 112,
+        "weightedDemand": 228
+      },
+      {
+        "key": "RTB:Y-like:z03",
+        "semanticCount": 36,
+        "weightedDemand": 81
+      },
+      {
+        "key": "RTB:Y-like:z10",
+        "semanticCount": 35,
+        "weightedDemand": 52
+      },
+      {
+        "key": "RTB:Y-like:z11",
+        "semanticCount": 95,
+        "weightedDemand": 253
+      },
+      {
+        "key": "RTB:Y-like:z12",
+        "semanticCount": 152,
+        "weightedDemand": 401
+      },
+      {
+        "key": "RTB:Y-like:z13",
+        "semanticCount": 77,
+        "weightedDemand": 141
+      },
+      {
+        "key": "RTB:Y-like:z20",
+        "semanticCount": 30,
+        "weightedDemand": 47
+      },
+      {
+        "key": "RTB:Y-like:z21",
+        "semanticCount": 88,
+        "weightedDemand": 207
+      },
+      {
+        "key": "RTB:Y-like:z22",
+        "semanticCount": 151,
+        "weightedDemand": 403
+      },
+      {
+        "key": "RTB:Y-like:z23",
+        "semanticCount": 71,
+        "weightedDemand": 128
+      },
+      {
+        "key": "RTB:Y-like:z30",
+        "semanticCount": 15,
+        "weightedDemand": 23
+      },
+      {
+        "key": "RTB:Y-like:z31",
+        "semanticCount": 48,
+        "weightedDemand": 58
+      },
+      {
+        "key": "RTB:Y-like:z32",
+        "semanticCount": 92,
+        "weightedDemand": 146
+      },
+      {
+        "key": "RTB:Y-like:z33",
+        "semanticCount": 30,
+        "weightedDemand": 68
+      }
+    ]
+  }
+}

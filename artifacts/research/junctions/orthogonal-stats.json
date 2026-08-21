@@ -1,0 +1,49 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-orthogonal-connector-stats",
+  "schemaVersion": 1,
+  "status": "5B.1-research-only-unallocated",
+  "width": 8,
+  "height": 16,
+  "intersectionPositions": 128,
+  "masksPerPosition": 5,
+  "semanticCount": 640,
+  "uniqueRasterOwners": 548,
+  "semanticDuplicatesRemoved": 92,
+  "ownersWithSemanticAliases": 48,
+  "maximumSemanticAliasesPerOwner": 16,
+  "graphicsV0ReuseOwners": 4,
+  "novelOwnersRequired": 544,
+  "protectedReserveSlots": 604,
+  "reserveRemainingAfterNovelOwners": 60,
+  "fitsReserve": true,
+  "junctionAllocations": 0,
+  "byMask": {
+    "NESW": {
+      "label": "full-cross",
+      "semanticCount": 128,
+      "uniqueRasterCountWithinMask": 128
+    },
+    "ESW": {
+      "label": "missing-north",
+      "semanticCount": 128,
+      "uniqueRasterCountWithinMask": 121
+    },
+    "NSW": {
+      "label": "missing-east",
+      "semanticCount": 128,
+      "uniqueRasterCountWithinMask": 113
+    },
+    "NEW": {
+      "label": "missing-south",
+      "semanticCount": 128,
+      "uniqueRasterCountWithinMask": 121
+    },
+    "NSE": {
+      "label": "missing-west",
+      "semanticCount": 128,
+      "uniqueRasterCountWithinMask": 113
+    }
+  }
+}

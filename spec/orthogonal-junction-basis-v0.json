@@ -1,0 +1,42 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-orthogonal-connector-basis",
+  "schemaVersion": 1,
+  "status": "5B.1-measured-generic-basis-unallocated",
+  "coordinateConvention": "x=0..7 left-to-right; y=0..15 top-to-bottom",
+  "masks": [
+    {
+      "id": "NESW",
+      "label": "full-cross",
+      "missing": null
+    },
+    {
+      "id": "ESW",
+      "label": "missing-north",
+      "missing": "N"
+    },
+    {
+      "id": "NSW",
+      "label": "missing-east",
+      "missing": "E"
+    },
+    {
+      "id": "NEW",
+      "label": "missing-south",
+      "missing": "S"
+    },
+    {
+      "id": "NSE",
+      "label": "missing-west",
+      "missing": "W"
+    }
+  ],
+  "rawSemanticCount": 640,
+  "exactRasterOwnerCount": 548,
+  "graphicsV0ReuseOwners": 4,
+  "novelOwnersRequired": 544,
+  "protectedReserveSlots": 604,
+  "reserveRemainingIfAllocated": 60,
+  "allocationPolicy": "preserve all 640 semantic connectors through exact owner aliases; allocate only novel visual owners"
+}

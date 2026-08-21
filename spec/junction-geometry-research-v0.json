@@ -1,0 +1,105 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-geometry-research",
+  "schemaVersion": 2,
+  "status": "5A.2-geometry-and-generic-lattice",
+  "canonicalCell": {
+    "width": 8,
+    "height": 16
+  },
+  "frozenInput": {
+    "demandedSemantics": 22428,
+    "weightedDemand": 928242,
+    "theoreticalSemantics": 22528,
+    "blindSpots": 100,
+    "encodedGraphics": 5796,
+    "protectedReserveSlots": 604,
+    "junctionAllocations": 0
+  },
+  "boundarySafeIngress": true,
+  "geometryModels": [
+    "mathematical-demand-hub",
+    "symmetric-half-pixel-center",
+    "central-2x2-kernel",
+    "port-centroid-midpoint"
+  ],
+  "genericTheory": {
+    "workingBudget": 600,
+    "leaveSlackSlots": 4,
+    "dyadicPortPriority": {
+      "L": [
+        0,
+        15,
+        7,
+        8,
+        3,
+        4,
+        11,
+        12,
+        1,
+        2,
+        5,
+        6,
+        9,
+        10,
+        13,
+        14
+      ],
+      "R": [
+        0,
+        15,
+        7,
+        8,
+        3,
+        4,
+        11,
+        12,
+        1,
+        2,
+        5,
+        6,
+        9,
+        10,
+        13,
+        14
+      ],
+      "T": [
+        0,
+        7,
+        3,
+        4,
+        1,
+        2,
+        5,
+        6
+      ],
+      "B": [
+        0,
+        7,
+        3,
+        4,
+        1,
+        2,
+        5,
+        6
+      ]
+    },
+    "balancedTopologyQuotas": {
+      "LRT": 120,
+      "LRB": 120,
+      "LTB": 120,
+      "RTB": 120,
+      "LRTB": 120
+    },
+    "proportionalTopologyQuotas": {
+      "LRT": 55,
+      "LRB": 55,
+      "LTB": 27,
+      "RTB": 27,
+      "LRTB": 436
+    },
+    "hybrid": "300 proportional lattice semantics + highest remaining demand semantics to 600"
+  },
+  "next": "5A.3 exhaustive candidate generation and global exact bitmap dedup using demand and generic-lattice baselines"
+}

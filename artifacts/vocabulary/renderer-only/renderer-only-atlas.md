@@ -1,0 +1,3417 @@
+# GraphSCII renderer-only resolution atlas
+
+This is the human-readable companion to the persistent Milestone 4D.5 renderer-only resolution registry.
+
+Renderer-only semantics remain valid GraphSCII requests without consuming additional BMP PUA codepoints. Exact bitmap matches resolve to an existing encoded owner; genuinely novel rasters remain algorithmically derived.
+
+| Group | Semantic aliases | Exact encoded reuse | Derived | Unique derived bitmaps |
+| --- | ---: | ---: | ---: | ---: |
+| Dense 87.5% | 1,664 | 207 | 1,457 | 1,204 |
+| Sparse 12.5% | 1,664 | 207 | 1,457 | 1,289 |
+| Demoted half 50% | 64 | 0 | 64 | 62 |
+
+Total renderer-only semantic aliases: **3,392**.
+
+Exact encoded reuses: **414**. Derived aliases: **2,978** across **2,555 unique derived bitmaps**.
+
+# Dense 87.5%
+
+- `straight-fill:LB:L0>B0:sideA:dense` → **EXACT** `U+00E100` / glyph 256 / bitmap `01010101010101010101010101010101`
+- `straight-fill:LB:L0>B0:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LB:L0>B1:sideA:dense` → **EXACT** `U+00E4E1` / glyph 1249 / bitmap `01010101010101010303030303030303`
+- `straight-fill:LB:L0>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fedefe76fedefe`
+- `straight-fill:LB:L0>B2:sideA:dense` → **DERIVED** bitmap `01010101030303030303030307070507`
+- `straight-fill:LB:L0>B2:sideB:dense` → **DERIVED** bitmap `77ffddff76fedefe76fedefe74fcdcfc`
+- `straight-fill:LB:L0>B3:sideA:dense` → **DERIVED** bitmap `010101030303030307070507070f0d0f`
+- `straight-fill:LB:L0>B3:sideB:dense` → **DERIVED** bitmap `77ffddfe76fedefe74fcdcfc74f8d8f8`
+- `straight-fill:LB:L0>B4:sideA:dense` → **DERIVED** bitmap `010103030303050707070d0f0f0f1d1f`
+- `straight-fill:LB:L0>B4:sideB:dense` → **DERIVED** bitmap `77ffdefe76fedcfc74fcd8f878f8d0f0`
+- `straight-fill:LB:L0>B5:sideA:dense` → **DERIVED** bitmap `01010303030705070f0f0d1f171f3d3f`
+- `straight-fill:LB:L0>B5:sideB:dense` → **DERIVED** bitmap `77ffdefe76fcdcfc78f8d8f070f0e0e0`
+- `straight-fill:LB:L0>B6:sideA:dense` → **DERIVED** bitmap `010103030707050f0f1f1d1f373f5d7f`
+- `straight-fill:LB:L0>B6:sideB:dense` → **DERIVED** bitmap `77ffdefe74fcdcf878f0d0f060e0c0c0`
+- `straight-fill:LB:L0>B7:sideA:dense` → **DERIVED** bitmap `0101030307070d0f171f3d3f777fddff`
+- `straight-fill:LB:L0>B7:sideB:dense` → **DERIVED** bitmap `77ffdefe74fcd8f870f0e0e040c08080`
+- `straight-fill:LB:L1>B0:sideA:dense` → **EXACT** `U+00E1A7` / glyph 423 / bitmap `00010101010101010101010101010101`
+- `straight-fill:LB:L1>B0:sideB:dense` → **DERIVED** bitmap `76ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LB:L1>B1:sideA:dense` → **EXACT** `U+00E5FF` / glyph 1535 / bitmap `00010101010101010303030303030303`
+- `straight-fill:LB:L1>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fedefe76fedefe`
+- `straight-fill:LB:L1>B2:sideA:dense` → **DERIVED** bitmap `00010101010303030303030307070507`
+- `straight-fill:LB:L1>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77fedefe76fedefe74fcdcfc`
+- `straight-fill:LB:L1>B3:sideA:dense` → **DERIVED** bitmap `000101010303030307070507070f0d0f`
+- `straight-fill:LB:L1>B3:sideB:dense` → **DERIVED** bitmap `77ffddff76fedefe74fcdcfc74f8d8f8`
+- `straight-fill:LB:L1>B4:sideA:dense` → **DERIVED** bitmap `000101030303030707070d0f0f0f1d1f`
+- `straight-fill:LB:L1>B4:sideB:dense` → **DERIVED** bitmap `77ffddfe76fedefc74fcd8f878f8d0f0`
+- `straight-fill:LB:L1>B5:sideA:dense` → **DERIVED** bitmap `00010103030305070f0f0d1f171f3d3f`
+- `straight-fill:LB:L1>B5:sideB:dense` → **DERIVED** bitmap `77ffddfe76fedcfc78f8d8f070f0e0e0`
+- `straight-fill:LB:L1>B6:sideA:dense` → **DERIVED** bitmap `000101030307050f0f0f1d1f373f5d7f`
+- `straight-fill:LB:L1>B6:sideB:dense` → **DERIVED** bitmap `77ffddfe76fcdcf878f8d0f060e0c0c0`
+- `straight-fill:LB:L1>B7:sideA:dense` → **DERIVED** bitmap `0001030307070d0f171f3d3f777fddff`
+- `straight-fill:LB:L1>B7:sideB:dense` → **DERIVED** bitmap `77ffdefe74fcd8f870f0e0e040c08080`
+- `straight-fill:LB:L10>B0:sideA:dense` → **EXACT** `U+00E1E6` / glyph 486 / bitmap `00000000000000000000010101010101`
+- `straight-fill:LB:L10>B0:sideB:dense` → **DERIVED** bitmap `76fedcfe76fedcfe76feddff77ffddff`
+- `straight-fill:LB:L10>B1:sideA:dense` → **EXACT** `U+00E65D` / glyph 1629 / bitmap `00000000000000000000010101030303`
+- `straight-fill:LB:L10>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fedefe`
+- `straight-fill:LB:L10>B2:sideA:dense` → **EXACT** `U+00EB3B` / glyph 2875 / bitmap `00000000000000000000010103030507`
+- `straight-fill:LB:L10>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff76fedcfc`
+- `straight-fill:LB:L10>B3:sideA:dense` → **EXACT** `U+00EB3D` / glyph 2877 / bitmap `0000000000000000000001030307050f`
+- `straight-fill:LB:L10>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfe76fcdcf8`
+- `straight-fill:LB:L10>B4:sideA:dense` → **DERIVED** bitmap `00000000000000000000010307070d1f`
+- `straight-fill:LB:L10>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfe74fcd8f0`
+- `straight-fill:LB:L10>B5:sideA:dense` → **DERIVED** bitmap `000000000000000000000103070f1d3f`
+- `straight-fill:LB:L10>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfe74f8d0e0`
+- `straight-fill:LB:L10>B6:sideA:dense` → **DERIVED** bitmap `000000000000000000000103071f3d7f`
+- `straight-fill:LB:L10>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfe74f8e0c0`
+- `straight-fill:LB:L10>B7:sideA:dense` → **DERIVED** bitmap `0000000000000000000001070f1f7dff`
+- `straight-fill:LB:L10>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfe78f0e080`
+- `straight-fill:LB:L11>B0:sideA:dense` → **EXACT** `U+00E1ED` / glyph 493 / bitmap `00000000000000000000000101010101`
+- `straight-fill:LB:L11>B0:sideB:dense` → **DERIVED** bitmap `76fedcfe76fedcfe76fedcff77ffddff`
+- `straight-fill:LB:L11>B1:sideA:dense` → **EXACT** `U+00E669` / glyph 1641 / bitmap `00000000000000000000000101030303`
+- `straight-fill:LB:L11>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fedefe`
+- `straight-fill:LB:L11>B2:sideA:dense` → **EXACT** `U+00EB46` / glyph 2886 / bitmap `00000000000000000000000103030507`
+- `straight-fill:LB:L11>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff76fedcfc`
+- `straight-fill:LB:L11>B3:sideA:dense` → **EXACT** `U+00EB47` / glyph 2887 / bitmap `0000000000000000000000010307050f`
+- `straight-fill:LB:L11>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff76fcdcf8`
+- `straight-fill:LB:L11>B4:sideA:dense` → **EXACT** `U+00EB49` / glyph 2889 / bitmap `00000000000000000000000103070d1f`
+- `straight-fill:LB:L11>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff76fcd8f0`
+- `straight-fill:LB:L11>B5:sideA:dense` → **DERIVED** bitmap `000000000000000000000001030f1d3f`
+- `straight-fill:LB:L11>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff76fcd0e0`
+- `straight-fill:LB:L11>B6:sideA:dense` → **DERIVED** bitmap `000000000000000000000001070f3d7f`
+- `straight-fill:LB:L11>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff76f8f0c0`
+- `straight-fill:LB:L11>B7:sideA:dense` → **DERIVED** bitmap `000000000000000000000001071f7dff`
+- `straight-fill:LB:L11>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff76f8e080`
+- `straight-fill:LB:L12>B0:sideA:dense` → **EXACT** `U+00E1F4` / glyph 500 / bitmap `00000000000000000000000001010101`
+- `straight-fill:LB:L12>B0:sideB:dense` → **DERIVED** bitmap `76fedcfe76fedcfe76fedcfe77ffddff`
+- `straight-fill:LB:L12>B1:sideA:dense` → **EXACT** `U+00E674` / glyph 1652 / bitmap `00000000000000000000000001010303`
+- `straight-fill:LB:L12>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdefe`
+- `straight-fill:LB:L12>B2:sideA:dense` → **EXACT** `U+00E675` / glyph 1653 / bitmap `00000000000000000000000001030307`
+- `straight-fill:LB:L12>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fedefc`
+- `straight-fill:LB:L12>B3:sideA:dense` → **EXACT** `U+00EB52` / glyph 2898 / bitmap `0000000000000000000000000103050f`
+- `straight-fill:LB:L12>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fedcf8`
+- `straight-fill:LB:L12>B4:sideA:dense` → **EXACT** `U+00EB54` / glyph 2900 / bitmap `00000000000000000000000001030d1f`
+- `straight-fill:LB:L12>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fedcf0`
+- `straight-fill:LB:L12>B5:sideA:dense` → **EXACT** `U+00EB56` / glyph 2902 / bitmap `00000000000000000000000001071d3f`
+- `straight-fill:LB:L12>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fed8e0`
+- `straight-fill:LB:L12>B6:sideA:dense` → **EXACT** `U+00EB58` / glyph 2904 / bitmap `00000000000000000000000001071d7f`
+- `straight-fill:LB:L12>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fed8e0`
+- `straight-fill:LB:L12>B7:sideA:dense` → **DERIVED** bitmap `000000000000000000000000030f3dff`
+- `straight-fill:LB:L12>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fcf0c0`
+- `straight-fill:LB:L13>B0:sideA:dense` → **EXACT** `U+00E1FB` / glyph 507 / bitmap `00000000000000000000000000010101`
+- `straight-fill:LB:L13>B0:sideB:dense` → **DERIVED** bitmap `76fedcfe76fedcfe76fedcfe76ffddff`
+- `straight-fill:LB:L13>B1:sideA:dense` → **EXACT** `U+00E67F` / glyph 1663 / bitmap `00000000000000000000000000010303`
+- `straight-fill:LB:L13>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdefe`
+- `straight-fill:LB:L13>B2:sideA:dense` → **EXACT** `U+00E680` / glyph 1664 / bitmap `00000000000000000000000000010307`
+- `straight-fill:LB:L13>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdefc`
+- `straight-fill:LB:L13>B3:sideA:dense` → **EXACT** `U+00E682` / glyph 1666 / bitmap `0000000000000000000000000001070f`
+- `straight-fill:LB:L13>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdef8`
+- `straight-fill:LB:L13>B4:sideA:dense` → **EXACT** `U+00E684` / glyph 1668 / bitmap `0000000000000000000000000001071f`
+- `straight-fill:LB:L13>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdef8`
+- `straight-fill:LB:L13>B5:sideA:dense` → **EXACT** `U+00EB5C` / glyph 2908 / bitmap `00000000000000000000000000030d3f`
+- `straight-fill:LB:L13>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdcf0`
+- `straight-fill:LB:L13>B6:sideA:dense` → **EXACT** `U+00EB5E` / glyph 2910 / bitmap `00000000000000000000000000031d7f`
+- `straight-fill:LB:L13>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdce0`
+- `straight-fill:LB:L13>B7:sideA:dense` → **EXACT** `U+00E990` / glyph 2448 / bitmap `00000000000000000000000000033dff`
+- `straight-fill:LB:L13>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fffcc0`
+- `straight-fill:LB:L14>B0:sideA:dense` → **EXACT** `U+00E202` / glyph 514 / bitmap `00000000000000000000000000000101`
+- `straight-fill:LB:L14>B0:sideB:dense` → **DERIVED** bitmap `76fedcfe76fedcfe76fedcfe76feddff`
+- `straight-fill:LB:L14>B1:sideA:dense` → **EXACT** `U+00E68A` / glyph 1674 / bitmap `00000000000000000000000000000103`
+- `straight-fill:LB:L14>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddfe`
+- `straight-fill:LB:L14>B2:sideA:dense` → **EXACT** `U+00E68B` / glyph 1675 / bitmap `00000000000000000000000000000107`
+- `straight-fill:LB:L14>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddfe`
+- `straight-fill:LB:L14>B3:sideA:dense` → **EXACT** `U+00E68C` / glyph 1676 / bitmap `0000000000000000000000000000030f`
+- `straight-fill:LB:L14>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdffc`
+- `straight-fill:LB:L14>B4:sideA:dense` → **EXACT** `U+00E68E` / glyph 1678 / bitmap `0000000000000000000000000000031f`
+- `straight-fill:LB:L14>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdffc`
+- `straight-fill:LB:L14>B5:sideA:dense` → **EXACT** `U+00E68F` / glyph 1679 / bitmap `0000000000000000000000000000073f`
+- `straight-fill:LB:L14>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdff8`
+- `straight-fill:LB:L14>B6:sideA:dense` → **EXACT** `U+00E691` / glyph 1681 / bitmap `0000000000000000000000000000077f`
+- `straight-fill:LB:L14>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdff8`
+- `straight-fill:LB:L14>B7:sideA:dense` → **EXACT** `U+00E4C3` / glyph 1219 / bitmap `00000000000000000000000000000fff`
+- `straight-fill:LB:L14>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdff0`
+- `straight-fill:LB:L15>B0:sideA:dense` → **EXACT** `U+00E209` / glyph 521 / bitmap `00000000000000000000000000000001`
+- `straight-fill:LB:L15>B0:sideB:dense` → **EXACT** `U+00E209` / glyph 521 / bitmap `00000000000000000000000000000001`
+- `straight-fill:LB:L15>B1:sideA:dense` → **EXACT** `U+00E20A` / glyph 522 / bitmap `00000000000000000000000000000003`
+- `straight-fill:LB:L15>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdd03`
+- `straight-fill:LB:L15>B2:sideA:dense` → **EXACT** `U+00E20B` / glyph 523 / bitmap `00000000000000000000000000000007`
+- `straight-fill:LB:L15>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdd07`
+- `straight-fill:LB:L15>B3:sideA:dense` → **EXACT** `U+00E20C` / glyph 524 / bitmap `0000000000000000000000000000000f`
+- `straight-fill:LB:L15>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdd0f`
+- `straight-fill:LB:L15>B4:sideA:dense` → **EXACT** `U+00E20D` / glyph 525 / bitmap `0000000000000000000000000000001f`
+- `straight-fill:LB:L15>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdd1f`
+- `straight-fill:LB:L15>B5:sideA:dense` → **EXACT** `U+00E20E` / glyph 526 / bitmap `0000000000000000000000000000003f`
+- `straight-fill:LB:L15>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdd3f`
+- `straight-fill:LB:L15>B6:sideA:dense` → **EXACT** `U+00E20F` / glyph 527 / bitmap `0000000000000000000000000000007f`
+- `straight-fill:LB:L15>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdd7f`
+- `straight-fill:LB:L15>B7:sideA:dense` → **EXACT** `U+00E0FF` / glyph 255 / bitmap `000000000000000000000000000000ff`
+- `straight-fill:LB:L15>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LB:L2>B0:sideA:dense` → **EXACT** `U+00E1AE` / glyph 430 / bitmap `00000101010101010101010101010101`
+- `straight-fill:LB:L2>B0:sideB:dense` → **DERIVED** bitmap `76feddff77ffddff77ffddff77ffddff`
+- `straight-fill:LB:L2>B1:sideA:dense` → **EXACT** `U+00E60A` / glyph 1546 / bitmap `00000101010101010103030303030303`
+- `straight-fill:LB:L2>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedefe76fedefe`
+- `straight-fill:LB:L2>B2:sideA:dense` → **DERIVED** bitmap `00000101010103030303030307070507`
+- `straight-fill:LB:L2>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefe76fedefe74fcdcfc`
+- `straight-fill:LB:L2>B3:sideA:dense` → **DERIVED** bitmap `000001010103030303070507070f0d0f`
+- `straight-fill:LB:L2>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77fedefe76fcdcfc74f8d8f8`
+- `straight-fill:LB:L2>B4:sideA:dense` → **DERIVED** bitmap `00000101030303070707050f0f0f1d1f`
+- `straight-fill:LB:L2>B4:sideB:dense` → **DERIVED** bitmap `77ffddff76fedefc74fcdcf878f8d0f0`
+- `straight-fill:LB:L2>B5:sideA:dense` → **DERIVED** bitmap `0000010103030507070f0d0f171f3d3f`
+- `straight-fill:LB:L2>B5:sideB:dense` → **DERIVED** bitmap `77ffddff76fedcfc74f8d8f870f0e0e0`
+- `straight-fill:LB:L2>B6:sideA:dense` → **DERIVED** bitmap `00000101030305070f0f1d1f373f5d7f`
+- `straight-fill:LB:L2>B6:sideB:dense` → **DERIVED** bitmap `77ffddff76fedcfc78f8d0f060e0c0c0`
+- `straight-fill:LB:L2>B7:sideA:dense` → **DERIVED** bitmap `000001030307050f0f1f1d3f377f5dff`
+- `straight-fill:LB:L2>B7:sideB:dense` → **DERIVED** bitmap `77ffddfe76fcdcf878f0d0e060c0c080`
+- `straight-fill:LB:L3>B0:sideA:dense` → **EXACT** `U+00E1B5` / glyph 437 / bitmap `00000001010101010101010101010101`
+- `straight-fill:LB:L3>B0:sideB:dense` → **DERIVED** bitmap `76fedcff77ffddff77ffddff77ffddff`
+- `straight-fill:LB:L3>B1:sideA:dense` → **EXACT** `U+00E615` / glyph 1557 / bitmap `00000001010101010103030303030303`
+- `straight-fill:LB:L3>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedefe76fedefe`
+- `straight-fill:LB:L3>B2:sideA:dense` → **DERIVED** bitmap `00000001010103030303030307070507`
+- `straight-fill:LB:L3>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefe76fedefe74fcdcfc`
+- `straight-fill:LB:L3>B3:sideA:dense` → **DERIVED** bitmap `000000010103030303070507070f0d0f`
+- `straight-fill:LB:L3>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77fedefe76fcdcfc74f8d8f8`
+- `straight-fill:LB:L3>B4:sideA:dense` → **DERIVED** bitmap `00000001010303030707050f0f0f1d1f`
+- `straight-fill:LB:L3>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77fedefe74fcdcf878f8d0f0`
+- `straight-fill:LB:L3>B5:sideA:dense` → **DERIVED** bitmap `0000000101030307070f0d0f171f3d3f`
+- `straight-fill:LB:L3>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77fedefc74f8d8f870f0e0e0`
+- `straight-fill:LB:L3>B6:sideA:dense` → **DERIVED** bitmap `00000001030305070f0f1d1f373f5d7f`
+- `straight-fill:LB:L3>B6:sideB:dense` → **DERIVED** bitmap `77ffddff76fedcfc78f8d0f060e0c0c0`
+- `straight-fill:LB:L3>B7:sideA:dense` → **DERIVED** bitmap `00000001030305070f1f1d3f377f5dff`
+- `straight-fill:LB:L3>B7:sideB:dense` → **DERIVED** bitmap `77ffddff76fedcfc78f0d0e060c0c080`
+- `straight-fill:LB:L4>B0:sideA:dense` → **EXACT** `U+00E1BC` / glyph 444 / bitmap `00000000010101010101010101010101`
+- `straight-fill:LB:L4>B0:sideB:dense` → **DERIVED** bitmap `76fedcfe77ffddff77ffddff77ffddff`
+- `straight-fill:LB:L4>B1:sideA:dense` → **EXACT** `U+00E61D` / glyph 1565 / bitmap `00000000010101010101030303030303`
+- `straight-fill:LB:L4>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdefe76fedefe`
+- `straight-fill:LB:L4>B2:sideA:dense` → **EXACT** `U+00EAFA` / glyph 2810 / bitmap `00000000010101030303030303070507`
+- `straight-fill:LB:L4>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe76fedefe76fcdcfc`
+- `straight-fill:LB:L4>B3:sideA:dense` → **DERIVED** bitmap `00000000010103030303050707070d0f`
+- `straight-fill:LB:L4>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefe76fedcfc74fcd8f8`
+- `straight-fill:LB:L4>B4:sideA:dense` → **DERIVED** bitmap `00000000010103030307050f0f0f1d1f`
+- `straight-fill:LB:L4>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefe76fcdcf878f8d0f0`
+- `straight-fill:LB:L4>B5:sideA:dense` → **DERIVED** bitmap `000000000101030307070d0f171f3d3f`
+- `straight-fill:LB:L4>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefe74fcd8f870f0e0e0`
+- `straight-fill:LB:L4>B6:sideA:dense` → **DERIVED** bitmap `0000000001030307070f0d1f173f3d7f`
+- `straight-fill:LB:L4>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77fedefc74f8d8f070e0e0c0`
+- `straight-fill:LB:L4>B7:sideA:dense` → **DERIVED** bitmap `00000000010303070f0f1d1f377f5dff`
+- `straight-fill:LB:L4>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77fedefc78f8d0f060c0c080`
+- `straight-fill:LB:L5>B0:sideA:dense` → **EXACT** `U+00E1C3` / glyph 451 / bitmap `00000000000101010101010101010101`
+- `straight-fill:LB:L5>B0:sideB:dense` → **DERIVED** bitmap `76fedcfe76ffddff77ffddff77ffddff`
+- `straight-fill:LB:L5>B1:sideA:dense` → **EXACT** `U+00E628` / glyph 1576 / bitmap `00000000000101010101030303030303`
+- `straight-fill:LB:L5>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdefe76fedefe`
+- `straight-fill:LB:L5>B2:sideA:dense` → **EXACT** `U+00EB05` / glyph 2821 / bitmap `00000000000101010303030303070507`
+- `straight-fill:LB:L5>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fedefe76fcdcfc`
+- `straight-fill:LB:L5>B3:sideA:dense` → **DERIVED** bitmap `00000000000101030303050707070d0f`
+- `straight-fill:LB:L5>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe76fedcfc74fcd8f8`
+- `straight-fill:LB:L5>B4:sideA:dense` → **DERIVED** bitmap `0000000000010103030705070f0f1d1f`
+- `straight-fill:LB:L5>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe76fcdcfc78f8d0f0`
+- `straight-fill:LB:L5>B5:sideA:dense` → **DERIVED** bitmap `000000000001030307070d0f171f3d3f`
+- `straight-fill:LB:L5>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefe74fcd8f870f0e0e0`
+- `straight-fill:LB:L5>B6:sideA:dense` → **DERIVED** bitmap `000000000001030307070d1f173f3d7f`
+- `straight-fill:LB:L5>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefe74fcd8f070e0e0c0`
+- `straight-fill:LB:L5>B7:sideA:dense` → **DERIVED** bitmap `0000000000010303070f1d1f377f5dff`
+- `straight-fill:LB:L5>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefe74f8d0f060c0c080`
+- `straight-fill:LB:L6>B0:sideA:dense` → **EXACT** `U+00E1CA` / glyph 458 / bitmap `00000000000001010101010101010101`
+- `straight-fill:LB:L6>B0:sideB:dense` → **DERIVED** bitmap `76fedcfe76feddff77ffddff77ffddff`
+- `straight-fill:LB:L6>B1:sideA:dense` → **EXACT** `U+00E632` / glyph 1586 / bitmap `00000000000001010101010303030303`
+- `straight-fill:LB:L6>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfe76fedefe`
+- `straight-fill:LB:L6>B2:sideA:dense` → **EXACT** `U+00EB10` / glyph 2832 / bitmap `00000000000001010103030303070507`
+- `straight-fill:LB:L6>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedefe76fcdcfc`
+- `straight-fill:LB:L6>B3:sideA:dense` → **DERIVED** bitmap `00000000000001010303030707070d0f`
+- `straight-fill:LB:L6>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fedefc74fcd8f8`
+- `straight-fill:LB:L6>B4:sideA:dense` → **DERIVED** bitmap `0000000000000101030305070f0f1d1f`
+- `straight-fill:LB:L6>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fedcfc78f8d0f0`
+- `straight-fill:LB:L6>B5:sideA:dense` → **DERIVED** bitmap `00000000000001030307050f0f1f1d3f`
+- `straight-fill:LB:L6>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe76fcdcf878f0d0e0`
+- `straight-fill:LB:L6>B6:sideA:dense` → **DERIVED** bitmap `000000000000010303070d0f173f3d7f`
+- `straight-fill:LB:L6>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe76fcd8f870e0e0c0`
+- `straight-fill:LB:L6>B7:sideA:dense` → **DERIVED** bitmap `000000000000010307070d1f373f5dff`
+- `straight-fill:LB:L6>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe74fcd8f060e0c080`
+- `straight-fill:LB:L7>B0:sideA:dense` → **EXACT** `U+00E1D1` / glyph 465 / bitmap `00000000000000010101010101010101`
+- `straight-fill:LB:L7>B0:sideB:dense` → **DERIVED** bitmap `76fedcfe76fedcff77ffddff77ffddff`
+- `straight-fill:LB:L7>B1:sideA:dense` → **EXACT** `U+00E63D` / glyph 1597 / bitmap `00000000000000010101010303030303`
+- `straight-fill:LB:L7>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfe76fedefe`
+- `straight-fill:LB:L7>B2:sideA:dense` → **EXACT** `U+00EB1B` / glyph 2843 / bitmap `00000000000000010103030303070507`
+- `straight-fill:LB:L7>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedefe76fcdcfc`
+- `straight-fill:LB:L7>B3:sideA:dense` → **DERIVED** bitmap `00000000000000010103030707070d0f`
+- `straight-fill:LB:L7>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedefc74fcd8f8`
+- `straight-fill:LB:L7>B4:sideA:dense` → **DERIVED** bitmap `0000000000000001030305070f0f1d1f`
+- `straight-fill:LB:L7>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fedcfc78f8d0f0`
+- `straight-fill:LB:L7>B5:sideA:dense` → **DERIVED** bitmap `00000000000000010303050f0f1f1d3f`
+- `straight-fill:LB:L7>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fedcf878f0d0e0`
+- `straight-fill:LB:L7>B6:sideA:dense` → **DERIVED** bitmap `00000000000000010307050f173f3d7f`
+- `straight-fill:LB:L7>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fcdcf870e0e0c0`
+- `straight-fill:LB:L7>B7:sideA:dense` → **DERIVED** bitmap `000000000000000103070d1f173f5dff`
+- `straight-fill:LB:L7>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fcd8f070e0c080`
+- `straight-fill:LB:L8>B0:sideA:dense` → **EXACT** `U+00E1D8` / glyph 472 / bitmap `00000000000000000101010101010101`
+- `straight-fill:LB:L8>B0:sideB:dense` → **DERIVED** bitmap `76fedcfe76fedcfe77ffddff77ffddff`
+- `straight-fill:LB:L8>B1:sideA:dense` → **EXACT** `U+00E646` / glyph 1606 / bitmap `00000000000000000101010103030303`
+- `straight-fill:LB:L8>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff76fedefe`
+- `straight-fill:LB:L8>B2:sideA:dense` → **EXACT** `U+00EB25` / glyph 2853 / bitmap `00000000000000000101030303030507`
+- `straight-fill:LB:L8>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdefe76fedcfc`
+- `straight-fill:LB:L8>B3:sideA:dense` → **DERIVED** bitmap `00000000000000000101030307070d0f`
+- `straight-fill:LB:L8>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdefe74fcd8f8`
+- `straight-fill:LB:L8>B4:sideA:dense` → **DERIVED** bitmap `000000000000000001030307070f0d1f`
+- `straight-fill:LB:L8>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedefc74f8d8f0`
+- `straight-fill:LB:L8>B5:sideA:dense` → **DERIVED** bitmap `0000000000000000010303070f1f1d3f`
+- `straight-fill:LB:L8>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedefc78f0d0e0`
+- `straight-fill:LB:L8>B6:sideA:dense` → **DERIVED** bitmap `00000000000000000103050f0f1f3d7f`
+- `straight-fill:LB:L8>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedcf878f0e0c0`
+- `straight-fill:LB:L8>B7:sideA:dense` → **DERIVED** bitmap `00000000000000000103050f173f5dff`
+- `straight-fill:LB:L8>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedcf870e0c080`
+- `straight-fill:LB:L9>B0:sideA:dense` → **EXACT** `U+00E1DF` / glyph 479 / bitmap `00000000000000000001010101010101`
+- `straight-fill:LB:L9>B0:sideB:dense` → **DERIVED** bitmap `76fedcfe76fedcfe76ffddff77ffddff`
+- `straight-fill:LB:L9>B1:sideA:dense` → **EXACT** `U+00E652` / glyph 1618 / bitmap `00000000000000000001010103030303`
+- `straight-fill:LB:L9>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff76fedefe`
+- `straight-fill:LB:L9>B2:sideA:dense` → **EXACT** `U+00EB30` / glyph 2864 / bitmap `00000000000000000001010303030507`
+- `straight-fill:LB:L9>B2:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfe76fedcfc`
+- `straight-fill:LB:L9>B3:sideA:dense` → **DERIVED** bitmap `00000000000000000001030307070d0f`
+- `straight-fill:LB:L9>B3:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdefe74fcd8f8`
+- `straight-fill:LB:L9>B4:sideA:dense` → **DERIVED** bitmap `000000000000000000010303070f0d1f`
+- `straight-fill:LB:L9>B4:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdefe74f8d8f0`
+- `straight-fill:LB:L9>B5:sideA:dense` → **DERIVED** bitmap `0000000000000000000103070f0f1d3f`
+- `straight-fill:LB:L9>B5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdefc78f8d0e0`
+- `straight-fill:LB:L9>B6:sideA:dense` → **DERIVED** bitmap `0000000000000000000103070f1f3d7f`
+- `straight-fill:LB:L9>B6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdefc78f0e0c0`
+- `straight-fill:LB:L9>B7:sideA:dense` → **DERIVED** bitmap `0000000000000000000103071f3f5dff`
+- `straight-fill:LB:L9>B7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdefc78e0c080`
+- `straight-fill:LR:L0>R0:sideA:dense` → **DERIVED** bitmap `ffffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L0>R0:sideB:dense` → **EXACT** `U+00E000` / glyph 0 / bitmap `ff000000000000000000000000000000`
+- `straight-fill:LR:L0>R1:sideA:dense` → **DERIVED** bitmap `0fffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L0>R1:sideB:dense` → **DERIVED** bitmap `7ff00000000000000000000000000000`
+- `straight-fill:LR:L0>R10:sideA:dense` → **DERIVED** bitmap `010303070f1f1d3f777fddff77ffddff`
+- `straight-fill:LR:L0>R10:sideB:dense` → **DERIVED** bitmap `77fedefc78f0d0e040c0800000000000`
+- `straight-fill:LR:L0>R11:sideA:dense` → **DERIVED** bitmap `010303070f0f1d1f377f5dff77ffddff`
+- `straight-fill:LR:L0>R11:sideB:dense` → **DERIVED** bitmap `77fedefc78f8d0f060c0c08000000000`
+- `straight-fill:LR:L0>R12:sideA:dense` → **DERIVED** bitmap `01030307070f1d1f373f5d7ff7ffddff`
+- `straight-fill:LR:L0>R12:sideB:dense` → **DERIVED** bitmap `77fedefc74f8d0f060e0c0c080000000`
+- `straight-fill:LR:L0>R13:sideA:dense` → **DERIVED** bitmap `01030307070f0d1f173f3d7f77ffddff`
+- `straight-fill:LR:L0>R13:sideB:dense` → **DERIVED** bitmap `77fedefc74f8d8f070e0e0c040800000`
+- `straight-fill:LR:L0>R14:sideA:dense` → **DERIVED** bitmap `01030307070f0d1f173f3d7f77ffddff`
+- `straight-fill:LR:L0>R14:sideB:dense` → **DERIVED** bitmap `77fedefc74f8d8f070e0e0c040808000`
+- `straight-fill:LR:L0>R15:sideA:dense` → **DERIVED** bitmap `0101030307070d0f171f3d3f777fddff`
+- `straight-fill:LR:L0>R15:sideB:dense` → **DERIVED** bitmap `77ffdefe74fcd8f870f0e0e040c08080`
+- `straight-fill:LR:L0>R2:sideA:dense` → **DERIVED** bitmap `033fddff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L0>R2:sideB:dense` → **DERIVED** bitmap `77fcc000000000000000000000000000`
+- `straight-fill:LR:L0>R3:sideA:dense` → **DERIVED** bitmap `030f3dff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L0>R3:sideB:dense` → **DERIVED** bitmap `77fcf0c0000000000000000000000000`
+- `straight-fill:LR:L0>R4:sideA:dense` → **DERIVED** bitmap `01071d7ff7ffddff77ffddff77ffddff`
+- `straight-fill:LR:L0>R4:sideB:dense` → **DERIVED** bitmap `77fed8e0800000000000000000000000`
+- `straight-fill:LR:L0>R5:sideA:dense` → **DERIVED** bitmap `01070d1f77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L0>R5:sideB:dense` → **DERIVED** bitmap `77fed8f0608000000000000000000000`
+- `straight-fill:LR:L0>R6:sideA:dense` → **DERIVED** bitmap `0103051f377fddff77ffddff77ffddff`
+- `straight-fill:LR:L0>R6:sideB:dense` → **DERIVED** bitmap `77fedcf860c080000000000000000000`
+- `straight-fill:LR:L0>R7:sideA:dense` → **DERIVED** bitmap `0103050f173f5dff77ffddff77ffddff`
+- `straight-fill:LR:L0>R7:sideB:dense` → **DERIVED** bitmap `77fedcf870e0c0800000000000000000`
+- `straight-fill:LR:L0>R8:sideA:dense` → **DERIVED** bitmap `0103050f171f3d7ff7ffddff77ffddff`
+- `straight-fill:LR:L0>R8:sideB:dense` → **DERIVED** bitmap `77fedcf870f0e0c08000000000000000`
+- `straight-fill:LR:L0>R9:sideA:dense` → **DERIVED** bitmap `010305070f1f3d3f77ffddff77ffddff`
+- `straight-fill:LR:L0>R9:sideB:dense` → **DERIVED** bitmap `77fedcfc78f0e0e04080000000000000`
+- `straight-fill:LR:L1>R0:sideA:dense` → **DERIVED** bitmap `f0ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L1>R0:sideB:dense` → **DERIVED** bitmap `f70f0000000000000000000000000000`
+- `straight-fill:LR:L1>R1:sideA:dense` → **DERIVED** bitmap `00ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L1>R1:sideB:dense` → **DERIVED** bitmap `77ff0000000000000000000000000000`
+- `straight-fill:LR:L1>R10:sideA:dense` → **DERIVED** bitmap `00010307070f1d3f377fddff77ffddff`
+- `straight-fill:LR:L1>R10:sideB:dense` → **DERIVED** bitmap `77ffdefc74f8d0e060c0800000000000`
+- `straight-fill:LR:L1>R11:sideA:dense` → **DERIVED** bitmap `00010303070f1d1f377f5dff77ffddff`
+- `straight-fill:LR:L1>R11:sideB:dense` → **DERIVED** bitmap `77ffdefe74f8d0f060c0c08000000000`
+- `straight-fill:LR:L1>R12:sideA:dense` → **DERIVED** bitmap `00010303070f0d1f173f5d7ff7ffddff`
+- `straight-fill:LR:L1>R12:sideB:dense` → **DERIVED** bitmap `77ffdefe74f8d8f070e0c0c080000000`
+- `straight-fill:LR:L1>R13:sideA:dense` → **DERIVED** bitmap `0001030307070d1f173f3d7f77ffddff`
+- `straight-fill:LR:L1>R13:sideB:dense` → **DERIVED** bitmap `77ffdefe74fcd8f070e0e0c040800000`
+- `straight-fill:LR:L1>R14:sideA:dense` → **DERIVED** bitmap `0001030307070d0f171f3d3f777fddff`
+- `straight-fill:LR:L1>R14:sideB:dense` → **DERIVED** bitmap `77ffdefe74fcd8f870f0e0e040c08000`
+- `straight-fill:LR:L1>R15:sideA:dense` → **DERIVED** bitmap `0001030307070d0f171f3d3f777fddff`
+- `straight-fill:LR:L1>R15:sideB:dense` → **DERIVED** bitmap `77ffdefe74fcd8f870f0e0e040c08080`
+- `straight-fill:LR:L1>R2:sideA:dense` → **DERIVED** bitmap `000ffdff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L1>R2:sideB:dense` → **DERIVED** bitmap `77fff000000000000000000000000000`
+- `straight-fill:LR:L1>R3:sideA:dense` → **DERIVED** bitmap `00033dff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L1>R3:sideB:dense` → **DERIVED** bitmap `77fffcc0000000000000000000000000`
+- `straight-fill:LR:L1>R4:sideA:dense` → **DERIVED** bitmap `00030d3ff7ffddff77ffddff77ffddff`
+- `straight-fill:LR:L1>R4:sideB:dense` → **DERIVED** bitmap `77ffdcf0c00000000000000000000000`
+- `straight-fill:LR:L1>R5:sideA:dense` → **DERIVED** bitmap `0001071f77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L1>R5:sideB:dense` → **DERIVED** bitmap `77ffdef8608000000000000000000000`
+- `straight-fill:LR:L1>R6:sideA:dense` → **DERIVED** bitmap `0001070f177fddff77ffddff77ffddff`
+- `straight-fill:LR:L1>R6:sideB:dense` → **DERIVED** bitmap `77ffdef870e080000000000000000000`
+- `straight-fill:LR:L1>R7:sideA:dense` → **DERIVED** bitmap `000103071f3f5dff77ffddff77ffddff`
+- `straight-fill:LR:L1>R7:sideB:dense` → **DERIVED** bitmap `77ffdefc78e0c0800000000000000000`
+- `straight-fill:LR:L1>R8:sideA:dense` → **DERIVED** bitmap `000103070f1f3d7ff7ffddff77ffddff`
+- `straight-fill:LR:L1>R8:sideB:dense` → **DERIVED** bitmap `77ffdefc78f0e0c08000000000000000`
+- `straight-fill:LR:L1>R9:sideA:dense` → **DERIVED** bitmap `000103070f1f1d3f77ffddff77ffddff`
+- `straight-fill:LR:L1>R9:sideB:dense` → **DERIVED** bitmap `77ffdefc78f0d0e04080000000000000`
+- `straight-fill:LR:L10>R0:sideA:dense` → **DERIVED** bitmap `80c0c0e070f0d8fc76feddff77ffddff`
+- `straight-fill:LR:L10>R0:sideB:dense` → **DERIVED** bitmap `f77f5d3f171f0d070303010000000000`
+- `straight-fill:LR:L10>R1:sideA:dense` → **DERIVED** bitmap `0080c0e060f0d8fc74feddff77ffddff`
+- `straight-fill:LR:L10>R1:sideB:dense` → **DERIVED** bitmap `77ff5d3f371f0d070703010000000000`
+- `straight-fill:LR:L10>R10:sideA:dense` → **DERIVED** bitmap `00000000000000000000ffff77ffddff`
+- `straight-fill:LR:L10>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffff0000000000`
+- `straight-fill:LR:L10>R11:sideA:dense` → **DERIVED** bitmap `000000000000000000000fff77ffddff`
+- `straight-fill:LR:L10>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdff000000000`
+- `straight-fill:LR:L10>R12:sideA:dense` → **DERIVED** bitmap `00000000000000000000033ff7ffddff`
+- `straight-fill:LR:L10>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdffcc0000000`
+- `straight-fill:LR:L10>R13:sideA:dense` → **DERIVED** bitmap `00000000000000000000030f37ffddff`
+- `straight-fill:LR:L10>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdffc70c00000`
+- `straight-fill:LR:L10>R14:sideA:dense` → **DERIVED** bitmap `0000000000000000000001071f7fddff`
+- `straight-fill:LR:L10>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfe78e08000`
+- `straight-fill:LR:L10>R15:sideA:dense` → **DERIVED** bitmap `0000000000000000000001070f1f7dff`
+- `straight-fill:LR:L10>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfe78f0e080`
+- `straight-fill:LR:L10>R2:sideA:dense` → **DERIVED** bitmap `000080c060f0d0f874feddff77ffddff`
+- `straight-fill:LR:L10>R2:sideB:dense` → **DERIVED** bitmap `77ffdd7f371f1d0f0703010000000000`
+- `straight-fill:LR:L10>R3:sideA:dense` → **DERIVED** bitmap `0000008040e0d0f874feddff77ffddff`
+- `straight-fill:LR:L10>R3:sideB:dense` → **DERIVED** bitmap `77ffddff773f1d0f0703010000000000`
+- `straight-fill:LR:L10>R4:sideA:dense` → **DERIVED** bitmap `0000000080c0e0f874feddff77ffddff`
+- `straight-fill:LR:L10>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff77f3d1f0703010000000000`
+- `straight-fill:LR:L10>R5:sideA:dense` → **DERIVED** bitmap `000000000080e0f078feddff77ffddff`
+- `straight-fill:LR:L10>R5:sideB:dense` → **DERIVED** bitmap `77ffddff77ff7d1f0f07010000000000`
+- `straight-fill:LR:L10>R6:sideA:dense` → **DERIVED** bitmap `00000000000080e078feddff77ffddff`
+- `straight-fill:LR:L10>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdd7f1f07010000000000`
+- `straight-fill:LR:L10>R7:sideA:dense` → **DERIVED** bitmap `00000000000000c070fcdfff77ffddff`
+- `straight-fill:LR:L10>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff370f030000000000`
+- `straight-fill:LR:L10>R8:sideA:dense` → **DERIVED** bitmap `0000000000000000c0fcdfff77ffddff`
+- `straight-fill:LR:L10>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfff73f030000000000`
+- `straight-fill:LR:L10>R9:sideA:dense` → **DERIVED** bitmap `000000000000000000f0dfff77ffddff`
+- `straight-fill:LR:L10>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff0f0000000000`
+- `straight-fill:LR:L11>R0:sideA:dense` → **DERIVED** bitmap `80c0c0e070f0d8f874fedeff77ffddff`
+- `straight-fill:LR:L11>R0:sideB:dense` → **DERIVED** bitmap `f77f5d3f171f0d0f0703030100000000`
+- `straight-fill:LR:L11>R1:sideA:dense` → **DERIVED** bitmap `0080c0c060f0d0f874fedeff77ffddff`
+- `straight-fill:LR:L11>R1:sideB:dense` → **DERIVED** bitmap `77ff5d7f371f1d0f0703030100000000`
+- `straight-fill:LR:L11>R10:sideA:dense` → **DERIVED** bitmap `00000000000000000000f0ff77ffddff`
+- `straight-fill:LR:L11>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fffd0f00000000`
+- `straight-fill:LR:L11>R11:sideA:dense` → **DERIVED** bitmap `0000000000000000000000ff77ffddff`
+- `straight-fill:LR:L11>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff00000000`
+- `straight-fill:LR:L11>R12:sideA:dense` → **DERIVED** bitmap `00000000000000000000000ff7ffddff`
+- `straight-fill:LR:L11>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff0000000`
+- `straight-fill:LR:L11>R13:sideA:dense` → **DERIVED** bitmap `0000000000000000000000033fffddff`
+- `straight-fill:LR:L11>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff7cc00000`
+- `straight-fill:LR:L11>R14:sideA:dense` → **DERIVED** bitmap `0000000000000000000000030f3fddff`
+- `straight-fill:LR:L11>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff7cf0c000`
+- `straight-fill:LR:L11>R15:sideA:dense` → **DERIVED** bitmap `000000000000000000000001071f7dff`
+- `straight-fill:LR:L11>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff76f8e080`
+- `straight-fill:LR:L11>R2:sideA:dense` → **DERIVED** bitmap `000080c060e0d0f874fcdeff77ffddff`
+- `straight-fill:LR:L11>R2:sideB:dense` → **DERIVED** bitmap `77ffdd7f373f1d0f0707030100000000`
+- `straight-fill:LR:L11>R3:sideA:dense` → **DERIVED** bitmap `0000008040e0d0f078fcdeff77ffddff`
+- `straight-fill:LR:L11>R3:sideB:dense` → **DERIVED** bitmap `77ffddff773f1d1f0f07030100000000`
+- `straight-fill:LR:L11>R4:sideA:dense` → **DERIVED** bitmap `0000000080c0e0f078fcdeff77ffddff`
+- `straight-fill:LR:L11>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff77f3d1f0f07030100000000`
+- `straight-fill:LR:L11>R5:sideA:dense` → **DERIVED** bitmap `000000000080c0e078fcdeff77ffddff`
+- `straight-fill:LR:L11>R5:sideB:dense` → **DERIVED** bitmap `77ffddff77ff5d3f1f07030100000000`
+- `straight-fill:LR:L11>R6:sideA:dense` → **DERIVED** bitmap `00000000000080e070f8deff77ffddff`
+- `straight-fill:LR:L11>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdd7f170f070100000000`
+- `straight-fill:LR:L11>R7:sideA:dense` → **DERIVED** bitmap `000000000000008060f8deff77ffddff`
+- `straight-fill:LR:L11>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff771f070100000000`
+- `straight-fill:LR:L11>R8:sideA:dense` → **DERIVED** bitmap `0000000000000000c0f0dcff77ffddff`
+- `straight-fill:LR:L11>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfff73f0d0300000000`
+- `straight-fill:LR:L11>R9:sideA:dense` → **DERIVED** bitmap `000000000000000000c0fcff77ffddff`
+- `straight-fill:LR:L11>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff3d0300000000`
+- `straight-fill:LR:L12>R0:sideA:dense` → **DERIVED** bitmap `80c0c0e060f0d0f874fcdefe77ffddff`
+- `straight-fill:LR:L12>R0:sideB:dense` → **DERIVED** bitmap `f77f5d3f371f1d0f0707030301000000`
+- `straight-fill:LR:L12>R1:sideA:dense` → **DERIVED** bitmap `0080c0c060f0d0f878fcdefe77ffddff`
+- `straight-fill:LR:L12>R1:sideB:dense` → **DERIVED** bitmap `77ff5d7f371f1d0f0f07030301000000`
+- `straight-fill:LR:L12>R10:sideA:dense` → **DERIVED** bitmap `00000000000000000000c0fc77ffddff`
+- `straight-fill:LR:L12>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdd3f03000000`
+- `straight-fill:LR:L12>R11:sideA:dense` → **DERIVED** bitmap `0000000000000000000000f07fffddff`
+- `straight-fill:LR:L12>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff0f000000`
+- `straight-fill:LR:L12>R12:sideA:dense` → **DERIVED** bitmap `000000000000000000000000ffffddff`
+- `straight-fill:LR:L12>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddffff000000`
+- `straight-fill:LR:L12>R13:sideA:dense` → **DERIVED** bitmap `0000000000000000000000000fffddff`
+- `straight-fill:LR:L12>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff7ff00000`
+- `straight-fill:LR:L12>R14:sideA:dense` → **DERIVED** bitmap `000000000000000000000000033fddff`
+- `straight-fill:LR:L12>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fcc000`
+- `straight-fill:LR:L12>R15:sideA:dense` → **DERIVED** bitmap `000000000000000000000000030f3dff`
+- `straight-fill:LR:L12>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fcf0c0`
+- `straight-fill:LR:L12>R2:sideA:dense` → **DERIVED** bitmap `000080c040e0d0f078fcdefe77ffddff`
+- `straight-fill:LR:L12>R2:sideB:dense` → **DERIVED** bitmap `77ffdd7f773f1d1f0f07030301000000`
+- `straight-fill:LR:L12>R3:sideA:dense` → **DERIVED** bitmap `0000008040e0e0f078fcdcfe77ffddff`
+- `straight-fill:LR:L12>R3:sideB:dense` → **DERIVED** bitmap `77ffddff773f3d1f0f07050301000000`
+- `straight-fill:LR:L12>R4:sideA:dense` → **DERIVED** bitmap `0000000080c0e0f070f8dcfe77ffddff`
+- `straight-fill:LR:L12>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff77f3d1f170f050301000000`
+- `straight-fill:LR:L12>R5:sideA:dense` → **DERIVED** bitmap `000000000080c0e070f8dcfe77ffddff`
+- `straight-fill:LR:L12>R5:sideB:dense` → **DERIVED** bitmap `77ffddff77ff5d3f170f050301000000`
+- `straight-fill:LR:L12>R6:sideA:dense` → **DERIVED** bitmap `00000000000080c060f8dcfe77ffddff`
+- `straight-fill:LR:L12>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdd7f371f050301000000`
+- `straight-fill:LR:L12>R7:sideA:dense` → **DERIVED** bitmap `000000000000008060f0d8fe77ffddff`
+- `straight-fill:LR:L12>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff771f0d0701000000`
+- `straight-fill:LR:L12>R8:sideA:dense` → **DERIVED** bitmap `000000000000000080e0d8fe77ffddff`
+- `straight-fill:LR:L12>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfff77f1d0701000000`
+- `straight-fill:LR:L12>R9:sideA:dense` → **DERIVED** bitmap `000000000000000000c0f0fc77ffddff`
+- `straight-fill:LR:L12>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff3d0f03000000`
+- `straight-fill:LR:L13>R0:sideA:dense` → **DERIVED** bitmap `80c0c0e060f0d0f878fcdcfe76ffddff`
+- `straight-fill:LR:L13>R0:sideB:dense` → **DERIVED** bitmap `f77f5d3f371f1d0f0f07050303010000`
+- `straight-fill:LR:L13>R1:sideA:dense` → **DERIVED** bitmap `0080c0c060e0d0f078fcdcfe76ffddff`
+- `straight-fill:LR:L13>R1:sideB:dense` → **DERIVED** bitmap `77ff5d7f373f1d1f0f07050303010000`
+- `straight-fill:LR:L13>R10:sideA:dense` → **DERIVED** bitmap `00000000000000000000c0f07cffddff`
+- `straight-fill:LR:L13>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdd3f0f030000`
+- `straight-fill:LR:L13>R11:sideA:dense` → **DERIVED** bitmap `0000000000000000000000c07cffddff`
+- `straight-fill:LR:L13>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff3f030000`
+- `straight-fill:LR:L13>R12:sideA:dense` → **DERIVED** bitmap `000000000000000000000000f0ffddff`
+- `straight-fill:LR:L13>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff70f0000`
+- `straight-fill:LR:L13>R13:sideA:dense` → **DERIVED** bitmap `00000000000000000000000000ffddff`
+- `straight-fill:LR:L13>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ff0000`
+- `straight-fill:LR:L13>R14:sideA:dense` → **DERIVED** bitmap `000000000000000000000000000ffdff`
+- `straight-fill:LR:L13>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fff000`
+- `straight-fill:LR:L13>R15:sideA:dense` → **EXACT** `U+00E990` / glyph 2448 / bitmap `00000000000000000000000000033dff`
+- `straight-fill:LR:L13>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fffcc0`
+- `straight-fill:LR:L13>R2:sideA:dense` → **DERIVED** bitmap `000080c040e0d0f078f8dcfe76ffddff`
+- `straight-fill:LR:L13>R2:sideB:dense` → **DERIVED** bitmap `77ffdd7f773f1d1f0f0f050303010000`
+- `straight-fill:LR:L13>R3:sideA:dense` → **DERIVED** bitmap `0000008040c0e0f070f8dcfe76ffddff`
+- `straight-fill:LR:L13>R3:sideB:dense` → **DERIVED** bitmap `77ffddff777f3d1f170f050303010000`
+- `straight-fill:LR:L13>R4:sideA:dense` → **DERIVED** bitmap `0000000080c0e0e070f8dcfc76ffddff`
+- `straight-fill:LR:L13>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff77f3d3f170f050703010000`
+- `straight-fill:LR:L13>R5:sideA:dense` → **DERIVED** bitmap `000000000080c0e070f0d8fc76ffddff`
+- `straight-fill:LR:L13>R5:sideB:dense` → **DERIVED** bitmap `77ffddff77ff5d3f171f0d0703010000`
+- `straight-fill:LR:L13>R6:sideA:dense` → **DERIVED** bitmap `00000000000080c060f0d8fc76ffddff`
+- `straight-fill:LR:L13>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdd7f371f0d0703010000`
+- `straight-fill:LR:L13>R7:sideA:dense` → **DERIVED** bitmap `000000000000008040e0d8fc76ffddff`
+- `straight-fill:LR:L13>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff773f1d0703010000`
+- `straight-fill:LR:L13>R8:sideA:dense` → **DERIVED** bitmap `000000000000000080e0d0f876ffddff`
+- `straight-fill:LR:L13>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfff77f1d0f07010000`
+- `straight-fill:LR:L13>R9:sideA:dense` → **DERIVED** bitmap `00000000000000000080e0f876ffddff`
+- `straight-fill:LR:L13>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff7d1f07010000`
+- `straight-fill:LR:L14>R0:sideA:dense` → **DERIVED** bitmap `8080c0c060e0d0f078f8dcfc76feddff`
+- `straight-fill:LR:L14>R0:sideB:dense` → **DERIVED** bitmap `f7ff5d7f373f1d1f0f0f050703030100`
+- `straight-fill:LR:L14>R1:sideA:dense` → **DERIVED** bitmap `0080c0c060e0d0f078f8dcfc76feddff`
+- `straight-fill:LR:L14>R1:sideB:dense` → **DERIVED** bitmap `77ff5d7f373f1d1f0f0f050703030100`
+- `straight-fill:LR:L14>R10:sideA:dense` → **DERIVED** bitmap `0000000000000000000080e078feddff`
+- `straight-fill:LR:L14>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdd7f1f070100`
+- `straight-fill:LR:L14>R11:sideA:dense` → **DERIVED** bitmap `0000000000000000000000c070fcdfff`
+- `straight-fill:LR:L14>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff370f0300`
+- `straight-fill:LR:L14>R12:sideA:dense` → **DERIVED** bitmap `000000000000000000000000c0fcdfff`
+- `straight-fill:LR:L14>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff73f0300`
+- `straight-fill:LR:L14>R13:sideA:dense` → **DERIVED** bitmap `00000000000000000000000000f0dfff`
+- `straight-fill:LR:L14>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ff0f00`
+- `straight-fill:LR:L14>R14:sideA:dense` → **EXACT** `U+00E4C1` / glyph 1217 / bitmap `0000000000000000000000000000ffff`
+- `straight-fill:LR:L14>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffff00`
+- `straight-fill:LR:L14>R15:sideA:dense` → **EXACT** `U+00E4C3` / glyph 1219 / bitmap `00000000000000000000000000000fff`
+- `straight-fill:LR:L14>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdff0`
+- `straight-fill:LR:L14>R2:sideA:dense` → **DERIVED** bitmap `000080c040e0e0f070f8dcfc76feddff`
+- `straight-fill:LR:L14>R2:sideB:dense` → **DERIVED** bitmap `77ffdd7f773f3d1f170f050703030100`
+- `straight-fill:LR:L14>R3:sideA:dense` → **DERIVED** bitmap `0000008040c0e0f070f8d8fc76feddff`
+- `straight-fill:LR:L14>R3:sideB:dense` → **DERIVED** bitmap `77ffddff777f3d1f170f0d0703030100`
+- `straight-fill:LR:L14>R4:sideA:dense` → **DERIVED** bitmap `0000000080c0c0e070f0d8fc76feddff`
+- `straight-fill:LR:L14>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff77f5d3f171f0d0703030100`
+- `straight-fill:LR:L14>R5:sideA:dense` → **DERIVED** bitmap `000000000080c0e060f0d8fc74feddff`
+- `straight-fill:LR:L14>R5:sideB:dense` → **DERIVED** bitmap `77ffddff77ff5d3f371f0d0707030100`
+- `straight-fill:LR:L14>R6:sideA:dense` → **DERIVED** bitmap `00000000000080c060f0d0f874feddff`
+- `straight-fill:LR:L14>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdd7f371f1d0f07030100`
+- `straight-fill:LR:L14>R7:sideA:dense` → **DERIVED** bitmap `000000000000008040e0d0f874feddff`
+- `straight-fill:LR:L14>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff773f1d0f07030100`
+- `straight-fill:LR:L14>R8:sideA:dense` → **DERIVED** bitmap `000000000000000080c0e0f874feddff`
+- `straight-fill:LR:L14>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfff77f3d1f07030100`
+- `straight-fill:LR:L14>R9:sideA:dense` → **DERIVED** bitmap `00000000000000000080e0f078feddff`
+- `straight-fill:LR:L14>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff7d1f0f070100`
+- `straight-fill:LR:L15>R0:sideA:dense` → **DERIVED** bitmap `8080c0c060e0d0f078f8dcfc76feddff`
+- `straight-fill:LR:L15>R0:sideB:dense` → **DERIVED** bitmap `f7ff5d7f373f1d1f0f0f050703030101`
+- `straight-fill:LR:L15>R1:sideA:dense` → **DERIVED** bitmap `008080c040e0e0f070f8d8fc74fedeff`
+- `straight-fill:LR:L15>R1:sideB:dense` → **DERIVED** bitmap `77ffdd7f773f3d1f170f0d0707030301`
+- `straight-fill:LR:L15>R10:sideA:dense` → **DERIVED** bitmap `0000000000000000000080e070f8deff`
+- `straight-fill:LR:L15>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdd7f170f0701`
+- `straight-fill:LR:L15>R11:sideA:dense` → **DERIVED** bitmap `00000000000000000000008060f8deff`
+- `straight-fill:LR:L15>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff771f0701`
+- `straight-fill:LR:L15>R12:sideA:dense` → **DERIVED** bitmap `000000000000000000000000c0f0dcff`
+- `straight-fill:LR:L15>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff73f0d03`
+- `straight-fill:LR:L15>R13:sideA:dense` → **EXACT** `U+00E4DD` / glyph 1245 / bitmap `00000000000000000000000000c0fcff`
+- `straight-fill:LR:L15>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ff3d03`
+- `straight-fill:LR:L15>R14:sideA:dense` → **EXACT** `U+00E4DF` / glyph 1247 / bitmap `0000000000000000000000000000f0ff`
+- `straight-fill:LR:L15>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fffd0f`
+- `straight-fill:LR:L15>R15:sideA:dense` → **EXACT** `U+00E0FF` / glyph 255 / bitmap `000000000000000000000000000000ff`
+- `straight-fill:LR:L15>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L15>R2:sideA:dense` → **DERIVED** bitmap `000080c040e0e0f070f8d8fc74fedeff`
+- `straight-fill:LR:L15>R2:sideB:dense` → **DERIVED** bitmap `77ffdd7f773f3d1f170f0d0707030301`
+- `straight-fill:LR:L15>R3:sideA:dense` → **DERIVED** bitmap `0000008040c0e0e070f0d8fc74fedeff`
+- `straight-fill:LR:L15>R3:sideB:dense` → **DERIVED** bitmap `77ffddff777f3d3f171f0d0707030301`
+- `straight-fill:LR:L15>R4:sideA:dense` → **DERIVED** bitmap `0000000080c0c0e070f0d8f874fedeff`
+- `straight-fill:LR:L15>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff77f5d3f171f0d0f07030301`
+- `straight-fill:LR:L15>R5:sideA:dense` → **DERIVED** bitmap `000000000080c0c060f0d0f874fedeff`
+- `straight-fill:LR:L15>R5:sideB:dense` → **DERIVED** bitmap `77ffddff77ff5d7f371f1d0f07030301`
+- `straight-fill:LR:L15>R6:sideA:dense` → **DERIVED** bitmap `00000000000080c060e0d0f874fcdeff`
+- `straight-fill:LR:L15>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdd7f373f1d0f07070301`
+- `straight-fill:LR:L15>R7:sideA:dense` → **DERIVED** bitmap `000000000000008040e0d0f078fcdeff`
+- `straight-fill:LR:L15>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff773f1d1f0f070301`
+- `straight-fill:LR:L15>R8:sideA:dense` → **DERIVED** bitmap `000000000000000080c0e0f078fcdeff`
+- `straight-fill:LR:L15>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfff77f3d1f0f070301`
+- `straight-fill:LR:L15>R9:sideA:dense` → **DERIVED** bitmap `00000000000000000080c0e078fcdeff`
+- `straight-fill:LR:L15>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff5d3f1f070301`
+- `straight-fill:LR:L2>R0:sideA:dense` → **DERIVED** bitmap `c0fcdfff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L2>R0:sideB:dense` → **DERIVED** bitmap `f73f0300000000000000000000000000`
+- `straight-fill:LR:L2>R1:sideA:dense` → **DERIVED** bitmap `00f0dfff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L2>R1:sideB:dense` → **DERIVED** bitmap `77ff0f00000000000000000000000000`
+- `straight-fill:LR:L2>R10:sideA:dense` → **DERIVED** bitmap `00000103070f1d1f377fddff77ffddff`
+- `straight-fill:LR:L2>R10:sideB:dense` → **DERIVED** bitmap `77ffddfe74f8d0f060c0800000000000`
+- `straight-fill:LR:L2>R11:sideA:dense` → **DERIVED** bitmap `0000010307070d1f373f5dff77ffddff`
+- `straight-fill:LR:L2>R11:sideB:dense` → **DERIVED** bitmap `77ffddfe74fcd8f060e0c08000000000`
+- `straight-fill:LR:L2>R12:sideA:dense` → **DERIVED** bitmap `0000010303070d1f173f5d7ff7ffddff`
+- `straight-fill:LR:L2>R12:sideB:dense` → **DERIVED** bitmap `77ffddfe76fcd8f070e0c0c080000000`
+- `straight-fill:LR:L2>R13:sideA:dense` → **DERIVED** bitmap `0000010303070d0f171f3d7f77ffddff`
+- `straight-fill:LR:L2>R13:sideB:dense` → **DERIVED** bitmap `77ffddfe76fcd8f870f0e0c040800000`
+- `straight-fill:LR:L2>R14:sideA:dense` → **DERIVED** bitmap `000001030307050f171f3d3f777fddff`
+- `straight-fill:LR:L2>R14:sideB:dense` → **DERIVED** bitmap `77ffddfe76fcdcf870f0e0e040c08000`
+- `straight-fill:LR:L2>R15:sideA:dense` → **DERIVED** bitmap `000001030307050f0f1f1d3f377f5dff`
+- `straight-fill:LR:L2>R15:sideB:dense` → **DERIVED** bitmap `77ffddfe76fcdcf878f0d0e060c0c080`
+- `straight-fill:LR:L2>R2:sideA:dense` → **DERIVED** bitmap `0000ffff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L2>R2:sideB:dense` → **DERIVED** bitmap `77ffff00000000000000000000000000`
+- `straight-fill:LR:L2>R3:sideA:dense` → **DERIVED** bitmap `00000fff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L2>R3:sideB:dense` → **DERIVED** bitmap `77ffdff0000000000000000000000000`
+- `straight-fill:LR:L2>R4:sideA:dense` → **DERIVED** bitmap `0000033ff7ffddff77ffddff77ffddff`
+- `straight-fill:LR:L2>R4:sideB:dense` → **DERIVED** bitmap `77ffdffcc00000000000000000000000`
+- `straight-fill:LR:L2>R5:sideA:dense` → **DERIVED** bitmap `0000030f37ffddff77ffddff77ffddff`
+- `straight-fill:LR:L2>R5:sideB:dense` → **DERIVED** bitmap `77ffdffc70c000000000000000000000`
+- `straight-fill:LR:L2>R6:sideA:dense` → **DERIVED** bitmap `000001071f7fddff77ffddff77ffddff`
+- `straight-fill:LR:L2>R6:sideB:dense` → **DERIVED** bitmap `77ffddfe78e080000000000000000000`
+- `straight-fill:LR:L2>R7:sideA:dense` → **DERIVED** bitmap `000001070f1f7dff77ffddff77ffddff`
+- `straight-fill:LR:L2>R7:sideB:dense` → **DERIVED** bitmap `77ffddfe78f0e0800000000000000000`
+- `straight-fill:LR:L2>R8:sideA:dense` → **DERIVED** bitmap `00000103071f3d7ff7ffddff77ffddff`
+- `straight-fill:LR:L2>R8:sideB:dense` → **DERIVED** bitmap `77ffddfe74f8e0c08000000000000000`
+- `straight-fill:LR:L2>R9:sideA:dense` → **DERIVED** bitmap `00000103070f1d3f77ffddff77ffddff`
+- `straight-fill:LR:L2>R9:sideB:dense` → **DERIVED** bitmap `77ffddfe74f8d0e04080000000000000`
+- `straight-fill:LR:L3>R0:sideA:dense` → **DERIVED** bitmap `c0f0dcff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L3>R0:sideB:dense` → **DERIVED** bitmap `f73f0d03000000000000000000000000`
+- `straight-fill:LR:L3>R1:sideA:dense` → **DERIVED** bitmap `00c0fcff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L3>R1:sideB:dense` → **DERIVED** bitmap `77ff3d03000000000000000000000000`
+- `straight-fill:LR:L3>R10:sideA:dense` → **DERIVED** bitmap `0000000103070d1f377fddff77ffddff`
+- `straight-fill:LR:L3>R10:sideB:dense` → **DERIVED** bitmap `77ffddff76fcd8f060c0800000000000`
+- `straight-fill:LR:L3>R11:sideA:dense` → **DERIVED** bitmap `0000000103070d1f173f5dff77ffddff`
+- `straight-fill:LR:L3>R11:sideB:dense` → **DERIVED** bitmap `77ffddff76fcd8f070e0c08000000000`
+- `straight-fill:LR:L3>R12:sideA:dense` → **DERIVED** bitmap `000000010307050f173f3d7ff7ffddff`
+- `straight-fill:LR:L3>R12:sideB:dense` → **DERIVED** bitmap `77ffddff76fcdcf870e0e0c080000000`
+- `straight-fill:LR:L3>R13:sideA:dense` → **DERIVED** bitmap `000000010303050f171f3d7f77ffddff`
+- `straight-fill:LR:L3>R13:sideB:dense` → **DERIVED** bitmap `77ffddff76fedcf870f0e0c040800000`
+- `straight-fill:LR:L3>R14:sideA:dense` → **DERIVED** bitmap `000000010303050f0f1f1d3f777fddff`
+- `straight-fill:LR:L3>R14:sideB:dense` → **DERIVED** bitmap `77ffddff76fedcf878f0d0e040c08000`
+- `straight-fill:LR:L3>R15:sideA:dense` → **DERIVED** bitmap `00000001030305070f1f1d3f377f5dff`
+- `straight-fill:LR:L3>R15:sideB:dense` → **DERIVED** bitmap `77ffddff76fedcfc78f0d0e060c0c080`
+- `straight-fill:LR:L3>R2:sideA:dense` → **DERIVED** bitmap `0000f0ff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L3>R2:sideB:dense` → **DERIVED** bitmap `77fffd0f000000000000000000000000`
+- `straight-fill:LR:L3>R3:sideA:dense` → **DERIVED** bitmap `000000ff77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L3>R3:sideB:dense` → **DERIVED** bitmap `77ffddff000000000000000000000000`
+- `straight-fill:LR:L3>R4:sideA:dense` → **DERIVED** bitmap `0000000ff7ffddff77ffddff77ffddff`
+- `straight-fill:LR:L3>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff00000000000000000000000`
+- `straight-fill:LR:L3>R5:sideA:dense` → **DERIVED** bitmap `000000033fffddff77ffddff77ffddff`
+- `straight-fill:LR:L3>R5:sideB:dense` → **DERIVED** bitmap `77ffddff7cc000000000000000000000`
+- `straight-fill:LR:L3>R6:sideA:dense` → **DERIVED** bitmap `000000030f3fddff77ffddff77ffddff`
+- `straight-fill:LR:L3>R6:sideB:dense` → **DERIVED** bitmap `77ffddff7cf0c0000000000000000000`
+- `straight-fill:LR:L3>R7:sideA:dense` → **DERIVED** bitmap `00000001071f7dff77ffddff77ffddff`
+- `straight-fill:LR:L3>R7:sideB:dense` → **DERIVED** bitmap `77ffddff76f8e0800000000000000000`
+- `straight-fill:LR:L3>R8:sideA:dense` → **DERIVED** bitmap `00000001070f1d7ff7ffddff77ffddff`
+- `straight-fill:LR:L3>R8:sideB:dense` → **DERIVED** bitmap `77ffddff76f8d0e08000000000000000`
+- `straight-fill:LR:L3>R9:sideA:dense` → **DERIVED** bitmap `0000000103071d3f77ffddff77ffddff`
+- `straight-fill:LR:L3>R9:sideB:dense` → **DERIVED** bitmap `77ffddff76fcd8e04080000000000000`
+- `straight-fill:LR:L4>R0:sideA:dense` → **DERIVED** bitmap `80e0d8fe77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L4>R0:sideB:dense` → **DERIVED** bitmap `f77f1d07010000000000000000000000`
+- `straight-fill:LR:L4>R1:sideA:dense` → **DERIVED** bitmap `00c0f0fc77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L4>R1:sideB:dense` → **DERIVED** bitmap `77ff3d0f030000000000000000000000`
+- `straight-fill:LR:L4>R10:sideA:dense` → **DERIVED** bitmap `000000000103051f377fddff77ffddff`
+- `straight-fill:LR:L4>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77fedcf860c0800000000000`
+- `straight-fill:LR:L4>R11:sideA:dense` → **DERIVED** bitmap `000000000103050f173f5dff77ffddff`
+- `straight-fill:LR:L4>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77fedcf870e0c08000000000`
+- `straight-fill:LR:L4>R12:sideA:dense` → **DERIVED** bitmap `000000000103050f171f3d7ff7ffddff`
+- `straight-fill:LR:L4>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77fedcf870f0e0c080000000`
+- `straight-fill:LR:L4>R13:sideA:dense` → **DERIVED** bitmap `00000000010305070f1f3d3f77ffddff`
+- `straight-fill:LR:L4>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77fedcfc78f0e0e040800000`
+- `straight-fill:LR:L4>R14:sideA:dense` → **DERIVED** bitmap `00000000010303070f1f1d3f777fddff`
+- `straight-fill:LR:L4>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77fedefc78f0d0e040c08000`
+- `straight-fill:LR:L4>R15:sideA:dense` → **DERIVED** bitmap `00000000010303070f0f1d1f377f5dff`
+- `straight-fill:LR:L4>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77fedefc78f8d0f060c0c080`
+- `straight-fill:LR:L4>R2:sideA:dense` → **DERIVED** bitmap `0000c0fc77ffddff77ffddff77ffddff`
+- `straight-fill:LR:L4>R2:sideB:dense` → **DERIVED** bitmap `77ffdd3f030000000000000000000000`
+- `straight-fill:LR:L4>R3:sideA:dense` → **DERIVED** bitmap `000000f07fffddff77ffddff77ffddff`
+- `straight-fill:LR:L4>R3:sideB:dense` → **DERIVED** bitmap `77ffddff0f0000000000000000000000`
+- `straight-fill:LR:L4>R4:sideA:dense` → **DERIVED** bitmap `00000000ffffddff77ffddff77ffddff`
+- `straight-fill:LR:L4>R4:sideB:dense` → **DERIVED** bitmap `77ffddffff0000000000000000000000`
+- `straight-fill:LR:L4>R5:sideA:dense` → **DERIVED** bitmap `000000000fffddff77ffddff77ffddff`
+- `straight-fill:LR:L4>R5:sideB:dense` → **DERIVED** bitmap `77ffddff7ff000000000000000000000`
+- `straight-fill:LR:L4>R6:sideA:dense` → **DERIVED** bitmap `00000000033fddff77ffddff77ffddff`
+- `straight-fill:LR:L4>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77fcc0000000000000000000`
+- `straight-fill:LR:L4>R7:sideA:dense` → **DERIVED** bitmap `00000000030f3dff77ffddff77ffddff`
+- `straight-fill:LR:L4>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77fcf0c00000000000000000`
+- `straight-fill:LR:L4>R8:sideA:dense` → **DERIVED** bitmap `0000000001071d7ff7ffddff77ffddff`
+- `straight-fill:LR:L4>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77fed8e08000000000000000`
+- `straight-fill:LR:L4>R9:sideA:dense` → **DERIVED** bitmap `0000000001070d1f77ffddff77ffddff`
+- `straight-fill:LR:L4>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77fed8f06080000000000000`
+- `straight-fill:LR:L5>R0:sideA:dense` → **DERIVED** bitmap `80e0d0f876ffddff77ffddff77ffddff`
+- `straight-fill:LR:L5>R0:sideB:dense` → **DERIVED** bitmap `f77f1d0f070100000000000000000000`
+- `straight-fill:LR:L5>R1:sideA:dense` → **DERIVED** bitmap `0080e0f876ffddff77ffddff77ffddff`
+- `straight-fill:LR:L5>R1:sideB:dense` → **DERIVED** bitmap `77ff7d1f070100000000000000000000`
+- `straight-fill:LR:L5>R10:sideA:dense` → **DERIVED** bitmap `000000000001070f177fddff77ffddff`
+- `straight-fill:LR:L5>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdef870e0800000000000`
+- `straight-fill:LR:L5>R11:sideA:dense` → **DERIVED** bitmap `00000000000103071f3f5dff77ffddff`
+- `straight-fill:LR:L5>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefc78e0c08000000000`
+- `straight-fill:LR:L5>R12:sideA:dense` → **DERIVED** bitmap `00000000000103070f1f3d7ff7ffddff`
+- `straight-fill:LR:L5>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefc78f0e0c080000000`
+- `straight-fill:LR:L5>R13:sideA:dense` → **DERIVED** bitmap `00000000000103070f1f1d3f77ffddff`
+- `straight-fill:LR:L5>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefc78f0d0e040800000`
+- `straight-fill:LR:L5>R14:sideA:dense` → **DERIVED** bitmap `0000000000010307070f1d3f377fddff`
+- `straight-fill:LR:L5>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefc74f8d0e060c08000`
+- `straight-fill:LR:L5>R15:sideA:dense` → **DERIVED** bitmap `0000000000010303070f1d1f377f5dff`
+- `straight-fill:LR:L5>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdefe74f8d0f060c0c080`
+- `straight-fill:LR:L5>R2:sideA:dense` → **DERIVED** bitmap `0000c0f07cffddff77ffddff77ffddff`
+- `straight-fill:LR:L5>R2:sideB:dense` → **DERIVED** bitmap `77ffdd3f0f0300000000000000000000`
+- `straight-fill:LR:L5>R3:sideA:dense` → **DERIVED** bitmap `000000c07cffddff77ffddff77ffddff`
+- `straight-fill:LR:L5>R3:sideB:dense` → **DERIVED** bitmap `77ffddff3f0300000000000000000000`
+- `straight-fill:LR:L5>R4:sideA:dense` → **DERIVED** bitmap `00000000f0ffddff77ffddff77ffddff`
+- `straight-fill:LR:L5>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff70f00000000000000000000`
+- `straight-fill:LR:L5>R5:sideA:dense` → **DERIVED** bitmap `0000000000ffddff77ffddff77ffddff`
+- `straight-fill:LR:L5>R5:sideB:dense` → **DERIVED** bitmap `77ffddff77ff00000000000000000000`
+- `straight-fill:LR:L5>R6:sideA:dense` → **DERIVED** bitmap `00000000000ffdff77ffddff77ffddff`
+- `straight-fill:LR:L5>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77fff0000000000000000000`
+- `straight-fill:LR:L5>R7:sideA:dense` → **DERIVED** bitmap `0000000000033dff77ffddff77ffddff`
+- `straight-fill:LR:L5>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77fffcc00000000000000000`
+- `straight-fill:LR:L5>R8:sideA:dense` → **DERIVED** bitmap `0000000000030d3ff7ffddff77ffddff`
+- `straight-fill:LR:L5>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdcf0c000000000000000`
+- `straight-fill:LR:L5>R9:sideA:dense` → **DERIVED** bitmap `000000000001071f77ffddff77ffddff`
+- `straight-fill:LR:L5>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdef86080000000000000`
+- `straight-fill:LR:L6>R0:sideA:dense` → **DERIVED** bitmap `80c0e0f874feddff77ffddff77ffddff`
+- `straight-fill:LR:L6>R0:sideB:dense` → **DERIVED** bitmap `f77f3d1f070301000000000000000000`
+- `straight-fill:LR:L6>R1:sideA:dense` → **DERIVED** bitmap `0080e0f078feddff77ffddff77ffddff`
+- `straight-fill:LR:L6>R1:sideB:dense` → **DERIVED** bitmap `77ff7d1f0f0701000000000000000000`
+- `straight-fill:LR:L6>R10:sideA:dense` → **DERIVED** bitmap `00000000000001071f7fddff77ffddff`
+- `straight-fill:LR:L6>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe78e0800000000000`
+- `straight-fill:LR:L6>R11:sideA:dense` → **DERIVED** bitmap `00000000000001070f1f7dff77ffddff`
+- `straight-fill:LR:L6>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe78f0e08000000000`
+- `straight-fill:LR:L6>R12:sideA:dense` → **DERIVED** bitmap `0000000000000103071f3d7ff7ffddff`
+- `straight-fill:LR:L6>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe74f8e0c080000000`
+- `straight-fill:LR:L6>R13:sideA:dense` → **DERIVED** bitmap `0000000000000103070f1d3f77ffddff`
+- `straight-fill:LR:L6>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe74f8d0e040800000`
+- `straight-fill:LR:L6>R14:sideA:dense` → **DERIVED** bitmap `0000000000000103070f1d1f377fddff`
+- `straight-fill:LR:L6>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe74f8d0f060c08000`
+- `straight-fill:LR:L6>R15:sideA:dense` → **DERIVED** bitmap `000000000000010307070d1f373f5dff`
+- `straight-fill:LR:L6>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfe74fcd8f060e0c080`
+- `straight-fill:LR:L6>R2:sideA:dense` → **DERIVED** bitmap `000080e078feddff77ffddff77ffddff`
+- `straight-fill:LR:L6>R2:sideB:dense` → **DERIVED** bitmap `77ffdd7f1f0701000000000000000000`
+- `straight-fill:LR:L6>R3:sideA:dense` → **DERIVED** bitmap `000000c070fcdfff77ffddff77ffddff`
+- `straight-fill:LR:L6>R3:sideB:dense` → **DERIVED** bitmap `77ffddff370f03000000000000000000`
+- `straight-fill:LR:L6>R4:sideA:dense` → **DERIVED** bitmap `00000000c0fcdfff77ffddff77ffddff`
+- `straight-fill:LR:L6>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff73f03000000000000000000`
+- `straight-fill:LR:L6>R5:sideA:dense` → **DERIVED** bitmap `0000000000f0dfff77ffddff77ffddff`
+- `straight-fill:LR:L6>R5:sideB:dense` → **DERIVED** bitmap `77ffddff77ff0f000000000000000000`
+- `straight-fill:LR:L6>R6:sideA:dense` → **DERIVED** bitmap `000000000000ffff77ffddff77ffddff`
+- `straight-fill:LR:L6>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffff000000000000000000`
+- `straight-fill:LR:L6>R7:sideA:dense` → **DERIVED** bitmap `0000000000000fff77ffddff77ffddff`
+- `straight-fill:LR:L6>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdff00000000000000000`
+- `straight-fill:LR:L6>R8:sideA:dense` → **DERIVED** bitmap `000000000000033ff7ffddff77ffddff`
+- `straight-fill:LR:L6>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdffcc000000000000000`
+- `straight-fill:LR:L6>R9:sideA:dense` → **DERIVED** bitmap `000000000000030f37ffddff77ffddff`
+- `straight-fill:LR:L6>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdffc70c0000000000000`
+- `straight-fill:LR:L7>R0:sideA:dense` → **DERIVED** bitmap `80c0e0f078fcdeff77ffddff77ffddff`
+- `straight-fill:LR:L7>R0:sideB:dense` → **DERIVED** bitmap `f77f3d1f0f0703010000000000000000`
+- `straight-fill:LR:L7>R1:sideA:dense` → **DERIVED** bitmap `0080c0e078fcdeff77ffddff77ffddff`
+- `straight-fill:LR:L7>R1:sideB:dense` → **DERIVED** bitmap `77ff5d3f1f0703010000000000000000`
+- `straight-fill:LR:L7>R10:sideA:dense` → **DERIVED** bitmap `00000000000000030f3fddff77ffddff`
+- `straight-fill:LR:L7>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff7cf0c00000000000`
+- `straight-fill:LR:L7>R11:sideA:dense` → **DERIVED** bitmap `0000000000000001071f7dff77ffddff`
+- `straight-fill:LR:L7>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76f8e08000000000`
+- `straight-fill:LR:L7>R12:sideA:dense` → **DERIVED** bitmap `0000000000000001070f1d7ff7ffddff`
+- `straight-fill:LR:L7>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76f8d0e080000000`
+- `straight-fill:LR:L7>R13:sideA:dense` → **DERIVED** bitmap `000000000000000103071d3f77ffddff`
+- `straight-fill:LR:L7>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fcd8e040800000`
+- `straight-fill:LR:L7>R14:sideA:dense` → **DERIVED** bitmap `000000000000000103070d1f377fddff`
+- `straight-fill:LR:L7>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fcd8f060c08000`
+- `straight-fill:LR:L7>R15:sideA:dense` → **DERIVED** bitmap `000000000000000103070d1f173f5dff`
+- `straight-fill:LR:L7>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fcd8f070e0c080`
+- `straight-fill:LR:L7>R2:sideA:dense` → **DERIVED** bitmap `000080e070f8deff77ffddff77ffddff`
+- `straight-fill:LR:L7>R2:sideB:dense` → **DERIVED** bitmap `77ffdd7f170f07010000000000000000`
+- `straight-fill:LR:L7>R3:sideA:dense` → **DERIVED** bitmap `0000008060f8deff77ffddff77ffddff`
+- `straight-fill:LR:L7>R3:sideB:dense` → **DERIVED** bitmap `77ffddff771f07010000000000000000`
+- `straight-fill:LR:L7>R4:sideA:dense` → **DERIVED** bitmap `00000000c0f0dcff77ffddff77ffddff`
+- `straight-fill:LR:L7>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff73f0d030000000000000000`
+- `straight-fill:LR:L7>R5:sideA:dense` → **DERIVED** bitmap `0000000000c0fcff77ffddff77ffddff`
+- `straight-fill:LR:L7>R5:sideB:dense` → **DERIVED** bitmap `77ffddff77ff3d030000000000000000`
+- `straight-fill:LR:L7>R6:sideA:dense` → **DERIVED** bitmap `000000000000f0ff77ffddff77ffddff`
+- `straight-fill:LR:L7>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77fffd0f0000000000000000`
+- `straight-fill:LR:L7>R7:sideA:dense` → **DERIVED** bitmap `00000000000000ff77ffddff77ffddff`
+- `straight-fill:LR:L7>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff0000000000000000`
+- `straight-fill:LR:L7>R8:sideA:dense` → **DERIVED** bitmap `000000000000000ff7ffddff77ffddff`
+- `straight-fill:LR:L7>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfff000000000000000`
+- `straight-fill:LR:L7>R9:sideA:dense` → **DERIVED** bitmap `00000000000000033fffddff77ffddff`
+- `straight-fill:LR:L7>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff7cc0000000000000`
+- `straight-fill:LR:L8>R0:sideA:dense` → **DERIVED** bitmap `80c0e0f070f8dcfe77ffddff77ffddff`
+- `straight-fill:LR:L8>R0:sideB:dense` → **DERIVED** bitmap `f77f3d1f170f05030100000000000000`
+- `straight-fill:LR:L8>R1:sideA:dense` → **DERIVED** bitmap `0080c0e070f8dcfe77ffddff77ffddff`
+- `straight-fill:LR:L8>R1:sideB:dense` → **DERIVED** bitmap `77ff5d3f170f05030100000000000000`
+- `straight-fill:LR:L8>R10:sideA:dense` → **DERIVED** bitmap `0000000000000000033fddff77ffddff`
+- `straight-fill:LR:L8>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fcc00000000000`
+- `straight-fill:LR:L8>R11:sideA:dense` → **DERIVED** bitmap `0000000000000000030f3dff77ffddff`
+- `straight-fill:LR:L8>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fcf0c000000000`
+- `straight-fill:LR:L8>R12:sideA:dense` → **DERIVED** bitmap `000000000000000001071d7ff7ffddff`
+- `straight-fill:LR:L8>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fed8e080000000`
+- `straight-fill:LR:L8>R13:sideA:dense` → **DERIVED** bitmap `000000000000000001070d1f77ffddff`
+- `straight-fill:LR:L8>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fed8f060800000`
+- `straight-fill:LR:L8>R14:sideA:dense` → **DERIVED** bitmap `00000000000000000103051f377fddff`
+- `straight-fill:LR:L8>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedcf860c08000`
+- `straight-fill:LR:L8>R15:sideA:dense` → **DERIVED** bitmap `00000000000000000103050f173f5dff`
+- `straight-fill:LR:L8>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedcf870e0c080`
+- `straight-fill:LR:L8>R2:sideA:dense` → **DERIVED** bitmap `000080c060f8dcfe77ffddff77ffddff`
+- `straight-fill:LR:L8>R2:sideB:dense` → **DERIVED** bitmap `77ffdd7f371f05030100000000000000`
+- `straight-fill:LR:L8>R3:sideA:dense` → **DERIVED** bitmap `0000008060f0d8fe77ffddff77ffddff`
+- `straight-fill:LR:L8>R3:sideB:dense` → **DERIVED** bitmap `77ffddff771f0d070100000000000000`
+- `straight-fill:LR:L8>R4:sideA:dense` → **DERIVED** bitmap `0000000080e0d8fe77ffddff77ffddff`
+- `straight-fill:LR:L8>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff77f1d070100000000000000`
+- `straight-fill:LR:L8>R5:sideA:dense` → **DERIVED** bitmap `0000000000c0f0fc77ffddff77ffddff`
+- `straight-fill:LR:L8>R5:sideB:dense` → **DERIVED** bitmap `77ffddff77ff3d0f0300000000000000`
+- `straight-fill:LR:L8>R6:sideA:dense` → **DERIVED** bitmap `000000000000c0fc77ffddff77ffddff`
+- `straight-fill:LR:L8>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdd3f0300000000000000`
+- `straight-fill:LR:L8>R7:sideA:dense` → **DERIVED** bitmap `00000000000000f07fffddff77ffddff`
+- `straight-fill:LR:L8>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff0f00000000000000`
+- `straight-fill:LR:L8>R8:sideA:dense` → **DERIVED** bitmap `0000000000000000ffffddff77ffddff`
+- `straight-fill:LR:L8>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddffff00000000000000`
+- `straight-fill:LR:L8>R9:sideA:dense` → **DERIVED** bitmap `00000000000000000fffddff77ffddff`
+- `straight-fill:LR:L8>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff7ff0000000000000`
+- `straight-fill:LR:L9>R0:sideA:dense` → **DERIVED** bitmap `80c0e0e070f8dcfc76ffddff77ffddff`
+- `straight-fill:LR:L9>R0:sideB:dense` → **DERIVED** bitmap `f77f3d3f170f05070301000000000000`
+- `straight-fill:LR:L9>R1:sideA:dense` → **DERIVED** bitmap `0080c0e070f0d8fc76ffddff77ffddff`
+- `straight-fill:LR:L9>R1:sideB:dense` → **DERIVED** bitmap `77ff5d3f171f0d070301000000000000`
+- `straight-fill:LR:L9>R10:sideA:dense` → **DERIVED** bitmap `0000000000000000000ffdff77ffddff`
+- `straight-fill:LR:L9>R10:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fff00000000000`
+- `straight-fill:LR:L9>R11:sideA:dense` → **DERIVED** bitmap `000000000000000000033dff77ffddff`
+- `straight-fill:LR:L9>R11:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77fffcc000000000`
+- `straight-fill:LR:L9>R12:sideA:dense` → **DERIVED** bitmap `000000000000000000030d3ff7ffddff`
+- `straight-fill:LR:L9>R12:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdcf0c0000000`
+- `straight-fill:LR:L9>R13:sideA:dense` → **DERIVED** bitmap `00000000000000000001071f77ffddff`
+- `straight-fill:LR:L9>R13:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdef860800000`
+- `straight-fill:LR:L9>R14:sideA:dense` → **DERIVED** bitmap `00000000000000000001070f177fddff`
+- `straight-fill:LR:L9>R14:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdef870e08000`
+- `straight-fill:LR:L9>R15:sideA:dense` → **DERIVED** bitmap `0000000000000000000103071f3f5dff`
+- `straight-fill:LR:L9>R15:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdefc78e0c080`
+- `straight-fill:LR:L9>R2:sideA:dense` → **DERIVED** bitmap `000080c060f0d8fc76ffddff77ffddff`
+- `straight-fill:LR:L9>R2:sideB:dense` → **DERIVED** bitmap `77ffdd7f371f0d070301000000000000`
+- `straight-fill:LR:L9>R3:sideA:dense` → **DERIVED** bitmap `0000008040e0d8fc76ffddff77ffddff`
+- `straight-fill:LR:L9>R3:sideB:dense` → **DERIVED** bitmap `77ffddff773f1d070301000000000000`
+- `straight-fill:LR:L9>R4:sideA:dense` → **DERIVED** bitmap `0000000080e0d0f876ffddff77ffddff`
+- `straight-fill:LR:L9>R4:sideB:dense` → **DERIVED** bitmap `77ffddfff77f1d0f0701000000000000`
+- `straight-fill:LR:L9>R5:sideA:dense` → **DERIVED** bitmap `000000000080e0f876ffddff77ffddff`
+- `straight-fill:LR:L9>R5:sideB:dense` → **DERIVED** bitmap `77ffddff77ff7d1f0701000000000000`
+- `straight-fill:LR:L9>R6:sideA:dense` → **DERIVED** bitmap `000000000000c0f07cffddff77ffddff`
+- `straight-fill:LR:L9>R6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffdd3f0f03000000000000`
+- `straight-fill:LR:L9>R7:sideA:dense` → **DERIVED** bitmap `00000000000000c07cffddff77ffddff`
+- `straight-fill:LR:L9>R7:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff3f03000000000000`
+- `straight-fill:LR:L9>R8:sideA:dense` → **DERIVED** bitmap `0000000000000000f0ffddff77ffddff`
+- `straight-fill:LR:L9>R8:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddfff70f000000000000`
+- `straight-fill:LR:L9>R9:sideA:dense` → **DERIVED** bitmap `000000000000000000ffddff77ffddff`
+- `straight-fill:LR:L9>R9:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff000000000000`
+- `straight-fill:LT:L0>T0:sideA:dense` → **EXACT** `U+00E13E` / glyph 318 / bitmap `01000000000000000000000000000000`
+- `straight-fill:LT:L0>T0:sideB:dense` → **EXACT** `U+00E13E` / glyph 318 / bitmap `01000000000000000000000000000000`
+- `straight-fill:LT:L0>T1:sideA:dense` → **DERIVED** bitmap `03ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L0>T1:sideB:dense` → **EXACT** `U+00E13F` / glyph 319 / bitmap `03000000000000000000000000000000`
+- `straight-fill:LT:L0>T2:sideA:dense` → **DERIVED** bitmap `07ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L0>T2:sideB:dense` → **EXACT** `U+00E140` / glyph 320 / bitmap `07000000000000000000000000000000`
+- `straight-fill:LT:L0>T3:sideA:dense` → **DERIVED** bitmap `0fffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L0>T3:sideB:dense` → **EXACT** `U+00E141` / glyph 321 / bitmap `0f000000000000000000000000000000`
+- `straight-fill:LT:L0>T4:sideA:dense` → **DERIVED** bitmap `1fffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L0>T4:sideB:dense` → **EXACT** `U+00E142` / glyph 322 / bitmap `1f000000000000000000000000000000`
+- `straight-fill:LT:L0>T5:sideA:dense` → **DERIVED** bitmap `3fffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L0>T5:sideB:dense` → **EXACT** `U+00E143` / glyph 323 / bitmap `3f000000000000000000000000000000`
+- `straight-fill:LT:L0>T6:sideA:dense` → **DERIVED** bitmap `7fffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L0>T6:sideB:dense` → **EXACT** `U+00E144` / glyph 324 / bitmap `7f000000000000000000000000000000`
+- `straight-fill:LT:L0>T7:sideA:dense` → **DERIVED** bitmap `ffffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L0>T7:sideB:dense` → **EXACT** `U+00E000` / glyph 0 / bitmap `ff000000000000000000000000000000`
+- `straight-fill:LT:L1>T0:sideA:dense` → **DERIVED** bitmap `77ffdcfe76fedcfe76fedcfe76fedcfe`
+- `straight-fill:LT:L1>T0:sideB:dense` → **EXACT** `U+00E145` / glyph 325 / bitmap `01010000000000000000000000000000`
+- `straight-fill:LT:L1>T1:sideA:dense` → **DERIVED** bitmap `76ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L1>T1:sideB:dense` → **EXACT** `U+00E560` / glyph 1376 / bitmap `03010000000000000000000000000000`
+- `straight-fill:LT:L1>T2:sideA:dense` → **DERIVED** bitmap `76ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L1>T2:sideB:dense` → **EXACT** `U+00E561` / glyph 1377 / bitmap `07010000000000000000000000000000`
+- `straight-fill:LT:L1>T3:sideA:dense` → **DERIVED** bitmap `7cffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L1>T3:sideB:dense` → **EXACT** `U+00E563` / glyph 1379 / bitmap `0f030000000000000000000000000000`
+- `straight-fill:LT:L1>T4:sideA:dense` → **DERIVED** bitmap `7cffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L1>T4:sideB:dense` → **EXACT** `U+00E564` / glyph 1380 / bitmap `1f030000000000000000000000000000`
+- `straight-fill:LT:L1>T5:sideA:dense` → **DERIVED** bitmap `78ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L1>T5:sideB:dense` → **EXACT** `U+00E566` / glyph 1382 / bitmap `3f070000000000000000000000000000`
+- `straight-fill:LT:L1>T6:sideA:dense` → **DERIVED** bitmap `78ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L1>T6:sideB:dense` → **EXACT** `U+00E567` / glyph 1383 / bitmap `7f070000000000000000000000000000`
+- `straight-fill:LT:L1>T7:sideA:dense` → **DERIVED** bitmap `f0ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L1>T7:sideB:dense` → **DERIVED** bitmap `f70f0000000000000000000000000000`
+- `straight-fill:LT:L10>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfe76fedcfe`
+- `straight-fill:LT:L10>T0:sideB:dense` → **EXACT** `U+00E184` / glyph 388 / bitmap `01010101010101010101010000000000`
+- `straight-fill:LT:L10>T1:sideA:dense` → **DERIVED** bitmap `76fedefe76feddff77ffddff77ffddff`
+- `straight-fill:LT:L10>T1:sideB:dense` → **EXACT** `U+00E5C7` / glyph 1479 / bitmap `03030303030301010101010000000000`
+- `straight-fill:LT:L10>T2:sideA:dense` → **DERIVED** bitmap `74fcdcfe76fedefe77ffddff77ffddff`
+- `straight-fill:LT:L10>T2:sideB:dense` → **DERIVED** bitmap `07070503030303030101010000000000`
+- `straight-fill:LT:L10>T3:sideA:dense` → **DERIVED** bitmap `78f8dcfc74fcdefe76ffddff77ffddff`
+- `straight-fill:LT:L10>T3:sideB:dense` → **DERIVED** bitmap `0f0f0507070703030301010000000000`
+- `straight-fill:LT:L10>T4:sideA:dense` → **DERIVED** bitmap `70f0d8f874fcdcfe76ffddff77ffddff`
+- `straight-fill:LT:L10>T4:sideB:dense` → **DERIVED** bitmap `171f0d0f070705030301010000000000`
+- `straight-fill:LT:L10>T5:sideA:dense` → **DERIVED** bitmap `60e0d0f078f8dcfc76feddff77ffddff`
+- `straight-fill:LT:L10>T5:sideB:dense` → **DERIVED** bitmap `373f1d1f0f0f05070303010000000000`
+- `straight-fill:LT:L10>T6:sideA:dense` → **DERIVED** bitmap `40e0e0f070f8dcfc76feddff77ffddff`
+- `straight-fill:LT:L10>T6:sideB:dense` → **DERIVED** bitmap `773f3d1f170f05070303010000000000`
+- `straight-fill:LT:L10>T7:sideA:dense` → **DERIVED** bitmap `80c0c0e070f0d8fc76feddff77ffddff`
+- `straight-fill:LT:L10>T7:sideB:dense` → **DERIVED** bitmap `f77f5d3f171f0d070303010000000000`
+- `straight-fill:LT:L11>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff76fedcfe`
+- `straight-fill:LT:L11>T0:sideB:dense` → **EXACT** `U+00E18B` / glyph 395 / bitmap `01010101010101010101010100000000`
+- `straight-fill:LT:L11>T1:sideA:dense` → **DERIVED** bitmap `76fedefe76feddff77ffddff77ffddff`
+- `straight-fill:LT:L11>T1:sideB:dense` → **EXACT** `U+00E5D3` / glyph 1491 / bitmap `03030303030301010101010100000000`
+- `straight-fill:LT:L11>T2:sideA:dense` → **DERIVED** bitmap `74fcdcfe76fedefe76ffddff77ffddff`
+- `straight-fill:LT:L11>T2:sideB:dense` → **DERIVED** bitmap `07070503030303030301010100000000`
+- `straight-fill:LT:L11>T3:sideA:dense` → **DERIVED** bitmap `78f8dcfc74fcdefe76feddff77ffddff`
+- `straight-fill:LT:L11>T3:sideB:dense` → **DERIVED** bitmap `0f0f0507070703030303010100000000`
+- `straight-fill:LT:L11>T4:sideA:dense` → **DERIVED** bitmap `70f0d8f878fcdcfe76feddff77ffddff`
+- `straight-fill:LT:L11>T4:sideB:dense` → **DERIVED** bitmap `171f0d0f0f0705030303010100000000`
+- `straight-fill:LT:L11>T5:sideA:dense` → **DERIVED** bitmap `60e0d0f078f8dcfc76feddff77ffddff`
+- `straight-fill:LT:L11>T5:sideB:dense` → **DERIVED** bitmap `373f1d1f0f0f05070303010100000000`
+- `straight-fill:LT:L11>T6:sideA:dense` → **DERIVED** bitmap `40e0e0f070f8d8fc74fedeff77ffddff`
+- `straight-fill:LT:L11>T6:sideB:dense` → **DERIVED** bitmap `773f3d1f170f0d070703030100000000`
+- `straight-fill:LT:L11>T7:sideA:dense` → **DERIVED** bitmap `80c0c0e070f0d8f874fedeff77ffddff`
+- `straight-fill:LT:L11>T7:sideB:dense` → **DERIVED** bitmap `f77f5d3f171f0d0f0703030100000000`
+- `straight-fill:LT:L12>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fedcfe`
+- `straight-fill:LT:L12>T0:sideB:dense` → **EXACT** `U+00E192` / glyph 402 / bitmap `01010101010101010101010101000000`
+- `straight-fill:LT:L12>T1:sideA:dense` → **DERIVED** bitmap `76fedefe76fedeff77ffddff77ffddff`
+- `straight-fill:LT:L12>T1:sideB:dense` → **EXACT** `U+00E5DF` / glyph 1503 / bitmap `03030303030303010101010101000000`
+- `straight-fill:LT:L12>T2:sideA:dense` → **DERIVED** bitmap `74fcdcfc76fedefe76feddff77ffddff`
+- `straight-fill:LT:L12>T2:sideB:dense` → **DERIVED** bitmap `07070507030303030303010101000000`
+- `straight-fill:LT:L12>T3:sideA:dense` → **DERIVED** bitmap `78f8d8fc74fcdcfe76fedeff77ffddff`
+- `straight-fill:LT:L12>T3:sideB:dense` → **DERIVED** bitmap `0f0f0d07070705030303030101000000`
+- `straight-fill:LT:L12>T4:sideA:dense` → **DERIVED** bitmap `70f0d8f878fcdcfc76fedeff77ffddff`
+- `straight-fill:LT:L12>T4:sideB:dense` → **DERIVED** bitmap `171f0d0f0f0705070303030101000000`
+- `straight-fill:LT:L12>T5:sideA:dense` → **DERIVED** bitmap `60e0d0f078f8d8fc74fedeff77ffddff`
+- `straight-fill:LT:L12>T5:sideB:dense` → **DERIVED** bitmap `373f1d1f0f0f0d070703030101000000`
+- `straight-fill:LT:L12>T6:sideA:dense` → **DERIVED** bitmap `40c0e0e070f0d8f874fcdefe77ffddff`
+- `straight-fill:LT:L12>T6:sideB:dense` → **DERIVED** bitmap `777f3d3f171f0d0f0707030301000000`
+- `straight-fill:LT:L12>T7:sideA:dense` → **DERIVED** bitmap `80c0c0e060f0d0f874fcdefe77ffddff`
+- `straight-fill:LT:L12>T7:sideB:dense` → **DERIVED** bitmap `f77f5d3f371f1d0f0707030301000000`
+- `straight-fill:LT:L13>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdcfe`
+- `straight-fill:LT:L13>T0:sideB:dense` → **EXACT** `U+00E199` / glyph 409 / bitmap `01010101010101010101010101010000`
+- `straight-fill:LT:L13>T1:sideA:dense` → **DERIVED** bitmap `76fedefe76fedeff77ffddff77ffddff`
+- `straight-fill:LT:L13>T1:sideB:dense` → **EXACT** `U+00E5EB` / glyph 1515 / bitmap `03030303030303010101010101010000`
+- `straight-fill:LT:L13>T2:sideA:dense` → **DERIVED** bitmap `74fcdcfc76fedefe76feddff77ffddff`
+- `straight-fill:LT:L13>T2:sideB:dense` → **DERIVED** bitmap `07070507030303030303010101010000`
+- `straight-fill:LT:L13>T3:sideA:dense` → **DERIVED** bitmap `78f8d8fc74fcdcfe76fedeff77ffddff`
+- `straight-fill:LT:L13>T3:sideB:dense` → **DERIVED** bitmap `0f0f0d07070705030303030101010000`
+- `straight-fill:LT:L13>T4:sideA:dense` → **DERIVED** bitmap `70f0d8f878fcdcfc74fedefe77ffddff`
+- `straight-fill:LT:L13>T4:sideB:dense` → **DERIVED** bitmap `171f0d0f0f0705070703030301010000`
+- `straight-fill:LT:L13>T5:sideA:dense` → **DERIVED** bitmap `60e0d0f078f8d8fc74fcdefe77ffddff`
+- `straight-fill:LT:L13>T5:sideB:dense` → **DERIVED** bitmap `373f1d1f0f0f0d070707030301010000`
+- `straight-fill:LT:L13>T6:sideA:dense` → **DERIVED** bitmap `40c0e0e070f0d8f874fcdefe77ffddff`
+- `straight-fill:LT:L13>T6:sideB:dense` → **DERIVED** bitmap `777f3d3f171f0d0f0707030301010000`
+- `straight-fill:LT:L13>T7:sideA:dense` → **DERIVED** bitmap `80c0c0e060f0d0f878fcdcfe76ffddff`
+- `straight-fill:LT:L13>T7:sideB:dense` → **DERIVED** bitmap `f77f5d3f371f1d0f0f07050303010000`
+- `straight-fill:LT:L14>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddfe`
+- `straight-fill:LT:L14>T0:sideB:dense` → **EXACT** `U+00E1A0` / glyph 416 / bitmap `01010101010101010101010101010100`
+- `straight-fill:LT:L14>T1:sideA:dense` → **DERIVED** bitmap `76fedefe76fedefe77ffddff77ffddff`
+- `straight-fill:LT:L14>T1:sideB:dense` → **EXACT** `U+00E5F4` / glyph 1524 / bitmap `03030303030303030101010101010100`
+- `straight-fill:LT:L14>T2:sideA:dense` → **DERIVED** bitmap `74fcdcfc76fedefe76fedeff77ffddff`
+- `straight-fill:LT:L14>T2:sideB:dense` → **DERIVED** bitmap `07070507030303030303030101010100`
+- `straight-fill:LT:L14>T3:sideA:dense` → **DERIVED** bitmap `78f8d8fc74fcdcfc76fedefe77ffddff`
+- `straight-fill:LT:L14>T3:sideB:dense` → **DERIVED** bitmap `0f0f0d07070705070303030301010100`
+- `straight-fill:LT:L14>T4:sideA:dense` → **DERIVED** bitmap `70f0d8f878f8dcfc74fedefe76ffddff`
+- `straight-fill:LT:L14>T4:sideB:dense` → **DERIVED** bitmap `171f0d0f0f0f05070703030303010100`
+- `straight-fill:LT:L14>T5:sideA:dense` → **DERIVED** bitmap `60e0d0f070f8d8f874fcdefe76ffddff`
+- `straight-fill:LT:L14>T5:sideB:dense` → **DERIVED** bitmap `373f1d1f170f0d0f0707030303010100`
+- `straight-fill:LT:L14>T6:sideA:dense` → **DERIVED** bitmap `40c0e0e070f0d8f878fcdcfe76ffddff`
+- `straight-fill:LT:L14>T6:sideB:dense` → **DERIVED** bitmap `777f3d3f171f0d0f0f07050303010100`
+- `straight-fill:LT:L14>T7:sideA:dense` → **DERIVED** bitmap `8080c0c060e0d0f078f8dcfc76feddff`
+- `straight-fill:LT:L14>T7:sideB:dense` → **DERIVED** bitmap `f7ff5d7f373f1d1f0f0f050703030100`
+- `straight-fill:LT:L15>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L15>T0:sideB:dense` → **EXACT** `U+00E100` / glyph 256 / bitmap `01010101010101010101010101010101`
+- `straight-fill:LT:L15>T1:sideA:dense` → **DERIVED** bitmap `76fedefe76fedefe77ffddff77ffddff`
+- `straight-fill:LT:L15>T1:sideB:dense` → **EXACT** `U+00E4ED` / glyph 1261 / bitmap `03030303030303030101010101010101`
+- `straight-fill:LT:L15>T2:sideA:dense` → **DERIVED** bitmap `74fcdcfc76fedefe76fedefe77ffddff`
+- `straight-fill:LT:L15>T2:sideB:dense` → **DERIVED** bitmap `07070507030303030303030301010101`
+- `straight-fill:LT:L15>T3:sideA:dense` → **DERIVED** bitmap `78f8d8fc74fcdcfc76fedefe76ffddff`
+- `straight-fill:LT:L15>T3:sideB:dense` → **DERIVED** bitmap `0f0f0d07070705070303030303010101`
+- `straight-fill:LT:L15>T4:sideA:dense` → **DERIVED** bitmap `70f0d8f878f8dcfc74fcdefe76feddff`
+- `straight-fill:LT:L15>T4:sideB:dense` → **DERIVED** bitmap `171f0d0f0f0f05070707030303030101`
+- `straight-fill:LT:L15>T5:sideA:dense` → **DERIVED** bitmap `60e0d0f070f8d8f874fcdcfe76feddff`
+- `straight-fill:LT:L15>T5:sideB:dense` → **DERIVED** bitmap `373f1d1f170f0d0f0707050303030101`
+- `straight-fill:LT:L15>T6:sideA:dense` → **DERIVED** bitmap `40c0e0e070f0d0f878fcdcfc76feddff`
+- `straight-fill:LT:L15>T6:sideB:dense` → **DERIVED** bitmap `777f3d3f171f1d0f0f07050703030101`
+- `straight-fill:LT:L15>T7:sideA:dense` → **DERIVED** bitmap `8080c0c060e0d0f078f8dcfc76feddff`
+- `straight-fill:LT:L15>T7:sideB:dense` → **DERIVED** bitmap `f7ff5d7f373f1d1f0f0f050703030101`
+- `straight-fill:LT:L2>T0:sideA:dense` → **DERIVED** bitmap `77ffddfe76fedcfe76fedcfe76fedcfe`
+- `straight-fill:LT:L2>T0:sideB:dense` → **EXACT** `U+00E14C` / glyph 332 / bitmap `01010100000000000000000000000000`
+- `straight-fill:LT:L2>T1:sideA:dense` → **DERIVED** bitmap `76feddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L2>T1:sideB:dense` → **EXACT** `U+00E56A` / glyph 1386 / bitmap `03030100000000000000000000000000`
+- `straight-fill:LT:L2>T2:sideA:dense` → **DERIVED** bitmap `74feddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L2>T2:sideB:dense` → **EXACT** `U+00E56C` / glyph 1388 / bitmap `07030100000000000000000000000000`
+- `straight-fill:LT:L2>T3:sideA:dense` → **DERIVED** bitmap `78feddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L2>T3:sideB:dense` → **EXACT** `U+00E56E` / glyph 1390 / bitmap `0f070100000000000000000000000000`
+- `straight-fill:LT:L2>T4:sideA:dense` → **DERIVED** bitmap `78feddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L2>T4:sideB:dense` → **EXACT** `U+00E56F` / glyph 1391 / bitmap `1f070100000000000000000000000000`
+- `straight-fill:LT:L2>T5:sideA:dense` → **DERIVED** bitmap `70fcdfff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L2>T5:sideB:dense` → **DERIVED** bitmap `370f0300000000000000000000000000`
+- `straight-fill:LT:L2>T6:sideA:dense` → **DERIVED** bitmap `60fcdfff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L2>T6:sideB:dense` → **DERIVED** bitmap `771f0300000000000000000000000000`
+- `straight-fill:LT:L2>T7:sideA:dense` → **DERIVED** bitmap `c0fcdfff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L2>T7:sideB:dense` → **DERIVED** bitmap `f73f0300000000000000000000000000`
+- `straight-fill:LT:L3>T0:sideA:dense` → **DERIVED** bitmap `77ffddff76fedcfe76fedcfe76fedcfe`
+- `straight-fill:LT:L3>T0:sideB:dense` → **EXACT** `U+00E153` / glyph 339 / bitmap `01010101000000000000000000000000`
+- `straight-fill:LT:L3>T1:sideA:dense` → **DERIVED** bitmap `76feddff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L3>T1:sideB:dense` → **EXACT** `U+00E575` / glyph 1397 / bitmap `03030101000000000000000000000000`
+- `straight-fill:LT:L3>T2:sideA:dense` → **DERIVED** bitmap `74fedeff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L3>T2:sideB:dense` → **EXACT** `U+00E577` / glyph 1399 / bitmap `07030301000000000000000000000000`
+- `straight-fill:LT:L3>T3:sideA:dense` → **DERIVED** bitmap `78fcdeff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L3>T3:sideB:dense` → **EXACT** `U+00E579` / glyph 1401 / bitmap `0f070301000000000000000000000000`
+- `straight-fill:LT:L3>T4:sideA:dense` → **DERIVED** bitmap `70fcdeff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L3>T4:sideB:dense` → **DERIVED** bitmap `170f0301000000000000000000000000`
+- `straight-fill:LT:L3>T5:sideA:dense` → **DERIVED** bitmap `60f8deff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L3>T5:sideB:dense` → **DERIVED** bitmap `371f0701000000000000000000000000`
+- `straight-fill:LT:L3>T6:sideA:dense` → **DERIVED** bitmap `60f8deff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L3>T6:sideB:dense` → **DERIVED** bitmap `771f0701000000000000000000000000`
+- `straight-fill:LT:L3>T7:sideA:dense` → **DERIVED** bitmap `c0f0dcff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L3>T7:sideB:dense` → **DERIVED** bitmap `f73f0d03000000000000000000000000`
+- `straight-fill:LT:L4>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77fedcfe76fedcfe76fedcfe`
+- `straight-fill:LT:L4>T0:sideB:dense` → **EXACT** `U+00E15A` / glyph 346 / bitmap `01010101010000000000000000000000`
+- `straight-fill:LT:L4>T1:sideA:dense` → **DERIVED** bitmap `76fedeff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L4>T1:sideB:dense` → **EXACT** `U+00E581` / glyph 1409 / bitmap `03030301010000000000000000000000`
+- `straight-fill:LT:L4>T2:sideA:dense` → **DERIVED** bitmap `74fcdefe77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L4>T2:sideB:dense` → **EXACT** `U+00E583` / glyph 1411 / bitmap `07070303010000000000000000000000`
+- `straight-fill:LT:L4>T3:sideA:dense` → **DERIVED** bitmap `78fcdcfe77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L4>T3:sideB:dense` → **DERIVED** bitmap `0f070503010000000000000000000000`
+- `straight-fill:LT:L4>T4:sideA:dense` → **DERIVED** bitmap `70f8dcfe77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L4>T4:sideB:dense` → **DERIVED** bitmap `170f0503010000000000000000000000`
+- `straight-fill:LT:L4>T5:sideA:dense` → **DERIVED** bitmap `60f0dcfe77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L4>T5:sideB:dense` → **DERIVED** bitmap `371f0d03010000000000000000000000`
+- `straight-fill:LT:L4>T6:sideA:dense` → **DERIVED** bitmap `40f0d8fe77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L4>T6:sideB:dense` → **DERIVED** bitmap `773f0d07010000000000000000000000`
+- `straight-fill:LT:L4>T7:sideA:dense` → **DERIVED** bitmap `80e0d8fe77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L4>T7:sideB:dense` → **DERIVED** bitmap `f77f1d07010000000000000000000000`
+- `straight-fill:LT:L5>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffdcfe76fedcfe76fedcfe`
+- `straight-fill:LT:L5>T0:sideB:dense` → **EXACT** `U+00E161` / glyph 353 / bitmap `01010101010100000000000000000000`
+- `straight-fill:LT:L5>T1:sideA:dense` → **DERIVED** bitmap `76fedeff77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L5>T1:sideB:dense` → **EXACT** `U+00E58D` / glyph 1421 / bitmap `03030301010100000000000000000000`
+- `straight-fill:LT:L5>T2:sideA:dense` → **DERIVED** bitmap `74fcdefe77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L5>T2:sideB:dense` → **EXACT** `U+00E58E` / glyph 1422 / bitmap `07070303010100000000000000000000`
+- `straight-fill:LT:L5>T3:sideA:dense` → **DERIVED** bitmap `78fcdcfe76ffddff77ffddff77ffddff`
+- `straight-fill:LT:L5>T3:sideB:dense` → **DERIVED** bitmap `0f070503030100000000000000000000`
+- `straight-fill:LT:L5>T4:sideA:dense` → **DERIVED** bitmap `70f8dcfc76ffddff77ffddff77ffddff`
+- `straight-fill:LT:L5>T4:sideB:dense` → **DERIVED** bitmap `170f0507030100000000000000000000`
+- `straight-fill:LT:L5>T5:sideA:dense` → **DERIVED** bitmap `60f0d8fc76ffddff77ffddff77ffddff`
+- `straight-fill:LT:L5>T5:sideB:dense` → **DERIVED** bitmap `371f0d07030100000000000000000000`
+- `straight-fill:LT:L5>T6:sideA:dense` → **DERIVED** bitmap `40e0d8fc76ffddff77ffddff77ffddff`
+- `straight-fill:LT:L5>T6:sideB:dense` → **DERIVED** bitmap `773f1d07030100000000000000000000`
+- `straight-fill:LT:L5>T7:sideA:dense` → **DERIVED** bitmap `80e0d0f876ffddff77ffddff77ffddff`
+- `straight-fill:LT:L5>T7:sideB:dense` → **DERIVED** bitmap `f77f1d0f070100000000000000000000`
+- `straight-fill:LT:L6>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfe76fedcfe76fedcfe`
+- `straight-fill:LT:L6>T0:sideB:dense` → **EXACT** `U+00E168` / glyph 360 / bitmap `01010101010101000000000000000000`
+- `straight-fill:LT:L6>T1:sideA:dense` → **DERIVED** bitmap `76fedefe77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L6>T1:sideB:dense` → **EXACT** `U+00E599` / glyph 1433 / bitmap `03030303010101000000000000000000`
+- `straight-fill:LT:L6>T2:sideA:dense` → **DERIVED** bitmap `74fcdefe76ffddff77ffddff77ffddff`
+- `straight-fill:LT:L6>T2:sideB:dense` → **EXACT** `U+00E59B` / glyph 1435 / bitmap `07070303030101000000000000000000`
+- `straight-fill:LT:L6>T3:sideA:dense` → **DERIVED** bitmap `78f8dcfc76feddff77ffddff77ffddff`
+- `straight-fill:LT:L6>T3:sideB:dense` → **DERIVED** bitmap `0f0f0507030301000000000000000000`
+- `straight-fill:LT:L6>T4:sideA:dense` → **DERIVED** bitmap `70f8d8fc76feddff77ffddff77ffddff`
+- `straight-fill:LT:L6>T4:sideB:dense` → **DERIVED** bitmap `170f0d07030301000000000000000000`
+- `straight-fill:LT:L6>T5:sideA:dense` → **DERIVED** bitmap `60f0d8f874feddff77ffddff77ffddff`
+- `straight-fill:LT:L6>T5:sideB:dense` → **DERIVED** bitmap `371f0d0f070301000000000000000000`
+- `straight-fill:LT:L6>T6:sideA:dense` → **DERIVED** bitmap `40e0d0f874feddff77ffddff77ffddff`
+- `straight-fill:LT:L6>T6:sideB:dense` → **DERIVED** bitmap `773f1d0f070301000000000000000000`
+- `straight-fill:LT:L6>T7:sideA:dense` → **DERIVED** bitmap `80c0e0f874feddff77ffddff77ffddff`
+- `straight-fill:LT:L6>T7:sideB:dense` → **DERIVED** bitmap `f77f3d1f070301000000000000000000`
+- `straight-fill:LT:L7>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff76fedcfe76fedcfe`
+- `straight-fill:LT:L7>T0:sideB:dense` → **EXACT** `U+00E16F` / glyph 367 / bitmap `01010101010101010000000000000000`
+- `straight-fill:LT:L7>T1:sideA:dense` → **DERIVED** bitmap `76fedefe77ffddff77ffddff77ffddff`
+- `straight-fill:LT:L7>T1:sideB:dense` → **EXACT** `U+00E5A4` / glyph 1444 / bitmap `03030303010101010000000000000000`
+- `straight-fill:LT:L7>T2:sideA:dense` → **DERIVED** bitmap `74fcdefe76feddff77ffddff77ffddff`
+- `straight-fill:LT:L7>T2:sideB:dense` → **EXACT** `U+00E5A6` / glyph 1446 / bitmap `07070303030301010000000000000000`
+- `straight-fill:LT:L7>T3:sideA:dense` → **DERIVED** bitmap `78f8dcfc76feddff77ffddff77ffddff`
+- `straight-fill:LT:L7>T3:sideB:dense` → **DERIVED** bitmap `0f0f0507030301010000000000000000`
+- `straight-fill:LT:L7>T4:sideA:dense` → **DERIVED** bitmap `70f8d8fc74fedeff77ffddff77ffddff`
+- `straight-fill:LT:L7>T4:sideB:dense` → **DERIVED** bitmap `170f0d07070303010000000000000000`
+- `straight-fill:LT:L7>T5:sideA:dense` → **DERIVED** bitmap `60f0d0f874fedeff77ffddff77ffddff`
+- `straight-fill:LT:L7>T5:sideB:dense` → **DERIVED** bitmap `371f1d0f070303010000000000000000`
+- `straight-fill:LT:L7>T6:sideA:dense` → **DERIVED** bitmap `40e0d0f878fcdeff77ffddff77ffddff`
+- `straight-fill:LT:L7>T6:sideB:dense` → **DERIVED** bitmap `773f1d0f0f0703010000000000000000`
+- `straight-fill:LT:L7>T7:sideA:dense` → **DERIVED** bitmap `80c0e0f078fcdeff77ffddff77ffddff`
+- `straight-fill:LT:L7>T7:sideB:dense` → **DERIVED** bitmap `f77f3d1f0f0703010000000000000000`
+- `straight-fill:LT:L8>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77fedcfe76fedcfe`
+- `straight-fill:LT:L8>T0:sideB:dense` → **EXACT** `U+00E176` / glyph 374 / bitmap `01010101010101010100000000000000`
+- `straight-fill:LT:L8>T1:sideA:dense` → **DERIVED** bitmap `76fedefe76ffddff77ffddff77ffddff`
+- `straight-fill:LT:L8>T1:sideB:dense` → **EXACT** `U+00E5B0` / glyph 1456 / bitmap `03030303030101010100000000000000`
+- `straight-fill:LT:L8>T2:sideA:dense` → **DERIVED** bitmap `74fcdcfe76fedeff77ffddff77ffddff`
+- `straight-fill:LT:L8>T2:sideB:dense` → **DERIVED** bitmap `07070503030303010100000000000000`
+- `straight-fill:LT:L8>T3:sideA:dense` → **DERIVED** bitmap `78f8dcfc74fedeff77ffddff77ffddff`
+- `straight-fill:LT:L8>T3:sideB:dense` → **DERIVED** bitmap `0f0f0507070303010100000000000000`
+- `straight-fill:LT:L8>T4:sideA:dense` → **DERIVED** bitmap `70f0d8f874fcdefe77ffddff77ffddff`
+- `straight-fill:LT:L8>T4:sideB:dense` → **DERIVED** bitmap `171f0d0f070703030100000000000000`
+- `straight-fill:LT:L8>T5:sideA:dense` → **DERIVED** bitmap `60f0d0f878fcdefe77ffddff77ffddff`
+- `straight-fill:LT:L8>T5:sideB:dense` → **DERIVED** bitmap `371f1d0f0f0703030100000000000000`
+- `straight-fill:LT:L8>T6:sideA:dense` → **DERIVED** bitmap `40e0e0f078fcdcfe77ffddff77ffddff`
+- `straight-fill:LT:L8>T6:sideB:dense` → **DERIVED** bitmap `773f3d1f0f0705030100000000000000`
+- `straight-fill:LT:L8>T7:sideA:dense` → **DERIVED** bitmap `80c0e0f070f8dcfe77ffddff77ffddff`
+- `straight-fill:LT:L8>T7:sideB:dense` → **DERIVED** bitmap `f77f3d1f170f05030100000000000000`
+- `straight-fill:LT:L9>T0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdcfe76fedcfe`
+- `straight-fill:LT:L9>T0:sideB:dense` → **EXACT** `U+00E17D` / glyph 381 / bitmap `01010101010101010101000000000000`
+- `straight-fill:LT:L9>T1:sideA:dense` → **DERIVED** bitmap `76fedefe76ffddff77ffddff77ffddff`
+- `straight-fill:LT:L9>T1:sideB:dense` → **EXACT** `U+00E5BC` / glyph 1468 / bitmap `03030303030101010101000000000000`
+- `straight-fill:LT:L9>T2:sideA:dense` → **DERIVED** bitmap `74fcdcfe76fedeff77ffddff77ffddff`
+- `straight-fill:LT:L9>T2:sideB:dense` → **DERIVED** bitmap `07070503030303010101000000000000`
+- `straight-fill:LT:L9>T3:sideA:dense` → **DERIVED** bitmap `78f8dcfc74fedefe77ffddff77ffddff`
+- `straight-fill:LT:L9>T3:sideB:dense` → **DERIVED** bitmap `0f0f0507070303030101000000000000`
+- `straight-fill:LT:L9>T4:sideA:dense` → **DERIVED** bitmap `70f0d8f874fcdefe77ffddff77ffddff`
+- `straight-fill:LT:L9>T4:sideB:dense` → **DERIVED** bitmap `171f0d0f070703030101000000000000`
+- `straight-fill:LT:L9>T5:sideA:dense` → **DERIVED** bitmap `60f0d0f878fcdcfe76ffddff77ffddff`
+- `straight-fill:LT:L9>T5:sideB:dense` → **DERIVED** bitmap `371f1d0f0f0705030301000000000000`
+- `straight-fill:LT:L9>T6:sideA:dense` → **DERIVED** bitmap `40e0e0f078f8dcfe76ffddff77ffddff`
+- `straight-fill:LT:L9>T6:sideB:dense` → **DERIVED** bitmap `773f3d1f0f0f05030301000000000000`
+- `straight-fill:LT:L9>T7:sideA:dense` → **DERIVED** bitmap `80c0e0e070f8dcfc76ffddff77ffddff`
+- `straight-fill:LT:L9>T7:sideB:dense` → **DERIVED** bitmap `f77f3d3f170f05070301000000000000`
+- `straight-fill:RB:R0>B0:sideA:dense` → **DERIVED** bitmap `f7ff5d7f373f1d1f0f0f050703030101`
+- `straight-fill:RB:R0>B0:sideB:dense` → **DERIVED** bitmap `8080c0c060e0d0f078f8dcfc76feddff`
+- `straight-fill:RB:R0>B1:sideA:dense` → **DERIVED** bitmap `f7ff5d7f373f3d1f170f0d0f07070303`
+- `straight-fill:RB:R0>B1:sideB:dense` → **DERIVED** bitmap `8080c0c060e0e0f070f8d8f874fcdefe`
+- `straight-fill:RB:R0>B2:sideA:dense` → **DERIVED** bitmap `f7ff5d7f773f3d3f171f1d0f0f0f0507`
+- `straight-fill:RB:R0>B2:sideB:dense` → **DERIVED** bitmap `8080c0c040e0e0e070f0d0f878f8dcfc`
+- `straight-fill:RB:R0>B3:sideA:dense` → **DERIVED** bitmap `f7ff5d7f777f3d3f373f1d1f171f0d0f`
+- `straight-fill:RB:R0>B3:sideB:dense` → **DERIVED** bitmap `8080c0c040c0e0e060e0d0f070f0d8f8`
+- `straight-fill:RB:R0>B4:sideA:dense` → **DERIVED** bitmap `f7ffdd7f777f5d7f373f3d3f371f1d1f`
+- `straight-fill:RB:R0>B4:sideB:dense` → **DERIVED** bitmap `808080c040c0c0c060e0e0e060f0d0f0`
+- `straight-fill:RB:R0>B5:sideA:dense` → **DERIVED** bitmap `f7ffddff777f5d7f777f5d7f373f3d3f`
+- `straight-fill:RB:R0>B5:sideB:dense` → **DERIVED** bitmap `8080808040c0c0c040c0c0c060e0e0e0`
+- `straight-fill:RB:R0>B6:sideA:dense` → **DERIVED** bitmap `f7ffddfff7ffddff777f5d7f777f5d7f`
+- `straight-fill:RB:R0>B6:sideB:dense` → **DERIVED** bitmap `808080808080808040c0c0c040c0c0c0`
+- `straight-fill:RB:R0>B7:sideA:dense` → **DERIVED** bitmap `f7ffddfff7ffddfff7ffddfff7ffddff`
+- `straight-fill:RB:R0>B7:sideB:dense` → **EXACT** `U+00E13D` / glyph 317 / bitmap `80808080808080808080808080808080`
+- `straight-fill:RB:R1>B0:sideA:dense` → **DERIVED** bitmap `77ff5d7f373f1d1f0f0f050703030101`
+- `straight-fill:RB:R1>B0:sideB:dense` → **DERIVED** bitmap `0080c0c060e0d0f078f8dcfc76feddff`
+- `straight-fill:RB:R1>B1:sideA:dense` → **DERIVED** bitmap `77ffdd7f773f3d1f171f0d0f07070303`
+- `straight-fill:RB:R1>B1:sideB:dense` → **DERIVED** bitmap `008080c040e0e0f070f0d8f874fcdefe`
+- `straight-fill:RB:R1>B2:sideA:dense` → **DERIVED** bitmap `77ffdd7f777f3d3f171f1d0f0f0f0507`
+- `straight-fill:RB:R1>B2:sideB:dense` → **DERIVED** bitmap `008080c040c0e0e070f0d0f878f8dcfc`
+- `straight-fill:RB:R1>B3:sideA:dense` → **DERIVED** bitmap `77ffdd7f777f5d3f373f1d1f171f0d0f`
+- `straight-fill:RB:R1>B3:sideB:dense` → **DERIVED** bitmap `008080c040c0c0e060e0d0f070f0d8f8`
+- `straight-fill:RB:R1>B4:sideA:dense` → **DERIVED** bitmap `77ffddff777f5d7f373f3d3f371f1d1f`
+- `straight-fill:RB:R1>B4:sideB:dense` → **DERIVED** bitmap `0080808040c0c0c060e0e0e060f0d0f0`
+- `straight-fill:RB:R1>B5:sideA:dense` → **DERIVED** bitmap `77ffddfff77f5d7f777f5d7f373f3d3f`
+- `straight-fill:RB:R1>B5:sideB:dense` → **DERIVED** bitmap `0080808080c0c0c040c0c0c060e0e0e0`
+- `straight-fill:RB:R1>B6:sideA:dense` → **DERIVED** bitmap `77ffddfff7ffddff777f5d7f777f5d7f`
+- `straight-fill:RB:R1>B6:sideB:dense` → **DERIVED** bitmap `008080808080808040c0c0c040c0c0c0`
+- `straight-fill:RB:R1>B7:sideA:dense` → **DERIVED** bitmap `77ffddfff7ffddfff7ffddfff7ffddff`
+- `straight-fill:RB:R1>B7:sideB:dense` → **EXACT** `U+00E284` / glyph 644 / bitmap `00808080808080808080808080808080`
+- `straight-fill:RB:R10>B0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdd7f170f0701`
+- `straight-fill:RB:R10>B0:sideB:dense` → **DERIVED** bitmap `0000000000000000000080e070f8deff`
+- `straight-fill:RB:R10>B1:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdd7f371f0503`
+- `straight-fill:RB:R10>B1:sideB:dense` → **DERIVED** bitmap `0000000000000000000080c060f8dcfe`
+- `straight-fill:RB:R10>B2:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdd7f371f0d07`
+- `straight-fill:RB:R10>B2:sideB:dense` → **DERIVED** bitmap `0000000000000000000080c060f0d8fc`
+- `straight-fill:RB:R10>B3:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdd7f373f1d0f`
+- `straight-fill:RB:R10>B3:sideB:dense` → **DERIVED** bitmap `0000000000000000000080c060e0d0f8`
+- `straight-fill:RB:R10>B4:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdd7f773f3d1f`
+- `straight-fill:RB:R10>B4:sideB:dense` → **DERIVED** bitmap `0000000000000000000080c040e0e0f0`
+- `straight-fill:RB:R10>B5:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff777f3d3f`
+- `straight-fill:RB:R10>B5:sideB:dense` → **DERIVED** bitmap `00000000000000000000808040c0e0e0`
+- `straight-fill:RB:R10>B6:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff77f5d7f`
+- `straight-fill:RB:R10>B6:sideB:dense` → **EXACT** `U+00E7A9` / glyph 1961 / bitmap `00000000000000000000808080c0c0c0`
+- `straight-fill:RB:R10>B7:sideA:dense` → **DERIVED** bitmap `777f5d7f777f5d7f777fddfff7ffddff`
+- `straight-fill:RB:R10>B7:sideB:dense` → **EXACT** `U+00E2C6` / glyph 710 / bitmap `00000000000000000000808080808080`
+- `straight-fill:RB:R11>B0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff771f0701`
+- `straight-fill:RB:R11>B0:sideB:dense` → **DERIVED** bitmap `00000000000000000000008060f8deff`
+- `straight-fill:RB:R11>B1:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff771f0d03`
+- `straight-fill:RB:R11>B1:sideB:dense` → **DERIVED** bitmap `00000000000000000000008060f0dcfe`
+- `straight-fill:RB:R11>B2:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff773f0d07`
+- `straight-fill:RB:R11>B2:sideB:dense` → **DERIVED** bitmap `00000000000000000000008040f0d8fc`
+- `straight-fill:RB:R11>B3:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff773f1d0f`
+- `straight-fill:RB:R11>B3:sideB:dense` → **DERIVED** bitmap `00000000000000000000008040e0d0f8`
+- `straight-fill:RB:R11>B4:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff773f3d1f`
+- `straight-fill:RB:R11>B4:sideB:dense` → **DERIVED** bitmap `00000000000000000000008040e0e0f0`
+- `straight-fill:RB:R11>B5:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff777f3d3f`
+- `straight-fill:RB:R11>B5:sideB:dense` → **DERIVED** bitmap `00000000000000000000008040c0e0e0`
+- `straight-fill:RB:R11>B6:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff77f5d7f`
+- `straight-fill:RB:R11>B6:sideB:dense` → **EXACT** `U+00E7B4` / glyph 1972 / bitmap `00000000000000000000008080c0c0c0`
+- `straight-fill:RB:R11>B7:sideA:dense` → **DERIVED** bitmap `777f5d7f777f5d7f777f5dfff7ffddff`
+- `straight-fill:RB:R11>B7:sideB:dense` → **EXACT** `U+00E2CD` / glyph 717 / bitmap `00000000000000000000008080808080`
+- `straight-fill:RB:R12>B0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff73f0d03`
+- `straight-fill:RB:R12>B0:sideB:dense` → **DERIVED** bitmap `000000000000000000000000c0f0dcff`
+- `straight-fill:RB:R12>B1:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff77f1d07`
+- `straight-fill:RB:R12>B1:sideB:dense` → **DERIVED** bitmap `00000000000000000000000080e0d8fe`
+- `straight-fill:RB:R12>B2:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff77f1d07`
+- `straight-fill:RB:R12>B2:sideB:dense` → **DERIVED** bitmap `00000000000000000000000080e0d8fc`
+- `straight-fill:RB:R12>B3:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff77f3d0f`
+- `straight-fill:RB:R12>B3:sideB:dense` → **EXACT** `U+00E7BA` / glyph 1978 / bitmap `00000000000000000000000080c0f0f8`
+- `straight-fill:RB:R12>B4:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff77f3d1f`
+- `straight-fill:RB:R12>B4:sideB:dense` → **EXACT** `U+00E7BC` / glyph 1980 / bitmap `00000000000000000000000080c0e0f0`
+- `straight-fill:RB:R12>B5:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff77f5d3f`
+- `straight-fill:RB:R12>B5:sideB:dense` → **EXACT** `U+00E7BE` / glyph 1982 / bitmap `00000000000000000000000080c0c0e0`
+- `straight-fill:RB:R12>B6:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddfff7ff5d7f`
+- `straight-fill:RB:R12>B6:sideB:dense` → **EXACT** `U+00E7BF` / glyph 1983 / bitmap `0000000000000000000000008080c0c0`
+- `straight-fill:RB:R12>B7:sideA:dense` → **DERIVED** bitmap `777f5d7f777f5d7f777f5d7ff7ffddff`
+- `straight-fill:RB:R12>B7:sideB:dense` → **EXACT** `U+00E2D4` / glyph 724 / bitmap `00000000000000000000000080808080`
+- `straight-fill:RB:R13>B0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ff3d03`
+- `straight-fill:RB:R13>B0:sideB:dense` → **EXACT** `U+00E4DD` / glyph 1245 / bitmap `00000000000000000000000000c0fcff`
+- `straight-fill:RB:R13>B1:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ff3d07`
+- `straight-fill:RB:R13>B1:sideB:dense` → **EXACT** `U+00E7C2` / glyph 1986 / bitmap `00000000000000000000000000c0f8fe`
+- `straight-fill:RB:R13>B2:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ff3d0f`
+- `straight-fill:RB:R13>B2:sideB:dense` → **EXACT** `U+00E7C4` / glyph 1988 / bitmap `00000000000000000000000000c0f0fc`
+- `straight-fill:RB:R13>B3:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ff7d1f`
+- `straight-fill:RB:R13>B3:sideB:dense` → **EXACT** `U+00E7C6` / glyph 1990 / bitmap `0000000000000000000000000080e0f8`
+- `straight-fill:RB:R13>B4:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ff7d1f`
+- `straight-fill:RB:R13>B4:sideB:dense` → **EXACT** `U+00E7C7` / glyph 1991 / bitmap `0000000000000000000000000080e0f0`
+- `straight-fill:RB:R13>B5:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ff5d3f`
+- `straight-fill:RB:R13>B5:sideB:dense` → **EXACT** `U+00E7C9` / glyph 1993 / bitmap `0000000000000000000000000080c0e0`
+- `straight-fill:RB:R13>B6:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ff5d7f`
+- `straight-fill:RB:R13>B6:sideB:dense` → **EXACT** `U+00E7CA` / glyph 1994 / bitmap `0000000000000000000000000080c0c0`
+- `straight-fill:RB:R13>B7:sideA:dense` → **DERIVED** bitmap `777f5d7f777f5d7f777f5d7f77ffddff`
+- `straight-fill:RB:R13>B7:sideB:dense` → **EXACT** `U+00E2DB` / glyph 731 / bitmap `00000000000000000000000000808080`
+- `straight-fill:RB:R14>B0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fffd0f`
+- `straight-fill:RB:R14>B0:sideB:dense` → **EXACT** `U+00E4DF` / glyph 1247 / bitmap `0000000000000000000000000000f0ff`
+- `straight-fill:RB:R14>B1:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fffd1f`
+- `straight-fill:RB:R14>B1:sideB:dense` → **EXACT** `U+00E7CC` / glyph 1996 / bitmap `0000000000000000000000000000e0fe`
+- `straight-fill:RB:R14>B2:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77fffd1f`
+- `straight-fill:RB:R14>B2:sideB:dense` → **EXACT** `U+00E7CD` / glyph 1997 / bitmap `0000000000000000000000000000e0fc`
+- `straight-fill:RB:R14>B3:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdd3f`
+- `straight-fill:RB:R14>B3:sideB:dense` → **EXACT** `U+00E7CE` / glyph 1998 / bitmap `0000000000000000000000000000c0f8`
+- `straight-fill:RB:R14>B4:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdd3f`
+- `straight-fill:RB:R14>B4:sideB:dense` → **EXACT** `U+00E7CF` / glyph 1999 / bitmap `0000000000000000000000000000c0f0`
+- `straight-fill:RB:R14>B5:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdd7f`
+- `straight-fill:RB:R14>B5:sideB:dense` → **EXACT** `U+00E7D0` / glyph 2000 / bitmap `000000000000000000000000000080e0`
+- `straight-fill:RB:R14>B6:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdd7f`
+- `straight-fill:RB:R14>B6:sideB:dense` → **EXACT** `U+00E7D1` / glyph 2001 / bitmap `000000000000000000000000000080c0`
+- `straight-fill:RB:R14>B7:sideA:dense` → **DERIVED** bitmap `777f5d7f777f5d7f777f5d7f777fddff`
+- `straight-fill:RB:R14>B7:sideB:dense` → **EXACT** `U+00E2E2` / glyph 738 / bitmap `00000000000000000000000000008080`
+- `straight-fill:RB:R15>B0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RB:R15>B0:sideB:dense` → **EXACT** `U+00E0FF` / glyph 255 / bitmap `000000000000000000000000000000ff`
+- `straight-fill:RB:R15>B1:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddfe`
+- `straight-fill:RB:R15>B1:sideB:dense` → **EXACT** `U+00E2E3` / glyph 739 / bitmap `000000000000000000000000000000fe`
+- `straight-fill:RB:R15>B2:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddfc`
+- `straight-fill:RB:R15>B2:sideB:dense` → **EXACT** `U+00E2E4` / glyph 740 / bitmap `000000000000000000000000000000fc`
+- `straight-fill:RB:R15>B3:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddf8`
+- `straight-fill:RB:R15>B3:sideB:dense` → **EXACT** `U+00E2E5` / glyph 741 / bitmap `000000000000000000000000000000f8`
+- `straight-fill:RB:R15>B4:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddf0`
+- `straight-fill:RB:R15>B4:sideB:dense` → **EXACT** `U+00E2E6` / glyph 742 / bitmap `000000000000000000000000000000f0`
+- `straight-fill:RB:R15>B5:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffdde0`
+- `straight-fill:RB:R15>B5:sideB:dense` → **EXACT** `U+00E2E7` / glyph 743 / bitmap `000000000000000000000000000000e0`
+- `straight-fill:RB:R15>B6:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddc0`
+- `straight-fill:RB:R15>B6:sideB:dense` → **EXACT** `U+00E2E8` / glyph 744 / bitmap `000000000000000000000000000000c0`
+- `straight-fill:RB:R15>B7:sideA:dense` → **EXACT** `U+00E2E9` / glyph 745 / bitmap `00000000000000000000000000000080`
+- `straight-fill:RB:R15>B7:sideB:dense` → **EXACT** `U+00E2E9` / glyph 745 / bitmap `00000000000000000000000000000080`
+- `straight-fill:RB:R2>B0:sideA:dense` → **DERIVED** bitmap `77ffdd7f773f3d1f170f0d0707030301`
+- `straight-fill:RB:R2>B0:sideB:dense` → **DERIVED** bitmap `000080c040e0e0f070f8d8fc74fedeff`
+- `straight-fill:RB:R2>B1:sideA:dense` → **DERIVED** bitmap `77ffddff777f3d3f171f0d0f07070303`
+- `straight-fill:RB:R2>B1:sideB:dense` → **DERIVED** bitmap `0000808040c0e0e070f0d8f874fcdefe`
+- `straight-fill:RB:R2>B2:sideA:dense` → **DERIVED** bitmap `77ffddff777f3d3f371f1d1f0f0f0507`
+- `straight-fill:RB:R2>B2:sideB:dense` → **DERIVED** bitmap `0000808040c0e0e060f0d0f078f8dcfc`
+- `straight-fill:RB:R2>B3:sideA:dense` → **DERIVED** bitmap `77ffddff777f5d3f373f3d1f171f0d0f`
+- `straight-fill:RB:R2>B3:sideB:dense` → **DERIVED** bitmap `0000808040c0c0e060e0e0f070f0d8f8`
+- `straight-fill:RB:R2>B4:sideA:dense` → **DERIVED** bitmap `77ffddfff77f5d7f773f3d3f371f1d1f`
+- `straight-fill:RB:R2>B4:sideB:dense` → **DERIVED** bitmap `0000808080c0c0c040e0e0e060f0d0f0`
+- `straight-fill:RB:R2>B5:sideA:dense` → **DERIVED** bitmap `77ffddfff7ff5d7f777f5d7f373f3d3f`
+- `straight-fill:RB:R2>B5:sideB:dense` → **DERIVED** bitmap `000080808080c0c040c0c0c060e0e0e0`
+- `straight-fill:RB:R2>B6:sideA:dense` → **DERIVED** bitmap `77ffddfff7ffddfff77f5d7f777f5d7f`
+- `straight-fill:RB:R2>B6:sideB:dense` → **DERIVED** bitmap `000080808080808080c0c0c040c0c0c0`
+- `straight-fill:RB:R2>B7:sideA:dense` → **DERIVED** bitmap `777fddfff7ffddfff7ffddfff7ffddff`
+- `straight-fill:RB:R2>B7:sideB:dense` → **EXACT** `U+00E28B` / glyph 651 / bitmap `00008080808080808080808080808080`
+- `straight-fill:RB:R3>B0:sideA:dense` → **DERIVED** bitmap `77ffddff777f3d3f170f0d0707030301`
+- `straight-fill:RB:R3>B0:sideB:dense` → **DERIVED** bitmap `0000008040c0e0e070f8d8fc74fedeff`
+- `straight-fill:RB:R3>B1:sideA:dense` → **DERIVED** bitmap `77ffddff777f3d3f171f0d0f07070303`
+- `straight-fill:RB:R3>B1:sideB:dense` → **DERIVED** bitmap `0000008040c0e0e070f0d8f874fcdefe`
+- `straight-fill:RB:R3>B2:sideA:dense` → **DERIVED** bitmap `77ffddfff77f5d3f371f1d1f0f0f0507`
+- `straight-fill:RB:R3>B2:sideB:dense` → **DERIVED** bitmap `0000008080c0c0e060f0d0f078f8dcfc`
+- `straight-fill:RB:R3>B3:sideA:dense` → **DERIVED** bitmap `77ffddfff77f5d7f373f3d1f171f0d0f`
+- `straight-fill:RB:R3>B3:sideB:dense` → **DERIVED** bitmap `0000008080c0c0c060e0e0f070f0d8f8`
+- `straight-fill:RB:R3>B4:sideA:dense` → **DERIVED** bitmap `77ffddfff77f5d7f773f3d3f371f1d1f`
+- `straight-fill:RB:R3>B4:sideB:dense` → **DERIVED** bitmap `0000008080c0c0c040e0e0e060f0d0f0`
+- `straight-fill:RB:R3>B5:sideA:dense` → **DERIVED** bitmap `77ffddfff7ff5d7f777f5d7f373f3d3f`
+- `straight-fill:RB:R3>B5:sideB:dense` → **DERIVED** bitmap `000000808080c0c040c0c0c060e0e0e0`
+- `straight-fill:RB:R3>B6:sideA:dense` → **DERIVED** bitmap `77ffddfff7ffddfff77f5d7f777f5d7f`
+- `straight-fill:RB:R3>B6:sideB:dense` → **DERIVED** bitmap `000000808080808080c0c0c040c0c0c0`
+- `straight-fill:RB:R3>B7:sideA:dense` → **DERIVED** bitmap `777f5dfff7ffddfff7ffddfff7ffddff`
+- `straight-fill:RB:R3>B7:sideB:dense` → **EXACT** `U+00E293` / glyph 659 / bitmap `00000080808080808080808080808080`
+- `straight-fill:RB:R4>B0:sideA:dense` → **DERIVED** bitmap `77ffddfff77f5d3f171f0d0f07030301`
+- `straight-fill:RB:R4>B0:sideB:dense` → **DERIVED** bitmap `0000000080c0c0e070f0d8f874fedeff`
+- `straight-fill:RB:R4>B1:sideA:dense` → **DERIVED** bitmap `77ffddfff77f5d3f371f1d0f0f070503`
+- `straight-fill:RB:R4>B1:sideB:dense` → **DERIVED** bitmap `0000000080c0c0e060f0d0f878fcdcfe`
+- `straight-fill:RB:R4>B2:sideA:dense` → **DERIVED** bitmap `77ffddfff7ff5d7f373f1d1f0f0f0507`
+- `straight-fill:RB:R4>B2:sideB:dense` → **DERIVED** bitmap `000000008080c0c060e0d0f078f8dcfc`
+- `straight-fill:RB:R4>B3:sideA:dense` → **DERIVED** bitmap `77ffddfff7ff5d7f773f3d1f171f0d0f`
+- `straight-fill:RB:R4>B3:sideB:dense` → **DERIVED** bitmap `000000008080c0c040e0e0f070f0d8f8`
+- `straight-fill:RB:R4>B4:sideA:dense` → **DERIVED** bitmap `77ffddfff7ff5d7f777f3d3f373f1d1f`
+- `straight-fill:RB:R4>B4:sideB:dense` → **DERIVED** bitmap `000000008080c0c040c0e0e060e0d0f0`
+- `straight-fill:RB:R4>B5:sideA:dense` → **DERIVED** bitmap `77ffddfff7ffdd7f777f5d7f773f3d3f`
+- `straight-fill:RB:R4>B5:sideB:dense` → **DERIVED** bitmap `00000000808080c040c0c0c040e0e0e0`
+- `straight-fill:RB:R4>B6:sideA:dense` → **DERIVED** bitmap `77ffddfff7ffddfff7ff5d7f777f5d7f`
+- `straight-fill:RB:R4>B6:sideB:dense` → **DERIVED** bitmap `00000000808080808080c0c040c0c0c0`
+- `straight-fill:RB:R4>B7:sideA:dense` → **DERIVED** bitmap `777f5d7ff7ffddfff7ffddfff7ffddff`
+- `straight-fill:RB:R4>B7:sideB:dense` → **EXACT** `U+00E29A` / glyph 666 / bitmap `00000000808080808080808080808080`
+- `straight-fill:RB:R5>B0:sideA:dense` → **DERIVED** bitmap `77ffddff77ff5d7f371f0d0f07030301`
+- `straight-fill:RB:R5>B0:sideB:dense` → **DERIVED** bitmap `000000000080c0c060f0d8f874fedeff`
+- `straight-fill:RB:R5>B1:sideA:dense` → **DERIVED** bitmap `77ffddff77ff5d7f373f1d0f0f070503`
+- `straight-fill:RB:R5>B1:sideB:dense` → **DERIVED** bitmap `000000000080c0c060e0d0f878fcdcfe`
+- `straight-fill:RB:R5>B2:sideA:dense` → **DERIVED** bitmap `77ffddff77ff5d7f373f1d1f0f0f0507`
+- `straight-fill:RB:R5>B2:sideB:dense` → **DERIVED** bitmap `000000000080c0c060e0d0f078f8dcfc`
+- `straight-fill:RB:R5>B3:sideA:dense` → **DERIVED** bitmap `77ffddff77ffdd7f773f3d3f171f0d0f`
+- `straight-fill:RB:R5>B3:sideB:dense` → **DERIVED** bitmap `00000000008080c040e0e0e070f0d8f8`
+- `straight-fill:RB:R5>B4:sideA:dense` → **DERIVED** bitmap `77ffddff77ffdd7f777f3d3f373f1d1f`
+- `straight-fill:RB:R5>B4:sideB:dense` → **DERIVED** bitmap `00000000008080c040c0e0e060e0d0f0`
+- `straight-fill:RB:R5>B5:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff777f5d7f773f3d3f`
+- `straight-fill:RB:R5>B5:sideB:dense` → **DERIVED** bitmap `000000000080808040c0c0c040e0e0e0`
+- `straight-fill:RB:R5>B6:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff7ff5d7f777f5d7f`
+- `straight-fill:RB:R5>B6:sideB:dense` → **DERIVED** bitmap `00000000008080808080c0c040c0c0c0`
+- `straight-fill:RB:R5>B7:sideA:dense` → **DERIVED** bitmap `777f5d7f77ffddfff7ffddfff7ffddff`
+- `straight-fill:RB:R5>B7:sideB:dense` → **EXACT** `U+00E2A2` / glyph 674 / bitmap `00000000008080808080808080808080`
+- `straight-fill:RB:R6>B0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffdd7f373f1d0f07070301`
+- `straight-fill:RB:R6>B0:sideB:dense` → **DERIVED** bitmap `00000000000080c060e0d0f874fcdeff`
+- `straight-fill:RB:R6>B1:sideA:dense` → **DERIVED** bitmap `77ffddff77ffdd7f773f1d1f0f070503`
+- `straight-fill:RB:R6>B1:sideB:dense` → **DERIVED** bitmap `00000000000080c040e0d0f078fcdcfe`
+- `straight-fill:RB:R6>B2:sideA:dense` → **DERIVED** bitmap `77ffddff77ffdd7f773f3d1f170f0d07`
+- `straight-fill:RB:R6>B2:sideB:dense` → **DERIVED** bitmap `00000000000080c040e0e0f070f8d8fc`
+- `straight-fill:RB:R6>B3:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff777f3d3f171f0d0f`
+- `straight-fill:RB:R6>B3:sideB:dense` → **DERIVED** bitmap `000000000000808040c0e0e070f0d8f8`
+- `straight-fill:RB:R6>B4:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff777f5d3f373f1d1f`
+- `straight-fill:RB:R6>B4:sideB:dense` → **DERIVED** bitmap `000000000000808040c0c0e060e0d0f0`
+- `straight-fill:RB:R6>B5:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff77f5d7f773f3d3f`
+- `straight-fill:RB:R6>B5:sideB:dense` → **DERIVED** bitmap `000000000000808080c0c0c040e0e0e0`
+- `straight-fill:RB:R6>B6:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff7ffdd7f777f5d7f`
+- `straight-fill:RB:R6>B6:sideB:dense` → **DERIVED** bitmap `0000000000008080808080c040c0c0c0`
+- `straight-fill:RB:R6>B7:sideA:dense` → **DERIVED** bitmap `777f5d7f777fddfff7ffddfff7ffddff`
+- `straight-fill:RB:R6>B7:sideB:dense` → **EXACT** `U+00E2A9` / glyph 681 / bitmap `00000000000080808080808080808080`
+- `straight-fill:RB:R7>B0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff773f1d0f0f070301`
+- `straight-fill:RB:R7>B0:sideB:dense` → **DERIVED** bitmap `000000000000008040e0d0f878fcdeff`
+- `straight-fill:RB:R7>B1:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff773f3d1f0f070503`
+- `straight-fill:RB:R7>B1:sideB:dense` → **DERIVED** bitmap `000000000000008040e0e0f078fcdcfe`
+- `straight-fill:RB:R7>B2:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff777f3d1f170f0d07`
+- `straight-fill:RB:R7>B2:sideB:dense` → **DERIVED** bitmap `000000000000008040c0e0f070f8d8fc`
+- `straight-fill:RB:R7>B3:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff777f3d3f171f0d0f`
+- `straight-fill:RB:R7>B3:sideB:dense` → **DERIVED** bitmap `000000000000008040c0e0e070f0d8f8`
+- `straight-fill:RB:R7>B4:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff77f5d3f373f1d1f`
+- `straight-fill:RB:R7>B4:sideB:dense` → **DERIVED** bitmap `000000000000008080c0c0e060e0d0f0`
+- `straight-fill:RB:R7>B5:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff77f5d7f773f3d3f`
+- `straight-fill:RB:R7>B5:sideB:dense` → **DERIVED** bitmap `000000000000008080c0c0c040e0e0e0`
+- `straight-fill:RB:R7>B6:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff7ffdd7f777f5d7f`
+- `straight-fill:RB:R7>B6:sideB:dense` → **DERIVED** bitmap `0000000000000080808080c040c0c0c0`
+- `straight-fill:RB:R7>B7:sideA:dense` → **DERIVED** bitmap `777f5d7f777f5dfff7ffddfff7ffddff`
+- `straight-fill:RB:R7>B7:sideB:dense` → **EXACT** `U+00E2B1` / glyph 689 / bitmap `00000000000000808080808080808080`
+- `straight-fill:RB:R8>B0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff77f3d1f0f070301`
+- `straight-fill:RB:R8>B0:sideB:dense` → **DERIVED** bitmap `000000000000000080c0e0f078fcdeff`
+- `straight-fill:RB:R8>B1:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff77f3d1f170f0503`
+- `straight-fill:RB:R8>B1:sideB:dense` → **DERIVED** bitmap `000000000000000080c0e0f070f8dcfe`
+- `straight-fill:RB:R8>B2:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff77f5d3f170f0d07`
+- `straight-fill:RB:R8>B2:sideB:dense` → **DERIVED** bitmap `000000000000000080c0c0e070f8d8fc`
+- `straight-fill:RB:R8>B3:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff77f5d3f371f1d0f`
+- `straight-fill:RB:R8>B3:sideB:dense` → **DERIVED** bitmap `000000000000000080c0c0e060f0d0f8`
+- `straight-fill:RB:R8>B4:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff7ff5d7f373f1d1f`
+- `straight-fill:RB:R8>B4:sideB:dense` → **DERIVED** bitmap `00000000000000008080c0c060e0d0f0`
+- `straight-fill:RB:R8>B5:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff7ff5d7f777f3d3f`
+- `straight-fill:RB:R8>B5:sideB:dense` → **DERIVED** bitmap `00000000000000008080c0c040c0e0e0`
+- `straight-fill:RB:R8>B6:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddfff7ffddff777f5d7f`
+- `straight-fill:RB:R8>B6:sideB:dense` → **DERIVED** bitmap `00000000000000008080808040c0c0c0`
+- `straight-fill:RB:R8>B7:sideA:dense` → **DERIVED** bitmap `777f5d7f777f5d7ff7ffddfff7ffddff`
+- `straight-fill:RB:R8>B7:sideB:dense` → **EXACT** `U+00E2B8` / glyph 696 / bitmap `00000000000000008080808080808080`
+- `straight-fill:RB:R9>B0:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff5d3f1f070301`
+- `straight-fill:RB:R9>B0:sideB:dense` → **DERIVED** bitmap `00000000000000000080c0e078fcdeff`
+- `straight-fill:RB:R9>B1:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff5d3f170f0503`
+- `straight-fill:RB:R9>B1:sideB:dense` → **DERIVED** bitmap `00000000000000000080c0e070f8dcfe`
+- `straight-fill:RB:R9>B2:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff5d3f171f0d07`
+- `straight-fill:RB:R9>B2:sideB:dense` → **DERIVED** bitmap `00000000000000000080c0e070f0d8fc`
+- `straight-fill:RB:R9>B3:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff5d7f371f1d0f`
+- `straight-fill:RB:R9>B3:sideB:dense` → **DERIVED** bitmap `00000000000000000080c0c060f0d0f8`
+- `straight-fill:RB:R9>B4:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ff5d7f373f1d1f`
+- `straight-fill:RB:R9>B4:sideB:dense` → **DERIVED** bitmap `00000000000000000080c0c060e0d0f0`
+- `straight-fill:RB:R9>B5:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffdd7f777f3d3f`
+- `straight-fill:RB:R9>B5:sideB:dense` → **DERIVED** bitmap `0000000000000000008080c040c0e0e0`
+- `straight-fill:RB:R9>B6:sideA:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff777f5d7f`
+- `straight-fill:RB:R9>B6:sideB:dense` → **DERIVED** bitmap `00000000000000000080808040c0c0c0`
+- `straight-fill:RB:R9>B7:sideA:dense` → **DERIVED** bitmap `777f5d7f777f5d7f77ffddfff7ffddff`
+- `straight-fill:RB:R9>B7:sideB:dense` → **EXACT** `U+00E2BF` / glyph 703 / bitmap `00000000000000000080808080808080`
+- `straight-fill:RT:R0>T0:sideA:dense` → **EXACT** `U+00E000` / glyph 0 / bitmap `ff000000000000000000000000000000`
+- `straight-fill:RT:R0>T0:sideB:dense` → **DERIVED** bitmap `ffffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R0>T1:sideA:dense` → **EXACT** `U+00E210` / glyph 528 / bitmap `fe000000000000000000000000000000`
+- `straight-fill:RT:R0>T1:sideB:dense` → **DERIVED** bitmap `feffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R0>T2:sideA:dense` → **EXACT** `U+00E211` / glyph 529 / bitmap `fc000000000000000000000000000000`
+- `straight-fill:RT:R0>T2:sideB:dense` → **DERIVED** bitmap `fcffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R0>T3:sideA:dense` → **EXACT** `U+00E212` / glyph 530 / bitmap `f8000000000000000000000000000000`
+- `straight-fill:RT:R0>T3:sideB:dense` → **DERIVED** bitmap `f8ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R0>T4:sideA:dense` → **EXACT** `U+00E213` / glyph 531 / bitmap `f0000000000000000000000000000000`
+- `straight-fill:RT:R0>T4:sideB:dense` → **DERIVED** bitmap `f0ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R0>T5:sideA:dense` → **EXACT** `U+00E214` / glyph 532 / bitmap `e0000000000000000000000000000000`
+- `straight-fill:RT:R0>T5:sideB:dense` → **DERIVED** bitmap `e0ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R0>T6:sideA:dense` → **EXACT** `U+00E215` / glyph 533 / bitmap `c0000000000000000000000000000000`
+- `straight-fill:RT:R0>T6:sideB:dense` → **DERIVED** bitmap `c0ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R0>T7:sideA:dense` → **EXACT** `U+00E216` / glyph 534 / bitmap `80000000000000000000000000000000`
+- `straight-fill:RT:R0>T7:sideB:dense` → **EXACT** `U+00E216` / glyph 534 / bitmap `80000000000000000000000000000000`
+- `straight-fill:RT:R1>T0:sideA:dense` → **DERIVED** bitmap `7ff00000000000000000000000000000`
+- `straight-fill:RT:R1>T0:sideB:dense` → **DERIVED** bitmap `0fffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R1>T1:sideA:dense` → **DERIVED** bitmap `7ee00000000000000000000000000000`
+- `straight-fill:RT:R1>T1:sideB:dense` → **DERIVED** bitmap `1fffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R1>T2:sideA:dense` → **DERIVED** bitmap `7ce00000000000000000000000000000`
+- `straight-fill:RT:R1>T2:sideB:dense` → **DERIVED** bitmap `1fffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R1>T3:sideA:dense` → **EXACT** `U+00EB71` / glyph 2929 / bitmap `78c00000000000000000000000000000`
+- `straight-fill:RT:R1>T3:sideB:dense` → **DERIVED** bitmap `3fffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R1>T4:sideA:dense` → **EXACT** `U+00EB73` / glyph 2931 / bitmap `70c00000000000000000000000000000`
+- `straight-fill:RT:R1>T4:sideB:dense` → **DERIVED** bitmap `37ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R1>T5:sideA:dense` → **EXACT** `U+00E21B` / glyph 539 / bitmap `60800000000000000000000000000000`
+- `straight-fill:RT:R1>T5:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R1>T6:sideA:dense` → **EXACT** `U+00E21C` / glyph 540 / bitmap `40800000000000000000000000000000`
+- `straight-fill:RT:R1>T6:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R1>T7:sideA:dense` → **EXACT** `U+00E21D` / glyph 541 / bitmap `80800000000000000000000000000000`
+- `straight-fill:RT:R1>T7:sideB:dense` → **DERIVED** bitmap `f7ff5d7f777f5d7f777f5d7f777f5d7f`
+- `straight-fill:RT:R10>T0:sideA:dense` → **DERIVED** bitmap `77fedefc78f8d0e040c0800000000000`
+- `straight-fill:RT:R10>T0:sideB:dense` → **DERIVED** bitmap `010303070f0f1d3f777fddff77ffddff`
+- `straight-fill:RT:R10>T1:sideA:dense` → **DERIVED** bitmap `76fcdcf878f0e0e040c0800000000000`
+- `straight-fill:RT:R10>T1:sideB:dense` → **DERIVED** bitmap `0307050f0f1f3d3f777fddff77ffddff`
+- `straight-fill:RT:R10>T2:sideA:dense` → **DERIVED** bitmap `74fcd8f870f0e0e040c0800000000000`
+- `straight-fill:RT:R10>T2:sideB:dense` → **DERIVED** bitmap `07070d0f171f3d3f777fddff77ffddff`
+- `straight-fill:RT:R10>T3:sideA:dense` → **DERIVED** bitmap `78f8d0f060e0e0c04080800000000000`
+- `straight-fill:RT:R10>T3:sideB:dense` → **DERIVED** bitmap `0f0f1d1f373f3d7f77ffddff77ffddff`
+- `straight-fill:RT:R10>T4:sideA:dense` → **DERIVED** bitmap `70f0e0e060e0c0c04080800000000000`
+- `straight-fill:RT:R10>T4:sideB:dense` → **DERIVED** bitmap `171f3d3f373f5d7f77ffddff77ffddff`
+- `straight-fill:RT:R10>T5:sideA:dense` → **DERIVED** bitmap `60e0e0c040c0c0c08080800000000000`
+- `straight-fill:RT:R10>T5:sideB:dense` → **DERIVED** bitmap `373f3d7f777f5d7ff7ffddff77ffddff`
+- `straight-fill:RT:R10>T6:sideA:dense` → **DERIVED** bitmap `40c0c0c040c080808080800000000000`
+- `straight-fill:RT:R10>T6:sideB:dense` → **DERIVED** bitmap `777f5d7f777fddfff7ffddff77ffddff`
+- `straight-fill:RT:R10>T7:sideA:dense` → **EXACT** `U+00E25E` / glyph 606 / bitmap `80808080808080808080800000000000`
+- `straight-fill:RT:R10>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff7ffddfff7ffdd7f777f5d7f`
+- `straight-fill:RT:R11>T0:sideA:dense` → **DERIVED** bitmap `77fedefc78f8d0f060c0c08000000000`
+- `straight-fill:RT:R11>T0:sideB:dense` → **DERIVED** bitmap `010303070f0f1d1f377f5dff77ffddff`
+- `straight-fill:RT:R11>T1:sideA:dense` → **DERIVED** bitmap `76fcdcf878f0d0e060c0c08000000000`
+- `straight-fill:RT:R11>T1:sideB:dense` → **DERIVED** bitmap `0307050f0f1f1d3f377f5dff77ffddff`
+- `straight-fill:RT:R11>T2:sideA:dense` → **DERIVED** bitmap `74fcd8f870f0e0e040c0808000000000`
+- `straight-fill:RT:R11>T2:sideB:dense` → **DERIVED** bitmap `07070d0f171f3d3f777fddff77ffddff`
+- `straight-fill:RT:R11>T3:sideA:dense` → **DERIVED** bitmap `78f8d0f070e0e0c040c0808000000000`
+- `straight-fill:RT:R11>T3:sideB:dense` → **DERIVED** bitmap `0f0f1d1f173f3d7f777fddff77ffddff`
+- `straight-fill:RT:R11>T4:sideA:dense` → **DERIVED** bitmap `70f0e0e060e0c0c040c0808000000000`
+- `straight-fill:RT:R11>T4:sideB:dense` → **DERIVED** bitmap `171f3d3f373f5d7f777fddff77ffddff`
+- `straight-fill:RT:R11>T5:sideA:dense` → **DERIVED** bitmap `60e0e0c040c0c0c04080808000000000`
+- `straight-fill:RT:R11>T5:sideB:dense` → **DERIVED** bitmap `373f3d7f777f5d7f77ffddff77ffddff`
+- `straight-fill:RT:R11>T6:sideA:dense` → **DERIVED** bitmap `40c0c0c040c080808080808000000000`
+- `straight-fill:RT:R11>T6:sideB:dense` → **DERIVED** bitmap `777f5d7f777fddfff7ffddff77ffddff`
+- `straight-fill:RT:R11>T7:sideA:dense` → **EXACT** `U+00E265` / glyph 613 / bitmap `80808080808080808080808000000000`
+- `straight-fill:RT:R11>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff7ffddfff7ffddff777f5d7f`
+- `straight-fill:RT:R12>T0:sideA:dense` → **DERIVED** bitmap `77fedefc74f8d8f060e0c0c080000000`
+- `straight-fill:RT:R12>T0:sideB:dense` → **DERIVED** bitmap `01030307070f0d1f373f5d7ff7ffddff`
+- `straight-fill:RT:R12>T1:sideA:dense` → **DERIVED** bitmap `76fedcfc78f8d0f060e0c0c080000000`
+- `straight-fill:RT:R12>T1:sideB:dense` → **DERIVED** bitmap `030305070f0f1d1f373f5d7ff7ffddff`
+- `straight-fill:RT:R12>T2:sideA:dense` → **DERIVED** bitmap `74fcd8f870f0d0e060c0c08080000000`
+- `straight-fill:RT:R12>T2:sideB:dense` → **DERIVED** bitmap `07070d0f171f1d3f377f5dfff7ffddff`
+- `straight-fill:RT:R12>T3:sideA:dense` → **DERIVED** bitmap `78f8d0f070e0e0e040c0c08080000000`
+- `straight-fill:RT:R12>T3:sideB:dense` → **DERIVED** bitmap `0f0f1d1f173f3d3f777f5dfff7ffddff`
+- `straight-fill:RT:R12>T4:sideA:dense` → **DERIVED** bitmap `70f0d0e060e0e0c040c0c08080000000`
+- `straight-fill:RT:R12>T4:sideB:dense` → **DERIVED** bitmap `171f1d3f373f3d7f777f5dfff7ffddff`
+- `straight-fill:RT:R12>T5:sideA:dense` → **DERIVED** bitmap `60e0e0e040c0c0c040c0808080000000`
+- `straight-fill:RT:R12>T5:sideB:dense` → **DERIVED** bitmap `373f3d3f777f5d7f777fddfff7ffddff`
+- `straight-fill:RT:R12>T6:sideA:dense` → **DERIVED** bitmap `40c0c0c040c0c0808080808080000000`
+- `straight-fill:RT:R12>T6:sideB:dense` → **DERIVED** bitmap `777f5d7f777f5dfff7ffddfff7ffddff`
+- `straight-fill:RT:R12>T7:sideA:dense` → **EXACT** `U+00E26D` / glyph 621 / bitmap `80808080808080808080808080000000`
+- `straight-fill:RT:R12>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff7ffddfff7ffddfff77f5d7f`
+- `straight-fill:RT:R13>T0:sideA:dense` → **DERIVED** bitmap `77fedefc74f8d8f070e0e0c040800000`
+- `straight-fill:RT:R13>T0:sideB:dense` → **DERIVED** bitmap `01030307070f0d1f173f3d7f77ffddff`
+- `straight-fill:RT:R13>T1:sideA:dense` → **DERIVED** bitmap `76fedcfc78f8d0f060e0c0c080800000`
+- `straight-fill:RT:R13>T1:sideB:dense` → **DERIVED** bitmap `030305070f0f1d1f373f5d7ff7ffddff`
+- `straight-fill:RT:R13>T2:sideA:dense` → **DERIVED** bitmap `74fcd8f870f0d0e060e0c0c080800000`
+- `straight-fill:RT:R13>T2:sideB:dense` → **DERIVED** bitmap `07070d0f171f1d3f373f5d7ff7ffddff`
+- `straight-fill:RT:R13>T3:sideA:dense` → **DERIVED** bitmap `78f8d0f070e0e0e060c0c0c080800000`
+- `straight-fill:RT:R13>T3:sideB:dense` → **DERIVED** bitmap `0f0f1d1f173f3d3f377f5d7ff7ffddff`
+- `straight-fill:RT:R13>T4:sideA:dense` → **DERIVED** bitmap `70f0d0e060e0e0c040c0c08080800000`
+- `straight-fill:RT:R13>T4:sideB:dense` → **DERIVED** bitmap `171f1d3f373f3d7f777f5dfff7ffddff`
+- `straight-fill:RT:R13>T5:sideA:dense` → **DERIVED** bitmap `60e0e0e040c0c0c040c0808080800000`
+- `straight-fill:RT:R13>T5:sideB:dense` → **DERIVED** bitmap `373f3d3f777f5d7f777fddfff7ffddff`
+- `straight-fill:RT:R13>T6:sideA:dense` → **DERIVED** bitmap `40c0c0c040c0c0808080808080800000`
+- `straight-fill:RT:R13>T6:sideB:dense` → **DERIVED** bitmap `777f5d7f777f5dfff7ffddfff7ffddff`
+- `straight-fill:RT:R13>T7:sideA:dense` → **EXACT** `U+00E274` / glyph 628 / bitmap `80808080808080808080808080800000`
+- `straight-fill:RT:R13>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff7ffddfff7ffddfff7ff5d7f`
+- `straight-fill:RT:R14>T0:sideA:dense` → **DERIVED** bitmap `77ffdefe74fcd8f870f0e0e040c08000`
+- `straight-fill:RT:R14>T0:sideB:dense` → **DERIVED** bitmap `0101030307070d0f171f3d3f777fddff`
+- `straight-fill:RT:R14>T1:sideA:dense` → **DERIVED** bitmap `76fedcfc78f8d0f070e0e0c040808000`
+- `straight-fill:RT:R14>T1:sideB:dense` → **DERIVED** bitmap `030305070f0f1d1f173f3d7f77ffddff`
+- `straight-fill:RT:R14>T2:sideA:dense` → **DERIVED** bitmap `74fcd8f878f0d0f060e0c0c040808000`
+- `straight-fill:RT:R14>T2:sideB:dense` → **DERIVED** bitmap `07070d0f0f1f1d1f373f5d7f77ffddff`
+- `straight-fill:RT:R14>T3:sideA:dense` → **DERIVED** bitmap `78f8d0f070f0e0e060c0c0c040808000`
+- `straight-fill:RT:R14>T3:sideB:dense` → **DERIVED** bitmap `0f0f1d1f171f3d3f377f5d7f77ffddff`
+- `straight-fill:RT:R14>T4:sideA:dense` → **DERIVED** bitmap `70f0d0e060e0e0e040c0c0c080808000`
+- `straight-fill:RT:R14>T4:sideB:dense` → **DERIVED** bitmap `171f1d3f373f3d3f777f5d7ff7ffddff`
+- `straight-fill:RT:R14>T5:sideA:dense` → **DERIVED** bitmap `60e0e0e040c0c0c040c0c08080808000`
+- `straight-fill:RT:R14>T5:sideB:dense` → **DERIVED** bitmap `373f3d3f777f5d7f777f5dfff7ffddff`
+- `straight-fill:RT:R14>T6:sideA:dense` → **DERIVED** bitmap `40c0c0c040c0c0c08080808080808000`
+- `straight-fill:RT:R14>T6:sideB:dense` → **DERIVED** bitmap `777f5d7f777f5d7ff7ffddfff7ffddff`
+- `straight-fill:RT:R14>T7:sideA:dense` → **EXACT** `U+00E27C` / glyph 636 / bitmap `80808080808080808080808080808000`
+- `straight-fill:RT:R14>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff7ffddfff7ffddfff7ffdd7f`
+- `straight-fill:RT:R15>T0:sideA:dense` → **DERIVED** bitmap `77ffdefe74fcd8f870f0e0e040c08080`
+- `straight-fill:RT:R15>T0:sideB:dense` → **DERIVED** bitmap `0101030307070d0f171f3d3f777fddff`
+- `straight-fill:RT:R15>T1:sideA:dense` → **DERIVED** bitmap `76fedcfc78f8d8f070e0e0e040c08080`
+- `straight-fill:RT:R15>T1:sideB:dense` → **DERIVED** bitmap `030305070f0f0d1f173f3d3f777fddff`
+- `straight-fill:RT:R15>T2:sideA:dense` → **DERIVED** bitmap `74fcd8f878f0d0f060e0e0c040c08080`
+- `straight-fill:RT:R15>T2:sideB:dense` → **DERIVED** bitmap `07070d0f0f1f1d1f373f3d7f777fddff`
+- `straight-fill:RT:R15>T3:sideA:dense` → **DERIVED** bitmap `78f8d0f070f0e0e060e0c0c040c08080`
+- `straight-fill:RT:R15>T3:sideB:dense` → **DERIVED** bitmap `0f0f1d1f171f3d3f373f5d7f777fddff`
+- `straight-fill:RT:R15>T4:sideA:dense` → **DERIVED** bitmap `70f0d0e060e0e0e040c0c0c040808080`
+- `straight-fill:RT:R15>T4:sideB:dense` → **DERIVED** bitmap `171f1d3f373f3d3f777f5d7f77ffddff`
+- `straight-fill:RT:R15>T5:sideA:dense` → **DERIVED** bitmap `60e0e0e040c0c0c040c0c0c080808080`
+- `straight-fill:RT:R15>T5:sideB:dense` → **DERIVED** bitmap `373f3d3f777f5d7f777f5d7ff7ffddff`
+- `straight-fill:RT:R15>T6:sideA:dense` → **DERIVED** bitmap `40c0c0c040c0c0c08080808080808080`
+- `straight-fill:RT:R15>T6:sideB:dense` → **DERIVED** bitmap `777f5d7f777f5d7ff7ffddfff7ffddff`
+- `straight-fill:RT:R15>T7:sideA:dense` → **EXACT** `U+00E13D` / glyph 317 / bitmap `80808080808080808080808080808080`
+- `straight-fill:RT:R15>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff7ffddfff7ffddfff7ffddff`
+- `straight-fill:RT:R2>T0:sideA:dense` → **DERIVED** bitmap `77fcc000000000000000000000000000`
+- `straight-fill:RT:R2>T0:sideB:dense` → **DERIVED** bitmap `033fddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R2>T1:sideA:dense` → **DERIVED** bitmap `76f8c000000000000000000000000000`
+- `straight-fill:RT:R2>T1:sideB:dense` → **DERIVED** bitmap `073fddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R2>T2:sideA:dense` → **DERIVED** bitmap `7cf0c000000000000000000000000000`
+- `straight-fill:RT:R2>T2:sideB:dense` → **DERIVED** bitmap `0f3fddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R2>T3:sideA:dense` → **DERIVED** bitmap `78e08000000000000000000000000000`
+- `straight-fill:RT:R2>T3:sideB:dense` → **DERIVED** bitmap `1f7fddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R2>T4:sideA:dense` → **DERIVED** bitmap `70e08000000000000000000000000000`
+- `straight-fill:RT:R2>T4:sideB:dense` → **DERIVED** bitmap `177fddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R2>T5:sideA:dense` → **EXACT** `U+00EB7F` / glyph 2943 / bitmap `60c08000000000000000000000000000`
+- `straight-fill:RT:R2>T5:sideB:dense` → **DERIVED** bitmap `377fddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R2>T6:sideA:dense` → **EXACT** `U+00EB81` / glyph 2945 / bitmap `40c08000000000000000000000000000`
+- `straight-fill:RT:R2>T6:sideB:dense` → **DERIVED** bitmap `777fddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R2>T7:sideA:dense` → **EXACT** `U+00E224` / glyph 548 / bitmap `80808000000000000000000000000000`
+- `straight-fill:RT:R2>T7:sideB:dense` → **DERIVED** bitmap `f7ffdd7f777f5d7f777f5d7f777f5d7f`
+- `straight-fill:RT:R3>T0:sideA:dense` → **DERIVED** bitmap `77fcf0c0000000000000000000000000`
+- `straight-fill:RT:R3>T0:sideB:dense` → **DERIVED** bitmap `030f3dff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R3>T1:sideA:dense` → **DERIVED** bitmap `76f8e080000000000000000000000000`
+- `straight-fill:RT:R3>T1:sideB:dense` → **DERIVED** bitmap `071f7dff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R3>T2:sideA:dense` → **DERIVED** bitmap `74f8e080000000000000000000000000`
+- `straight-fill:RT:R3>T2:sideB:dense` → **DERIVED** bitmap `071f7dff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R3>T3:sideA:dense` → **DERIVED** bitmap `78f0c080000000000000000000000000`
+- `straight-fill:RT:R3>T3:sideB:dense` → **DERIVED** bitmap `0f3f5dff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R3>T4:sideA:dense` → **DERIVED** bitmap `70e0c080000000000000000000000000`
+- `straight-fill:RT:R3>T4:sideB:dense` → **DERIVED** bitmap `173f5dff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R3>T5:sideA:dense` → **DERIVED** bitmap `60c0c080000000000000000000000000`
+- `straight-fill:RT:R3>T5:sideB:dense` → **DERIVED** bitmap `377f5dff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R3>T6:sideA:dense` → **EXACT** `U+00EB8E` / glyph 2958 / bitmap `40c08080000000000000000000000000`
+- `straight-fill:RT:R3>T6:sideB:dense` → **DERIVED** bitmap `777fddff77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R3>T7:sideA:dense` → **EXACT** `U+00E22B` / glyph 555 / bitmap `80808080000000000000000000000000`
+- `straight-fill:RT:R3>T7:sideB:dense` → **DERIVED** bitmap `f7ffddff777f5d7f777f5d7f777f5d7f`
+- `straight-fill:RT:R4>T0:sideA:dense` → **DERIVED** bitmap `77fed8e0800000000000000000000000`
+- `straight-fill:RT:R4>T0:sideB:dense` → **DERIVED** bitmap `01071d7ff7ffddff77ffddff77ffddff`
+- `straight-fill:RT:R4>T1:sideA:dense` → **DERIVED** bitmap `76fcd0e0800000000000000000000000`
+- `straight-fill:RT:R4>T1:sideB:dense` → **DERIVED** bitmap `030f1d7ff7ffddff77ffddff77ffddff`
+- `straight-fill:RT:R4>T2:sideA:dense` → **DERIVED** bitmap `74f8f0c0800000000000000000000000`
+- `straight-fill:RT:R4>T2:sideB:dense` → **DERIVED** bitmap `070f3d7ff7ffddff77ffddff77ffddff`
+- `straight-fill:RT:R4>T3:sideA:dense` → **DERIVED** bitmap `78f0e0c0800000000000000000000000`
+- `straight-fill:RT:R4>T3:sideB:dense` → **DERIVED** bitmap `0f1f3d7ff7ffddff77ffddff77ffddff`
+- `straight-fill:RT:R4>T4:sideA:dense` → **DERIVED** bitmap `70e0e0c0800000000000000000000000`
+- `straight-fill:RT:R4>T4:sideB:dense` → **DERIVED** bitmap `173f3d7ff7ffddff77ffddff77ffddff`
+- `straight-fill:RT:R4>T5:sideA:dense` → **DERIVED** bitmap `60e0c0c0800000000000000000000000`
+- `straight-fill:RT:R4>T5:sideB:dense` → **DERIVED** bitmap `373f5d7ff7ffddff77ffddff77ffddff`
+- `straight-fill:RT:R4>T6:sideA:dense` → **DERIVED** bitmap `40c0c080800000000000000000000000`
+- `straight-fill:RT:R4>T6:sideB:dense` → **DERIVED** bitmap `777f5dfff7ffddff77ffddff77ffddff`
+- `straight-fill:RT:R4>T7:sideA:dense` → **EXACT** `U+00E232` / glyph 562 / bitmap `80808080800000000000000000000000`
+- `straight-fill:RT:R4>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff77f5d7f777f5d7f777f5d7f`
+- `straight-fill:RT:R5>T0:sideA:dense` → **DERIVED** bitmap `77fed8f0608000000000000000000000`
+- `straight-fill:RT:R5>T0:sideB:dense` → **DERIVED** bitmap `01070d1f77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R5>T1:sideA:dense` → **DERIVED** bitmap `76fcd8e0408000000000000000000000`
+- `straight-fill:RT:R5>T1:sideB:dense` → **DERIVED** bitmap `03071d3f77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R5>T2:sideA:dense` → **DERIVED** bitmap `74f8d0e0408000000000000000000000`
+- `straight-fill:RT:R5>T2:sideB:dense` → **DERIVED** bitmap `070f1d3f77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R5>T3:sideA:dense` → **DERIVED** bitmap `78f0e0e0408000000000000000000000`
+- `straight-fill:RT:R5>T3:sideB:dense` → **DERIVED** bitmap `0f1f3d3f77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R5>T4:sideA:dense` → **DERIVED** bitmap `70e0e0c0408000000000000000000000`
+- `straight-fill:RT:R5>T4:sideB:dense` → **DERIVED** bitmap `173f3d7f77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R5>T5:sideA:dense` → **DERIVED** bitmap `60e0c0c0808000000000000000000000`
+- `straight-fill:RT:R5>T5:sideB:dense` → **DERIVED** bitmap `373f5d7ff7ffddff77ffddff77ffddff`
+- `straight-fill:RT:R5>T6:sideA:dense` → **DERIVED** bitmap `40c0c080808000000000000000000000`
+- `straight-fill:RT:R5>T6:sideB:dense` → **DERIVED** bitmap `777f5dfff7ffddff77ffddff77ffddff`
+- `straight-fill:RT:R5>T7:sideA:dense` → **EXACT** `U+00E239` / glyph 569 / bitmap `80808080808000000000000000000000`
+- `straight-fill:RT:R5>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff7ff5d7f777f5d7f777f5d7f`
+- `straight-fill:RT:R6>T0:sideA:dense` → **DERIVED** bitmap `77fedcf860c080000000000000000000`
+- `straight-fill:RT:R6>T0:sideB:dense` → **DERIVED** bitmap `0103051f377fddff77ffddff77ffddff`
+- `straight-fill:RT:R6>T1:sideA:dense` → **DERIVED** bitmap `76fcd8f060c080000000000000000000`
+- `straight-fill:RT:R6>T1:sideB:dense` → **DERIVED** bitmap `03070d1f377fddff77ffddff77ffddff`
+- `straight-fill:RT:R6>T2:sideA:dense` → **DERIVED** bitmap `74f8d0f060c080000000000000000000`
+- `straight-fill:RT:R6>T2:sideB:dense` → **DERIVED** bitmap `070f1d1f377fddff77ffddff77ffddff`
+- `straight-fill:RT:R6>T3:sideA:dense` → **DERIVED** bitmap `78f0d0e040c080000000000000000000`
+- `straight-fill:RT:R6>T3:sideB:dense` → **DERIVED** bitmap `0f1f1d3f777fddff77ffddff77ffddff`
+- `straight-fill:RT:R6>T4:sideA:dense` → **DERIVED** bitmap `70f0e0e040c080000000000000000000`
+- `straight-fill:RT:R6>T4:sideB:dense` → **DERIVED** bitmap `171f3d3f777fddff77ffddff77ffddff`
+- `straight-fill:RT:R6>T5:sideA:dense` → **DERIVED** bitmap `60e0c0c0408080000000000000000000`
+- `straight-fill:RT:R6>T5:sideB:dense` → **DERIVED** bitmap `373f5d7f77ffddff77ffddff77ffddff`
+- `straight-fill:RT:R6>T6:sideA:dense` → **DERIVED** bitmap `40c0c0c0808080000000000000000000`
+- `straight-fill:RT:R6>T6:sideB:dense` → **DERIVED** bitmap `777f5d7ff7ffddff77ffddff77ffddff`
+- `straight-fill:RT:R6>T7:sideA:dense` → **EXACT** `U+00E240` / glyph 576 / bitmap `80808080808080000000000000000000`
+- `straight-fill:RT:R6>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff7ffdd7f777f5d7f777f5d7f`
+- `straight-fill:RT:R7>T0:sideA:dense` → **DERIVED** bitmap `77fedcf870e0c0800000000000000000`
+- `straight-fill:RT:R7>T0:sideB:dense` → **DERIVED** bitmap `0103050f173f5dff77ffddff77ffddff`
+- `straight-fill:RT:R7>T1:sideA:dense` → **DERIVED** bitmap `76fcd8f070e0c0800000000000000000`
+- `straight-fill:RT:R7>T1:sideB:dense` → **DERIVED** bitmap `03070d1f173f5dff77ffddff77ffddff`
+- `straight-fill:RT:R7>T2:sideA:dense` → **DERIVED** bitmap `74f8d8f060c0c0800000000000000000`
+- `straight-fill:RT:R7>T2:sideB:dense` → **DERIVED** bitmap `070f0d1f377f5dff77ffddff77ffddff`
+- `straight-fill:RT:R7>T3:sideA:dense` → **DERIVED** bitmap `78f0d0e060c0c0800000000000000000`
+- `straight-fill:RT:R7>T3:sideB:dense` → **DERIVED** bitmap `0f1f1d3f377f5dff77ffddff77ffddff`
+- `straight-fill:RT:R7>T4:sideA:dense` → **DERIVED** bitmap `70f0e0e040c080800000000000000000`
+- `straight-fill:RT:R7>T4:sideB:dense` → **DERIVED** bitmap `171f3d3f777fddff77ffddff77ffddff`
+- `straight-fill:RT:R7>T5:sideA:dense` → **DERIVED** bitmap `60e0c0c040c080800000000000000000`
+- `straight-fill:RT:R7>T5:sideB:dense` → **DERIVED** bitmap `373f5d7f777fddff77ffddff77ffddff`
+- `straight-fill:RT:R7>T6:sideA:dense` → **DERIVED** bitmap `40c0c0c0808080800000000000000000`
+- `straight-fill:RT:R7>T6:sideB:dense` → **DERIVED** bitmap `777f5d7ff7ffddff77ffddff77ffddff`
+- `straight-fill:RT:R7>T7:sideA:dense` → **EXACT** `U+00E247` / glyph 583 / bitmap `80808080808080800000000000000000`
+- `straight-fill:RT:R7>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff7ffddff777f5d7f777f5d7f`
+- `straight-fill:RT:R8>T0:sideA:dense` → **DERIVED** bitmap `77fedcf878f0e0c08000000000000000`
+- `straight-fill:RT:R8>T0:sideB:dense` → **DERIVED** bitmap `0103050f0f1f3d7ff7ffddff77ffddff`
+- `straight-fill:RT:R8>T1:sideA:dense` → **DERIVED** bitmap `76fcdcf870e0e0c08000000000000000`
+- `straight-fill:RT:R8>T1:sideB:dense` → **DERIVED** bitmap `0307050f173f3d7ff7ffddff77ffddff`
+- `straight-fill:RT:R8>T2:sideA:dense` → **DERIVED** bitmap `74f8d8f070e0c0c08000000000000000`
+- `straight-fill:RT:R8>T2:sideB:dense` → **DERIVED** bitmap `070f0d1f173f5d7ff7ffddff77ffddff`
+- `straight-fill:RT:R8>T3:sideA:dense` → **DERIVED** bitmap `78f8d0f060e0c0c08000000000000000`
+- `straight-fill:RT:R8>T3:sideB:dense` → **DERIVED** bitmap `0f0f1d1f373f5d7ff7ffddff77ffddff`
+- `straight-fill:RT:R8>T4:sideA:dense` → **DERIVED** bitmap `70f0e0e060c0c0808000000000000000`
+- `straight-fill:RT:R8>T4:sideB:dense` → **DERIVED** bitmap `171f3d3f377f5dfff7ffddff77ffddff`
+- `straight-fill:RT:R8>T5:sideA:dense` → **DERIVED** bitmap `60e0e0c040c0c0808000000000000000`
+- `straight-fill:RT:R8>T5:sideB:dense` → **DERIVED** bitmap `373f3d7f777f5dfff7ffddff77ffddff`
+- `straight-fill:RT:R8>T6:sideA:dense` → **DERIVED** bitmap `40c0c0c0408080808000000000000000`
+- `straight-fill:RT:R8>T6:sideB:dense` → **DERIVED** bitmap `777f5d7f77ffddfff7ffddff77ffddff`
+- `straight-fill:RT:R8>T7:sideA:dense` → **EXACT** `U+00E24F` / glyph 591 / bitmap `80808080808080808000000000000000`
+- `straight-fill:RT:R8>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff7ffddfff77f5d7f777f5d7f`
+- `straight-fill:RT:R9>T0:sideA:dense` → **DERIVED** bitmap `77fedcfc78f0e0e04080000000000000`
+- `straight-fill:RT:R9>T0:sideB:dense` → **DERIVED** bitmap `010305070f1f3d3f77ffddff77ffddff`
+- `straight-fill:RT:R9>T1:sideA:dense` → **DERIVED** bitmap `76fcdcf870f0e0c04080000000000000`
+- `straight-fill:RT:R9>T1:sideB:dense` → **DERIVED** bitmap `0307050f171f3d7f77ffddff77ffddff`
+- `straight-fill:RT:R9>T2:sideA:dense` → **DERIVED** bitmap `74f8d8f070e0e0c04080000000000000`
+- `straight-fill:RT:R9>T2:sideB:dense` → **DERIVED** bitmap `070f0d1f173f3d7f77ffddff77ffddff`
+- `straight-fill:RT:R9>T3:sideA:dense` → **DERIVED** bitmap `78f8d0f060e0c0c08080000000000000`
+- `straight-fill:RT:R9>T3:sideB:dense` → **DERIVED** bitmap `0f0f1d1f373f5d7ff7ffddff77ffddff`
+- `straight-fill:RT:R9>T4:sideA:dense` → **DERIVED** bitmap `70f0e0e060c0c0c08080000000000000`
+- `straight-fill:RT:R9>T4:sideB:dense` → **DERIVED** bitmap `171f3d3f377f5d7ff7ffddff77ffddff`
+- `straight-fill:RT:R9>T5:sideA:dense` → **DERIVED** bitmap `60e0e0c040c0c0808080000000000000`
+- `straight-fill:RT:R9>T5:sideB:dense` → **DERIVED** bitmap `373f3d7f777f5dfff7ffddff77ffddff`
+- `straight-fill:RT:R9>T6:sideA:dense` → **DERIVED** bitmap `40c0c0c0408080808080000000000000`
+- `straight-fill:RT:R9>T6:sideB:dense` → **DERIVED** bitmap `777f5d7f77ffddfff7ffddff77ffddff`
+- `straight-fill:RT:R9>T7:sideA:dense` → **EXACT** `U+00E256` / glyph 598 / bitmap `80808080808080808080000000000000`
+- `straight-fill:RT:R9>T7:sideB:dense` → **DERIVED** bitmap `f7ffddfff7ffddfff7ff5d7f777f5d7f`
+- `straight-fill:TB:T0>B0:sideA:dense` → **EXACT** `U+00E100` / glyph 256 / bitmap `01010101010101010101010101010101`
+- `straight-fill:TB:T0>B0:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff77ffddff77ffddff`
+- `straight-fill:TB:T0>B1:sideA:dense` → **EXACT** `U+00E4E1` / glyph 1249 / bitmap `01010101010101010303030303030303`
+- `straight-fill:TB:T0>B1:sideB:dense` → **DERIVED** bitmap `77ffddff77ffddff76fedefe76fedefe`
+- `straight-fill:TB:T0>B2:sideA:dense` → **DERIVED** bitmap `01010101030303030303030307070507`
+- `straight-fill:TB:T0>B2:sideB:dense` → **DERIVED** bitmap `77ffddff76fedefe76fedefe74fcdcfc`
+- `straight-fill:TB:T0>B3:sideA:dense` → **DERIVED** bitmap `010101030303030307070507070f0d0f`
+- `straight-fill:TB:T0>B3:sideB:dense` → **DERIVED** bitmap `77ffddfe76fedefe74fcdcfc74f8d8f8`
+- `straight-fill:TB:T0>B4:sideA:dense` → **DERIVED** bitmap `010103030303050707070d0f0f0f1d1f`
+- `straight-fill:TB:T0>B4:sideB:dense` → **DERIVED** bitmap `77ffdefe76fedcfc74fcd8f878f8d0f0`
+- `straight-fill:TB:T0>B5:sideA:dense` → **DERIVED** bitmap `01010303030705070f0f0d1f171f3d3f`
+- `straight-fill:TB:T0>B5:sideB:dense` → **DERIVED** bitmap `77ffdefe76fcdcfc78f8d8f070f0e0e0`
+- `straight-fill:TB:T0>B6:sideA:dense` → **DERIVED** bitmap `010103030707050f0f1f1d1f373f5d7f`
+- `straight-fill:TB:T0>B6:sideB:dense` → **DERIVED** bitmap `77ffdefe74fcdcf878f0d0f060e0c0c0`
+- `straight-fill:TB:T0>B7:sideA:dense` → **DERIVED** bitmap `0101030307070d0f171f3d3f777fddff`
+- `straight-fill:TB:T0>B7:sideB:dense` → **DERIVED** bitmap `77ffdefe74fcd8f870f0e0e040c08080`
+- `straight-fill:TB:T1>B0:sideA:dense` → **EXACT** `U+00E4ED` / glyph 1261 / bitmap `03030303030303030101010101010101`
+- `straight-fill:TB:T1>B0:sideB:dense` → **DERIVED** bitmap `76fedefe76fedefe77ffddff77ffddff`
+- `straight-fill:TB:T1>B1:sideA:dense` → **EXACT** `U+00E4EF` / glyph 1263 / bitmap `03030303030303030303030303030303`
+- `straight-fill:TB:T1>B1:sideB:dense` → **DERIVED** bitmap `76fedefe76fedefe76fedefe76fedefe`
+- `straight-fill:TB:T1>B2:sideA:dense` → **DERIVED** bitmap `03030303030303030707050707070507`
+- `straight-fill:TB:T1>B2:sideB:dense` → **DERIVED** bitmap `76fedefe76fedefe74fcdcfc74fcdcfc`
+- `straight-fill:TB:T1>B3:sideA:dense` → **DERIVED** bitmap `0303030307070507070705070f0f0d0f`
+- `straight-fill:TB:T1>B3:sideB:dense` → **DERIVED** bitmap `76fedefe74fcdcfc74fcdcfc78f8d8f8`
+- `straight-fill:TB:T1>B4:sideA:dense` → **DERIVED** bitmap `03030307070705070f0f0d0f0f1f1d1f`
+- `straight-fill:TB:T1>B4:sideB:dense` → **DERIVED** bitmap `76fedefc74fcdcfc78f8d8f878f0d0f0`
+- `straight-fill:TB:T1>B5:sideA:dense` → **DERIVED** bitmap `0303050707070d0f0f0f1d1f171f3d3f`
+- `straight-fill:TB:T1>B5:sideB:dense` → **DERIVED** bitmap `76fedcfc74fcd8f878f8d0f070f0e0e0`
+- `straight-fill:TB:T1>B6:sideA:dense` → **DERIVED** bitmap `03030507070f0d0f171f1d3f373f5d7f`
+- `straight-fill:TB:T1>B6:sideB:dense` → **DERIVED** bitmap `76fedcfc74f8d8f870f0d0e060e0c0c0`
+- `straight-fill:TB:T1>B7:sideA:dense` → **DERIVED** bitmap `030305070f0f0d1f173f3d3f777fddff`
+- `straight-fill:TB:T1>B7:sideB:dense` → **DERIVED** bitmap `76fedcfc78f8d8f070e0e0e040c08080`
+- `straight-fill:TB:T2>B0:sideA:dense` → **DERIVED** bitmap `07070507030303030303030301010101`
+- `straight-fill:TB:T2>B0:sideB:dense` → **DERIVED** bitmap `74fcdcfc76fedefe76fedefe77ffddff`
+- `straight-fill:TB:T2>B1:sideA:dense` → **DERIVED** bitmap `07070507070705070303030303030303`
+- `straight-fill:TB:T2>B1:sideB:dense` → **DERIVED** bitmap `74fcdcfc74fcdcfc76fedefe76fedefe`
+- `straight-fill:TB:T2>B2:sideA:dense` → **DERIVED** bitmap `07070507070705070707050707070507`
+- `straight-fill:TB:T2>B2:sideB:dense` → **DERIVED** bitmap `74fcdcfc74fcdcfc74fcdcfc74fcdcfc`
+- `straight-fill:TB:T2>B3:sideA:dense` → **DERIVED** bitmap `07070507070705070f0f0d0f0f0f0d0f`
+- `straight-fill:TB:T2>B3:sideB:dense` → **DERIVED** bitmap `74fcdcfc74fcdcfc78f8d8f878f8d8f8`
+- `straight-fill:TB:T2>B4:sideA:dense` → **DERIVED** bitmap `070705070f0f0d0f0f0f0d0f171f1d1f`
+- `straight-fill:TB:T2>B4:sideB:dense` → **DERIVED** bitmap `74fcdcfc78f8d8f878f8d8f870f0d0f0`
+- `straight-fill:TB:T2>B5:sideA:dense` → **DERIVED** bitmap `0707050f0f0f0d0f171f1d1f173f3d3f`
+- `straight-fill:TB:T2>B5:sideB:dense` → **DERIVED** bitmap `74fcdcf878f8d8f870f0d0f070e0e0e0`
+- `straight-fill:TB:T2>B6:sideA:dense` → **DERIVED** bitmap `07070d0f0f0f1d1f171f3d3f373f5d7f`
+- `straight-fill:TB:T2>B6:sideB:dense` → **DERIVED** bitmap `74fcd8f878f8d0f070f0e0e060e0c0c0`
+- `straight-fill:TB:T2>B7:sideA:dense` → **DERIVED** bitmap `07070d0f0f1f1d1f373f3d7f777fddff`
+- `straight-fill:TB:T2>B7:sideB:dense` → **DERIVED** bitmap `74fcd8f878f0d0f060e0e0c040c08080`
+- `straight-fill:TB:T3>B0:sideA:dense` → **DERIVED** bitmap `0f0f0d07070705070303030303010101`
+- `straight-fill:TB:T3>B0:sideB:dense` → **DERIVED** bitmap `78f8d8fc74fcdcfc76fedefe76ffddff`
+- `straight-fill:TB:T3>B1:sideA:dense` → **DERIVED** bitmap `0f0f0d0f070705070707050703030303`
+- `straight-fill:TB:T3>B1:sideB:dense` → **DERIVED** bitmap `78f8d8f874fcdcfc74fcdcfc76fedefe`
+- `straight-fill:TB:T3>B2:sideA:dense` → **DERIVED** bitmap `0f0f0d0f0f0f0d0f0707050707070507`
+- `straight-fill:TB:T3>B2:sideB:dense` → **DERIVED** bitmap `78f8d8f878f8d8f874fcdcfc74fcdcfc`
+- `straight-fill:TB:T3>B3:sideA:dense` → **DERIVED** bitmap `0f0f0d0f0f0f0d0f0f0f0d0f0f0f0d0f`
+- `straight-fill:TB:T3>B3:sideB:dense` → **DERIVED** bitmap `78f8d8f878f8d8f878f8d8f878f8d8f8`
+- `straight-fill:TB:T3>B4:sideA:dense` → **DERIVED** bitmap `0f0f0d0f0f0f0d0f171f1d1f171f1d1f`
+- `straight-fill:TB:T3>B4:sideB:dense` → **DERIVED** bitmap `78f8d8f878f8d8f870f0d0f070f0d0f0`
+- `straight-fill:TB:T3>B5:sideA:dense` → **DERIVED** bitmap `0f0f0d0f171f1d1f171f1d1f373f3d3f`
+- `straight-fill:TB:T3>B5:sideB:dense` → **DERIVED** bitmap `78f8d8f870f0d0f070f0d0f060e0e0e0`
+- `straight-fill:TB:T3>B6:sideA:dense` → **DERIVED** bitmap `0f0f0d1f171f1d1f373f3d3f377f5d7f`
+- `straight-fill:TB:T3>B6:sideB:dense` → **DERIVED** bitmap `78f8d8f070f0d0f060e0e0e060c0c0c0`
+- `straight-fill:TB:T3>B7:sideA:dense` → **DERIVED** bitmap `0f0f1d1f171f3d3f373f5d7f777fddff`
+- `straight-fill:TB:T3>B7:sideB:dense` → **DERIVED** bitmap `78f8d0f070f0e0e060e0c0c040c08080`
+- `straight-fill:TB:T4>B0:sideA:dense` → **DERIVED** bitmap `171f0d0f0f0f05070707030303030101`
+- `straight-fill:TB:T4>B0:sideB:dense` → **DERIVED** bitmap `70f0d8f878f8dcfc74fcdefe76feddff`
+- `straight-fill:TB:T4>B1:sideA:dense` → **DERIVED** bitmap `171f1d0f0f0f0d0f0707050707030303`
+- `straight-fill:TB:T4>B1:sideB:dense` → **DERIVED** bitmap `70f0d0f878f8d8f874fcdcfc74fedefe`
+- `straight-fill:TB:T4>B2:sideA:dense` → **DERIVED** bitmap `171f1d1f0f0f0d0f0f0f0d0f07070507`
+- `straight-fill:TB:T4>B2:sideB:dense` → **DERIVED** bitmap `70f0d0f078f8d8f878f8d8f874fcdcfc`
+- `straight-fill:TB:T4>B3:sideA:dense` → **DERIVED** bitmap `171f1d1f171f1d1f0f0f0d0f0f0f0d0f`
+- `straight-fill:TB:T4>B3:sideB:dense` → **DERIVED** bitmap `70f0d0f070f0d0f078f8d8f878f8d8f8`
+- `straight-fill:TB:T4>B4:sideA:dense` → **DERIVED** bitmap `171f1d1f171f1d1f171f1d1f171f1d1f`
+- `straight-fill:TB:T4>B4:sideB:dense` → **DERIVED** bitmap `70f0d0f070f0d0f070f0d0f070f0d0f0`
+- `straight-fill:TB:T4>B5:sideA:dense` → **DERIVED** bitmap `171f1d1f171f1d1f373f3d3f373f3d3f`
+- `straight-fill:TB:T4>B5:sideB:dense` → **DERIVED** bitmap `70f0d0f070f0d0f060e0e0e060e0e0e0`
+- `straight-fill:TB:T4>B6:sideA:dense` → **DERIVED** bitmap `171f1d1f373f3d3f373f3d3f777f5d7f`
+- `straight-fill:TB:T4>B6:sideB:dense` → **DERIVED** bitmap `70f0d0f060e0e0e060e0e0e040c0c0c0`
+- `straight-fill:TB:T4>B7:sideA:dense` → **DERIVED** bitmap `171f1d3f373f3d3f777f5d7f77ffddff`
+- `straight-fill:TB:T4>B7:sideB:dense` → **DERIVED** bitmap `70f0d0e060e0e0e040c0c0c040808080`
+- `straight-fill:TB:T5>B0:sideA:dense` → **DERIVED** bitmap `373f1d1f170f0d0f0707050303030101`
+- `straight-fill:TB:T5>B0:sideB:dense` → **DERIVED** bitmap `60e0d0f070f8d8f874fcdcfe76feddff`
+- `straight-fill:TB:T5>B1:sideA:dense` → **DERIVED** bitmap `373f1d1f171f0d0f0f0f050707070303`
+- `straight-fill:TB:T5>B1:sideB:dense` → **DERIVED** bitmap `60e0d0f070f0d8f878f8dcfc74fcdefe`
+- `straight-fill:TB:T5>B2:sideA:dense` → **DERIVED** bitmap `373f3d1f171f1d1f0f0f0d0f0f070507`
+- `straight-fill:TB:T5>B2:sideB:dense` → **DERIVED** bitmap `60e0e0f070f0d0f078f8d8f878fcdcfc`
+- `straight-fill:TB:T5>B3:sideA:dense` → **DERIVED** bitmap `373f3d3f171f1d1f171f1d1f0f0f0d0f`
+- `straight-fill:TB:T5>B3:sideB:dense` → **DERIVED** bitmap `60e0e0e070f0d0f070f0d0f078f8d8f8`
+- `straight-fill:TB:T5>B4:sideA:dense` → **DERIVED** bitmap `373f3d3f373f3d3f171f1d1f171f1d1f`
+- `straight-fill:TB:T5>B4:sideB:dense` → **DERIVED** bitmap `60e0e0e060e0e0e070f0d0f070f0d0f0`
+- `straight-fill:TB:T5>B5:sideA:dense` → **DERIVED** bitmap `373f3d3f373f3d3f373f3d3f373f3d3f`
+- `straight-fill:TB:T5>B5:sideB:dense` → **DERIVED** bitmap `60e0e0e060e0e0e060e0e0e060e0e0e0`
+- `straight-fill:TB:T5>B6:sideA:dense` → **DERIVED** bitmap `373f3d3f373f3d3f777f5d7f777f5d7f`
+- `straight-fill:TB:T5>B6:sideB:dense` → **DERIVED** bitmap `60e0e0e060e0e0e040c0c0c040c0c0c0`
+- `straight-fill:TB:T5>B7:sideA:dense` → **DERIVED** bitmap `373f3d3f777f5d7f777f5d7ff7ffddff`
+- `straight-fill:TB:T5>B7:sideB:dense` → **DERIVED** bitmap `60e0e0e040c0c0c040c0c0c080808080`
+- `straight-fill:TB:T6>B0:sideA:dense` → **DERIVED** bitmap `777f3d3f171f1d0f0f07050703030101`
+- `straight-fill:TB:T6>B0:sideB:dense` → **DERIVED** bitmap `40c0e0e070f0d0f878fcdcfc76feddff`
+- `straight-fill:TB:T6>B1:sideA:dense` → **DERIVED** bitmap `777f3d3f371f1d1f0f0f0d0707070303`
+- `straight-fill:TB:T6>B1:sideB:dense` → **DERIVED** bitmap `40c0e0e060f0d0f078f8d8fc74fcdefe`
+- `straight-fill:TB:T6>B2:sideA:dense` → **DERIVED** bitmap `777f3d3f373f1d1f171f0d0f0f0f0507`
+- `straight-fill:TB:T6>B2:sideB:dense` → **DERIVED** bitmap `40c0e0e060e0d0f070f0d8f878f8dcfc`
+- `straight-fill:TB:T6>B3:sideA:dense` → **DERIVED** bitmap `777f5d3f373f3d3f171f1d1f170f0d0f`
+- `straight-fill:TB:T6>B3:sideB:dense` → **DERIVED** bitmap `40c0c0e060e0e0e070f0d0f070f8d8f8`
+- `straight-fill:TB:T6>B4:sideA:dense` → **DERIVED** bitmap `777f5d7f373f3d3f373f3d3f171f1d1f`
+- `straight-fill:TB:T6>B4:sideB:dense` → **DERIVED** bitmap `40c0c0c060e0e0e060e0e0e070f0d0f0`
+- `straight-fill:TB:T6>B5:sideA:dense` → **DERIVED** bitmap `777f5d7f777f5d7f373f3d3f373f3d3f`
+- `straight-fill:TB:T6>B5:sideB:dense` → **DERIVED** bitmap `40c0c0c040c0c0c060e0e0e060e0e0e0`
+- `straight-fill:TB:T6>B6:sideA:dense` → **DERIVED** bitmap `777f5d7f777f5d7f777f5d7f777f5d7f`
+- `straight-fill:TB:T6>B6:sideB:dense` → **DERIVED** bitmap `40c0c0c040c0c0c040c0c0c040c0c0c0`
+- `straight-fill:TB:T6>B7:sideA:dense` → **DERIVED** bitmap `777f5d7f777f5d7ff7ffddfff7ffddff`
+- `straight-fill:TB:T6>B7:sideB:dense` → **DERIVED** bitmap `40c0c0c040c0c0c08080808080808080`
+- `straight-fill:TB:T7>B0:sideA:dense` → **DERIVED** bitmap `f7ff5d7f373f1d1f0f0f050703030101`
+- `straight-fill:TB:T7>B0:sideB:dense` → **DERIVED** bitmap `8080c0c060e0d0f078f8dcfc76feddff`
+- `straight-fill:TB:T7>B1:sideA:dense` → **DERIVED** bitmap `f7ff5d7f373f3d1f170f0d0f07070303`
+- `straight-fill:TB:T7>B1:sideB:dense` → **DERIVED** bitmap `8080c0c060e0e0f070f8d8f874fcdefe`
+- `straight-fill:TB:T7>B2:sideA:dense` → **DERIVED** bitmap `f7ff5d7f773f3d3f171f1d0f0f0f0507`
+- `straight-fill:TB:T7>B2:sideB:dense` → **DERIVED** bitmap `8080c0c040e0e0e070f0d0f878f8dcfc`
+- `straight-fill:TB:T7>B3:sideA:dense` → **DERIVED** bitmap `f7ff5d7f777f3d3f373f1d1f171f0d0f`
+- `straight-fill:TB:T7>B3:sideB:dense` → **DERIVED** bitmap `8080c0c040c0e0e060e0d0f070f0d8f8`
+- `straight-fill:TB:T7>B4:sideA:dense` → **DERIVED** bitmap `f7ffdd7f777f5d7f373f3d3f371f1d1f`
+- `straight-fill:TB:T7>B4:sideB:dense` → **DERIVED** bitmap `808080c040c0c0c060e0e0e060f0d0f0`
+- `straight-fill:TB:T7>B5:sideA:dense` → **DERIVED** bitmap `f7ffddff777f5d7f777f5d7f373f3d3f`
+- `straight-fill:TB:T7>B5:sideB:dense` → **DERIVED** bitmap `8080808040c0c0c040c0c0c060e0e0e0`
+- `straight-fill:TB:T7>B6:sideA:dense` → **DERIVED** bitmap `f7ffddfff7ffddff777f5d7f777f5d7f`
+- `straight-fill:TB:T7>B6:sideB:dense` → **DERIVED** bitmap `808080808080808040c0c0c040c0c0c0`
+- `straight-fill:TB:T7>B7:sideA:dense` → **DERIVED** bitmap `f7ffddfff7ffddfff7ffddfff7ffddff`
+- `straight-fill:TB:T7>B7:sideB:dense` → **EXACT** `U+00E13D` / glyph 317 / bitmap `80808080808080808080808080808080`
+
+# Sparse 12.5%
+
+- `straight-fill:LB:L0>B0:sideA:sparse` → **EXACT** `U+00E100` / glyph 256 / bitmap `01010101010101010101010101010101`
+- `straight-fill:LB:L0>B0:sideB:sparse` → **DERIVED** bitmap `11014501110145011101450111014501`
+- `straight-fill:LB:L0>B1:sideA:sparse` → **DERIVED** bitmap `01010101010101010302020203020202`
+- `straight-fill:LB:L0>B1:sideB:sparse` → **DERIVED** bitmap `11014501110145011202460212024602`
+- `straight-fill:LB:L0>B2:sideA:sparse` → **DERIVED** bitmap `01010101030202020302020205040404`
+- `straight-fill:LB:L0>B2:sideB:sparse` → **DERIVED** bitmap `11014501120246021202460214044404`
+- `straight-fill:LB:L0>B3:sideA:sparse` → **DERIVED** bitmap `01010102030202020504040405080c08`
+- `straight-fill:LB:L0>B3:sideB:sparse` → **DERIVED** bitmap `11014502120246021404440414084808`
+- `straight-fill:LB:L0>B4:sideA:sparse` → **DERIVED** bitmap `010102020302040405040c0809081410`
+- `straight-fill:LB:L0>B4:sideB:sparse` → **DERIVED** bitmap `11014602120244041404480818085010`
+- `straight-fill:LB:L0>B5:sideA:sparse` → **DERIVED** bitmap `010102020304040409080c1011102420`
+- `straight-fill:LB:L0>B5:sideB:sparse` → **DERIVED** bitmap `11014602120444041808481010106020`
+- `straight-fill:LB:L0>B6:sideA:sparse` → **DERIVED** bitmap `01010202050404080910141031204440`
+- `straight-fill:LB:L0>B6:sideB:sparse` → **DERIVED** bitmap `11014602140444081810501020204040`
+- `straight-fill:LB:L0>B7:sideA:sparse` → **DERIVED** bitmap `0101020205040c08111024205140c480`
+- `straight-fill:LB:L0>B7:sideB:sparse` → **DERIVED** bitmap `11014602140448081010602040408080`
+- `straight-fill:LB:L1>B0:sideA:sparse` → **EXACT** `U+00E1A7` / glyph 423 / bitmap `00010101010101010101010101010101`
+- `straight-fill:LB:L1>B0:sideB:sparse` → **DERIVED** bitmap `10014501110145011101450111014501`
+- `straight-fill:LB:L1>B1:sideA:sparse` → **DERIVED** bitmap `00010101010101010302020203020202`
+- `straight-fill:LB:L1>B1:sideB:sparse` → **DERIVED** bitmap `11014501110145011202460212024602`
+- `straight-fill:LB:L1>B2:sideA:sparse` → **DERIVED** bitmap `00010101010202020302020205040404`
+- `straight-fill:LB:L1>B2:sideB:sparse` → **DERIVED** bitmap `11014501110246021202460214044404`
+- `straight-fill:LB:L1>B3:sideA:sparse` → **DERIVED** bitmap `00010101030202020504040405080c08`
+- `straight-fill:LB:L1>B3:sideB:sparse` → **DERIVED** bitmap `11014501120246021404440414084808`
+- `straight-fill:LB:L1>B4:sideA:sparse` → **DERIVED** bitmap `000101020302020405040c0809081410`
+- `straight-fill:LB:L1>B4:sideB:sparse` → **DERIVED** bitmap `11014502120246041404480818085010`
+- `straight-fill:LB:L1>B5:sideA:sparse` → **DERIVED** bitmap `000101020302040409080c1011102420`
+- `straight-fill:LB:L1>B5:sideB:sparse` → **DERIVED** bitmap `11014502120244041808481010106020`
+- `straight-fill:LB:L1>B6:sideA:sparse` → **DERIVED** bitmap `00010102030404080908141031204440`
+- `straight-fill:LB:L1>B6:sideB:sparse` → **DERIVED** bitmap `11014502120444081808501020204040`
+- `straight-fill:LB:L1>B7:sideA:sparse` → **DERIVED** bitmap `0001020205040c08111024205140c480`
+- `straight-fill:LB:L1>B7:sideB:sparse` → **DERIVED** bitmap `11014602140448081010602040408080`
+- `straight-fill:LB:L10>B0:sideA:sparse` → **EXACT** `U+00E1E6` / glyph 486 / bitmap `00000000000000000000010101010101`
+- `straight-fill:LB:L10>B0:sideB:sparse` → **DERIVED** bitmap `10004400100044001000450111014501`
+- `straight-fill:LB:L10>B1:sideA:sparse` → **EXACT** `U+00E1E7` / glyph 487 / bitmap `00000000000000000000010101020202`
+- `straight-fill:LB:L10>B1:sideB:sparse` → **DERIVED** bitmap `11004400110044001100450111024602`
+- `straight-fill:LB:L10>B2:sideA:sparse` → **DERIVED** bitmap `00000000000000000000010103020404`
+- `straight-fill:LB:L10>B2:sideB:sparse` → **DERIVED** bitmap `11004400110044001100450112024404`
+- `straight-fill:LB:L10>B3:sideA:sparse` → **DERIVED** bitmap `00000000000000000000010203040408`
+- `straight-fill:LB:L10>B3:sideB:sparse` → **DERIVED** bitmap `11004400110044001100450212044408`
+- `straight-fill:LB:L10>B4:sideA:sparse` → **DERIVED** bitmap `00000000000000000000010205040c10`
+- `straight-fill:LB:L10>B4:sideB:sparse` → **DERIVED** bitmap `11004400110044001100450214044810`
+- `straight-fill:LB:L10>B5:sideA:sparse` → **DERIVED** bitmap `00000000000000000000010205081420`
+- `straight-fill:LB:L10>B5:sideB:sparse` → **DERIVED** bitmap `11004400110044001100450214085020`
+- `straight-fill:LB:L10>B6:sideA:sparse` → **DERIVED** bitmap `00000000000000000000010205182440`
+- `straight-fill:LB:L10>B6:sideB:sparse` → **DERIVED** bitmap `11004400110044001100450214186040`
+- `straight-fill:LB:L10>B7:sideA:sparse` → **DERIVED** bitmap `00000000000000000000010609106480`
+- `straight-fill:LB:L10>B7:sideB:sparse` → **DERIVED** bitmap `11004400110044001100450618106080`
+- `straight-fill:LB:L11>B0:sideA:sparse` → **EXACT** `U+00E1ED` / glyph 493 / bitmap `00000000000000000000000101010101`
+- `straight-fill:LB:L11>B0:sideB:sparse` → **DERIVED** bitmap `10004400100044001000440111014501`
+- `straight-fill:LB:L11>B1:sideA:sparse` → **EXACT** `U+00E1EE` / glyph 494 / bitmap `00000000000000000000000101020202`
+- `straight-fill:LB:L11>B1:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440111024602`
+- `straight-fill:LB:L11>B2:sideA:sparse` → **DERIVED** bitmap `00000000000000000000000103020404`
+- `straight-fill:LB:L11>B2:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440112024404`
+- `straight-fill:LB:L11>B3:sideA:sparse` → **DERIVED** bitmap `00000000000000000000000103040408`
+- `straight-fill:LB:L11>B3:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440112044408`
+- `straight-fill:LB:L11>B4:sideA:sparse` → **DERIVED** bitmap `00000000000000000000000103040c10`
+- `straight-fill:LB:L11>B4:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440112044810`
+- `straight-fill:LB:L11>B5:sideA:sparse` → **DERIVED** bitmap `000000000000000000000001030c1420`
+- `straight-fill:LB:L11>B5:sideB:sparse` → **DERIVED** bitmap `110044001100440011004401120c5020`
+- `straight-fill:LB:L11>B6:sideA:sparse` → **DERIVED** bitmap `00000000000000000000000107083440`
+- `straight-fill:LB:L11>B6:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440116087040`
+- `straight-fill:LB:L11>B7:sideA:sparse` → **DERIVED** bitmap `00000000000000000000000107186480`
+- `straight-fill:LB:L11>B7:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440116186080`
+- `straight-fill:LB:L12>B0:sideA:sparse` → **EXACT** `U+00E1F4` / glyph 500 / bitmap `00000000000000000000000001010101`
+- `straight-fill:LB:L12>B0:sideB:sparse` → **DERIVED** bitmap `10004400100044001000440011014501`
+- `straight-fill:LB:L12>B1:sideA:sparse` → **EXACT** `U+00E1F5` / glyph 501 / bitmap `00000000000000000000000001010202`
+- `straight-fill:LB:L12>B1:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011014602`
+- `straight-fill:LB:L12>B2:sideA:sparse` → **EXACT** `U+00E1F6` / glyph 502 / bitmap `00000000000000000000000001020204`
+- `straight-fill:LB:L12>B2:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011024604`
+- `straight-fill:LB:L12>B3:sideA:sparse` → **EXACT** `U+00E1F7` / glyph 503 / bitmap `00000000000000000000000001020408`
+- `straight-fill:LB:L12>B3:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011024408`
+- `straight-fill:LB:L12>B4:sideA:sparse` → **EXACT** `U+00E1F8` / glyph 504 / bitmap `00000000000000000000000001020c10`
+- `straight-fill:LB:L12>B4:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011024c10`
+- `straight-fill:LB:L12>B5:sideA:sparse` → **DERIVED** bitmap `00000000000000000000000001061c20`
+- `straight-fill:LB:L12>B5:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011065820`
+- `straight-fill:LB:L12>B6:sideA:sparse` → **DERIVED** bitmap `00000000000000000000000001061c60`
+- `straight-fill:LB:L12>B6:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011065860`
+- `straight-fill:LB:L12>B7:sideA:sparse` → **DERIVED** bitmap `000000000000000000000000030c34c0`
+- `straight-fill:LB:L12>B7:sideB:sparse` → **DERIVED** bitmap `110044001100440011004400130c70c0`
+- `straight-fill:LB:L13>B0:sideA:sparse` → **EXACT** `U+00E1FB` / glyph 507 / bitmap `00000000000000000000000000010101`
+- `straight-fill:LB:L13>B0:sideB:sparse` → **DERIVED** bitmap `10004400100044001000440010014501`
+- `straight-fill:LB:L13>B1:sideA:sparse` → **EXACT** `U+00E1FC` / glyph 508 / bitmap `00000000000000000000000000010202`
+- `straight-fill:LB:L13>B1:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011014602`
+- `straight-fill:LB:L13>B2:sideA:sparse` → **EXACT** `U+00E1FD` / glyph 509 / bitmap `00000000000000000000000000010204`
+- `straight-fill:LB:L13>B2:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011014604`
+- `straight-fill:LB:L13>B3:sideA:sparse` → **EXACT** `U+00E1FE` / glyph 510 / bitmap `00000000000000000000000000010608`
+- `straight-fill:LB:L13>B3:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011014608`
+- `straight-fill:LB:L13>B4:sideA:sparse` → **EXACT** `U+00E1FF` / glyph 511 / bitmap `00000000000000000000000000010618`
+- `straight-fill:LB:L13>B4:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011014618`
+- `straight-fill:LB:L13>B5:sideA:sparse` → **EXACT** `U+00E200` / glyph 512 / bitmap `00000000000000000000000000030c30`
+- `straight-fill:LB:L13>B5:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011034c30`
+- `straight-fill:LB:L13>B6:sideA:sparse` → **EXACT** `U+00E201` / glyph 513 / bitmap `00000000000000000000000000031c60`
+- `straight-fill:LB:L13>B6:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011035c60`
+- `straight-fill:LB:L13>B7:sideA:sparse` → **EXACT** `U+00E0DF` / glyph 223 / bitmap `00000000000000000000000000033cc0`
+- `straight-fill:LB:L13>B7:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011037cc0`
+- `straight-fill:LB:L14>B0:sideA:sparse` → **EXACT** `U+00E202` / glyph 514 / bitmap `00000000000000000000000000000101`
+- `straight-fill:LB:L14>B0:sideB:sparse` → **DERIVED** bitmap `10004400100044001000440010004501`
+- `straight-fill:LB:L14>B1:sideA:sparse` → **EXACT** `U+00E203` / glyph 515 / bitmap `00000000000000000000000000000102`
+- `straight-fill:LB:L14>B1:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011004502`
+- `straight-fill:LB:L14>B2:sideA:sparse` → **EXACT** `U+00E204` / glyph 516 / bitmap `00000000000000000000000000000106`
+- `straight-fill:LB:L14>B2:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011004506`
+- `straight-fill:LB:L14>B3:sideA:sparse` → **EXACT** `U+00E205` / glyph 517 / bitmap `0000000000000000000000000000030c`
+- `straight-fill:LB:L14>B3:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044001100470c`
+- `straight-fill:LB:L14>B4:sideA:sparse` → **EXACT** `U+00E206` / glyph 518 / bitmap `0000000000000000000000000000031c`
+- `straight-fill:LB:L14>B4:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044001100471c`
+- `straight-fill:LB:L14>B5:sideA:sparse` → **EXACT** `U+00E207` / glyph 519 / bitmap `00000000000000000000000000000738`
+- `straight-fill:LB:L14>B5:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011004738`
+- `straight-fill:LB:L14>B6:sideA:sparse` → **EXACT** `U+00E208` / glyph 520 / bitmap `00000000000000000000000000000778`
+- `straight-fill:LB:L14>B6:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011004778`
+- `straight-fill:LB:L14>B7:sideA:sparse` → **EXACT** `U+00E0EF` / glyph 239 / bitmap `00000000000000000000000000000ff0`
+- `straight-fill:LB:L14>B7:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011004ff0`
+- `straight-fill:LB:L15>B0:sideA:sparse` → **EXACT** `U+00E209` / glyph 521 / bitmap `00000000000000000000000000000001`
+- `straight-fill:LB:L15>B0:sideB:sparse` → **EXACT** `U+00E209` / glyph 521 / bitmap `00000000000000000000000000000001`
+- `straight-fill:LB:L15>B1:sideA:sparse` → **EXACT** `U+00E20A` / glyph 522 / bitmap `00000000000000000000000000000003`
+- `straight-fill:LB:L15>B1:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011004403`
+- `straight-fill:LB:L15>B2:sideA:sparse` → **EXACT** `U+00E20B` / glyph 523 / bitmap `00000000000000000000000000000007`
+- `straight-fill:LB:L15>B2:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011004407`
+- `straight-fill:LB:L15>B3:sideA:sparse` → **EXACT** `U+00E20C` / glyph 524 / bitmap `0000000000000000000000000000000f`
+- `straight-fill:LB:L15>B3:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044001100440f`
+- `straight-fill:LB:L15>B4:sideA:sparse` → **EXACT** `U+00E20D` / glyph 525 / bitmap `0000000000000000000000000000001f`
+- `straight-fill:LB:L15>B4:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044001100441f`
+- `straight-fill:LB:L15>B5:sideA:sparse` → **EXACT** `U+00E20E` / glyph 526 / bitmap `0000000000000000000000000000003f`
+- `straight-fill:LB:L15>B5:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044001100443f`
+- `straight-fill:LB:L15>B6:sideA:sparse` → **EXACT** `U+00E20F` / glyph 527 / bitmap `0000000000000000000000000000007f`
+- `straight-fill:LB:L15>B6:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044001100447f`
+- `straight-fill:LB:L15>B7:sideA:sparse` → **EXACT** `U+00E0FF` / glyph 255 / bitmap `000000000000000000000000000000ff`
+- `straight-fill:LB:L15>B7:sideB:sparse` → **DERIVED** bitmap `110044001100440011004400110044ff`
+- `straight-fill:LB:L2>B0:sideA:sparse` → **EXACT** `U+00E1AE` / glyph 430 / bitmap `00000101010101010101010101010101`
+- `straight-fill:LB:L2>B0:sideB:sparse` → **DERIVED** bitmap `10004501110145011101450111014501`
+- `straight-fill:LB:L2>B1:sideA:sparse` → **DERIVED** bitmap `00000101010101010102020203020202`
+- `straight-fill:LB:L2>B1:sideB:sparse` → **DERIVED** bitmap `11004501110145011102460212024602`
+- `straight-fill:LB:L2>B2:sideA:sparse` → **DERIVED** bitmap `00000101010102020302020205040404`
+- `straight-fill:LB:L2>B2:sideB:sparse` → **DERIVED** bitmap `11004501110146021202460214044404`
+- `straight-fill:LB:L2>B3:sideA:sparse` → **DERIVED** bitmap `00000101010202020304040405080c08`
+- `straight-fill:LB:L2>B3:sideB:sparse` → **DERIVED** bitmap `11004501110246021204440414084808`
+- `straight-fill:LB:L2>B4:sideA:sparse` → **DERIVED** bitmap `00000101030202040504040809081410`
+- `straight-fill:LB:L2>B4:sideB:sparse` → **DERIVED** bitmap `11004501120246041404440818085010`
+- `straight-fill:LB:L2>B5:sideA:sparse` → **DERIVED** bitmap `000001010302040405080c0811102420`
+- `straight-fill:LB:L2>B5:sideB:sparse` → **DERIVED** bitmap `11004501120244041408480810106020`
+- `straight-fill:LB:L2>B6:sideA:sparse` → **DERIVED** bitmap `00000101030204040908141031204440`
+- `straight-fill:LB:L2>B6:sideB:sparse` → **DERIVED** bitmap `11004501120244041808501020204040`
+- `straight-fill:LB:L2>B7:sideA:sparse` → **DERIVED** bitmap `00000102030404080910142031404480`
+- `straight-fill:LB:L2>B7:sideB:sparse` → **DERIVED** bitmap `11004502120444081810502020404080`
+- `straight-fill:LB:L3>B0:sideA:sparse` → **EXACT** `U+00E1B5` / glyph 437 / bitmap `00000001010101010101010101010101`
+- `straight-fill:LB:L3>B0:sideB:sparse` → **DERIVED** bitmap `10004401110145011101450111014501`
+- `straight-fill:LB:L3>B1:sideA:sparse` → **DERIVED** bitmap `00000001010101010102020203020202`
+- `straight-fill:LB:L3>B1:sideB:sparse` → **DERIVED** bitmap `11004401110145011102460212024602`
+- `straight-fill:LB:L3>B2:sideA:sparse` → **DERIVED** bitmap `00000001010102020302020205040404`
+- `straight-fill:LB:L3>B2:sideB:sparse` → **DERIVED** bitmap `11004401110146021202460214044404`
+- `straight-fill:LB:L3>B3:sideA:sparse` → **DERIVED** bitmap `00000001010202020304040405080c08`
+- `straight-fill:LB:L3>B3:sideB:sparse` → **DERIVED** bitmap `11004401110246021204440414084808`
+- `straight-fill:LB:L3>B4:sideA:sparse` → **DERIVED** bitmap `00000001010202020504040809081410`
+- `straight-fill:LB:L3>B4:sideB:sparse` → **DERIVED** bitmap `11004401110246021404440818085010`
+- `straight-fill:LB:L3>B5:sideA:sparse` → **DERIVED** bitmap `000000010102020405080c0811102420`
+- `straight-fill:LB:L3>B5:sideB:sparse` → **DERIVED** bitmap `11004401110246041408480810106020`
+- `straight-fill:LB:L3>B6:sideA:sparse` → **DERIVED** bitmap `00000001030204040908141031204440`
+- `straight-fill:LB:L3>B6:sideB:sparse` → **DERIVED** bitmap `11004401120244041808501020204040`
+- `straight-fill:LB:L3>B7:sideA:sparse` → **DERIVED** bitmap `00000001030204040910142031404480`
+- `straight-fill:LB:L3>B7:sideB:sparse` → **DERIVED** bitmap `11004401120244041810502020404080`
+- `straight-fill:LB:L4>B0:sideA:sparse` → **EXACT** `U+00E1BC` / glyph 444 / bitmap `00000000010101010101010101010101`
+- `straight-fill:LB:L4>B0:sideB:sparse` → **DERIVED** bitmap `10004400110145011101450111014501`
+- `straight-fill:LB:L4>B1:sideA:sparse` → **DERIVED** bitmap `00000000010101010101020203020202`
+- `straight-fill:LB:L4>B1:sideB:sparse` → **DERIVED** bitmap `11004400110145011101460212024602`
+- `straight-fill:LB:L4>B2:sideA:sparse` → **DERIVED** bitmap `00000000010101020302020203040404`
+- `straight-fill:LB:L4>B2:sideB:sparse` → **DERIVED** bitmap `11004400110145021202460212044404`
+- `straight-fill:LB:L4>B3:sideA:sparse` → **DERIVED** bitmap `00000000010102020302040405040c08`
+- `straight-fill:LB:L4>B3:sideB:sparse` → **DERIVED** bitmap `11004400110146021202440414044808`
+- `straight-fill:LB:L4>B4:sideA:sparse` → **DERIVED** bitmap `00000000010102020304040809081410`
+- `straight-fill:LB:L4>B4:sideB:sparse` → **DERIVED** bitmap `11004400110146021204440818085010`
+- `straight-fill:LB:L4>B5:sideA:sparse` → **DERIVED** bitmap `000000000101020205040c0811102420`
+- `straight-fill:LB:L4>B5:sideB:sparse` → **DERIVED** bitmap `11004400110146021404480810106020`
+- `straight-fill:LB:L4>B6:sideA:sparse` → **DERIVED** bitmap `000000000102020405080c1011202440`
+- `straight-fill:LB:L4>B6:sideB:sparse` → **DERIVED** bitmap `11004400110246041408481010206040`
+- `straight-fill:LB:L4>B7:sideA:sparse` → **DERIVED** bitmap `00000000010202040908141031404480`
+- `straight-fill:LB:L4>B7:sideB:sparse` → **DERIVED** bitmap `11004400110246041808501020404080`
+- `straight-fill:LB:L5>B0:sideA:sparse` → **EXACT** `U+00E1C3` / glyph 451 / bitmap `00000000000101010101010101010101`
+- `straight-fill:LB:L5>B0:sideB:sparse` → **DERIVED** bitmap `10004400100145011101450111014501`
+- `straight-fill:LB:L5>B1:sideA:sparse` → **DERIVED** bitmap `00000000000101010101020203020202`
+- `straight-fill:LB:L5>B1:sideB:sparse` → **DERIVED** bitmap `11004400110145011101460212024602`
+- `straight-fill:LB:L5>B2:sideA:sparse` → **DERIVED** bitmap `00000000000101010302020203040404`
+- `straight-fill:LB:L5>B2:sideB:sparse` → **DERIVED** bitmap `11004400110145011202460212044404`
+- `straight-fill:LB:L5>B3:sideA:sparse` → **DERIVED** bitmap `00000000000101020302040405040c08`
+- `straight-fill:LB:L5>B3:sideB:sparse` → **DERIVED** bitmap `11004400110145021202440414044808`
+- `straight-fill:LB:L5>B4:sideA:sparse` → **DERIVED** bitmap `00000000000101020304040409081410`
+- `straight-fill:LB:L5>B4:sideB:sparse` → **DERIVED** bitmap `11004400110145021204440418085010`
+- `straight-fill:LB:L5>B5:sideA:sparse` → **DERIVED** bitmap `000000000001020205040c0811102420`
+- `straight-fill:LB:L5>B5:sideB:sparse` → **DERIVED** bitmap `11004400110146021404480810106020`
+- `straight-fill:LB:L5>B6:sideA:sparse` → **DERIVED** bitmap `000000000001020205040c1011202440`
+- `straight-fill:LB:L5>B6:sideB:sparse` → **DERIVED** bitmap `11004400110146021404481010206040`
+- `straight-fill:LB:L5>B7:sideA:sparse` → **DERIVED** bitmap `00000000000102020508141031404480`
+- `straight-fill:LB:L5>B7:sideB:sparse` → **DERIVED** bitmap `11004400110146021408501020404080`
+- `straight-fill:LB:L6>B0:sideA:sparse` → **EXACT** `U+00E1CA` / glyph 458 / bitmap `00000000000001010101010101010101`
+- `straight-fill:LB:L6>B0:sideB:sparse` → **DERIVED** bitmap `10004400100045011101450111014501`
+- `straight-fill:LB:L6>B1:sideA:sparse` → **DERIVED** bitmap `00000000000001010101010203020202`
+- `straight-fill:LB:L6>B1:sideB:sparse` → **DERIVED** bitmap `11004400110045011101450212024602`
+- `straight-fill:LB:L6>B2:sideA:sparse` → **DERIVED** bitmap `00000000000001010102020203040404`
+- `straight-fill:LB:L6>B2:sideB:sparse` → **DERIVED** bitmap `11004400110045011102460212044404`
+- `straight-fill:LB:L6>B3:sideA:sparse` → **DERIVED** bitmap `00000000000001010302020405040c08`
+- `straight-fill:LB:L6>B3:sideB:sparse` → **DERIVED** bitmap `11004400110045011202460414044808`
+- `straight-fill:LB:L6>B4:sideA:sparse` → **DERIVED** bitmap `00000000000001010302040409081410`
+- `straight-fill:LB:L6>B4:sideB:sparse` → **DERIVED** bitmap `11004400110045011202440418085010`
+- `straight-fill:LB:L6>B5:sideA:sparse` → **DERIVED** bitmap `00000000000001020304040809101420`
+- `straight-fill:LB:L6>B5:sideB:sparse` → **DERIVED** bitmap `11004400110045021204440818105020`
+- `straight-fill:LB:L6>B6:sideA:sparse` → **DERIVED** bitmap `000000000000010203040c0811202440`
+- `straight-fill:LB:L6>B6:sideB:sparse` → **DERIVED** bitmap `11004400110045021204480810206040`
+- `straight-fill:LB:L6>B7:sideA:sparse` → **DERIVED** bitmap `000000000000010205040c1031204480`
+- `straight-fill:LB:L6>B7:sideB:sparse` → **DERIVED** bitmap `11004400110045021404481020204080`
+- `straight-fill:LB:L7>B0:sideA:sparse` → **EXACT** `U+00E1D1` / glyph 465 / bitmap `00000000000000010101010101010101`
+- `straight-fill:LB:L7>B0:sideB:sparse` → **DERIVED** bitmap `10004400100044011101450111014501`
+- `straight-fill:LB:L7>B1:sideA:sparse` → **DERIVED** bitmap `00000000000000010101010203020202`
+- `straight-fill:LB:L7>B1:sideB:sparse` → **DERIVED** bitmap `11004400110044011101450212024602`
+- `straight-fill:LB:L7>B2:sideA:sparse` → **DERIVED** bitmap `00000000000000010102020203040404`
+- `straight-fill:LB:L7>B2:sideB:sparse` → **DERIVED** bitmap `11004400110044011102460212044404`
+- `straight-fill:LB:L7>B3:sideA:sparse` → **DERIVED** bitmap `00000000000000010102020405040c08`
+- `straight-fill:LB:L7>B3:sideB:sparse` → **DERIVED** bitmap `11004400110044011102460414044808`
+- `straight-fill:LB:L7>B4:sideA:sparse` → **DERIVED** bitmap `00000000000000010302040409081410`
+- `straight-fill:LB:L7>B4:sideB:sparse` → **DERIVED** bitmap `11004400110044011202440418085010`
+- `straight-fill:LB:L7>B5:sideA:sparse` → **DERIVED** bitmap `00000000000000010302040809101420`
+- `straight-fill:LB:L7>B5:sideB:sparse` → **DERIVED** bitmap `11004400110044011202440818105020`
+- `straight-fill:LB:L7>B6:sideA:sparse` → **DERIVED** bitmap `00000000000000010304040811202440`
+- `straight-fill:LB:L7>B6:sideB:sparse` → **DERIVED** bitmap `11004400110044011204440810206040`
+- `straight-fill:LB:L7>B7:sideA:sparse` → **DERIVED** bitmap `000000000000000103040c1011204480`
+- `straight-fill:LB:L7>B7:sideB:sparse` → **DERIVED** bitmap `11004400110044011204481010204080`
+- `straight-fill:LB:L8>B0:sideA:sparse` → **EXACT** `U+00E1D8` / glyph 472 / bitmap `00000000000000000101010101010101`
+- `straight-fill:LB:L8>B0:sideB:sparse` → **DERIVED** bitmap `10004400100044001101450111014501`
+- `straight-fill:LB:L8>B1:sideA:sparse` → **DERIVED** bitmap `00000000000000000101010103020202`
+- `straight-fill:LB:L8>B1:sideB:sparse` → **DERIVED** bitmap `11004400110044001101450112024602`
+- `straight-fill:LB:L8>B2:sideA:sparse` → **DERIVED** bitmap `00000000000000000101020203020404`
+- `straight-fill:LB:L8>B2:sideB:sparse` → **DERIVED** bitmap `11004400110044001101460212024404`
+- `straight-fill:LB:L8>B3:sideA:sparse` → **DERIVED** bitmap `00000000000000000101020205040c08`
+- `straight-fill:LB:L8>B3:sideB:sparse` → **DERIVED** bitmap `11004400110044001101460214044808`
+- `straight-fill:LB:L8>B4:sideA:sparse` → **DERIVED** bitmap `00000000000000000102020405080c10`
+- `straight-fill:LB:L8>B4:sideB:sparse` → **DERIVED** bitmap `11004400110044001102460414084810`
+- `straight-fill:LB:L8>B5:sideA:sparse` → **DERIVED** bitmap `00000000000000000102020409101420`
+- `straight-fill:LB:L8>B5:sideB:sparse` → **DERIVED** bitmap `11004400110044001102460418105020`
+- `straight-fill:LB:L8>B6:sideA:sparse` → **DERIVED** bitmap `00000000000000000102040809102440`
+- `straight-fill:LB:L8>B6:sideB:sparse` → **DERIVED** bitmap `11004400110044001102440818106040`
+- `straight-fill:LB:L8>B7:sideA:sparse` → **DERIVED** bitmap `00000000000000000102040811204480`
+- `straight-fill:LB:L8>B7:sideB:sparse` → **DERIVED** bitmap `11004400110044001102440810204080`
+- `straight-fill:LB:L9>B0:sideA:sparse` → **EXACT** `U+00E1DF` / glyph 479 / bitmap `00000000000000000001010101010101`
+- `straight-fill:LB:L9>B0:sideB:sparse` → **DERIVED** bitmap `10004400100044001001450111014501`
+- `straight-fill:LB:L9>B1:sideA:sparse` → **DERIVED** bitmap `00000000000000000001010103020202`
+- `straight-fill:LB:L9>B1:sideB:sparse` → **DERIVED** bitmap `11004400110044001101450112024602`
+- `straight-fill:LB:L9>B2:sideA:sparse` → **DERIVED** bitmap `00000000000000000001010203020404`
+- `straight-fill:LB:L9>B2:sideB:sparse` → **DERIVED** bitmap `11004400110044001101450212024404`
+- `straight-fill:LB:L9>B3:sideA:sparse` → **DERIVED** bitmap `00000000000000000001020205040c08`
+- `straight-fill:LB:L9>B3:sideB:sparse` → **DERIVED** bitmap `11004400110044001101460214044808`
+- `straight-fill:LB:L9>B4:sideA:sparse` → **DERIVED** bitmap `00000000000000000001020205080c10`
+- `straight-fill:LB:L9>B4:sideB:sparse` → **DERIVED** bitmap `11004400110044001101460214084810`
+- `straight-fill:LB:L9>B5:sideA:sparse` → **DERIVED** bitmap `00000000000000000001020409081420`
+- `straight-fill:LB:L9>B5:sideB:sparse` → **DERIVED** bitmap `11004400110044001101460418085020`
+- `straight-fill:LB:L9>B6:sideA:sparse` → **DERIVED** bitmap `00000000000000000001020409102440`
+- `straight-fill:LB:L9>B6:sideB:sparse` → **DERIVED** bitmap `11004400110044001101460418106040`
+- `straight-fill:LB:L9>B7:sideA:sparse` → **DERIVED** bitmap `00000000000000000001020419204480`
+- `straight-fill:LB:L9>B7:sideB:sparse` → **DERIVED** bitmap `11004400110044001101460418204080`
+- `straight-fill:LR:L0>R0:sideA:sparse` → **DERIVED** bitmap `ff004400110044001100440011004400`
+- `straight-fill:LR:L0>R0:sideB:sparse` → **EXACT** `U+00E000` / glyph 0 / bitmap `ff000000000000000000000000000000`
+- `straight-fill:LR:L0>R1:sideA:sparse` → **DERIVED** bitmap `0ff04400110044001100440011004400`
+- `straight-fill:LR:L0>R1:sideB:sparse` → **DERIVED** bitmap `1ff00000000000000000000000000000`
+- `straight-fill:LR:L0>R10:sideA:sparse` → **DERIVED** bitmap `01020204091014205140c40011004400`
+- `straight-fill:LR:L0>R10:sideB:sparse` → **DERIVED** bitmap `11024604181050204040800000000000`
+- `straight-fill:LR:L0>R11:sideA:sparse` → **DERIVED** bitmap `01020204090814103140448011004400`
+- `straight-fill:LR:L0>R11:sideB:sparse` → **DERIVED** bitmap `11024604180850102040408000000000`
+- `straight-fill:LR:L0>R12:sideA:sparse` → **DERIVED** bitmap `01020204050814103120444091004400`
+- `straight-fill:LR:L0>R12:sideB:sparse` → **DERIVED** bitmap `11024604140850102020404080000000`
+- `straight-fill:LR:L0>R13:sideA:sparse` → **DERIVED** bitmap `0102020405080c101120244051804400`
+- `straight-fill:LR:L0>R13:sideB:sparse` → **DERIVED** bitmap `11024604140848101020604040800000`
+- `straight-fill:LR:L0>R14:sideA:sparse` → **DERIVED** bitmap `0102020405080c10112024405180c400`
+- `straight-fill:LR:L0>R14:sideB:sparse` → **DERIVED** bitmap `11024604140848101020604040808000`
+- `straight-fill:LR:L0>R15:sideA:sparse` → **DERIVED** bitmap `0101020205040c08111024205140c480`
+- `straight-fill:LR:L0>R15:sideB:sparse` → **DERIVED** bitmap `11014602140448081010602040408080`
+- `straight-fill:LR:L0>R2:sideA:sparse` → **DERIVED** bitmap `033cc400110044001100440011004400`
+- `straight-fill:LR:L0>R2:sideB:sparse` → **DERIVED** bitmap `133cc000000000000000000000000000`
+- `straight-fill:LR:L0>R3:sideA:sparse` → **DERIVED** bitmap `030c34c0110044001100440011004400`
+- `straight-fill:LR:L0>R3:sideB:sparse` → **DERIVED** bitmap `130c70c0000000000000000000000000`
+- `straight-fill:LR:L0>R4:sideA:sparse` → **DERIVED** bitmap `01061c60910044001100440011004400`
+- `straight-fill:LR:L0>R4:sideB:sparse` → **DERIVED** bitmap `11065860800000000000000000000000`
+- `straight-fill:LR:L0>R5:sideA:sparse` → **DERIVED** bitmap `01060c10718044001100440011004400`
+- `straight-fill:LR:L0>R5:sideB:sparse` → **DERIVED** bitmap `11064810608000000000000000000000`
+- `straight-fill:LR:L0>R6:sideA:sparse` → **DERIVED** bitmap `010204183140c4001100440011004400`
+- `straight-fill:LR:L0>R6:sideB:sparse` → **DERIVED** bitmap `11024418204080000000000000000000`
+- `straight-fill:LR:L0>R7:sideA:sparse` → **DERIVED** bitmap `01020408112044801100440011004400`
+- `straight-fill:LR:L0>R7:sideB:sparse` → **DERIVED** bitmap `11024408102040800000000000000000`
+- `straight-fill:LR:L0>R8:sideA:sparse` → **DERIVED** bitmap `01020408111024409100440011004400`
+- `straight-fill:LR:L0>R8:sideB:sparse` → **DERIVED** bitmap `11024408101060408000000000000000`
+- `straight-fill:LR:L0>R9:sideA:sparse` → **DERIVED** bitmap `01020404091024205180440011004400`
+- `straight-fill:LR:L0>R9:sideB:sparse` → **DERIVED** bitmap `11024404181060204080000000000000`
+- `straight-fill:LR:L1>R0:sideA:sparse` → **DERIVED** bitmap `f00f4400110044001100440011004400`
+- `straight-fill:LR:L1>R0:sideB:sparse` → **DERIVED** bitmap `f10f0000000000000000000000000000`
+- `straight-fill:LR:L1>R1:sideA:sparse` → **DERIVED** bitmap `00ff4400110044001100440011004400`
+- `straight-fill:LR:L1>R1:sideB:sparse` → **DERIVED** bitmap `11ff0000000000000000000000000000`
+- `straight-fill:LR:L1>R10:sideA:sparse` → **DERIVED** bitmap `00010204050814203140c40011004400`
+- `straight-fill:LR:L1>R10:sideB:sparse` → **DERIVED** bitmap `11014604140850202040800000000000`
+- `straight-fill:LR:L1>R11:sideA:sparse` → **DERIVED** bitmap `00010202050814103140448011004400`
+- `straight-fill:LR:L1>R11:sideB:sparse` → **DERIVED** bitmap `11014602140850102040408000000000`
+- `straight-fill:LR:L1>R12:sideA:sparse` → **DERIVED** bitmap `0001020205080c101120444091004400`
+- `straight-fill:LR:L1>R12:sideB:sparse` → **DERIVED** bitmap `11014602140848101020404080000000`
+- `straight-fill:LR:L1>R13:sideA:sparse` → **DERIVED** bitmap `0001020205040c101120244051804400`
+- `straight-fill:LR:L1>R13:sideB:sparse` → **DERIVED** bitmap `11014602140448101020604040800000`
+- `straight-fill:LR:L1>R14:sideA:sparse` → **DERIVED** bitmap `0001020205040c08111024205140c400`
+- `straight-fill:LR:L1>R14:sideB:sparse` → **DERIVED** bitmap `11014602140448081010602040408000`
+- `straight-fill:LR:L1>R15:sideA:sparse` → **DERIVED** bitmap `0001020205040c08111024205140c480`
+- `straight-fill:LR:L1>R15:sideB:sparse` → **DERIVED** bitmap `11014602140448081010602040408080`
+- `straight-fill:LR:L1>R2:sideA:sparse` → **DERIVED** bitmap `000ff400110044001100440011004400`
+- `straight-fill:LR:L1>R2:sideB:sparse` → **DERIVED** bitmap `110ff000000000000000000000000000`
+- `straight-fill:LR:L1>R3:sideA:sparse` → **DERIVED** bitmap `00033cc0110044001100440011004400`
+- `straight-fill:LR:L1>R3:sideB:sparse` → **DERIVED** bitmap `11037cc0000000000000000000000000`
+- `straight-fill:LR:L1>R4:sideA:sparse` → **DERIVED** bitmap `00030c30d10044001100440011004400`
+- `straight-fill:LR:L1>R4:sideB:sparse` → **DERIVED** bitmap `11034c30c00000000000000000000000`
+- `straight-fill:LR:L1>R5:sideA:sparse` → **DERIVED** bitmap `00010618718044001100440011004400`
+- `straight-fill:LR:L1>R5:sideB:sparse` → **DERIVED** bitmap `11014618608000000000000000000000`
+- `straight-fill:LR:L1>R6:sideA:sparse` → **DERIVED** bitmap `000106081160c4001100440011004400`
+- `straight-fill:LR:L1>R6:sideB:sparse` → **DERIVED** bitmap `11014608106080000000000000000000`
+- `straight-fill:LR:L1>R7:sideA:sparse` → **DERIVED** bitmap `00010204192044801100440011004400`
+- `straight-fill:LR:L1>R7:sideB:sparse` → **DERIVED** bitmap `11014604182040800000000000000000`
+- `straight-fill:LR:L1>R8:sideA:sparse` → **DERIVED** bitmap `00010204091024409100440011004400`
+- `straight-fill:LR:L1>R8:sideB:sparse` → **DERIVED** bitmap `11014604181060408000000000000000`
+- `straight-fill:LR:L1>R9:sideA:sparse` → **DERIVED** bitmap `00010204091014205180440011004400`
+- `straight-fill:LR:L1>R9:sideB:sparse` → **DERIVED** bitmap `11014604181050204080000000000000`
+- `straight-fill:LR:L10>R0:sideA:sparse` → **DERIVED** bitmap `80404020101048041202450011004400`
+- `straight-fill:LR:L10>R0:sideB:sparse` → **DERIVED** bitmap `9140442011100c040302010000000000`
+- `straight-fill:LR:L10>R1:sideA:sparse` → **DERIVED** bitmap `00804020201048041402450011004400`
+- `straight-fill:LR:L10>R1:sideB:sparse` → **DERIVED** bitmap `1180442031100c040502010000000000`
+- `straight-fill:LR:L10>R10:sideA:sparse` → **DERIVED** bitmap `00000000000000000000ff0011004400`
+- `straight-fill:LR:L10>R10:sideB:sparse` → **DERIVED** bitmap `11004400110044001100ff0000000000`
+- `straight-fill:LR:L10>R11:sideA:sparse` → **DERIVED** bitmap `000000000000000000000ff011004400`
+- `straight-fill:LR:L10>R11:sideB:sparse` → **DERIVED** bitmap `110044001100440011004ff000000000`
+- `straight-fill:LR:L10>R12:sideA:sparse` → **DERIVED** bitmap `00000000000000000000033cd1004400`
+- `straight-fill:LR:L10>R12:sideB:sparse` → **DERIVED** bitmap `11004400110044001100473cc0000000`
+- `straight-fill:LR:L10>R13:sideA:sparse` → **DERIVED** bitmap `00000000000000000000030c31c04400`
+- `straight-fill:LR:L10>R13:sideB:sparse` → **DERIVED** bitmap `11004400110044001100470c30c00000`
+- `straight-fill:LR:L10>R14:sideA:sparse` → **DERIVED** bitmap `0000000000000000000001061960c400`
+- `straight-fill:LR:L10>R14:sideB:sparse` → **DERIVED** bitmap `11004400110044001100450618608000`
+- `straight-fill:LR:L10>R15:sideA:sparse` → **DERIVED** bitmap `00000000000000000000010609106480`
+- `straight-fill:LR:L10>R15:sideB:sparse` → **DERIVED** bitmap `11004400110044001100450618106080`
+- `straight-fill:LR:L10>R2:sideA:sparse` → **DERIVED** bitmap `00008040201050081402450011004400`
+- `straight-fill:LR:L10>R2:sideB:sparse` → **DERIVED** bitmap `1100c440311014080502010000000000`
+- `straight-fill:LR:L10>R3:sideA:sparse` → **DERIVED** bitmap `00000080402050081402450011004400`
+- `straight-fill:LR:L10>R3:sideB:sparse` → **DERIVED** bitmap `11004480512014080502010000000000`
+- `straight-fill:LR:L10>R4:sideA:sparse` → **DERIVED** bitmap `00000000804060181402450011004400`
+- `straight-fill:LR:L10>R4:sideB:sparse` → **DERIVED** bitmap `11004400914024180502010000000000`
+- `straight-fill:LR:L10>R5:sideA:sparse` → **DERIVED** bitmap `00000000008060101806450011004400`
+- `straight-fill:LR:L10>R5:sideB:sparse` → **DERIVED** bitmap `11004400118064100906010000000000`
+- `straight-fill:LR:L10>R6:sideA:sparse` → **DERIVED** bitmap `00000000000080601806450011004400`
+- `straight-fill:LR:L10>R6:sideB:sparse` → **DERIVED** bitmap `110044001100c4601906010000000000`
+- `straight-fill:LR:L10>R7:sideA:sparse` → **DERIVED** bitmap `00000000000000c0300c470011004400`
+- `straight-fill:LR:L10>R7:sideB:sparse` → **DERIVED** bitmap `11004400110044c0310c030000000000`
+- `straight-fill:LR:L10>R8:sideA:sparse` → **DERIVED** bitmap `0000000000000000c03c470011004400`
+- `straight-fill:LR:L10>R8:sideB:sparse` → **DERIVED** bitmap `1100440011004400d13c030000000000`
+- `straight-fill:LR:L10>R9:sideA:sparse` → **DERIVED** bitmap `000000000000000000f04f0011004400`
+- `straight-fill:LR:L10>R9:sideB:sparse` → **DERIVED** bitmap `110044001100440011f00f0000000000`
+- `straight-fill:LR:L11>R0:sideA:sparse` → **DERIVED** bitmap `80404020101048081402460111004400`
+- `straight-fill:LR:L11>R0:sideB:sparse` → **DERIVED** bitmap `9140442011100c080502020100000000`
+- `straight-fill:LR:L11>R1:sideA:sparse` → **DERIVED** bitmap `00804040201050081402460111004400`
+- `straight-fill:LR:L11>R1:sideB:sparse` → **DERIVED** bitmap `11804440311014080502020100000000`
+- `straight-fill:LR:L11>R10:sideA:sparse` → **DERIVED** bitmap `00000000000000000000f00f11004400`
+- `straight-fill:LR:L11>R10:sideB:sparse` → **DERIVED** bitmap `11004400110044001100f40f00000000`
+- `straight-fill:LR:L11>R11:sideA:sparse` → **DERIVED** bitmap `0000000000000000000000ff11004400`
+- `straight-fill:LR:L11>R11:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044ff00000000`
+- `straight-fill:LR:L11>R12:sideA:sparse` → **DERIVED** bitmap `00000000000000000000000ff1004400`
+- `straight-fill:LR:L11>R12:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440ff0000000`
+- `straight-fill:LR:L11>R13:sideA:sparse` → **DERIVED** bitmap `0000000000000000000000033dc04400`
+- `straight-fill:LR:L11>R13:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044033cc00000`
+- `straight-fill:LR:L11>R14:sideA:sparse` → **DERIVED** bitmap `0000000000000000000000030d30c400`
+- `straight-fill:LR:L11>R14:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044031c30c000`
+- `straight-fill:LR:L11>R15:sideA:sparse` → **DERIVED** bitmap `00000000000000000000000107186480`
+- `straight-fill:LR:L11>R15:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440116186080`
+- `straight-fill:LR:L11>R2:sideA:sparse` → **DERIVED** bitmap `00008040202050081404460111004400`
+- `straight-fill:LR:L11>R2:sideB:sparse` → **DERIVED** bitmap `1100c440312014080504020100000000`
+- `straight-fill:LR:L11>R3:sideA:sparse` → **DERIVED** bitmap `00000080402050101804460111004400`
+- `straight-fill:LR:L11>R3:sideB:sparse` → **DERIVED** bitmap `11004480512014100904020100000000`
+- `straight-fill:LR:L11>R4:sideA:sparse` → **DERIVED** bitmap `00000000804060101804460111004400`
+- `straight-fill:LR:L11>R4:sideB:sparse` → **DERIVED** bitmap `11004400914024100904020100000000`
+- `straight-fill:LR:L11>R5:sideA:sparse` → **DERIVED** bitmap `00000000008040201804460111004400`
+- `straight-fill:LR:L11>R5:sideB:sparse` → **DERIVED** bitmap `11004400118044201904020100000000`
+- `straight-fill:LR:L11>R6:sideA:sparse` → **DERIVED** bitmap `00000000000080601008460111004400`
+- `straight-fill:LR:L11>R6:sideB:sparse` → **DERIVED** bitmap `110044001100c4601108060100000000`
+- `straight-fill:LR:L11>R7:sideA:sparse` → **DERIVED** bitmap `00000000000000806018460111004400`
+- `straight-fill:LR:L11>R7:sideB:sparse` → **DERIVED** bitmap `11004400110044807118060100000000`
+- `straight-fill:LR:L11>R8:sideA:sparse` → **DERIVED** bitmap `0000000000000000c0304c0311004400`
+- `straight-fill:LR:L11>R8:sideB:sparse` → **DERIVED** bitmap `1100440011004400d1300c0300000000`
+- `straight-fill:LR:L11>R9:sideA:sparse` → **DERIVED** bitmap `000000000000000000c07c0311004400`
+- `straight-fill:LR:L11>R9:sideB:sparse` → **DERIVED** bitmap `110044001100440011c03c0300000000`
+- `straight-fill:LR:L12>R0:sideA:sparse` → **DERIVED** bitmap `80404020201050081404460211004400`
+- `straight-fill:LR:L12>R0:sideB:sparse` → **DERIVED** bitmap `91404420311014080504020201000000`
+- `straight-fill:LR:L12>R1:sideA:sparse` → **DERIVED** bitmap `00804040201050081804460211004400`
+- `straight-fill:LR:L12>R1:sideB:sparse` → **DERIVED** bitmap `11804440311014080904020201000000`
+- `straight-fill:LR:L12>R10:sideA:sparse` → **DERIVED** bitmap `00000000000000000000c03c13004400`
+- `straight-fill:LR:L12>R10:sideB:sparse` → **DERIVED** bitmap `11004400110044001100c43c03000000`
+- `straight-fill:LR:L12>R11:sideA:sparse` → **DERIVED** bitmap `0000000000000000000000f01f004400`
+- `straight-fill:LR:L12>R11:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044f00f000000`
+- `straight-fill:LR:L12>R12:sideA:sparse` → **DERIVED** bitmap `000000000000000000000000ff004400`
+- `straight-fill:LR:L12>R12:sideB:sparse` → **DERIVED** bitmap `110044001100440011004400ff000000`
+- `straight-fill:LR:L12>R13:sideA:sparse` → **DERIVED** bitmap `0000000000000000000000000ff04400`
+- `straight-fill:LR:L12>R13:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044001ff00000`
+- `straight-fill:LR:L12>R14:sideA:sparse` → **DERIVED** bitmap `000000000000000000000000033cc400`
+- `straight-fill:LR:L12>R14:sideB:sparse` → **DERIVED** bitmap `110044001100440011004400133cc000`
+- `straight-fill:LR:L12>R15:sideA:sparse` → **DERIVED** bitmap `000000000000000000000000030c34c0`
+- `straight-fill:LR:L12>R15:sideB:sparse` → **DERIVED** bitmap `110044001100440011004400130c70c0`
+- `straight-fill:LR:L12>R2:sideA:sparse` → **DERIVED** bitmap `00008040402050101804460211004400`
+- `straight-fill:LR:L12>R2:sideB:sparse` → **DERIVED** bitmap `1100c440512014100904020201000000`
+- `straight-fill:LR:L12>R3:sideA:sparse` → **DERIVED** bitmap `00000080402060101804440211004400`
+- `straight-fill:LR:L12>R3:sideB:sparse` → **DERIVED** bitmap `11004480512024100904040201000000`
+- `straight-fill:LR:L12>R4:sideA:sparse` → **DERIVED** bitmap `00000000804060101008440211004400`
+- `straight-fill:LR:L12>R4:sideB:sparse` → **DERIVED** bitmap `11004400914024101108040201000000`
+- `straight-fill:LR:L12>R5:sideA:sparse` → **DERIVED** bitmap `00000000008040201008440211004400`
+- `straight-fill:LR:L12>R5:sideB:sparse` → **DERIVED** bitmap `11004400118044201108040201000000`
+- `straight-fill:LR:L12>R6:sideA:sparse` → **DERIVED** bitmap `00000000000080402018440211004400`
+- `straight-fill:LR:L12>R6:sideB:sparse` → **DERIVED** bitmap `110044001100c4403118040201000000`
+- `straight-fill:LR:L12>R7:sideA:sparse` → **DERIVED** bitmap `00000000000000806010480611004400`
+- `straight-fill:LR:L12>R7:sideB:sparse` → **DERIVED** bitmap `110044001100448071100c0601000000`
+- `straight-fill:LR:L12>R8:sideA:sparse` → **DERIVED** bitmap `00000000000000008060580611004400`
+- `straight-fill:LR:L12>R8:sideB:sparse` → **DERIVED** bitmap `110044001100440091601c0601000000`
+- `straight-fill:LR:L12>R9:sideA:sparse` → **DERIVED** bitmap `000000000000000000c0700c13004400`
+- `straight-fill:LR:L12>R9:sideB:sparse` → **DERIVED** bitmap `110044001100440011c0340c03000000`
+- `straight-fill:LR:L13>R0:sideA:sparse` → **DERIVED** bitmap `80404020201050081804440212014400`
+- `straight-fill:LR:L13>R0:sideB:sparse` → **DERIVED** bitmap `91404420311014080904040203010000`
+- `straight-fill:LR:L13>R1:sideA:sparse` → **DERIVED** bitmap `00804040202050101804440212014400`
+- `straight-fill:LR:L13>R1:sideB:sparse` → **DERIVED** bitmap `11804440312014100904040203010000`
+- `straight-fill:LR:L13>R10:sideA:sparse` → **DERIVED** bitmap `00000000000000000000c0301c034400`
+- `straight-fill:LR:L13>R10:sideB:sparse` → **DERIVED** bitmap `11004400110044001100c4300d030000`
+- `straight-fill:LR:L13>R11:sideA:sparse` → **DERIVED** bitmap `0000000000000000000000c03c034400`
+- `straight-fill:LR:L13>R11:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044c03d030000`
+- `straight-fill:LR:L13>R12:sideA:sparse` → **DERIVED** bitmap `000000000000000000000000f00f4400`
+- `straight-fill:LR:L13>R12:sideB:sparse` → **DERIVED** bitmap `110044001100440011004400f10f0000`
+- `straight-fill:LR:L13>R13:sideA:sparse` → **DERIVED** bitmap `00000000000000000000000000ff4400`
+- `straight-fill:LR:L13>R13:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011ff0000`
+- `straight-fill:LR:L13>R14:sideA:sparse` → **DERIVED** bitmap `000000000000000000000000000ff400`
+- `straight-fill:LR:L13>R14:sideB:sparse` → **DERIVED** bitmap `110044001100440011004400110ff000`
+- `straight-fill:LR:L13>R15:sideA:sparse` → **EXACT** `U+00E0DF` / glyph 223 / bitmap `00000000000000000000000000033cc0`
+- `straight-fill:LR:L13>R15:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011037cc0`
+- `straight-fill:LR:L13>R2:sideA:sparse` → **DERIVED** bitmap `00008040402050101808440212014400`
+- `straight-fill:LR:L13>R2:sideB:sparse` → **DERIVED** bitmap `1100c440512014100908040203010000`
+- `straight-fill:LR:L13>R3:sideA:sparse` → **DERIVED** bitmap `00000080404060101008440212014400`
+- `straight-fill:LR:L13>R3:sideB:sparse` → **DERIVED** bitmap `11004480514024101108040203010000`
+- `straight-fill:LR:L13>R4:sideA:sparse` → **DERIVED** bitmap `00000000804060201008440412014400`
+- `straight-fill:LR:L13>R4:sideB:sparse` → **DERIVED** bitmap `11004400914024201108040403010000`
+- `straight-fill:LR:L13>R5:sideA:sparse` → **DERIVED** bitmap `00000000008040201010480412014400`
+- `straight-fill:LR:L13>R5:sideB:sparse` → **DERIVED** bitmap `110044001180442011100c0403010000`
+- `straight-fill:LR:L13>R6:sideA:sparse` → **DERIVED** bitmap `00000000000080402010480412014400`
+- `straight-fill:LR:L13>R6:sideB:sparse` → **DERIVED** bitmap `110044001100c44031100c0403010000`
+- `straight-fill:LR:L13>R7:sideA:sparse` → **DERIVED** bitmap `00000000000000804020580412014400`
+- `straight-fill:LR:L13>R7:sideB:sparse` → **DERIVED** bitmap `110044001100448051201c0403010000`
+- `straight-fill:LR:L13>R8:sideA:sparse` → **DERIVED** bitmap `00000000000000008060500816014400`
+- `straight-fill:LR:L13>R8:sideB:sparse` → **DERIVED** bitmap `11004400110044009160140807010000`
+- `straight-fill:LR:L13>R9:sideA:sparse` → **DERIVED** bitmap `00000000000000000080601816014400`
+- `straight-fill:LR:L13>R9:sideB:sparse` → **DERIVED** bitmap `11004400110044001180641807010000`
+- `straight-fill:LR:L14>R0:sideA:sparse` → **DERIVED** bitmap `80804040202050101808440412024500`
+- `straight-fill:LR:L14>R0:sideB:sparse` → **DERIVED** bitmap `91804440312014100908040403020100`
+- `straight-fill:LR:L14>R1:sideA:sparse` → **DERIVED** bitmap `00804040202050101808440412024500`
+- `straight-fill:LR:L14>R1:sideB:sparse` → **DERIVED** bitmap `11804440312014100908040403020100`
+- `straight-fill:LR:L14>R10:sideA:sparse` → **DERIVED** bitmap `00000000000000000000806018064500`
+- `straight-fill:LR:L14>R10:sideB:sparse` → **DERIVED** bitmap `11004400110044001100c46019060100`
+- `straight-fill:LR:L14>R11:sideA:sparse` → **DERIVED** bitmap `0000000000000000000000c0300c4700`
+- `straight-fill:LR:L14>R11:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044c0310c0300`
+- `straight-fill:LR:L14>R12:sideA:sparse` → **DERIVED** bitmap `000000000000000000000000c03c4700`
+- `straight-fill:LR:L14>R12:sideB:sparse` → **DERIVED** bitmap `110044001100440011004400d13c0300`
+- `straight-fill:LR:L14>R13:sideA:sparse` → **DERIVED** bitmap `00000000000000000000000000f04f00`
+- `straight-fill:LR:L14>R13:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011f00f00`
+- `straight-fill:LR:L14>R14:sideA:sparse` → **EXACT** `U+00E0EE` / glyph 238 / bitmap `0000000000000000000000000000ff00`
+- `straight-fill:LR:L14>R14:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044001100ff00`
+- `straight-fill:LR:L14>R15:sideA:sparse` → **EXACT** `U+00E0EF` / glyph 239 / bitmap `00000000000000000000000000000ff0`
+- `straight-fill:LR:L14>R15:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011004ff0`
+- `straight-fill:LR:L14>R2:sideA:sparse` → **DERIVED** bitmap `00008040402060101008440412024500`
+- `straight-fill:LR:L14>R2:sideB:sparse` → **DERIVED** bitmap `1100c440512024101108040403020100`
+- `straight-fill:LR:L14>R3:sideA:sparse` → **DERIVED** bitmap `00000080404060101008480412024500`
+- `straight-fill:LR:L14>R3:sideB:sparse` → **DERIVED** bitmap `110044805140241011080c0403020100`
+- `straight-fill:LR:L14>R4:sideA:sparse` → **DERIVED** bitmap `00000000804040201010480412024500`
+- `straight-fill:LR:L14>R4:sideB:sparse` → **DERIVED** bitmap `110044009140442011100c0403020100`
+- `straight-fill:LR:L14>R5:sideA:sparse` → **DERIVED** bitmap `00000000008040202010480414024500`
+- `straight-fill:LR:L14>R5:sideB:sparse` → **DERIVED** bitmap `110044001180442031100c0405020100`
+- `straight-fill:LR:L14>R6:sideA:sparse` → **DERIVED** bitmap `00000000000080402010500814024500`
+- `straight-fill:LR:L14>R6:sideB:sparse` → **DERIVED** bitmap `110044001100c4403110140805020100`
+- `straight-fill:LR:L14>R7:sideA:sparse` → **DERIVED** bitmap `00000000000000804020500814024500`
+- `straight-fill:LR:L14>R7:sideB:sparse` → **DERIVED** bitmap `11004400110044805120140805020100`
+- `straight-fill:LR:L14>R8:sideA:sparse` → **DERIVED** bitmap `00000000000000008040601814024500`
+- `straight-fill:LR:L14>R8:sideB:sparse` → **DERIVED** bitmap `11004400110044009140241805020100`
+- `straight-fill:LR:L14>R9:sideA:sparse` → **DERIVED** bitmap `00000000000000000080601018064500`
+- `straight-fill:LR:L14>R9:sideB:sparse` → **DERIVED** bitmap `11004400110044001180641009060100`
+- `straight-fill:LR:L15>R0:sideA:sparse` → **DERIVED** bitmap `80804040202050101808440412024501`
+- `straight-fill:LR:L15>R0:sideB:sparse` → **DERIVED** bitmap `91804440312014100908040403020101`
+- `straight-fill:LR:L15>R1:sideA:sparse` → **DERIVED** bitmap `00808040402060101008480414024601`
+- `straight-fill:LR:L15>R1:sideB:sparse` → **DERIVED** bitmap `1180c4405120241011080c0405020201`
+- `straight-fill:LR:L15>R10:sideA:sparse` → **DERIVED** bitmap `00000000000000000000806010084601`
+- `straight-fill:LR:L15>R10:sideB:sparse` → **DERIVED** bitmap `11004400110044001100c46011080601`
+- `straight-fill:LR:L15>R11:sideA:sparse` → **DERIVED** bitmap `00000000000000000000008060184601`
+- `straight-fill:LR:L15>R11:sideB:sparse` → **DERIVED** bitmap `11004400110044001100448071180601`
+- `straight-fill:LR:L15>R12:sideA:sparse` → **DERIVED** bitmap `000000000000000000000000c0304c03`
+- `straight-fill:LR:L15>R12:sideB:sparse` → **DERIVED** bitmap `110044001100440011004400d1300c03`
+- `straight-fill:LR:L15>R13:sideA:sparse` → **EXACT** `U+00EEBD` / glyph 3773 / bitmap `00000000000000000000000000c07c03`
+- `straight-fill:LR:L15>R13:sideB:sparse` → **DERIVED** bitmap `11004400110044001100440011c03c03`
+- `straight-fill:LR:L15>R14:sideA:sparse` → **EXACT** `U+00E0FE` / glyph 254 / bitmap `0000000000000000000000000000f00f`
+- `straight-fill:LR:L15>R14:sideB:sparse` → **DERIVED** bitmap `1100440011004400110044001100f40f`
+- `straight-fill:LR:L15>R15:sideA:sparse` → **EXACT** `U+00E0FF` / glyph 255 / bitmap `000000000000000000000000000000ff`
+- `straight-fill:LR:L15>R15:sideB:sparse` → **DERIVED** bitmap `110044001100440011004400110044ff`
+- `straight-fill:LR:L15>R2:sideA:sparse` → **DERIVED** bitmap `00008040402060101008480414024601`
+- `straight-fill:LR:L15>R2:sideB:sparse` → **DERIVED** bitmap `1100c4405120241011080c0405020201`
+- `straight-fill:LR:L15>R3:sideA:sparse` → **DERIVED** bitmap `00000080404060201010480414024601`
+- `straight-fill:LR:L15>R3:sideB:sparse` → **DERIVED** bitmap `110044805140242011100c0405020201`
+- `straight-fill:LR:L15>R4:sideA:sparse` → **DERIVED** bitmap `00000000804040201010480814024601`
+- `straight-fill:LR:L15>R4:sideB:sparse` → **DERIVED** bitmap `110044009140442011100c0805020201`
+- `straight-fill:LR:L15>R5:sideA:sparse` → **DERIVED** bitmap `00000000008040402010500814024601`
+- `straight-fill:LR:L15>R5:sideB:sparse` → **DERIVED** bitmap `11004400118044403110140805020201`
+- `straight-fill:LR:L15>R6:sideA:sparse` → **DERIVED** bitmap `00000000000080402020500814044601`
+- `straight-fill:LR:L15>R6:sideB:sparse` → **DERIVED** bitmap `110044001100c4403120140805040201`
+- `straight-fill:LR:L15>R7:sideA:sparse` → **DERIVED** bitmap `00000000000000804020501018044601`
+- `straight-fill:LR:L15>R7:sideB:sparse` → **DERIVED** bitmap `11004400110044805120141009040201`
+- `straight-fill:LR:L15>R8:sideA:sparse` → **DERIVED** bitmap `00000000000000008040601018044601`
+- `straight-fill:LR:L15>R8:sideB:sparse` → **DERIVED** bitmap `11004400110044009140241009040201`
+- `straight-fill:LR:L15>R9:sideA:sparse` → **DERIVED** bitmap `00000000000000000080402018044601`
+- `straight-fill:LR:L15>R9:sideB:sparse` → **DERIVED** bitmap `11004400110044001180442019040201`
+- `straight-fill:LR:L2>R0:sideA:sparse` → **DERIVED** bitmap `c03c4700110044001100440011004400`
+- `straight-fill:LR:L2>R0:sideB:sparse` → **DERIVED** bitmap `d13c0300000000000000000000000000`
+- `straight-fill:LR:L2>R1:sideA:sparse` → **DERIVED** bitmap `00f04f00110044001100440011004400`
+- `straight-fill:LR:L2>R1:sideB:sparse` → **DERIVED** bitmap `11f00f00000000000000000000000000`
+- `straight-fill:LR:L2>R10:sideA:sparse` → **DERIVED** bitmap `00000102050814103140c40011004400`
+- `straight-fill:LR:L2>R10:sideB:sparse` → **DERIVED** bitmap `11004502140850102040800000000000`
+- `straight-fill:LR:L2>R11:sideA:sparse` → **DERIVED** bitmap `0000010205040c103120448011004400`
+- `straight-fill:LR:L2>R11:sideB:sparse` → **DERIVED** bitmap `11004502140448102020408000000000`
+- `straight-fill:LR:L2>R12:sideA:sparse` → **DERIVED** bitmap `0000010203040c101120444091004400`
+- `straight-fill:LR:L2>R12:sideB:sparse` → **DERIVED** bitmap `11004502120448101020404080000000`
+- `straight-fill:LR:L2>R13:sideA:sparse` → **DERIVED** bitmap `0000010203040c081110244051804400`
+- `straight-fill:LR:L2>R13:sideB:sparse` → **DERIVED** bitmap `11004502120448081010604040800000`
+- `straight-fill:LR:L2>R14:sideA:sparse` → **DERIVED** bitmap `0000010203040408111024205140c400`
+- `straight-fill:LR:L2>R14:sideB:sparse` → **DERIVED** bitmap `11004502120444081010602040408000`
+- `straight-fill:LR:L2>R15:sideA:sparse` → **DERIVED** bitmap `00000102030404080910142031404480`
+- `straight-fill:LR:L2>R15:sideB:sparse` → **DERIVED** bitmap `11004502120444081810502020404080`
+- `straight-fill:LR:L2>R2:sideA:sparse` → **DERIVED** bitmap `0000ff00110044001100440011004400`
+- `straight-fill:LR:L2>R2:sideB:sparse` → **DERIVED** bitmap `1100ff00000000000000000000000000`
+- `straight-fill:LR:L2>R3:sideA:sparse` → **DERIVED** bitmap `00000ff0110044001100440011004400`
+- `straight-fill:LR:L2>R3:sideB:sparse` → **DERIVED** bitmap `11004ff0000000000000000000000000`
+- `straight-fill:LR:L2>R4:sideA:sparse` → **DERIVED** bitmap `0000033cd10044001100440011004400`
+- `straight-fill:LR:L2>R4:sideB:sparse` → **DERIVED** bitmap `1100473cc00000000000000000000000`
+- `straight-fill:LR:L2>R5:sideA:sparse` → **DERIVED** bitmap `0000030c31c044001100440011004400`
+- `straight-fill:LR:L2>R5:sideB:sparse` → **DERIVED** bitmap `1100470c30c000000000000000000000`
+- `straight-fill:LR:L2>R6:sideA:sparse` → **DERIVED** bitmap `000001061960c4001100440011004400`
+- `straight-fill:LR:L2>R6:sideB:sparse` → **DERIVED** bitmap `11004506186080000000000000000000`
+- `straight-fill:LR:L2>R7:sideA:sparse` → **DERIVED** bitmap `00000106091064801100440011004400`
+- `straight-fill:LR:L2>R7:sideB:sparse` → **DERIVED** bitmap `11004506181060800000000000000000`
+- `straight-fill:LR:L2>R8:sideA:sparse` → **DERIVED** bitmap `00000102051824409100440011004400`
+- `straight-fill:LR:L2>R8:sideB:sparse` → **DERIVED** bitmap `11004502141860408000000000000000`
+- `straight-fill:LR:L2>R9:sideA:sparse` → **DERIVED** bitmap `00000102050814205180440011004400`
+- `straight-fill:LR:L2>R9:sideB:sparse` → **DERIVED** bitmap `11004502140850204080000000000000`
+- `straight-fill:LR:L3>R0:sideA:sparse` → **DERIVED** bitmap `c0304c03110044001100440011004400`
+- `straight-fill:LR:L3>R0:sideB:sparse` → **DERIVED** bitmap `d1300c03000000000000000000000000`
+- `straight-fill:LR:L3>R1:sideA:sparse` → **DERIVED** bitmap `00c07c03110044001100440011004400`
+- `straight-fill:LR:L3>R1:sideB:sparse` → **DERIVED** bitmap `11c03c03000000000000000000000000`
+- `straight-fill:LR:L3>R10:sideA:sparse` → **DERIVED** bitmap `0000000103040c103140c40011004400`
+- `straight-fill:LR:L3>R10:sideB:sparse` → **DERIVED** bitmap `11004401120448102040800000000000`
+- `straight-fill:LR:L3>R11:sideA:sparse` → **DERIVED** bitmap `0000000103040c101120448011004400`
+- `straight-fill:LR:L3>R11:sideB:sparse` → **DERIVED** bitmap `11004401120448101020408000000000`
+- `straight-fill:LR:L3>R12:sideA:sparse` → **DERIVED** bitmap `00000001030404081120244091004400`
+- `straight-fill:LR:L3>R12:sideB:sparse` → **DERIVED** bitmap `11004401120444081020604080000000`
+- `straight-fill:LR:L3>R13:sideA:sparse` → **DERIVED** bitmap `00000001030204081110244051804400`
+- `straight-fill:LR:L3>R13:sideB:sparse` → **DERIVED** bitmap `11004401120244081010604040800000`
+- `straight-fill:LR:L3>R14:sideA:sparse` → **DERIVED** bitmap `0000000103020408091014205140c400`
+- `straight-fill:LR:L3>R14:sideB:sparse` → **DERIVED** bitmap `11004401120244081810502040408000`
+- `straight-fill:LR:L3>R15:sideA:sparse` → **DERIVED** bitmap `00000001030204040910142031404480`
+- `straight-fill:LR:L3>R15:sideB:sparse` → **DERIVED** bitmap `11004401120244041810502020404080`
+- `straight-fill:LR:L3>R2:sideA:sparse` → **DERIVED** bitmap `0000f00f110044001100440011004400`
+- `straight-fill:LR:L3>R2:sideB:sparse` → **DERIVED** bitmap `1100f40f000000000000000000000000`
+- `straight-fill:LR:L3>R3:sideA:sparse` → **DERIVED** bitmap `000000ff110044001100440011004400`
+- `straight-fill:LR:L3>R3:sideB:sparse` → **DERIVED** bitmap `110044ff000000000000000000000000`
+- `straight-fill:LR:L3>R4:sideA:sparse` → **DERIVED** bitmap `0000000ff10044001100440011004400`
+- `straight-fill:LR:L3>R4:sideB:sparse` → **DERIVED** bitmap `1100440ff00000000000000000000000`
+- `straight-fill:LR:L3>R5:sideA:sparse` → **DERIVED** bitmap `000000033dc044001100440011004400`
+- `straight-fill:LR:L3>R5:sideB:sparse` → **DERIVED** bitmap `110044033cc000000000000000000000`
+- `straight-fill:LR:L3>R6:sideA:sparse` → **DERIVED** bitmap `000000030d30c4001100440011004400`
+- `straight-fill:LR:L3>R6:sideB:sparse` → **DERIVED** bitmap `110044031c30c0000000000000000000`
+- `straight-fill:LR:L3>R7:sideA:sparse` → **DERIVED** bitmap `00000001071864801100440011004400`
+- `straight-fill:LR:L3>R7:sideB:sparse` → **DERIVED** bitmap `11004401161860800000000000000000`
+- `straight-fill:LR:L3>R8:sideA:sparse` → **DERIVED** bitmap `00000001070814609100440011004400`
+- `straight-fill:LR:L3>R8:sideB:sparse` → **DERIVED** bitmap `11004401160850608000000000000000`
+- `straight-fill:LR:L3>R9:sideA:sparse` → **DERIVED** bitmap `0000000103041c205180440011004400`
+- `straight-fill:LR:L3>R9:sideB:sparse` → **DERIVED** bitmap `11004401120458204080000000000000`
+- `straight-fill:LR:L4>R0:sideA:sparse` → **DERIVED** bitmap `80605806110044001100440011004400`
+- `straight-fill:LR:L4>R0:sideB:sparse` → **DERIVED** bitmap `91601c06010000000000000000000000`
+- `straight-fill:LR:L4>R1:sideA:sparse` → **DERIVED** bitmap `00c0700c130044001100440011004400`
+- `straight-fill:LR:L4>R1:sideB:sparse` → **DERIVED** bitmap `11c0340c030000000000000000000000`
+- `straight-fill:LR:L4>R10:sideA:sparse` → **DERIVED** bitmap `00000000010204183140c40011004400`
+- `straight-fill:LR:L4>R10:sideB:sparse` → **DERIVED** bitmap `11004400110244182040800000000000`
+- `straight-fill:LR:L4>R11:sideA:sparse` → **DERIVED** bitmap `00000000010204081120448011004400`
+- `straight-fill:LR:L4>R11:sideB:sparse` → **DERIVED** bitmap `11004400110244081020408000000000`
+- `straight-fill:LR:L4>R12:sideA:sparse` → **DERIVED** bitmap `00000000010204081110244091004400`
+- `straight-fill:LR:L4>R12:sideB:sparse` → **DERIVED** bitmap `11004400110244081010604080000000`
+- `straight-fill:LR:L4>R13:sideA:sparse` → **DERIVED** bitmap `00000000010204040910242051804400`
+- `straight-fill:LR:L4>R13:sideB:sparse` → **DERIVED** bitmap `11004400110244041810602040800000`
+- `straight-fill:LR:L4>R14:sideA:sparse` → **DERIVED** bitmap `0000000001020204091014205140c400`
+- `straight-fill:LR:L4>R14:sideB:sparse` → **DERIVED** bitmap `11004400110246041810502040408000`
+- `straight-fill:LR:L4>R15:sideA:sparse` → **DERIVED** bitmap `00000000010202040908141031404480`
+- `straight-fill:LR:L4>R15:sideB:sparse` → **DERIVED** bitmap `11004400110246041808501020404080`
+- `straight-fill:LR:L4>R2:sideA:sparse` → **DERIVED** bitmap `0000c03c130044001100440011004400`
+- `straight-fill:LR:L4>R2:sideB:sparse` → **DERIVED** bitmap `1100c43c030000000000000000000000`
+- `straight-fill:LR:L4>R3:sideA:sparse` → **DERIVED** bitmap `000000f01f0044001100440011004400`
+- `straight-fill:LR:L4>R3:sideB:sparse` → **DERIVED** bitmap `110044f00f0000000000000000000000`
+- `straight-fill:LR:L4>R4:sideA:sparse` → **DERIVED** bitmap `00000000ff0044001100440011004400`
+- `straight-fill:LR:L4>R4:sideB:sparse` → **DERIVED** bitmap `11004400ff0000000000000000000000`
+- `straight-fill:LR:L4>R5:sideA:sparse` → **DERIVED** bitmap `000000000ff044001100440011004400`
+- `straight-fill:LR:L4>R5:sideB:sparse` → **DERIVED** bitmap `110044001ff000000000000000000000`
+- `straight-fill:LR:L4>R6:sideA:sparse` → **DERIVED** bitmap `00000000033cc4001100440011004400`
+- `straight-fill:LR:L4>R6:sideB:sparse` → **DERIVED** bitmap `11004400133cc0000000000000000000`
+- `straight-fill:LR:L4>R7:sideA:sparse` → **DERIVED** bitmap `00000000030c34c01100440011004400`
+- `straight-fill:LR:L4>R7:sideB:sparse` → **DERIVED** bitmap `11004400130c70c00000000000000000`
+- `straight-fill:LR:L4>R8:sideA:sparse` → **DERIVED** bitmap `0000000001061c609100440011004400`
+- `straight-fill:LR:L4>R8:sideB:sparse` → **DERIVED** bitmap `11004400110658608000000000000000`
+- `straight-fill:LR:L4>R9:sideA:sparse` → **DERIVED** bitmap `0000000001060c107180440011004400`
+- `straight-fill:LR:L4>R9:sideB:sparse` → **DERIVED** bitmap `11004400110648106080000000000000`
+- `straight-fill:LR:L5>R0:sideA:sparse` → **DERIVED** bitmap `80605008160144001100440011004400`
+- `straight-fill:LR:L5>R0:sideB:sparse` → **DERIVED** bitmap `91601408070100000000000000000000`
+- `straight-fill:LR:L5>R1:sideA:sparse` → **DERIVED** bitmap `00806018160144001100440011004400`
+- `straight-fill:LR:L5>R1:sideB:sparse` → **DERIVED** bitmap `11806418070100000000000000000000`
+- `straight-fill:LR:L5>R10:sideA:sparse` → **DERIVED** bitmap `00000000000106081160c40011004400`
+- `straight-fill:LR:L5>R10:sideB:sparse` → **DERIVED** bitmap `11004400110146081060800000000000`
+- `straight-fill:LR:L5>R11:sideA:sparse` → **DERIVED** bitmap `00000000000102041920448011004400`
+- `straight-fill:LR:L5>R11:sideB:sparse` → **DERIVED** bitmap `11004400110146041820408000000000`
+- `straight-fill:LR:L5>R12:sideA:sparse` → **DERIVED** bitmap `00000000000102040910244091004400`
+- `straight-fill:LR:L5>R12:sideB:sparse` → **DERIVED** bitmap `11004400110146041810604080000000`
+- `straight-fill:LR:L5>R13:sideA:sparse` → **DERIVED** bitmap `00000000000102040910142051804400`
+- `straight-fill:LR:L5>R13:sideB:sparse` → **DERIVED** bitmap `11004400110146041810502040800000`
+- `straight-fill:LR:L5>R14:sideA:sparse` → **DERIVED** bitmap `0000000000010204050814203140c400`
+- `straight-fill:LR:L5>R14:sideB:sparse` → **DERIVED** bitmap `11004400110146041408502020408000`
+- `straight-fill:LR:L5>R15:sideA:sparse` → **DERIVED** bitmap `00000000000102020508141031404480`
+- `straight-fill:LR:L5>R15:sideB:sparse` → **DERIVED** bitmap `11004400110146021408501020404080`
+- `straight-fill:LR:L5>R2:sideA:sparse` → **DERIVED** bitmap `0000c0301c0344001100440011004400`
+- `straight-fill:LR:L5>R2:sideB:sparse` → **DERIVED** bitmap `1100c4300d0300000000000000000000`
+- `straight-fill:LR:L5>R3:sideA:sparse` → **DERIVED** bitmap `000000c03c0344001100440011004400`
+- `straight-fill:LR:L5>R3:sideB:sparse` → **DERIVED** bitmap `110044c03d0300000000000000000000`
+- `straight-fill:LR:L5>R4:sideA:sparse` → **DERIVED** bitmap `00000000f00f44001100440011004400`
+- `straight-fill:LR:L5>R4:sideB:sparse` → **DERIVED** bitmap `11004400f10f00000000000000000000`
+- `straight-fill:LR:L5>R5:sideA:sparse` → **DERIVED** bitmap `0000000000ff44001100440011004400`
+- `straight-fill:LR:L5>R5:sideB:sparse` → **DERIVED** bitmap `1100440011ff00000000000000000000`
+- `straight-fill:LR:L5>R6:sideA:sparse` → **DERIVED** bitmap `00000000000ff4001100440011004400`
+- `straight-fill:LR:L5>R6:sideB:sparse` → **DERIVED** bitmap `11004400110ff0000000000000000000`
+- `straight-fill:LR:L5>R7:sideA:sparse` → **DERIVED** bitmap `0000000000033cc01100440011004400`
+- `straight-fill:LR:L5>R7:sideB:sparse` → **DERIVED** bitmap `1100440011037cc00000000000000000`
+- `straight-fill:LR:L5>R8:sideA:sparse` → **DERIVED** bitmap `0000000000030c30d100440011004400`
+- `straight-fill:LR:L5>R8:sideB:sparse` → **DERIVED** bitmap `1100440011034c30c000000000000000`
+- `straight-fill:LR:L5>R9:sideA:sparse` → **DERIVED** bitmap `00000000000106187180440011004400`
+- `straight-fill:LR:L5>R9:sideB:sparse` → **DERIVED** bitmap `11004400110146186080000000000000`
+- `straight-fill:LR:L6>R0:sideA:sparse` → **DERIVED** bitmap `80406018140245001100440011004400`
+- `straight-fill:LR:L6>R0:sideB:sparse` → **DERIVED** bitmap `91402418050201000000000000000000`
+- `straight-fill:LR:L6>R1:sideA:sparse` → **DERIVED** bitmap `00806010180645001100440011004400`
+- `straight-fill:LR:L6>R1:sideB:sparse` → **DERIVED** bitmap `11806410090601000000000000000000`
+- `straight-fill:LR:L6>R10:sideA:sparse` → **DERIVED** bitmap `00000000000001061960c40011004400`
+- `straight-fill:LR:L6>R10:sideB:sparse` → **DERIVED** bitmap `11004400110045061860800000000000`
+- `straight-fill:LR:L6>R11:sideA:sparse` → **DERIVED** bitmap `00000000000001060910648011004400`
+- `straight-fill:LR:L6>R11:sideB:sparse` → **DERIVED** bitmap `11004400110045061810608000000000`
+- `straight-fill:LR:L6>R12:sideA:sparse` → **DERIVED** bitmap `00000000000001020518244091004400`
+- `straight-fill:LR:L6>R12:sideB:sparse` → **DERIVED** bitmap `11004400110045021418604080000000`
+- `straight-fill:LR:L6>R13:sideA:sparse` → **DERIVED** bitmap `00000000000001020508142051804400`
+- `straight-fill:LR:L6>R13:sideB:sparse` → **DERIVED** bitmap `11004400110045021408502040800000`
+- `straight-fill:LR:L6>R14:sideA:sparse` → **DERIVED** bitmap `0000000000000102050814103140c400`
+- `straight-fill:LR:L6>R14:sideB:sparse` → **DERIVED** bitmap `11004400110045021408501020408000`
+- `straight-fill:LR:L6>R15:sideA:sparse` → **DERIVED** bitmap `000000000000010205040c1031204480`
+- `straight-fill:LR:L6>R15:sideB:sparse` → **DERIVED** bitmap `11004400110045021404481020204080`
+- `straight-fill:LR:L6>R2:sideA:sparse` → **DERIVED** bitmap `00008060180645001100440011004400`
+- `straight-fill:LR:L6>R2:sideB:sparse` → **DERIVED** bitmap `1100c460190601000000000000000000`
+- `straight-fill:LR:L6>R3:sideA:sparse` → **DERIVED** bitmap `000000c0300c47001100440011004400`
+- `straight-fill:LR:L6>R3:sideB:sparse` → **DERIVED** bitmap `110044c0310c03000000000000000000`
+- `straight-fill:LR:L6>R4:sideA:sparse` → **DERIVED** bitmap `00000000c03c47001100440011004400`
+- `straight-fill:LR:L6>R4:sideB:sparse` → **DERIVED** bitmap `11004400d13c03000000000000000000`
+- `straight-fill:LR:L6>R5:sideA:sparse` → **DERIVED** bitmap `0000000000f04f001100440011004400`
+- `straight-fill:LR:L6>R5:sideB:sparse` → **DERIVED** bitmap `1100440011f00f000000000000000000`
+- `straight-fill:LR:L6>R6:sideA:sparse` → **DERIVED** bitmap `000000000000ff001100440011004400`
+- `straight-fill:LR:L6>R6:sideB:sparse` → **DERIVED** bitmap `110044001100ff000000000000000000`
+- `straight-fill:LR:L6>R7:sideA:sparse` → **DERIVED** bitmap `0000000000000ff01100440011004400`
+- `straight-fill:LR:L6>R7:sideB:sparse` → **DERIVED** bitmap `1100440011004ff00000000000000000`
+- `straight-fill:LR:L6>R8:sideA:sparse` → **DERIVED** bitmap `000000000000033cd100440011004400`
+- `straight-fill:LR:L6>R8:sideB:sparse` → **DERIVED** bitmap `110044001100473cc000000000000000`
+- `straight-fill:LR:L6>R9:sideA:sparse` → **DERIVED** bitmap `000000000000030c31c0440011004400`
+- `straight-fill:LR:L6>R9:sideB:sparse` → **DERIVED** bitmap `110044001100470c30c0000000000000`
+- `straight-fill:LR:L7>R0:sideA:sparse` → **DERIVED** bitmap `80406010180446011100440011004400`
+- `straight-fill:LR:L7>R0:sideB:sparse` → **DERIVED** bitmap `91402410090402010000000000000000`
+- `straight-fill:LR:L7>R1:sideA:sparse` → **DERIVED** bitmap `00804020180446011100440011004400`
+- `straight-fill:LR:L7>R1:sideB:sparse` → **DERIVED** bitmap `11804420190402010000000000000000`
+- `straight-fill:LR:L7>R10:sideA:sparse` → **DERIVED** bitmap `00000000000000030d30c40011004400`
+- `straight-fill:LR:L7>R10:sideB:sparse` → **DERIVED** bitmap `11004400110044031c30c00000000000`
+- `straight-fill:LR:L7>R11:sideA:sparse` → **DERIVED** bitmap `00000000000000010718648011004400`
+- `straight-fill:LR:L7>R11:sideB:sparse` → **DERIVED** bitmap `11004400110044011618608000000000`
+- `straight-fill:LR:L7>R12:sideA:sparse` → **DERIVED** bitmap `00000000000000010708146091004400`
+- `straight-fill:LR:L7>R12:sideB:sparse` → **DERIVED** bitmap `11004400110044011608506080000000`
+- `straight-fill:LR:L7>R13:sideA:sparse` → **DERIVED** bitmap `000000000000000103041c2051804400`
+- `straight-fill:LR:L7>R13:sideB:sparse` → **DERIVED** bitmap `11004400110044011204582040800000`
+- `straight-fill:LR:L7>R14:sideA:sparse` → **DERIVED** bitmap `000000000000000103040c103140c400`
+- `straight-fill:LR:L7>R14:sideB:sparse` → **DERIVED** bitmap `11004400110044011204481020408000`
+- `straight-fill:LR:L7>R15:sideA:sparse` → **DERIVED** bitmap `000000000000000103040c1011204480`
+- `straight-fill:LR:L7>R15:sideB:sparse` → **DERIVED** bitmap `11004400110044011204481010204080`
+- `straight-fill:LR:L7>R2:sideA:sparse` → **DERIVED** bitmap `00008060100846011100440011004400`
+- `straight-fill:LR:L7>R2:sideB:sparse` → **DERIVED** bitmap `1100c460110806010000000000000000`
+- `straight-fill:LR:L7>R3:sideA:sparse` → **DERIVED** bitmap `00000080601846011100440011004400`
+- `straight-fill:LR:L7>R3:sideB:sparse` → **DERIVED** bitmap `11004480711806010000000000000000`
+- `straight-fill:LR:L7>R4:sideA:sparse` → **DERIVED** bitmap `00000000c0304c031100440011004400`
+- `straight-fill:LR:L7>R4:sideB:sparse` → **DERIVED** bitmap `11004400d1300c030000000000000000`
+- `straight-fill:LR:L7>R5:sideA:sparse` → **DERIVED** bitmap `0000000000c07c031100440011004400`
+- `straight-fill:LR:L7>R5:sideB:sparse` → **DERIVED** bitmap `1100440011c03c030000000000000000`
+- `straight-fill:LR:L7>R6:sideA:sparse` → **DERIVED** bitmap `000000000000f00f1100440011004400`
+- `straight-fill:LR:L7>R6:sideB:sparse` → **DERIVED** bitmap `110044001100f40f0000000000000000`
+- `straight-fill:LR:L7>R7:sideA:sparse` → **DERIVED** bitmap `00000000000000ff1100440011004400`
+- `straight-fill:LR:L7>R7:sideB:sparse` → **DERIVED** bitmap `11004400110044ff0000000000000000`
+- `straight-fill:LR:L7>R8:sideA:sparse` → **DERIVED** bitmap `000000000000000ff100440011004400`
+- `straight-fill:LR:L7>R8:sideB:sparse` → **DERIVED** bitmap `110044001100440ff000000000000000`
+- `straight-fill:LR:L7>R9:sideA:sparse` → **DERIVED** bitmap `00000000000000033dc0440011004400`
+- `straight-fill:LR:L7>R9:sideB:sparse` → **DERIVED** bitmap `11004400110044033cc0000000000000`
+- `straight-fill:LR:L8>R0:sideA:sparse` → **DERIVED** bitmap `80406010100844021100440011004400`
+- `straight-fill:LR:L8>R0:sideB:sparse` → **DERIVED** bitmap `91402410110804020100000000000000`
+- `straight-fill:LR:L8>R1:sideA:sparse` → **DERIVED** bitmap `00804020100844021100440011004400`
+- `straight-fill:LR:L8>R1:sideB:sparse` → **DERIVED** bitmap `11804420110804020100000000000000`
+- `straight-fill:LR:L8>R10:sideA:sparse` → **DERIVED** bitmap `0000000000000000033cc40011004400`
+- `straight-fill:LR:L8>R10:sideB:sparse` → **DERIVED** bitmap `1100440011004400133cc00000000000`
+- `straight-fill:LR:L8>R11:sideA:sparse` → **DERIVED** bitmap `0000000000000000030c34c011004400`
+- `straight-fill:LR:L8>R11:sideB:sparse` → **DERIVED** bitmap `1100440011004400130c70c000000000`
+- `straight-fill:LR:L8>R12:sideA:sparse` → **DERIVED** bitmap `000000000000000001061c6091004400`
+- `straight-fill:LR:L8>R12:sideB:sparse` → **DERIVED** bitmap `11004400110044001106586080000000`
+- `straight-fill:LR:L8>R13:sideA:sparse` → **DERIVED** bitmap `000000000000000001060c1071804400`
+- `straight-fill:LR:L8>R13:sideB:sparse` → **DERIVED** bitmap `11004400110044001106481060800000`
+- `straight-fill:LR:L8>R14:sideA:sparse` → **DERIVED** bitmap `0000000000000000010204183140c400`
+- `straight-fill:LR:L8>R14:sideB:sparse` → **DERIVED** bitmap `11004400110044001102441820408000`
+- `straight-fill:LR:L8>R15:sideA:sparse` → **DERIVED** bitmap `00000000000000000102040811204480`
+- `straight-fill:LR:L8>R15:sideB:sparse` → **DERIVED** bitmap `11004400110044001102440810204080`
+- `straight-fill:LR:L8>R2:sideA:sparse` → **DERIVED** bitmap `00008040201844021100440011004400`
+- `straight-fill:LR:L8>R2:sideB:sparse` → **DERIVED** bitmap `1100c440311804020100000000000000`
+- `straight-fill:LR:L8>R3:sideA:sparse` → **DERIVED** bitmap `00000080601048061100440011004400`
+- `straight-fill:LR:L8>R3:sideB:sparse` → **DERIVED** bitmap `1100448071100c060100000000000000`
+- `straight-fill:LR:L8>R4:sideA:sparse` → **DERIVED** bitmap `00000000806058061100440011004400`
+- `straight-fill:LR:L8>R4:sideB:sparse` → **DERIVED** bitmap `1100440091601c060100000000000000`
+- `straight-fill:LR:L8>R5:sideA:sparse` → **DERIVED** bitmap `0000000000c0700c1300440011004400`
+- `straight-fill:LR:L8>R5:sideB:sparse` → **DERIVED** bitmap `1100440011c0340c0300000000000000`
+- `straight-fill:LR:L8>R6:sideA:sparse` → **DERIVED** bitmap `000000000000c03c1300440011004400`
+- `straight-fill:LR:L8>R6:sideB:sparse` → **DERIVED** bitmap `110044001100c43c0300000000000000`
+- `straight-fill:LR:L8>R7:sideA:sparse` → **DERIVED** bitmap `00000000000000f01f00440011004400`
+- `straight-fill:LR:L8>R7:sideB:sparse` → **DERIVED** bitmap `11004400110044f00f00000000000000`
+- `straight-fill:LR:L8>R8:sideA:sparse` → **DERIVED** bitmap `0000000000000000ff00440011004400`
+- `straight-fill:LR:L8>R8:sideB:sparse` → **DERIVED** bitmap `1100440011004400ff00000000000000`
+- `straight-fill:LR:L8>R9:sideA:sparse` → **DERIVED** bitmap `00000000000000000ff0440011004400`
+- `straight-fill:LR:L8>R9:sideB:sparse` → **DERIVED** bitmap `11004400110044001ff0000000000000`
+- `straight-fill:LR:L9>R0:sideA:sparse` → **DERIVED** bitmap `80406020100844041201440011004400`
+- `straight-fill:LR:L9>R0:sideB:sparse` → **DERIVED** bitmap `91402420110804040301000000000000`
+- `straight-fill:LR:L9>R1:sideA:sparse` → **DERIVED** bitmap `00804020101048041201440011004400`
+- `straight-fill:LR:L9>R1:sideB:sparse` → **DERIVED** bitmap `1180442011100c040301000000000000`
+- `straight-fill:LR:L9>R10:sideA:sparse` → **DERIVED** bitmap `0000000000000000000ff40011004400`
+- `straight-fill:LR:L9>R10:sideB:sparse` → **DERIVED** bitmap `1100440011004400110ff00000000000`
+- `straight-fill:LR:L9>R11:sideA:sparse` → **DERIVED** bitmap `000000000000000000033cc011004400`
+- `straight-fill:LR:L9>R11:sideB:sparse` → **DERIVED** bitmap `110044001100440011037cc000000000`
+- `straight-fill:LR:L9>R12:sideA:sparse` → **DERIVED** bitmap `000000000000000000030c30d1004400`
+- `straight-fill:LR:L9>R12:sideB:sparse` → **DERIVED** bitmap `110044001100440011034c30c0000000`
+- `straight-fill:LR:L9>R13:sideA:sparse` → **DERIVED** bitmap `00000000000000000001061871804400`
+- `straight-fill:LR:L9>R13:sideB:sparse` → **DERIVED** bitmap `11004400110044001101461860800000`
+- `straight-fill:LR:L9>R14:sideA:sparse` → **DERIVED** bitmap `0000000000000000000106081160c400`
+- `straight-fill:LR:L9>R14:sideB:sparse` → **DERIVED** bitmap `11004400110044001101460810608000`
+- `straight-fill:LR:L9>R15:sideA:sparse` → **DERIVED** bitmap `00000000000000000001020419204480`
+- `straight-fill:LR:L9>R15:sideB:sparse` → **DERIVED** bitmap `11004400110044001101460418204080`
+- `straight-fill:LR:L9>R2:sideA:sparse` → **DERIVED** bitmap `00008040201048041201440011004400`
+- `straight-fill:LR:L9>R2:sideB:sparse` → **DERIVED** bitmap `1100c44031100c040301000000000000`
+- `straight-fill:LR:L9>R3:sideA:sparse` → **DERIVED** bitmap `00000080402058041201440011004400`
+- `straight-fill:LR:L9>R3:sideB:sparse` → **DERIVED** bitmap `1100448051201c040301000000000000`
+- `straight-fill:LR:L9>R4:sideA:sparse` → **DERIVED** bitmap `00000000806050081601440011004400`
+- `straight-fill:LR:L9>R4:sideB:sparse` → **DERIVED** bitmap `11004400916014080701000000000000`
+- `straight-fill:LR:L9>R5:sideA:sparse` → **DERIVED** bitmap `00000000008060181601440011004400`
+- `straight-fill:LR:L9>R5:sideB:sparse` → **DERIVED** bitmap `11004400118064180701000000000000`
+- `straight-fill:LR:L9>R6:sideA:sparse` → **DERIVED** bitmap `000000000000c0301c03440011004400`
+- `straight-fill:LR:L9>R6:sideB:sparse` → **DERIVED** bitmap `110044001100c4300d03000000000000`
+- `straight-fill:LR:L9>R7:sideA:sparse` → **DERIVED** bitmap `00000000000000c03c03440011004400`
+- `straight-fill:LR:L9>R7:sideB:sparse` → **DERIVED** bitmap `11004400110044c03d03000000000000`
+- `straight-fill:LR:L9>R8:sideA:sparse` → **DERIVED** bitmap `0000000000000000f00f440011004400`
+- `straight-fill:LR:L9>R8:sideB:sparse` → **DERIVED** bitmap `1100440011004400f10f000000000000`
+- `straight-fill:LR:L9>R9:sideA:sparse` → **DERIVED** bitmap `000000000000000000ff440011004400`
+- `straight-fill:LR:L9>R9:sideB:sparse` → **DERIVED** bitmap `110044001100440011ff000000000000`
+- `straight-fill:LT:L0>T0:sideA:sparse` → **EXACT** `U+00E13E` / glyph 318 / bitmap `01000000000000000000000000000000`
+- `straight-fill:LT:L0>T0:sideB:sparse` → **EXACT** `U+00E13E` / glyph 318 / bitmap `01000000000000000000000000000000`
+- `straight-fill:LT:L0>T1:sideA:sparse` → **DERIVED** bitmap `03004400110044001100440011004400`
+- `straight-fill:LT:L0>T1:sideB:sparse` → **EXACT** `U+00E13F` / glyph 319 / bitmap `03000000000000000000000000000000`
+- `straight-fill:LT:L0>T2:sideA:sparse` → **DERIVED** bitmap `07004400110044001100440011004400`
+- `straight-fill:LT:L0>T2:sideB:sparse` → **EXACT** `U+00E140` / glyph 320 / bitmap `07000000000000000000000000000000`
+- `straight-fill:LT:L0>T3:sideA:sparse` → **DERIVED** bitmap `0f004400110044001100440011004400`
+- `straight-fill:LT:L0>T3:sideB:sparse` → **EXACT** `U+00E141` / glyph 321 / bitmap `0f000000000000000000000000000000`
+- `straight-fill:LT:L0>T4:sideA:sparse` → **DERIVED** bitmap `1f004400110044001100440011004400`
+- `straight-fill:LT:L0>T4:sideB:sparse` → **EXACT** `U+00E142` / glyph 322 / bitmap `1f000000000000000000000000000000`
+- `straight-fill:LT:L0>T5:sideA:sparse` → **DERIVED** bitmap `3f004400110044001100440011004400`
+- `straight-fill:LT:L0>T5:sideB:sparse` → **EXACT** `U+00E143` / glyph 323 / bitmap `3f000000000000000000000000000000`
+- `straight-fill:LT:L0>T6:sideA:sparse` → **DERIVED** bitmap `7f004400110044001100440011004400`
+- `straight-fill:LT:L0>T6:sideB:sparse` → **EXACT** `U+00E144` / glyph 324 / bitmap `7f000000000000000000000000000000`
+- `straight-fill:LT:L0>T7:sideA:sparse` → **DERIVED** bitmap `ff004400110044001100440011004400`
+- `straight-fill:LT:L0>T7:sideB:sparse` → **EXACT** `U+00E000` / glyph 0 / bitmap `ff000000000000000000000000000000`
+- `straight-fill:LT:L1>T0:sideA:sparse` → **DERIVED** bitmap `11014400100044001000440010004400`
+- `straight-fill:LT:L1>T0:sideB:sparse` → **EXACT** `U+00E145` / glyph 325 / bitmap `01010000000000000000000000000000`
+- `straight-fill:LT:L1>T1:sideA:sparse` → **DERIVED** bitmap `12014400110044001100440011004400`
+- `straight-fill:LT:L1>T1:sideB:sparse` → **EXACT** `U+00E560` / glyph 1376 / bitmap `03010000000000000000000000000000`
+- `straight-fill:LT:L1>T2:sideA:sparse` → **DERIVED** bitmap `16014400110044001100440011004400`
+- `straight-fill:LT:L1>T2:sideB:sparse` → **EXACT** `U+00E561` / glyph 1377 / bitmap `07010000000000000000000000000000`
+- `straight-fill:LT:L1>T3:sideA:sparse` → **DERIVED** bitmap `1c034400110044001100440011004400`
+- `straight-fill:LT:L1>T3:sideB:sparse` → **EXACT** `U+00EA4A` / glyph 2634 / bitmap `0d030000000000000000000000000000`
+- `straight-fill:LT:L1>T4:sideA:sparse` → **DERIVED** bitmap `1c034400110044001100440011004400`
+- `straight-fill:LT:L1>T4:sideB:sparse` → **EXACT** `U+00EA4B` / glyph 2635 / bitmap `1d030000000000000000000000000000`
+- `straight-fill:LT:L1>T5:sideA:sparse` → **DERIVED** bitmap `38074400110044001100440011004400`
+- `straight-fill:LT:L1>T5:sideB:sparse` → **DERIVED** bitmap `39070000000000000000000000000000`
+- `straight-fill:LT:L1>T6:sideA:sparse` → **DERIVED** bitmap `78074400110044001100440011004400`
+- `straight-fill:LT:L1>T6:sideB:sparse` → **DERIVED** bitmap `79070000000000000000000000000000`
+- `straight-fill:LT:L1>T7:sideA:sparse` → **DERIVED** bitmap `f00f4400110044001100440011004400`
+- `straight-fill:LT:L1>T7:sideB:sparse` → **DERIVED** bitmap `f10f0000000000000000000000000000`
+- `straight-fill:LT:L10>T0:sideA:sparse` → **DERIVED** bitmap `11014501110145011101450010004400`
+- `straight-fill:LT:L10>T0:sideB:sparse` → **EXACT** `U+00E184` / glyph 388 / bitmap `01010101010101010101010000000000`
+- `straight-fill:LT:L10>T1:sideA:sparse` → **DERIVED** bitmap `12024602120245011101450011004400`
+- `straight-fill:LT:L10>T1:sideB:sparse` → **DERIVED** bitmap `03020202030201010101010000000000`
+- `straight-fill:LT:L10>T2:sideA:sparse` → **DERIVED** bitmap `14044402120246021101450011004400`
+- `straight-fill:LT:L10>T2:sideB:sparse` → **DERIVED** bitmap `05040402030202020101010000000000`
+- `straight-fill:LT:L10>T3:sideA:sparse` → **DERIVED** bitmap `18084404140446021201450011004400`
+- `straight-fill:LT:L10>T3:sideB:sparse` → **DERIVED** bitmap `09080404050402020301010000000000`
+- `straight-fill:LT:L10>T4:sideA:sparse` → **DERIVED** bitmap `10104808140444021201450011004400`
+- `straight-fill:LT:L10>T4:sideB:sparse` → **DERIVED** bitmap `11100c08050404020301010000000000`
+- `straight-fill:LT:L10>T5:sideA:sparse` → **DERIVED** bitmap `20205010180844041202450011004400`
+- `straight-fill:LT:L10>T5:sideB:sparse` → **DERIVED** bitmap `31201410090804040302010000000000`
+- `straight-fill:LT:L10>T6:sideA:sparse` → **DERIVED** bitmap `40206010100844041202450011004400`
+- `straight-fill:LT:L10>T6:sideB:sparse` → **DERIVED** bitmap `51202410110804040302010000000000`
+- `straight-fill:LT:L10>T7:sideA:sparse` → **DERIVED** bitmap `80404020101048041202450011004400`
+- `straight-fill:LT:L10>T7:sideB:sparse` → **DERIVED** bitmap `9140442011100c040302010000000000`
+- `straight-fill:LT:L11>T0:sideA:sparse` → **DERIVED** bitmap `11014501110145011101450110004400`
+- `straight-fill:LT:L11>T0:sideB:sparse` → **EXACT** `U+00E18B` / glyph 395 / bitmap `01010101010101010101010100000000`
+- `straight-fill:LT:L11>T1:sideA:sparse` → **DERIVED** bitmap `12024602120245011101450111004400`
+- `straight-fill:LT:L11>T1:sideB:sparse` → **DERIVED** bitmap `03020202030201010101010100000000`
+- `straight-fill:LT:L11>T2:sideA:sparse` → **DERIVED** bitmap `14044402120246021201450111004400`
+- `straight-fill:LT:L11>T2:sideB:sparse` → **DERIVED** bitmap `05040402030202020301010100000000`
+- `straight-fill:LT:L11>T3:sideA:sparse` → **DERIVED** bitmap `18084404140446021202450111004400`
+- `straight-fill:LT:L11>T3:sideB:sparse` → **DERIVED** bitmap `09080404050402020302010100000000`
+- `straight-fill:LT:L11>T4:sideA:sparse` → **DERIVED** bitmap `10104808180444021202450111004400`
+- `straight-fill:LT:L11>T4:sideB:sparse` → **DERIVED** bitmap `11100c08090404020302010100000000`
+- `straight-fill:LT:L11>T5:sideA:sparse` → **DERIVED** bitmap `20205010180844041202450111004400`
+- `straight-fill:LT:L11>T5:sideB:sparse` → **DERIVED** bitmap `31201410090804040302010100000000`
+- `straight-fill:LT:L11>T6:sideA:sparse` → **DERIVED** bitmap `40206010100848041402460111004400`
+- `straight-fill:LT:L11>T6:sideB:sparse` → **DERIVED** bitmap `5120241011080c040502020100000000`
+- `straight-fill:LT:L11>T7:sideA:sparse` → **DERIVED** bitmap `80404020101048081402460111004400`
+- `straight-fill:LT:L11>T7:sideB:sparse` → **DERIVED** bitmap `9140442011100c080502020100000000`
+- `straight-fill:LT:L12>T0:sideA:sparse` → **DERIVED** bitmap `11014501110145011101450111004400`
+- `straight-fill:LT:L12>T0:sideB:sparse` → **EXACT** `U+00E192` / glyph 402 / bitmap `01010101010101010101010101000000`
+- `straight-fill:LT:L12>T1:sideA:sparse` → **DERIVED** bitmap `12024602120246011101450111004400`
+- `straight-fill:LT:L12>T1:sideB:sparse` → **DERIVED** bitmap `03020202030202010101010101000000`
+- `straight-fill:LT:L12>T2:sideA:sparse` → **DERIVED** bitmap `14044404120246021202450111004400`
+- `straight-fill:LT:L12>T2:sideB:sparse` → **DERIVED** bitmap `05040404030202020302010101000000`
+- `straight-fill:LT:L12>T3:sideA:sparse` → **DERIVED** bitmap `18084804140444021202460111004400`
+- `straight-fill:LT:L12>T3:sideB:sparse` → **DERIVED** bitmap `09080c04050404020302020101000000`
+- `straight-fill:LT:L12>T4:sideA:sparse` → **DERIVED** bitmap `10104808180444041202460111004400`
+- `straight-fill:LT:L12>T4:sideB:sparse` → **DERIVED** bitmap `11100c08090404040302020101000000`
+- `straight-fill:LT:L12>T5:sideA:sparse` → **DERIVED** bitmap `20205010180848041402460111004400`
+- `straight-fill:LT:L12>T5:sideB:sparse` → **DERIVED** bitmap `3120141009080c040502020101000000`
+- `straight-fill:LT:L12>T6:sideA:sparse` → **DERIVED** bitmap `40406020101048081404460211004400`
+- `straight-fill:LT:L12>T6:sideB:sparse` → **DERIVED** bitmap `5140242011100c080504020201000000`
+- `straight-fill:LT:L12>T7:sideA:sparse` → **DERIVED** bitmap `80404020201050081404460211004400`
+- `straight-fill:LT:L12>T7:sideB:sparse` → **DERIVED** bitmap `91404420311014080504020201000000`
+- `straight-fill:LT:L13>T0:sideA:sparse` → **DERIVED** bitmap `11014501110145011101450111014400`
+- `straight-fill:LT:L13>T0:sideB:sparse` → **EXACT** `U+00E199` / glyph 409 / bitmap `01010101010101010101010101010000`
+- `straight-fill:LT:L13>T1:sideA:sparse` → **DERIVED** bitmap `12024602120246011101450111014400`
+- `straight-fill:LT:L13>T1:sideB:sparse` → **DERIVED** bitmap `03020202030202010101010101010000`
+- `straight-fill:LT:L13>T2:sideA:sparse` → **DERIVED** bitmap `14044404120246021202450111014400`
+- `straight-fill:LT:L13>T2:sideB:sparse` → **DERIVED** bitmap `05040404030202020302010101010000`
+- `straight-fill:LT:L13>T3:sideA:sparse` → **DERIVED** bitmap `18084804140444021202460111014400`
+- `straight-fill:LT:L13>T3:sideB:sparse` → **DERIVED** bitmap `09080c04050404020302020101010000`
+- `straight-fill:LT:L13>T4:sideA:sparse` → **DERIVED** bitmap `10104808180444041402460211014400`
+- `straight-fill:LT:L13>T4:sideB:sparse` → **DERIVED** bitmap `11100c08090404040502020201010000`
+- `straight-fill:LT:L13>T5:sideA:sparse` → **DERIVED** bitmap `20205010180848041404460211014400`
+- `straight-fill:LT:L13>T5:sideB:sparse` → **DERIVED** bitmap `3120141009080c040504020201010000`
+- `straight-fill:LT:L13>T6:sideA:sparse` → **DERIVED** bitmap `40406020101048081404460211014400`
+- `straight-fill:LT:L13>T6:sideB:sparse` → **DERIVED** bitmap `5140242011100c080504020201010000`
+- `straight-fill:LT:L13>T7:sideA:sparse` → **DERIVED** bitmap `80404020201050081804440212014400`
+- `straight-fill:LT:L13>T7:sideB:sparse` → **DERIVED** bitmap `91404420311014080904040203010000`
+- `straight-fill:LT:L14>T0:sideA:sparse` → **DERIVED** bitmap `11014501110145011101450111014500`
+- `straight-fill:LT:L14>T0:sideB:sparse` → **EXACT** `U+00E1A0` / glyph 416 / bitmap `01010101010101010101010101010100`
+- `straight-fill:LT:L14>T1:sideA:sparse` → **DERIVED** bitmap `12024602120246021101450111014500`
+- `straight-fill:LT:L14>T1:sideB:sparse` → **DERIVED** bitmap `03020202030202020101010101010100`
+- `straight-fill:LT:L14>T2:sideA:sparse` → **DERIVED** bitmap `14044404120246021202460111014500`
+- `straight-fill:LT:L14>T2:sideB:sparse` → **DERIVED** bitmap `05040404030202020302020101010100`
+- `straight-fill:LT:L14>T3:sideA:sparse` → **DERIVED** bitmap `18084804140444041202460211014500`
+- `straight-fill:LT:L14>T3:sideB:sparse` → **DERIVED** bitmap `09080c04050404040302020201010100`
+- `straight-fill:LT:L14>T4:sideA:sparse` → **DERIVED** bitmap `10104808180844041402460212014500`
+- `straight-fill:LT:L14>T4:sideB:sparse` → **DERIVED** bitmap `11100c08090804040502020203010100`
+- `straight-fill:LT:L14>T5:sideA:sparse` → **DERIVED** bitmap `20205010100848081404460212014500`
+- `straight-fill:LT:L14>T5:sideB:sparse` → **DERIVED** bitmap `3120141011080c080504020203010100`
+- `straight-fill:LT:L14>T6:sideA:sparse` → **DERIVED** bitmap `40406020101048081804440212014500`
+- `straight-fill:LT:L14>T6:sideB:sparse` → **DERIVED** bitmap `5140242011100c080904040203010100`
+- `straight-fill:LT:L14>T7:sideA:sparse` → **DERIVED** bitmap `80804040202050101808440412024500`
+- `straight-fill:LT:L14>T7:sideB:sparse` → **DERIVED** bitmap `91804440312014100908040403020100`
+- `straight-fill:LT:L15>T0:sideA:sparse` → **DERIVED** bitmap `11014501110145011101450111014501`
+- `straight-fill:LT:L15>T0:sideB:sparse` → **EXACT** `U+00E100` / glyph 256 / bitmap `01010101010101010101010101010101`
+- `straight-fill:LT:L15>T1:sideA:sparse` → **DERIVED** bitmap `12024602120246021101450111014501`
+- `straight-fill:LT:L15>T1:sideB:sparse` → **DERIVED** bitmap `03020202030202020101010101010101`
+- `straight-fill:LT:L15>T2:sideA:sparse` → **DERIVED** bitmap `14044404120246021202460211014501`
+- `straight-fill:LT:L15>T2:sideB:sparse` → **DERIVED** bitmap `05040404030202020302020201010101`
+- `straight-fill:LT:L15>T3:sideA:sparse` → **DERIVED** bitmap `18084804140444041202460212014501`
+- `straight-fill:LT:L15>T3:sideB:sparse` → **DERIVED** bitmap `09080c04050404040302020203010101`
+- `straight-fill:LT:L15>T4:sideA:sparse` → **DERIVED** bitmap `10104808180844041404460212024501`
+- `straight-fill:LT:L15>T4:sideB:sparse` → **DERIVED** bitmap `11100c08090804040504020203020101`
+- `straight-fill:LT:L15>T5:sideA:sparse` → **DERIVED** bitmap `20205010100848081404440212024501`
+- `straight-fill:LT:L15>T5:sideB:sparse` → **DERIVED** bitmap `3120141011080c080504040203020101`
+- `straight-fill:LT:L15>T6:sideA:sparse` → **DERIVED** bitmap `40406020101050081804440412024501`
+- `straight-fill:LT:L15>T6:sideB:sparse` → **DERIVED** bitmap `51402420111014080904040403020101`
+- `straight-fill:LT:L15>T7:sideA:sparse` → **DERIVED** bitmap `80804040202050101808440412024501`
+- `straight-fill:LT:L15>T7:sideB:sparse` → **DERIVED** bitmap `91804440312014100908040403020101`
+- `straight-fill:LT:L2>T0:sideA:sparse` → **DERIVED** bitmap `11014500100044001000440010004400`
+- `straight-fill:LT:L2>T0:sideB:sparse` → **EXACT** `U+00E14C` / glyph 332 / bitmap `01010100000000000000000000000000`
+- `straight-fill:LT:L2>T1:sideA:sparse` → **DERIVED** bitmap `12024500110044001100440011004400`
+- `straight-fill:LT:L2>T1:sideB:sparse` → **EXACT** `U+00EF44` / glyph 3908 / bitmap `03020100000000000000000000000000`
+- `straight-fill:LT:L2>T2:sideA:sparse` → **DERIVED** bitmap `14024500110044001100440011004400`
+- `straight-fill:LT:L2>T2:sideB:sparse` → **EXACT** `U+00EF46` / glyph 3910 / bitmap `05020100000000000000000000000000`
+- `straight-fill:LT:L2>T3:sideA:sparse` → **DERIVED** bitmap `18064500110044001100440011004400`
+- `straight-fill:LT:L2>T3:sideB:sparse` → **DERIVED** bitmap `09060100000000000000000000000000`
+- `straight-fill:LT:L2>T4:sideA:sparse` → **DERIVED** bitmap `18064500110044001100440011004400`
+- `straight-fill:LT:L2>T4:sideB:sparse` → **DERIVED** bitmap `19060100000000000000000000000000`
+- `straight-fill:LT:L2>T5:sideA:sparse` → **DERIVED** bitmap `300c4700110044001100440011004400`
+- `straight-fill:LT:L2>T5:sideB:sparse` → **DERIVED** bitmap `310c0300000000000000000000000000`
+- `straight-fill:LT:L2>T6:sideA:sparse` → **DERIVED** bitmap `601c4700110044001100440011004400`
+- `straight-fill:LT:L2>T6:sideB:sparse` → **DERIVED** bitmap `711c0300000000000000000000000000`
+- `straight-fill:LT:L2>T7:sideA:sparse` → **DERIVED** bitmap `c03c4700110044001100440011004400`
+- `straight-fill:LT:L2>T7:sideB:sparse` → **DERIVED** bitmap `d13c0300000000000000000000000000`
+- `straight-fill:LT:L3>T0:sideA:sparse` → **DERIVED** bitmap `11014501100044001000440010004400`
+- `straight-fill:LT:L3>T0:sideB:sparse` → **EXACT** `U+00E153` / glyph 339 / bitmap `01010101000000000000000000000000`
+- `straight-fill:LT:L3>T1:sideA:sparse` → **DERIVED** bitmap `12024501110044001100440011004400`
+- `straight-fill:LT:L3>T1:sideB:sparse` → **EXACT** `U+00EF50` / glyph 3920 / bitmap `03020101000000000000000000000000`
+- `straight-fill:LT:L3>T2:sideA:sparse` → **DERIVED** bitmap `14024601110044001100440011004400`
+- `straight-fill:LT:L3>T2:sideB:sparse` → **DERIVED** bitmap `05020201000000000000000000000000`
+- `straight-fill:LT:L3>T3:sideA:sparse` → **DERIVED** bitmap `18044601110044001100440011004400`
+- `straight-fill:LT:L3>T3:sideB:sparse` → **DERIVED** bitmap `09040201000000000000000000000000`
+- `straight-fill:LT:L3>T4:sideA:sparse` → **DERIVED** bitmap `100c4601110044001100440011004400`
+- `straight-fill:LT:L3>T4:sideB:sparse` → **DERIVED** bitmap `110c0201000000000000000000000000`
+- `straight-fill:LT:L3>T5:sideA:sparse` → **DERIVED** bitmap `20184601110044001100440011004400`
+- `straight-fill:LT:L3>T5:sideB:sparse` → **DERIVED** bitmap `31180601000000000000000000000000`
+- `straight-fill:LT:L3>T6:sideA:sparse` → **DERIVED** bitmap `60184601110044001100440011004400`
+- `straight-fill:LT:L3>T6:sideB:sparse` → **DERIVED** bitmap `71180601000000000000000000000000`
+- `straight-fill:LT:L3>T7:sideA:sparse` → **DERIVED** bitmap `c0304c03110044001100440011004400`
+- `straight-fill:LT:L3>T7:sideB:sparse` → **DERIVED** bitmap `d1300c03000000000000000000000000`
+- `straight-fill:LT:L4>T0:sideA:sparse` → **DERIVED** bitmap `11014501110044001000440010004400`
+- `straight-fill:LT:L4>T0:sideB:sparse` → **EXACT** `U+00E15A` / glyph 346 / bitmap `01010101010000000000000000000000`
+- `straight-fill:LT:L4>T1:sideA:sparse` → **DERIVED** bitmap `12024601110044001100440011004400`
+- `straight-fill:LT:L4>T1:sideB:sparse` → **DERIVED** bitmap `03020201010000000000000000000000`
+- `straight-fill:LT:L4>T2:sideA:sparse` → **DERIVED** bitmap `14044602110044001100440011004400`
+- `straight-fill:LT:L4>T2:sideB:sparse` → **DERIVED** bitmap `05040202010000000000000000000000`
+- `straight-fill:LT:L4>T3:sideA:sparse` → **DERIVED** bitmap `18044402110044001100440011004400`
+- `straight-fill:LT:L4>T3:sideB:sparse` → **DERIVED** bitmap `09040402010000000000000000000000`
+- `straight-fill:LT:L4>T4:sideA:sparse` → **DERIVED** bitmap `10084402110044001100440011004400`
+- `straight-fill:LT:L4>T4:sideB:sparse` → **DERIVED** bitmap `11080402010000000000000000000000`
+- `straight-fill:LT:L4>T5:sideA:sparse` → **DERIVED** bitmap `20104c02110044001100440011004400`
+- `straight-fill:LT:L4>T5:sideB:sparse` → **DERIVED** bitmap `31100c02010000000000000000000000`
+- `straight-fill:LT:L4>T6:sideA:sparse` → **DERIVED** bitmap `40304806110044001100440011004400`
+- `straight-fill:LT:L4>T6:sideB:sparse` → **DERIVED** bitmap `51300c06010000000000000000000000`
+- `straight-fill:LT:L4>T7:sideA:sparse` → **DERIVED** bitmap `80605806110044001100440011004400`
+- `straight-fill:LT:L4>T7:sideB:sparse` → **DERIVED** bitmap `91601c06010000000000000000000000`
+- `straight-fill:LT:L5>T0:sideA:sparse` → **DERIVED** bitmap `11014501110144001000440010004400`
+- `straight-fill:LT:L5>T0:sideB:sparse` → **EXACT** `U+00E161` / glyph 353 / bitmap `01010101010100000000000000000000`
+- `straight-fill:LT:L5>T1:sideA:sparse` → **DERIVED** bitmap `12024601110144001100440011004400`
+- `straight-fill:LT:L5>T1:sideB:sparse` → **DERIVED** bitmap `03020201010100000000000000000000`
+- `straight-fill:LT:L5>T2:sideA:sparse` → **DERIVED** bitmap `14044602110144001100440011004400`
+- `straight-fill:LT:L5>T2:sideB:sparse` → **DERIVED** bitmap `05040202010100000000000000000000`
+- `straight-fill:LT:L5>T3:sideA:sparse` → **DERIVED** bitmap `18044402120144001100440011004400`
+- `straight-fill:LT:L5>T3:sideB:sparse` → **DERIVED** bitmap `09040402030100000000000000000000`
+- `straight-fill:LT:L5>T4:sideA:sparse` → **DERIVED** bitmap `10084404120144001100440011004400`
+- `straight-fill:LT:L5>T4:sideB:sparse` → **DERIVED** bitmap `11080404030100000000000000000000`
+- `straight-fill:LT:L5>T5:sideA:sparse` → **DERIVED** bitmap `20104804120144001100440011004400`
+- `straight-fill:LT:L5>T5:sideB:sparse` → **DERIVED** bitmap `31100c04030100000000000000000000`
+- `straight-fill:LT:L5>T6:sideA:sparse` → **DERIVED** bitmap `40205804120144001100440011004400`
+- `straight-fill:LT:L5>T6:sideB:sparse` → **DERIVED** bitmap `51201c04030100000000000000000000`
+- `straight-fill:LT:L5>T7:sideA:sparse` → **DERIVED** bitmap `80605008160144001100440011004400`
+- `straight-fill:LT:L5>T7:sideB:sparse` → **DERIVED** bitmap `91601408070100000000000000000000`
+- `straight-fill:LT:L6>T0:sideA:sparse` → **DERIVED** bitmap `11014501110145001000440010004400`
+- `straight-fill:LT:L6>T0:sideB:sparse` → **EXACT** `U+00E168` / glyph 360 / bitmap `01010101010101000000000000000000`
+- `straight-fill:LT:L6>T1:sideA:sparse` → **DERIVED** bitmap `12024602110145001100440011004400`
+- `straight-fill:LT:L6>T1:sideB:sparse` → **DERIVED** bitmap `03020202010101000000000000000000`
+- `straight-fill:LT:L6>T2:sideA:sparse` → **DERIVED** bitmap `14044602120145001100440011004400`
+- `straight-fill:LT:L6>T2:sideB:sparse` → **DERIVED** bitmap `05040202030101000000000000000000`
+- `straight-fill:LT:L6>T3:sideA:sparse` → **DERIVED** bitmap `18084404120245001100440011004400`
+- `straight-fill:LT:L6>T3:sideB:sparse` → **DERIVED** bitmap `09080404030201000000000000000000`
+- `straight-fill:LT:L6>T4:sideA:sparse` → **DERIVED** bitmap `10084804120245001100440011004400`
+- `straight-fill:LT:L6>T4:sideB:sparse` → **DERIVED** bitmap `11080c04030201000000000000000000`
+- `straight-fill:LT:L6>T5:sideA:sparse` → **DERIVED** bitmap `20104808140245001100440011004400`
+- `straight-fill:LT:L6>T5:sideB:sparse` → **DERIVED** bitmap `31100c08050201000000000000000000`
+- `straight-fill:LT:L6>T6:sideA:sparse` → **DERIVED** bitmap `40205008140245001100440011004400`
+- `straight-fill:LT:L6>T6:sideB:sparse` → **DERIVED** bitmap `51201408050201000000000000000000`
+- `straight-fill:LT:L6>T7:sideA:sparse` → **DERIVED** bitmap `80406018140245001100440011004400`
+- `straight-fill:LT:L6>T7:sideB:sparse` → **DERIVED** bitmap `91402418050201000000000000000000`
+- `straight-fill:LT:L7>T0:sideA:sparse` → **DERIVED** bitmap `11014501110145011000440010004400`
+- `straight-fill:LT:L7>T0:sideB:sparse` → **EXACT** `U+00E16F` / glyph 367 / bitmap `01010101010101010000000000000000`
+- `straight-fill:LT:L7>T1:sideA:sparse` → **DERIVED** bitmap `12024602110145011100440011004400`
+- `straight-fill:LT:L7>T1:sideB:sparse` → **DERIVED** bitmap `03020202010101010000000000000000`
+- `straight-fill:LT:L7>T2:sideA:sparse` → **DERIVED** bitmap `14044602120245011100440011004400`
+- `straight-fill:LT:L7>T2:sideB:sparse` → **DERIVED** bitmap `05040202030201010000000000000000`
+- `straight-fill:LT:L7>T3:sideA:sparse` → **DERIVED** bitmap `18084404120245011100440011004400`
+- `straight-fill:LT:L7>T3:sideB:sparse` → **DERIVED** bitmap `09080404030201010000000000000000`
+- `straight-fill:LT:L7>T4:sideA:sparse` → **DERIVED** bitmap `10084804140246011100440011004400`
+- `straight-fill:LT:L7>T4:sideB:sparse` → **DERIVED** bitmap `11080c04050202010000000000000000`
+- `straight-fill:LT:L7>T5:sideA:sparse` → **DERIVED** bitmap `20105008140246011100440011004400`
+- `straight-fill:LT:L7>T5:sideB:sparse` → **DERIVED** bitmap `31101408050202010000000000000000`
+- `straight-fill:LT:L7>T6:sideA:sparse` → **DERIVED** bitmap `40205008180446011100440011004400`
+- `straight-fill:LT:L7>T6:sideB:sparse` → **DERIVED** bitmap `51201408090402010000000000000000`
+- `straight-fill:LT:L7>T7:sideA:sparse` → **DERIVED** bitmap `80406010180446011100440011004400`
+- `straight-fill:LT:L7>T7:sideB:sparse` → **DERIVED** bitmap `91402410090402010000000000000000`
+- `straight-fill:LT:L8>T0:sideA:sparse` → **DERIVED** bitmap `11014501110145011100440010004400`
+- `straight-fill:LT:L8>T0:sideB:sparse` → **EXACT** `U+00E176` / glyph 374 / bitmap `01010101010101010100000000000000`
+- `straight-fill:LT:L8>T1:sideA:sparse` → **DERIVED** bitmap `12024602120145011100440011004400`
+- `straight-fill:LT:L8>T1:sideB:sparse` → **DERIVED** bitmap `03020202030101010100000000000000`
+- `straight-fill:LT:L8>T2:sideA:sparse` → **DERIVED** bitmap `14044402120246011100440011004400`
+- `straight-fill:LT:L8>T2:sideB:sparse` → **DERIVED** bitmap `05040402030202010100000000000000`
+- `straight-fill:LT:L8>T3:sideA:sparse` → **DERIVED** bitmap `18084404140246011100440011004400`
+- `straight-fill:LT:L8>T3:sideB:sparse` → **DERIVED** bitmap `09080404050202010100000000000000`
+- `straight-fill:LT:L8>T4:sideA:sparse` → **DERIVED** bitmap `10104808140446021100440011004400`
+- `straight-fill:LT:L8>T4:sideB:sparse` → **DERIVED** bitmap `11100c08050402020100000000000000`
+- `straight-fill:LT:L8>T5:sideA:sparse` → **DERIVED** bitmap `20105008180446021100440011004400`
+- `straight-fill:LT:L8>T5:sideB:sparse` → **DERIVED** bitmap `31101408090402020100000000000000`
+- `straight-fill:LT:L8>T6:sideA:sparse` → **DERIVED** bitmap `40206010180444021100440011004400`
+- `straight-fill:LT:L8>T6:sideB:sparse` → **DERIVED** bitmap `51202410090404020100000000000000`
+- `straight-fill:LT:L8>T7:sideA:sparse` → **DERIVED** bitmap `80406010100844021100440011004400`
+- `straight-fill:LT:L8>T7:sideB:sparse` → **DERIVED** bitmap `91402410110804020100000000000000`
+- `straight-fill:LT:L9>T0:sideA:sparse` → **DERIVED** bitmap `11014501110145011101440010004400`
+- `straight-fill:LT:L9>T0:sideB:sparse` → **EXACT** `U+00E17D` / glyph 381 / bitmap `01010101010101010101000000000000`
+- `straight-fill:LT:L9>T1:sideA:sparse` → **DERIVED** bitmap `12024602120145011101440011004400`
+- `straight-fill:LT:L9>T1:sideB:sparse` → **DERIVED** bitmap `03020202030101010101000000000000`
+- `straight-fill:LT:L9>T2:sideA:sparse` → **DERIVED** bitmap `14044402120246011101440011004400`
+- `straight-fill:LT:L9>T2:sideB:sparse` → **DERIVED** bitmap `05040402030202010101000000000000`
+- `straight-fill:LT:L9>T3:sideA:sparse` → **DERIVED** bitmap `18084404140246021101440011004400`
+- `straight-fill:LT:L9>T3:sideB:sparse` → **DERIVED** bitmap `09080404050202020101000000000000`
+- `straight-fill:LT:L9>T4:sideA:sparse` → **DERIVED** bitmap `10104808140446021101440011004400`
+- `straight-fill:LT:L9>T4:sideB:sparse` → **DERIVED** bitmap `11100c08050402020101000000000000`
+- `straight-fill:LT:L9>T5:sideA:sparse` → **DERIVED** bitmap `20105008180444021201440011004400`
+- `straight-fill:LT:L9>T5:sideB:sparse` → **DERIVED** bitmap `31101408090404020301000000000000`
+- `straight-fill:LT:L9>T6:sideA:sparse` → **DERIVED** bitmap `40206010180844021201440011004400`
+- `straight-fill:LT:L9>T6:sideB:sparse` → **DERIVED** bitmap `51202410090804020301000000000000`
+- `straight-fill:LT:L9>T7:sideA:sparse` → **DERIVED** bitmap `80406020100844041201440011004400`
+- `straight-fill:LT:L9>T7:sideB:sparse` → **DERIVED** bitmap `91402420110804040301000000000000`
+- `straight-fill:RB:R0>B0:sideA:sparse` → **DERIVED** bitmap `91804440312014100908040403020101`
+- `straight-fill:RB:R0>B0:sideB:sparse` → **DERIVED** bitmap `80804040202050101808440412024501`
+- `straight-fill:RB:R0>B1:sideA:sparse` → **DERIVED** bitmap `918044403120241011080c0805040202`
+- `straight-fill:RB:R0>B1:sideB:sparse` → **DERIVED** bitmap `80804040202060101008480814044602`
+- `straight-fill:RB:R0>B2:sideA:sparse` → **DERIVED** bitmap `91804440512024201110140809080404`
+- `straight-fill:RB:R0>B2:sideB:sparse` → **DERIVED** bitmap `80804040402060201010500818084404`
+- `straight-fill:RB:R0>B3:sideA:sparse` → **DERIVED** bitmap `91804440514024203120141011100c08`
+- `straight-fill:RB:R0>B3:sideB:sparse` → **DERIVED** bitmap `80804040404060202020501010104808`
+- `straight-fill:RB:R0>B4:sideA:sparse` → **DERIVED** bitmap `9180c440514044403120242031101410`
+- `straight-fill:RB:R0>B4:sideB:sparse` → **DERIVED** bitmap `80808040404040402020602020105010`
+- `straight-fill:RB:R0>B5:sideA:sparse` → **DERIVED** bitmap `9180c480514044405140444031202420`
+- `straight-fill:RB:R0>B5:sideB:sparse` → **DERIVED** bitmap `80808080404040404040404020206020`
+- `straight-fill:RB:R0>B6:sideA:sparse` → **DERIVED** bitmap `9180c4809180c4805140444051404440`
+- `straight-fill:RB:R0>B6:sideB:sparse` → **EXACT** `U+00E13C` / glyph 316 / bitmap `80808080808080804040404040404040`
+- `straight-fill:RB:R0>B7:sideA:sparse` → **DERIVED** bitmap `9180c4809180c4809180c4809180c480`
+- `straight-fill:RB:R0>B7:sideB:sparse` → **EXACT** `U+00E13D` / glyph 317 / bitmap `80808080808080808080808080808080`
+- `straight-fill:RB:R1>B0:sideA:sparse` → **DERIVED** bitmap `11804440312014100908040403020101`
+- `straight-fill:RB:R1>B0:sideB:sparse` → **DERIVED** bitmap `00804040202050101808440412024501`
+- `straight-fill:RB:R1>B1:sideA:sparse` → **DERIVED** bitmap `1180c4405120241011100c0805040202`
+- `straight-fill:RB:R1>B1:sideB:sparse` → **DERIVED** bitmap `00808040402060101010480814044602`
+- `straight-fill:RB:R1>B2:sideA:sparse` → **DERIVED** bitmap `1180c440514024201110140809080404`
+- `straight-fill:RB:R1>B2:sideB:sparse` → **DERIVED** bitmap `00808040404060201010500818084404`
+- `straight-fill:RB:R1>B3:sideA:sparse` → **DERIVED** bitmap `1180c440514044203120141011100c08`
+- `straight-fill:RB:R1>B3:sideB:sparse` → **DERIVED** bitmap `00808040404040202020501010104808`
+- `straight-fill:RB:R1>B4:sideA:sparse` → **DERIVED** bitmap `1180c480514044403120242031101410`
+- `straight-fill:RB:R1>B4:sideB:sparse` → **DERIVED** bitmap `00808080404040402020602020105010`
+- `straight-fill:RB:R1>B5:sideA:sparse` → **DERIVED** bitmap `1180c480914044405140444031202420`
+- `straight-fill:RB:R1>B5:sideB:sparse` → **DERIVED** bitmap `00808080804040404040404020206020`
+- `straight-fill:RB:R1>B6:sideA:sparse` → **DERIVED** bitmap `1180c4809180c4805140444051404440`
+- `straight-fill:RB:R1>B6:sideB:sparse` → **EXACT** `U+00E283` / glyph 643 / bitmap `00808080808080804040404040404040`
+- `straight-fill:RB:R1>B7:sideA:sparse` → **DERIVED** bitmap `1180c4809180c4809180c4809180c480`
+- `straight-fill:RB:R1>B7:sideB:sparse` → **EXACT** `U+00E284` / glyph 644 / bitmap `00808080808080808080808080808080`
+- `straight-fill:RB:R10>B0:sideA:sparse` → **DERIVED** bitmap `11004400110044001100c46011080601`
+- `straight-fill:RB:R10>B0:sideB:sparse` → **DERIVED** bitmap `00000000000000000000806010084601`
+- `straight-fill:RB:R10>B1:sideA:sparse` → **DERIVED** bitmap `11004400110044001100c44031180402`
+- `straight-fill:RB:R10>B1:sideB:sparse` → **DERIVED** bitmap `00000000000000000000804020184402`
+- `straight-fill:RB:R10>B2:sideA:sparse` → **DERIVED** bitmap `11004400110044001100c44031100c04`
+- `straight-fill:RB:R10>B2:sideB:sparse` → **DERIVED** bitmap `00000000000000000000804020104804`
+- `straight-fill:RB:R10>B3:sideA:sparse` → **DERIVED** bitmap `11004400110044001100c44031201408`
+- `straight-fill:RB:R10>B3:sideB:sparse` → **DERIVED** bitmap `00000000000000000000804020205008`
+- `straight-fill:RB:R10>B4:sideA:sparse` → **DERIVED** bitmap `11004400110044001100c44051202410`
+- `straight-fill:RB:R10>B4:sideB:sparse` → **EXACT** `U+00F1BB` / glyph 4539 / bitmap `00000000000000000000804040206010`
+- `straight-fill:RB:R10>B5:sideA:sparse` → **DERIVED** bitmap `11004400110044001100c48051402420`
+- `straight-fill:RB:R10>B5:sideB:sparse` → **EXACT** `U+00F1BD` / glyph 4541 / bitmap `00000000000000000000808040406020`
+- `straight-fill:RB:R10>B6:sideA:sparse` → **DERIVED** bitmap `11004400110044001100c48091404440`
+- `straight-fill:RB:R10>B6:sideB:sparse` → **EXACT** `U+00E2C5` / glyph 709 / bitmap `00000000000000000000808080404040`
+- `straight-fill:RB:R10>B7:sideA:sparse` → **DERIVED** bitmap `11004400110044001100c4809180c480`
+- `straight-fill:RB:R10>B7:sideB:sparse` → **EXACT** `U+00E2C6` / glyph 710 / bitmap `00000000000000000000808080808080`
+- `straight-fill:RB:R11>B0:sideA:sparse` → **DERIVED** bitmap `11004400110044001100448071180601`
+- `straight-fill:RB:R11>B0:sideB:sparse` → **DERIVED** bitmap `00000000000000000000008060184601`
+- `straight-fill:RB:R11>B1:sideA:sparse` → **DERIVED** bitmap `11004400110044001100448071100c02`
+- `straight-fill:RB:R11>B1:sideB:sparse` → **DERIVED** bitmap `00000000000000000000008060104c02`
+- `straight-fill:RB:R11>B2:sideA:sparse` → **DERIVED** bitmap `11004400110044001100448051300c04`
+- `straight-fill:RB:R11>B2:sideB:sparse` → **DERIVED** bitmap `00000000000000000000008040304804`
+- `straight-fill:RB:R11>B3:sideA:sparse` → **DERIVED** bitmap `11004400110044001100448051201408`
+- `straight-fill:RB:R11>B3:sideB:sparse` → **EXACT** `U+00F1C5` / glyph 4549 / bitmap `00000000000000000000008040205008`
+- `straight-fill:RB:R11>B4:sideA:sparse` → **DERIVED** bitmap `11004400110044001100448051202410`
+- `straight-fill:RB:R11>B4:sideB:sparse` → **EXACT** `U+00F1C7` / glyph 4551 / bitmap `00000000000000000000008040206010`
+- `straight-fill:RB:R11>B5:sideA:sparse` → **DERIVED** bitmap `11004400110044001100448051402420`
+- `straight-fill:RB:R11>B5:sideB:sparse` → **EXACT** `U+00F1C9` / glyph 4553 / bitmap `00000000000000000000008040406020`
+- `straight-fill:RB:R11>B6:sideA:sparse` → **DERIVED** bitmap `11004400110044001100448091404440`
+- `straight-fill:RB:R11>B6:sideB:sparse` → **EXACT** `U+00E2CC` / glyph 716 / bitmap `00000000000000000000008080404040`
+- `straight-fill:RB:R11>B7:sideA:sparse` → **DERIVED** bitmap `1100440011004400110044809180c480`
+- `straight-fill:RB:R11>B7:sideB:sparse` → **EXACT** `U+00E2CD` / glyph 717 / bitmap `00000000000000000000008080808080`
+- `straight-fill:RB:R12>B0:sideA:sparse` → **DERIVED** bitmap `110044001100440011004400d1300c03`
+- `straight-fill:RB:R12>B0:sideB:sparse` → **DERIVED** bitmap `000000000000000000000000c0304c03`
+- `straight-fill:RB:R12>B1:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440091601c06`
+- `straight-fill:RB:R12>B1:sideB:sparse` → **EXACT** `U+00F1CD` / glyph 4557 / bitmap `00000000000000000000000080605806`
+- `straight-fill:RB:R12>B2:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440091601c04`
+- `straight-fill:RB:R12>B2:sideB:sparse` → **EXACT** `U+00F1CF` / glyph 4559 / bitmap `00000000000000000000000080605804`
+- `straight-fill:RB:R12>B3:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440091403408`
+- `straight-fill:RB:R12>B3:sideB:sparse` → **EXACT** `U+00F1D1` / glyph 4561 / bitmap `00000000000000000000000080407008`
+- `straight-fill:RB:R12>B4:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440091402410`
+- `straight-fill:RB:R12>B4:sideB:sparse` → **EXACT** `U+00F1D3` / glyph 4563 / bitmap `00000000000000000000000080406010`
+- `straight-fill:RB:R12>B5:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440091404420`
+- `straight-fill:RB:R12>B5:sideB:sparse` → **EXACT** `U+00E2D2` / glyph 722 / bitmap `00000000000000000000000080404020`
+- `straight-fill:RB:R12>B6:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440091804440`
+- `straight-fill:RB:R12>B6:sideB:sparse` → **EXACT** `U+00E2D3` / glyph 723 / bitmap `00000000000000000000000080804040`
+- `straight-fill:RB:R12>B7:sideA:sparse` → **DERIVED** bitmap `1100440011004400110044009180c480`
+- `straight-fill:RB:R12>B7:sideB:sparse` → **EXACT** `U+00E2D4` / glyph 724 / bitmap `00000000000000000000000080808080`
+- `straight-fill:RB:R13>B0:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440011c03c03`
+- `straight-fill:RB:R13>B0:sideB:sparse` → **EXACT** `U+00EEBD` / glyph 3773 / bitmap `00000000000000000000000000c07c03`
+- `straight-fill:RB:R13>B1:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440011c03c06`
+- `straight-fill:RB:R13>B1:sideB:sparse` → **EXACT** `U+00F1D8` / glyph 4568 / bitmap `00000000000000000000000000c07806`
+- `straight-fill:RB:R13>B2:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440011c0340c`
+- `straight-fill:RB:R13>B2:sideB:sparse` → **EXACT** `U+00F1DA` / glyph 4570 / bitmap `00000000000000000000000000c0700c`
+- `straight-fill:RB:R13>B3:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440011806418`
+- `straight-fill:RB:R13>B3:sideB:sparse` → **EXACT** `U+00E2D7` / glyph 727 / bitmap `00000000000000000000000000806018`
+- `straight-fill:RB:R13>B4:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440011806410`
+- `straight-fill:RB:R13>B4:sideB:sparse` → **EXACT** `U+00E2D8` / glyph 728 / bitmap `00000000000000000000000000806010`
+- `straight-fill:RB:R13>B5:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440011804420`
+- `straight-fill:RB:R13>B5:sideB:sparse` → **EXACT** `U+00E2D9` / glyph 729 / bitmap `00000000000000000000000000804020`
+- `straight-fill:RB:R13>B6:sideA:sparse` → **DERIVED** bitmap `11004400110044001100440011804440`
+- `straight-fill:RB:R13>B6:sideB:sparse` → **EXACT** `U+00E2DA` / glyph 730 / bitmap `00000000000000000000000000804040`
+- `straight-fill:RB:R13>B7:sideA:sparse` → **DERIVED** bitmap `1100440011004400110044001180c480`
+- `straight-fill:RB:R13>B7:sideB:sparse` → **EXACT** `U+00E2DB` / glyph 731 / bitmap `00000000000000000000000000808080`
+- `straight-fill:RB:R14>B0:sideA:sparse` → **DERIVED** bitmap `1100440011004400110044001100f40f`
+- `straight-fill:RB:R14>B0:sideB:sparse` → **EXACT** `U+00E0FE` / glyph 254 / bitmap `0000000000000000000000000000f00f`
+- `straight-fill:RB:R14>B1:sideA:sparse` → **DERIVED** bitmap `1100440011004400110044001100e41e`
+- `straight-fill:RB:R14>B1:sideB:sparse` → **EXACT** `U+00E2DC` / glyph 732 / bitmap `0000000000000000000000000000e01e`
+- `straight-fill:RB:R14>B2:sideA:sparse` → **DERIVED** bitmap `1100440011004400110044001100e41c`
+- `straight-fill:RB:R14>B2:sideB:sparse` → **EXACT** `U+00E2DD` / glyph 733 / bitmap `0000000000000000000000000000e01c`
+- `straight-fill:RB:R14>B3:sideA:sparse` → **DERIVED** bitmap `1100440011004400110044001100c438`
+- `straight-fill:RB:R14>B3:sideB:sparse` → **EXACT** `U+00E2DE` / glyph 734 / bitmap `0000000000000000000000000000c038`
+- `straight-fill:RB:R14>B4:sideA:sparse` → **DERIVED** bitmap `1100440011004400110044001100c430`
+- `straight-fill:RB:R14>B4:sideB:sparse` → **EXACT** `U+00E2DF` / glyph 735 / bitmap `0000000000000000000000000000c030`
+- `straight-fill:RB:R14>B5:sideA:sparse` → **DERIVED** bitmap `1100440011004400110044001100c460`
+- `straight-fill:RB:R14>B5:sideB:sparse` → **EXACT** `U+00E2E0` / glyph 736 / bitmap `00000000000000000000000000008060`
+- `straight-fill:RB:R14>B6:sideA:sparse` → **DERIVED** bitmap `1100440011004400110044001100c440`
+- `straight-fill:RB:R14>B6:sideB:sparse` → **EXACT** `U+00E2E1` / glyph 737 / bitmap `00000000000000000000000000008040`
+- `straight-fill:RB:R14>B7:sideA:sparse` → **DERIVED** bitmap `1100440011004400110044001100c480`
+- `straight-fill:RB:R14>B7:sideB:sparse` → **EXACT** `U+00E2E2` / glyph 738 / bitmap `00000000000000000000000000008080`
+- `straight-fill:RB:R15>B0:sideA:sparse` → **DERIVED** bitmap `110044001100440011004400110044ff`
+- `straight-fill:RB:R15>B0:sideB:sparse` → **EXACT** `U+00E0FF` / glyph 255 / bitmap `000000000000000000000000000000ff`
+- `straight-fill:RB:R15>B1:sideA:sparse` → **DERIVED** bitmap `110044001100440011004400110044fe`
+- `straight-fill:RB:R15>B1:sideB:sparse` → **EXACT** `U+00E2E3` / glyph 739 / bitmap `000000000000000000000000000000fe`
+- `straight-fill:RB:R15>B2:sideA:sparse` → **DERIVED** bitmap `110044001100440011004400110044fc`
+- `straight-fill:RB:R15>B2:sideB:sparse` → **EXACT** `U+00E2E4` / glyph 740 / bitmap `000000000000000000000000000000fc`
+- `straight-fill:RB:R15>B3:sideA:sparse` → **DERIVED** bitmap `110044001100440011004400110044f8`
+- `straight-fill:RB:R15>B3:sideB:sparse` → **EXACT** `U+00E2E5` / glyph 741 / bitmap `000000000000000000000000000000f8`
+- `straight-fill:RB:R15>B4:sideA:sparse` → **DERIVED** bitmap `110044001100440011004400110044f0`
+- `straight-fill:RB:R15>B4:sideB:sparse` → **EXACT** `U+00E2E6` / glyph 742 / bitmap `000000000000000000000000000000f0`
+- `straight-fill:RB:R15>B5:sideA:sparse` → **DERIVED** bitmap `110044001100440011004400110044e0`
+- `straight-fill:RB:R15>B5:sideB:sparse` → **EXACT** `U+00E2E7` / glyph 743 / bitmap `000000000000000000000000000000e0`
+- `straight-fill:RB:R15>B6:sideA:sparse` → **DERIVED** bitmap `110044001100440011004400110044c0`
+- `straight-fill:RB:R15>B6:sideB:sparse` → **EXACT** `U+00E2E8` / glyph 744 / bitmap `000000000000000000000000000000c0`
+- `straight-fill:RB:R15>B7:sideA:sparse` → **EXACT** `U+00E2E9` / glyph 745 / bitmap `00000000000000000000000000000080`
+- `straight-fill:RB:R15>B7:sideB:sparse` → **EXACT** `U+00E2E9` / glyph 745 / bitmap `00000000000000000000000000000080`
+- `straight-fill:RB:R2>B0:sideA:sparse` → **DERIVED** bitmap `1100c4405120241011080c0405020201`
+- `straight-fill:RB:R2>B0:sideB:sparse` → **DERIVED** bitmap `00008040402060101008480414024601`
+- `straight-fill:RB:R2>B1:sideA:sparse` → **DERIVED** bitmap `1100c4805140242011100c0805040202`
+- `straight-fill:RB:R2>B1:sideB:sparse` → **DERIVED** bitmap `00008080404060201010480814044602`
+- `straight-fill:RB:R2>B2:sideA:sparse` → **DERIVED** bitmap `1100c480514024203110141009080404`
+- `straight-fill:RB:R2>B2:sideB:sparse` → **DERIVED** bitmap `00008080404060202010501018084404`
+- `straight-fill:RB:R2>B3:sideA:sparse` → **DERIVED** bitmap `1100c480514044203120241011100c08`
+- `straight-fill:RB:R2>B3:sideB:sparse` → **DERIVED** bitmap `00008080404040202020601010104808`
+- `straight-fill:RB:R2>B4:sideA:sparse` → **DERIVED** bitmap `1100c480914044405120242031101410`
+- `straight-fill:RB:R2>B4:sideB:sparse` → **DERIVED** bitmap `00008080804040404020602020105010`
+- `straight-fill:RB:R2>B5:sideA:sparse` → **DERIVED** bitmap `1100c480918044405140444031202420`
+- `straight-fill:RB:R2>B5:sideB:sparse` → **DERIVED** bitmap `00008080808040404040404020206020`
+- `straight-fill:RB:R2>B6:sideA:sparse` → **DERIVED** bitmap `1100c4809180c4809140444051404440`
+- `straight-fill:RB:R2>B6:sideB:sparse` → **EXACT** `U+00E28A` / glyph 650 / bitmap `00008080808080808040404040404040`
+- `straight-fill:RB:R2>B7:sideA:sparse` → **DERIVED** bitmap `1100c4809180c4809180c4809180c480`
+- `straight-fill:RB:R2>B7:sideB:sparse` → **EXACT** `U+00E28B` / glyph 651 / bitmap `00008080808080808080808080808080`
+- `straight-fill:RB:R3>B0:sideA:sparse` → **DERIVED** bitmap `110044805140242011080c0405020201`
+- `straight-fill:RB:R3>B0:sideB:sparse` → **DERIVED** bitmap `00000080404060201008480414024601`
+- `straight-fill:RB:R3>B1:sideA:sparse` → **DERIVED** bitmap `110044805140242011100c0805040202`
+- `straight-fill:RB:R3>B1:sideB:sparse` → **DERIVED** bitmap `00000080404060201010480814044602`
+- `straight-fill:RB:R3>B2:sideA:sparse` → **DERIVED** bitmap `11004480914044203110141009080404`
+- `straight-fill:RB:R3>B2:sideB:sparse` → **DERIVED** bitmap `00000080804040202010501018084404`
+- `straight-fill:RB:R3>B3:sideA:sparse` → **DERIVED** bitmap `11004480914044403120241011100c08`
+- `straight-fill:RB:R3>B3:sideB:sparse` → **DERIVED** bitmap `00000080804040402020601010104808`
+- `straight-fill:RB:R3>B4:sideA:sparse` → **DERIVED** bitmap `11004480914044405120242031101410`
+- `straight-fill:RB:R3>B4:sideB:sparse` → **DERIVED** bitmap `00000080804040404020602020105010`
+- `straight-fill:RB:R3>B5:sideA:sparse` → **DERIVED** bitmap `11004480918044405140444031202420`
+- `straight-fill:RB:R3>B5:sideB:sparse` → **DERIVED** bitmap `00000080808040404040404020206020`
+- `straight-fill:RB:R3>B6:sideA:sparse` → **DERIVED** bitmap `110044809180c4809140444051404440`
+- `straight-fill:RB:R3>B6:sideB:sparse` → **EXACT** `U+00E292` / glyph 658 / bitmap `00000080808080808040404040404040`
+- `straight-fill:RB:R3>B7:sideA:sparse` → **DERIVED** bitmap `110044809180c4809180c4809180c480`
+- `straight-fill:RB:R3>B7:sideB:sparse` → **EXACT** `U+00E293` / glyph 659 / bitmap `00000080808080808080808080808080`
+- `straight-fill:RB:R4>B0:sideA:sparse` → **DERIVED** bitmap `110044009140442011100c0805020201`
+- `straight-fill:RB:R4>B0:sideB:sparse` → **DERIVED** bitmap `00000000804040201010480814024601`
+- `straight-fill:RB:R4>B1:sideA:sparse` → **DERIVED** bitmap `11004400914044203110140809040402`
+- `straight-fill:RB:R4>B1:sideB:sparse` → **DERIVED** bitmap `00000000804040202010500818044402`
+- `straight-fill:RB:R4>B2:sideA:sparse` → **DERIVED** bitmap `11004400918044403120141009080404`
+- `straight-fill:RB:R4>B2:sideB:sparse` → **DERIVED** bitmap `00000000808040402020501018084404`
+- `straight-fill:RB:R4>B3:sideA:sparse` → **DERIVED** bitmap `11004400918044405120241011100c08`
+- `straight-fill:RB:R4>B3:sideB:sparse` → **DERIVED** bitmap `00000000808040404020601010104808`
+- `straight-fill:RB:R4>B4:sideA:sparse` → **DERIVED** bitmap `11004400918044405140242031201410`
+- `straight-fill:RB:R4>B4:sideB:sparse` → **DERIVED** bitmap `00000000808040404040602020205010`
+- `straight-fill:RB:R4>B5:sideA:sparse` → **DERIVED** bitmap `110044009180c4405140444051202420`
+- `straight-fill:RB:R4>B5:sideB:sparse` → **EXACT** `U+00F171` / glyph 4465 / bitmap `00000000808080404040404040206020`
+- `straight-fill:RB:R4>B6:sideA:sparse` → **DERIVED** bitmap `110044009180c4809180444051404440`
+- `straight-fill:RB:R4>B6:sideB:sparse` → **EXACT** `U+00E299` / glyph 665 / bitmap `00000000808080808080404040404040`
+- `straight-fill:RB:R4>B7:sideA:sparse` → **DERIVED** bitmap `110044009180c4809180c4809180c480`
+- `straight-fill:RB:R4>B7:sideB:sparse` → **EXACT** `U+00E29A` / glyph 666 / bitmap `00000000808080808080808080808080`
+- `straight-fill:RB:R5>B0:sideA:sparse` → **DERIVED** bitmap `110044001180444031100c0805020201`
+- `straight-fill:RB:R5>B0:sideB:sparse` → **DERIVED** bitmap `00000000008040402010480814024601`
+- `straight-fill:RB:R5>B1:sideA:sparse` → **DERIVED** bitmap `11004400118044403120140809040402`
+- `straight-fill:RB:R5>B1:sideB:sparse` → **DERIVED** bitmap `00000000008040402020500818044402`
+- `straight-fill:RB:R5>B2:sideA:sparse` → **DERIVED** bitmap `11004400118044403120141009080404`
+- `straight-fill:RB:R5>B2:sideB:sparse` → **DERIVED** bitmap `00000000008040402020501018084404`
+- `straight-fill:RB:R5>B3:sideA:sparse` → **DERIVED** bitmap `110044001180c4405120242011100c08`
+- `straight-fill:RB:R5>B3:sideB:sparse` → **DERIVED** bitmap `00000000008080404020602010104808`
+- `straight-fill:RB:R5>B4:sideA:sparse` → **DERIVED** bitmap `110044001180c4405140242031201410`
+- `straight-fill:RB:R5>B4:sideB:sparse` → **DERIVED** bitmap `00000000008080404040602020205010`
+- `straight-fill:RB:R5>B5:sideA:sparse` → **DERIVED** bitmap `110044001180c4805140444051202420`
+- `straight-fill:RB:R5>B5:sideB:sparse` → **EXACT** `U+00F17F` / glyph 4479 / bitmap `00000000008080804040404040206020`
+- `straight-fill:RB:R5>B6:sideA:sparse` → **DERIVED** bitmap `110044001180c4809180444051404440`
+- `straight-fill:RB:R5>B6:sideB:sparse` → **EXACT** `U+00E2A1` / glyph 673 / bitmap `00000000008080808080404040404040`
+- `straight-fill:RB:R5>B7:sideA:sparse` → **DERIVED** bitmap `110044001180c4809180c4809180c480`
+- `straight-fill:RB:R5>B7:sideB:sparse` → **EXACT** `U+00E2A2` / glyph 674 / bitmap `00000000008080808080808080808080`
+- `straight-fill:RB:R6>B0:sideA:sparse` → **DERIVED** bitmap `110044001100c4403120140805040201`
+- `straight-fill:RB:R6>B0:sideB:sparse` → **DERIVED** bitmap `00000000000080402020500814044601`
+- `straight-fill:RB:R6>B1:sideA:sparse` → **DERIVED** bitmap `110044001100c4405120141009040402`
+- `straight-fill:RB:R6>B1:sideB:sparse` → **DERIVED** bitmap `00000000000080404020501018044402`
+- `straight-fill:RB:R6>B2:sideA:sparse` → **DERIVED** bitmap `110044001100c4405120241011080c04`
+- `straight-fill:RB:R6>B2:sideB:sparse` → **DERIVED** bitmap `00000000000080404020601010084804`
+- `straight-fill:RB:R6>B3:sideA:sparse` → **DERIVED** bitmap `110044001100c4805140242011100c08`
+- `straight-fill:RB:R6>B3:sideB:sparse` → **DERIVED** bitmap `00000000000080804040602010104808`
+- `straight-fill:RB:R6>B4:sideA:sparse` → **DERIVED** bitmap `110044001100c4805140442031201410`
+- `straight-fill:RB:R6>B4:sideB:sparse` → **DERIVED** bitmap `00000000000080804040402020205010`
+- `straight-fill:RB:R6>B5:sideA:sparse` → **DERIVED** bitmap `110044001100c4809140444051202420`
+- `straight-fill:RB:R6>B5:sideB:sparse` → **EXACT** `U+00F18B` / glyph 4491 / bitmap `00000000000080808040404040206020`
+- `straight-fill:RB:R6>B6:sideA:sparse` → **DERIVED** bitmap `110044001100c4809180c44051404440`
+- `straight-fill:RB:R6>B6:sideB:sparse` → **EXACT** `U+00E2A8` / glyph 680 / bitmap `00000000000080808080804040404040`
+- `straight-fill:RB:R6>B7:sideA:sparse` → **DERIVED** bitmap `110044001100c4809180c4809180c480`
+- `straight-fill:RB:R6>B7:sideB:sparse` → **EXACT** `U+00E2A9` / glyph 681 / bitmap `00000000000080808080808080808080`
+- `straight-fill:RB:R7>B0:sideA:sparse` → **DERIVED** bitmap `11004400110044805120140809040201`
+- `straight-fill:RB:R7>B0:sideB:sparse` → **DERIVED** bitmap `00000000000000804020500818044601`
+- `straight-fill:RB:R7>B1:sideA:sparse` → **DERIVED** bitmap `11004400110044805120241009040402`
+- `straight-fill:RB:R7>B1:sideB:sparse` → **DERIVED** bitmap `00000000000000804020601018044402`
+- `straight-fill:RB:R7>B2:sideA:sparse` → **DERIVED** bitmap `11004400110044805140241011080c04`
+- `straight-fill:RB:R7>B2:sideB:sparse` → **DERIVED** bitmap `00000000000000804040601010084804`
+- `straight-fill:RB:R7>B3:sideA:sparse` → **DERIVED** bitmap `11004400110044805140242011100c08`
+- `straight-fill:RB:R7>B3:sideB:sparse` → **DERIVED** bitmap `00000000000000804040602010104808`
+- `straight-fill:RB:R7>B4:sideA:sparse` → **DERIVED** bitmap `11004400110044809140442031201410`
+- `straight-fill:RB:R7>B4:sideB:sparse` → **DERIVED** bitmap `00000000000000808040402020205010`
+- `straight-fill:RB:R7>B5:sideA:sparse` → **DERIVED** bitmap `11004400110044809140444051202420`
+- `straight-fill:RB:R7>B5:sideB:sparse` → **EXACT** `U+00F199` / glyph 4505 / bitmap `00000000000000808040404040206020`
+- `straight-fill:RB:R7>B6:sideA:sparse` → **DERIVED** bitmap `11004400110044809180c44051404440`
+- `straight-fill:RB:R7>B6:sideB:sparse` → **EXACT** `U+00E2B0` / glyph 688 / bitmap `00000000000000808080804040404040`
+- `straight-fill:RB:R7>B7:sideA:sparse` → **DERIVED** bitmap `11004400110044809180c4809180c480`
+- `straight-fill:RB:R7>B7:sideB:sparse` → **EXACT** `U+00E2B1` / glyph 689 / bitmap `00000000000000808080808080808080`
+- `straight-fill:RB:R8>B0:sideA:sparse` → **DERIVED** bitmap `11004400110044009140241009040201`
+- `straight-fill:RB:R8>B0:sideB:sparse` → **DERIVED** bitmap `00000000000000008040601018044601`
+- `straight-fill:RB:R8>B1:sideA:sparse` → **DERIVED** bitmap `11004400110044009140241011080402`
+- `straight-fill:RB:R8>B1:sideB:sparse` → **DERIVED** bitmap `00000000000000008040601010084402`
+- `straight-fill:RB:R8>B2:sideA:sparse` → **DERIVED** bitmap `11004400110044009140442011080c04`
+- `straight-fill:RB:R8>B2:sideB:sparse` → **DERIVED** bitmap `00000000000000008040402010084804`
+- `straight-fill:RB:R8>B3:sideA:sparse` → **DERIVED** bitmap `11004400110044009140442031101408`
+- `straight-fill:RB:R8>B3:sideB:sparse` → **DERIVED** bitmap `00000000000000008040402020105008`
+- `straight-fill:RB:R8>B4:sideA:sparse` → **DERIVED** bitmap `11004400110044009180444031201410`
+- `straight-fill:RB:R8>B4:sideB:sparse` → **DERIVED** bitmap `00000000000000008080404020205010`
+- `straight-fill:RB:R8>B5:sideA:sparse` → **DERIVED** bitmap `11004400110044009180444051402420`
+- `straight-fill:RB:R8>B5:sideB:sparse` → **EXACT** `U+00F1A5` / glyph 4517 / bitmap `00000000000000008080404040406020`
+- `straight-fill:RB:R8>B6:sideA:sparse` → **DERIVED** bitmap `11004400110044009180c48051404440`
+- `straight-fill:RB:R8>B6:sideB:sparse` → **EXACT** `U+00E2B7` / glyph 695 / bitmap `00000000000000008080808040404040`
+- `straight-fill:RB:R8>B7:sideA:sparse` → **DERIVED** bitmap `11004400110044009180c4809180c480`
+- `straight-fill:RB:R8>B7:sideB:sparse` → **EXACT** `U+00E2B8` / glyph 696 / bitmap `00000000000000008080808080808080`
+- `straight-fill:RB:R9>B0:sideA:sparse` → **DERIVED** bitmap `11004400110044001180442019040201`
+- `straight-fill:RB:R9>B0:sideB:sparse` → **DERIVED** bitmap `00000000000000000080402018044601`
+- `straight-fill:RB:R9>B1:sideA:sparse` → **DERIVED** bitmap `11004400110044001180442011080402`
+- `straight-fill:RB:R9>B1:sideB:sparse` → **DERIVED** bitmap `00000000000000000080402010084402`
+- `straight-fill:RB:R9>B2:sideA:sparse` → **DERIVED** bitmap `11004400110044001180442011100c04`
+- `straight-fill:RB:R9>B2:sideB:sparse` → **DERIVED** bitmap `00000000000000000080402010104804`
+- `straight-fill:RB:R9>B3:sideA:sparse` → **DERIVED** bitmap `11004400110044001180444031101408`
+- `straight-fill:RB:R9>B3:sideB:sparse` → **DERIVED** bitmap `00000000000000000080404020105008`
+- `straight-fill:RB:R9>B4:sideA:sparse` → **DERIVED** bitmap `11004400110044001180444031201410`
+- `straight-fill:RB:R9>B4:sideB:sparse` → **DERIVED** bitmap `00000000000000000080404020205010`
+- `straight-fill:RB:R9>B5:sideA:sparse` → **DERIVED** bitmap `11004400110044001180c44051402420`
+- `straight-fill:RB:R9>B5:sideB:sparse` → **EXACT** `U+00F1B1` / glyph 4529 / bitmap `00000000000000000080804040406020`
+- `straight-fill:RB:R9>B6:sideA:sparse` → **DERIVED** bitmap `11004400110044001180c48051404440`
+- `straight-fill:RB:R9>B6:sideB:sparse` → **EXACT** `U+00E2BE` / glyph 702 / bitmap `00000000000000000080808040404040`
+- `straight-fill:RB:R9>B7:sideA:sparse` → **DERIVED** bitmap `11004400110044001180c4809180c480`
+- `straight-fill:RB:R9>B7:sideB:sparse` → **EXACT** `U+00E2BF` / glyph 703 / bitmap `00000000000000000080808080808080`
+- `straight-fill:RT:R0>T0:sideA:sparse` → **EXACT** `U+00E000` / glyph 0 / bitmap `ff000000000000000000000000000000`
+- `straight-fill:RT:R0>T0:sideB:sparse` → **DERIVED** bitmap `ff004400110044001100440011004400`
+- `straight-fill:RT:R0>T1:sideA:sparse` → **EXACT** `U+00E210` / glyph 528 / bitmap `fe000000000000000000000000000000`
+- `straight-fill:RT:R0>T1:sideB:sparse` → **DERIVED** bitmap `fe004400110044001100440011004400`
+- `straight-fill:RT:R0>T2:sideA:sparse` → **EXACT** `U+00E211` / glyph 529 / bitmap `fc000000000000000000000000000000`
+- `straight-fill:RT:R0>T2:sideB:sparse` → **DERIVED** bitmap `fc004400110044001100440011004400`
+- `straight-fill:RT:R0>T3:sideA:sparse` → **EXACT** `U+00E212` / glyph 530 / bitmap `f8000000000000000000000000000000`
+- `straight-fill:RT:R0>T3:sideB:sparse` → **DERIVED** bitmap `f8004400110044001100440011004400`
+- `straight-fill:RT:R0>T4:sideA:sparse` → **EXACT** `U+00E213` / glyph 531 / bitmap `f0000000000000000000000000000000`
+- `straight-fill:RT:R0>T4:sideB:sparse` → **DERIVED** bitmap `f0004400110044001100440011004400`
+- `straight-fill:RT:R0>T5:sideA:sparse` → **EXACT** `U+00E214` / glyph 532 / bitmap `e0000000000000000000000000000000`
+- `straight-fill:RT:R0>T5:sideB:sparse` → **DERIVED** bitmap `e0004400110044001100440011004400`
+- `straight-fill:RT:R0>T6:sideA:sparse` → **EXACT** `U+00E215` / glyph 533 / bitmap `c0000000000000000000000000000000`
+- `straight-fill:RT:R0>T6:sideB:sparse` → **DERIVED** bitmap `c0004400110044001100440011004400`
+- `straight-fill:RT:R0>T7:sideA:sparse` → **EXACT** `U+00E216` / glyph 534 / bitmap `80000000000000000000000000000000`
+- `straight-fill:RT:R0>T7:sideB:sparse` → **EXACT** `U+00E216` / glyph 534 / bitmap `80000000000000000000000000000000`
+- `straight-fill:RT:R1>T0:sideA:sparse` → **DERIVED** bitmap `1ff00000000000000000000000000000`
+- `straight-fill:RT:R1>T0:sideB:sparse` → **DERIVED** bitmap `0ff04400110044001100440011004400`
+- `straight-fill:RT:R1>T1:sideA:sparse` → **EXACT** `U+00E217` / glyph 535 / bitmap `1ee00000000000000000000000000000`
+- `straight-fill:RT:R1>T1:sideB:sparse` → **DERIVED** bitmap `1fe04400110044001100440011004400`
+- `straight-fill:RT:R1>T2:sideA:sparse` → **EXACT** `U+00E218` / glyph 536 / bitmap `1ce00000000000000000000000000000`
+- `straight-fill:RT:R1>T2:sideB:sparse` → **DERIVED** bitmap `1de04400110044001100440011004400`
+- `straight-fill:RT:R1>T3:sideA:sparse` → **EXACT** `U+00E219` / glyph 537 / bitmap `38c00000000000000000000000000000`
+- `straight-fill:RT:R1>T3:sideB:sparse` → **DERIVED** bitmap `39c04400110044001100440011004400`
+- `straight-fill:RT:R1>T4:sideA:sparse` → **EXACT** `U+00E21A` / glyph 538 / bitmap `30c00000000000000000000000000000`
+- `straight-fill:RT:R1>T4:sideB:sparse` → **DERIVED** bitmap `31c04400110044001100440011004400`
+- `straight-fill:RT:R1>T5:sideA:sparse` → **EXACT** `U+00E21B` / glyph 539 / bitmap `60800000000000000000000000000000`
+- `straight-fill:RT:R1>T5:sideB:sparse` → **DERIVED** bitmap `71804400110044001100440011004400`
+- `straight-fill:RT:R1>T6:sideA:sparse` → **EXACT** `U+00E21C` / glyph 540 / bitmap `40800000000000000000000000000000`
+- `straight-fill:RT:R1>T6:sideB:sparse` → **DERIVED** bitmap `51804400110044001100440011004400`
+- `straight-fill:RT:R1>T7:sideA:sparse` → **EXACT** `U+00E21D` / glyph 541 / bitmap `80800000000000000000000000000000`
+- `straight-fill:RT:R1>T7:sideB:sparse` → **DERIVED** bitmap `91804400110044001100440011004400`
+- `straight-fill:RT:R10>T0:sideA:sparse` → **DERIVED** bitmap `11024604180850204040800000000000`
+- `straight-fill:RT:R10>T0:sideB:sparse` → **DERIVED** bitmap `01020204090814205140c40011004400`
+- `straight-fill:RT:R10>T1:sideA:sparse` → **DERIVED** bitmap `12044408181060204040800000000000`
+- `straight-fill:RT:R10>T1:sideB:sparse` → **DERIVED** bitmap `03040408091024205140c40011004400`
+- `straight-fill:RT:R10>T2:sideA:sparse` → **DERIVED** bitmap `14044808101060204040800000000000`
+- `straight-fill:RT:R10>T2:sideB:sparse` → **DERIVED** bitmap `05040c08111024205140c40011004400`
+- `straight-fill:RT:R10>T3:sideA:sparse` → **DERIVED** bitmap `18085010202060404080800000000000`
+- `straight-fill:RT:R10>T3:sideB:sparse` → **DERIVED** bitmap `09081410312024405180c40011004400`
+- `straight-fill:RT:R10>T4:sideA:sparse` → **DERIVED** bitmap `10106020202040404080800000000000`
+- `straight-fill:RT:R10>T4:sideB:sparse` → **DERIVED** bitmap `11102420312044405180c40011004400`
+- `straight-fill:RT:R10>T5:sideA:sparse` → **DERIVED** bitmap `20206040404040408080800000000000`
+- `straight-fill:RT:R10>T5:sideB:sparse` → **DERIVED** bitmap `31202440514044409180c40011004400`
+- `straight-fill:RT:R10>T6:sideA:sparse` → **EXACT** `U+00E25D` / glyph 605 / bitmap `40404040404080808080800000000000`
+- `straight-fill:RT:R10>T6:sideB:sparse` → **DERIVED** bitmap `514044405140c4809180c40011004400`
+- `straight-fill:RT:R10>T7:sideA:sparse` → **EXACT** `U+00E25E` / glyph 606 / bitmap `80808080808080808080800000000000`
+- `straight-fill:RT:R10>T7:sideB:sparse` → **DERIVED** bitmap `9180c4809180c4809180c40011004400`
+- `straight-fill:RT:R11>T0:sideA:sparse` → **DERIVED** bitmap `11024604180850102040408000000000`
+- `straight-fill:RT:R11>T0:sideB:sparse` → **DERIVED** bitmap `01020204090814103140448011004400`
+- `straight-fill:RT:R11>T1:sideA:sparse` → **DERIVED** bitmap `12044408181050202040408000000000`
+- `straight-fill:RT:R11>T1:sideB:sparse` → **DERIVED** bitmap `03040408091014203140448011004400`
+- `straight-fill:RT:R11>T2:sideA:sparse` → **DERIVED** bitmap `14044808101060204040808000000000`
+- `straight-fill:RT:R11>T2:sideB:sparse` → **DERIVED** bitmap `05040c08111024205140c48011004400`
+- `straight-fill:RT:R11>T3:sideA:sparse` → **DERIVED** bitmap `18085010102060404040808000000000`
+- `straight-fill:RT:R11>T3:sideB:sparse` → **DERIVED** bitmap `09081410112024405140c48011004400`
+- `straight-fill:RT:R11>T4:sideA:sparse` → **DERIVED** bitmap `10106020202040404040808000000000`
+- `straight-fill:RT:R11>T4:sideB:sparse` → **DERIVED** bitmap `11102420312044405140c48011004400`
+- `straight-fill:RT:R11>T5:sideA:sparse` → **DERIVED** bitmap `20206040404040404080808000000000`
+- `straight-fill:RT:R11>T5:sideB:sparse` → **DERIVED** bitmap `31202440514044405180c48011004400`
+- `straight-fill:RT:R11>T6:sideA:sparse` → **EXACT** `U+00E264` / glyph 612 / bitmap `40404040404080808080808000000000`
+- `straight-fill:RT:R11>T6:sideB:sparse` → **DERIVED** bitmap `514044405140c4809180c48011004400`
+- `straight-fill:RT:R11>T7:sideA:sparse` → **EXACT** `U+00E265` / glyph 613 / bitmap `80808080808080808080808000000000`
+- `straight-fill:RT:R11>T7:sideB:sparse` → **DERIVED** bitmap `9180c4809180c4809180c48011004400`
+- `straight-fill:RT:R12>T0:sideA:sparse` → **DERIVED** bitmap `11024604140848102020404080000000`
+- `straight-fill:RT:R12>T0:sideB:sparse` → **DERIVED** bitmap `0102020405080c103120444091004400`
+- `straight-fill:RT:R12>T1:sideA:sparse` → **DERIVED** bitmap `12024404180850102020404080000000`
+- `straight-fill:RT:R12>T1:sideB:sparse` → **DERIVED** bitmap `03020404090814103120444091004400`
+- `straight-fill:RT:R12>T2:sideA:sparse` → **DERIVED** bitmap `14044808101050202040408080000000`
+- `straight-fill:RT:R12>T2:sideB:sparse` → **DERIVED** bitmap `05040c08111014203140448091004400`
+- `straight-fill:RT:R12>T3:sideA:sparse` → **DERIVED** bitmap `18085010102060204040408080000000`
+- `straight-fill:RT:R12>T3:sideB:sparse` → **DERIVED** bitmap `09081410112024205140448091004400`
+- `straight-fill:RT:R12>T4:sideA:sparse` → **DERIVED** bitmap `10105020202060404040408080000000`
+- `straight-fill:RT:R12>T4:sideB:sparse` → **DERIVED** bitmap `11101420312024405140448091004400`
+- `straight-fill:RT:R12>T5:sideA:sparse` → **DERIVED** bitmap `20206020404040404040808080000000`
+- `straight-fill:RT:R12>T5:sideB:sparse` → **DERIVED** bitmap `31202420514044405140c48091004400`
+- `straight-fill:RT:R12>T6:sideA:sparse` → **EXACT** `U+00E26C` / glyph 620 / bitmap `40404040404040808080808080000000`
+- `straight-fill:RT:R12>T6:sideB:sparse` → **DERIVED** bitmap `51404440514044809180c48091004400`
+- `straight-fill:RT:R12>T7:sideA:sparse` → **EXACT** `U+00E26D` / glyph 621 / bitmap `80808080808080808080808080000000`
+- `straight-fill:RT:R12>T7:sideB:sparse` → **DERIVED** bitmap `9180c4809180c4809180c48091004400`
+- `straight-fill:RT:R13>T0:sideA:sparse` → **DERIVED** bitmap `11024604140848101020604040800000`
+- `straight-fill:RT:R13>T0:sideB:sparse` → **DERIVED** bitmap `0102020405080c101120244051804400`
+- `straight-fill:RT:R13>T1:sideA:sparse` → **DERIVED** bitmap `12024404180850102020404080800000`
+- `straight-fill:RT:R13>T1:sideB:sparse` → **DERIVED** bitmap `03020404090814103120444091804400`
+- `straight-fill:RT:R13>T2:sideA:sparse` → **DERIVED** bitmap `14044808101050202020404080800000`
+- `straight-fill:RT:R13>T2:sideB:sparse` → **DERIVED** bitmap `05040c08111014203120444091804400`
+- `straight-fill:RT:R13>T3:sideA:sparse` → **DERIVED** bitmap `18085010102060202040404080800000`
+- `straight-fill:RT:R13>T3:sideB:sparse` → **DERIVED** bitmap `09081410112024203140444091804400`
+- `straight-fill:RT:R13>T4:sideA:sparse` → **DERIVED** bitmap `10105020202060404040408080800000`
+- `straight-fill:RT:R13>T4:sideB:sparse` → **DERIVED** bitmap `11101420312024405140448091804400`
+- `straight-fill:RT:R13>T5:sideA:sparse` → **DERIVED** bitmap `20206020404040404040808080800000`
+- `straight-fill:RT:R13>T5:sideB:sparse` → **DERIVED** bitmap `31202420514044405140c48091804400`
+- `straight-fill:RT:R13>T6:sideA:sparse` → **EXACT** `U+00E273` / glyph 627 / bitmap `40404040404040808080808080800000`
+- `straight-fill:RT:R13>T6:sideB:sparse` → **DERIVED** bitmap `51404440514044809180c48091804400`
+- `straight-fill:RT:R13>T7:sideA:sparse` → **EXACT** `U+00E274` / glyph 628 / bitmap `80808080808080808080808080800000`
+- `straight-fill:RT:R13>T7:sideB:sparse` → **DERIVED** bitmap `9180c4809180c4809180c48091804400`
+- `straight-fill:RT:R14>T0:sideA:sparse` → **DERIVED** bitmap `11014602140448081010602040408000`
+- `straight-fill:RT:R14>T0:sideB:sparse` → **DERIVED** bitmap `0101020205040c08111024205140c400`
+- `straight-fill:RT:R14>T1:sideA:sparse` → **DERIVED** bitmap `12024404180850101020604040808000`
+- `straight-fill:RT:R14>T1:sideB:sparse` → **DERIVED** bitmap `0302040409081410112024405180c400`
+- `straight-fill:RT:R14>T2:sideA:sparse` → **DERIVED** bitmap `14044808181050102020404040808000`
+- `straight-fill:RT:R14>T2:sideB:sparse` → **DERIVED** bitmap `05040c0809101410312044405180c400`
+- `straight-fill:RT:R14>T3:sideA:sparse` → **DERIVED** bitmap `18085010101060202040404040808000`
+- `straight-fill:RT:R14>T3:sideB:sparse` → **DERIVED** bitmap `0908141011102420314044405180c400`
+- `straight-fill:RT:R14>T4:sideA:sparse` → **DERIVED** bitmap `10105020202060204040404080808000`
+- `straight-fill:RT:R14>T4:sideB:sparse` → **DERIVED** bitmap `1110142031202420514044409180c400`
+- `straight-fill:RT:R14>T5:sideA:sparse` → **DERIVED** bitmap `20206020404040404040408080808000`
+- `straight-fill:RT:R14>T5:sideB:sparse` → **DERIVED** bitmap `3120242051404440514044809180c400`
+- `straight-fill:RT:R14>T6:sideA:sparse` → **EXACT** `U+00E27B` / glyph 635 / bitmap `40404040404040408080808080808000`
+- `straight-fill:RT:R14>T6:sideB:sparse` → **DERIVED** bitmap `51404440514044409180c4809180c400`
+- `straight-fill:RT:R14>T7:sideA:sparse` → **EXACT** `U+00E27C` / glyph 636 / bitmap `80808080808080808080808080808000`
+- `straight-fill:RT:R14>T7:sideB:sparse` → **DERIVED** bitmap `9180c4809180c4809180c4809180c400`
+- `straight-fill:RT:R15>T0:sideA:sparse` → **DERIVED** bitmap `11014602140448081010602040408080`
+- `straight-fill:RT:R15>T0:sideB:sparse` → **DERIVED** bitmap `0101020205040c08111024205140c480`
+- `straight-fill:RT:R15>T1:sideA:sparse` → **DERIVED** bitmap `12024404180848101020602040408080`
+- `straight-fill:RT:R15>T1:sideB:sparse` → **DERIVED** bitmap `0302040409080c10112024205140c480`
+- `straight-fill:RT:R15>T2:sideA:sparse` → **DERIVED** bitmap `14044808181050102020604040408080`
+- `straight-fill:RT:R15>T2:sideB:sparse` → **DERIVED** bitmap `05040c0809101410312024405140c480`
+- `straight-fill:RT:R15>T3:sideA:sparse` → **DERIVED** bitmap `18085010101060202020404040408080`
+- `straight-fill:RT:R15>T3:sideB:sparse` → **DERIVED** bitmap `0908141011102420312044405140c480`
+- `straight-fill:RT:R15>T4:sideA:sparse` → **DERIVED** bitmap `10105020202060204040404040808080`
+- `straight-fill:RT:R15>T4:sideB:sparse` → **DERIVED** bitmap `1110142031202420514044405180c480`
+- `straight-fill:RT:R15>T5:sideA:sparse` → **DERIVED** bitmap `20206020404040404040404080808080`
+- `straight-fill:RT:R15>T5:sideB:sparse` → **DERIVED** bitmap `3120242051404440514044409180c480`
+- `straight-fill:RT:R15>T6:sideA:sparse` → **EXACT** `U+00E136` / glyph 310 / bitmap `40404040404040408080808080808080`
+- `straight-fill:RT:R15>T6:sideB:sparse` → **DERIVED** bitmap `51404440514044409180c4809180c480`
+- `straight-fill:RT:R15>T7:sideA:sparse` → **EXACT** `U+00E13D` / glyph 317 / bitmap `80808080808080808080808080808080`
+- `straight-fill:RT:R15>T7:sideB:sparse` → **DERIVED** bitmap `9180c4809180c4809180c4809180c480`
+- `straight-fill:RT:R2>T0:sideA:sparse` → **DERIVED** bitmap `133cc000000000000000000000000000`
+- `straight-fill:RT:R2>T0:sideB:sparse` → **DERIVED** bitmap `033cc400110044001100440011004400`
+- `straight-fill:RT:R2>T1:sideA:sparse` → **DERIVED** bitmap `1638c000000000000000000000000000`
+- `straight-fill:RT:R2>T1:sideB:sparse` → **DERIVED** bitmap `0738c400110044001100440011004400`
+- `straight-fill:RT:R2>T2:sideA:sparse` → **DERIVED** bitmap `1c30c000000000000000000000000000`
+- `straight-fill:RT:R2>T2:sideB:sparse` → **DERIVED** bitmap `0d30c400110044001100440011004400`
+- `straight-fill:RT:R2>T3:sideA:sparse` → **EXACT** `U+00E220` / glyph 544 / bitmap `18608000000000000000000000000000`
+- `straight-fill:RT:R2>T3:sideB:sparse` → **DERIVED** bitmap `1960c400110044001100440011004400`
+- `straight-fill:RT:R2>T4:sideA:sparse` → **EXACT** `U+00E221` / glyph 545 / bitmap `10608000000000000000000000000000`
+- `straight-fill:RT:R2>T4:sideB:sparse` → **DERIVED** bitmap `1160c400110044001100440011004400`
+- `straight-fill:RT:R2>T5:sideA:sparse` → **EXACT** `U+00E222` / glyph 546 / bitmap `20408000000000000000000000000000`
+- `straight-fill:RT:R2>T5:sideB:sparse` → **DERIVED** bitmap `3140c400110044001100440011004400`
+- `straight-fill:RT:R2>T6:sideA:sparse` → **EXACT** `U+00E223` / glyph 547 / bitmap `40408000000000000000000000000000`
+- `straight-fill:RT:R2>T6:sideB:sparse` → **DERIVED** bitmap `5140c400110044001100440011004400`
+- `straight-fill:RT:R2>T7:sideA:sparse` → **EXACT** `U+00E224` / glyph 548 / bitmap `80808000000000000000000000000000`
+- `straight-fill:RT:R2>T7:sideB:sparse` → **DERIVED** bitmap `9180c400110044001100440011004400`
+- `straight-fill:RT:R3>T0:sideA:sparse` → **DERIVED** bitmap `130c70c0000000000000000000000000`
+- `straight-fill:RT:R3>T0:sideB:sparse` → **DERIVED** bitmap `030c34c0110044001100440011004400`
+- `straight-fill:RT:R3>T1:sideA:sparse` → **DERIVED** bitmap `16186080000000000000000000000000`
+- `straight-fill:RT:R3>T1:sideB:sparse` → **DERIVED** bitmap `07186480110044001100440011004400`
+- `straight-fill:RT:R3>T2:sideA:sparse` → **DERIVED** bitmap `14186080000000000000000000000000`
+- `straight-fill:RT:R3>T2:sideB:sparse` → **DERIVED** bitmap `05186480110044001100440011004400`
+- `straight-fill:RT:R3>T3:sideA:sparse` → **DERIVED** bitmap `18304080000000000000000000000000`
+- `straight-fill:RT:R3>T3:sideB:sparse` → **DERIVED** bitmap `09304480110044001100440011004400`
+- `straight-fill:RT:R3>T4:sideA:sparse` → **EXACT** `U+00E228` / glyph 552 / bitmap `10204080000000000000000000000000`
+- `straight-fill:RT:R3>T4:sideB:sparse` → **DERIVED** bitmap `11204480110044001100440011004400`
+- `straight-fill:RT:R3>T5:sideA:sparse` → **EXACT** `U+00E229` / glyph 553 / bitmap `20404080000000000000000000000000`
+- `straight-fill:RT:R3>T5:sideB:sparse` → **DERIVED** bitmap `31404480110044001100440011004400`
+- `straight-fill:RT:R3>T6:sideA:sparse` → **EXACT** `U+00E22A` / glyph 554 / bitmap `40408080000000000000000000000000`
+- `straight-fill:RT:R3>T6:sideB:sparse` → **DERIVED** bitmap `5140c480110044001100440011004400`
+- `straight-fill:RT:R3>T7:sideA:sparse` → **EXACT** `U+00E22B` / glyph 555 / bitmap `80808080000000000000000000000000`
+- `straight-fill:RT:R3>T7:sideB:sparse` → **DERIVED** bitmap `9180c480110044001100440011004400`
+- `straight-fill:RT:R4>T0:sideA:sparse` → **DERIVED** bitmap `11065860800000000000000000000000`
+- `straight-fill:RT:R4>T0:sideB:sparse` → **DERIVED** bitmap `01061c60910044001100440011004400`
+- `straight-fill:RT:R4>T1:sideA:sparse` → **DERIVED** bitmap `120c5060800000000000000000000000`
+- `straight-fill:RT:R4>T1:sideB:sparse` → **DERIVED** bitmap `030c1460910044001100440011004400`
+- `straight-fill:RT:R4>T2:sideA:sparse` → **DERIVED** bitmap `14087040800000000000000000000000`
+- `straight-fill:RT:R4>T2:sideB:sparse` → **DERIVED** bitmap `05083440910044001100440011004400`
+- `straight-fill:RT:R4>T3:sideA:sparse` → **DERIVED** bitmap `18106040800000000000000000000000`
+- `straight-fill:RT:R4>T3:sideB:sparse` → **DERIVED** bitmap `09102440910044001100440011004400`
+- `straight-fill:RT:R4>T4:sideA:sparse` → **DERIVED** bitmap `10206040800000000000000000000000`
+- `straight-fill:RT:R4>T4:sideB:sparse` → **DERIVED** bitmap `11202440910044001100440011004400`
+- `straight-fill:RT:R4>T5:sideA:sparse` → **EXACT** `U+00E230` / glyph 560 / bitmap `20204040800000000000000000000000`
+- `straight-fill:RT:R4>T5:sideB:sparse` → **DERIVED** bitmap `31204440910044001100440011004400`
+- `straight-fill:RT:R4>T6:sideA:sparse` → **EXACT** `U+00E231` / glyph 561 / bitmap `40404080800000000000000000000000`
+- `straight-fill:RT:R4>T6:sideB:sparse` → **DERIVED** bitmap `51404480910044001100440011004400`
+- `straight-fill:RT:R4>T7:sideA:sparse` → **EXACT** `U+00E232` / glyph 562 / bitmap `80808080800000000000000000000000`
+- `straight-fill:RT:R4>T7:sideB:sparse` → **DERIVED** bitmap `9180c480910044001100440011004400`
+- `straight-fill:RT:R5>T0:sideA:sparse` → **DERIVED** bitmap `11064810608000000000000000000000`
+- `straight-fill:RT:R5>T0:sideB:sparse` → **DERIVED** bitmap `01060c10718044001100440011004400`
+- `straight-fill:RT:R5>T1:sideA:sparse` → **DERIVED** bitmap `12045820408000000000000000000000`
+- `straight-fill:RT:R5>T1:sideB:sparse` → **DERIVED** bitmap `03041c20518044001100440011004400`
+- `straight-fill:RT:R5>T2:sideA:sparse` → **DERIVED** bitmap `14085020408000000000000000000000`
+- `straight-fill:RT:R5>T2:sideB:sparse` → **DERIVED** bitmap `05081420518044001100440011004400`
+- `straight-fill:RT:R5>T3:sideA:sparse` → **DERIVED** bitmap `18106020408000000000000000000000`
+- `straight-fill:RT:R5>T3:sideB:sparse` → **DERIVED** bitmap `09102420518044001100440011004400`
+- `straight-fill:RT:R5>T4:sideA:sparse` → **DERIVED** bitmap `10206040408000000000000000000000`
+- `straight-fill:RT:R5>T4:sideB:sparse` → **DERIVED** bitmap `11202440518044001100440011004400`
+- `straight-fill:RT:R5>T5:sideA:sparse` → **EXACT** `U+00E237` / glyph 567 / bitmap `20204040808000000000000000000000`
+- `straight-fill:RT:R5>T5:sideB:sparse` → **DERIVED** bitmap `31204440918044001100440011004400`
+- `straight-fill:RT:R5>T6:sideA:sparse` → **EXACT** `U+00E238` / glyph 568 / bitmap `40404080808000000000000000000000`
+- `straight-fill:RT:R5>T6:sideB:sparse` → **DERIVED** bitmap `51404480918044001100440011004400`
+- `straight-fill:RT:R5>T7:sideA:sparse` → **EXACT** `U+00E239` / glyph 569 / bitmap `80808080808000000000000000000000`
+- `straight-fill:RT:R5>T7:sideB:sparse` → **DERIVED** bitmap `9180c480918044001100440011004400`
+- `straight-fill:RT:R6>T0:sideA:sparse` → **DERIVED** bitmap `11024418204080000000000000000000`
+- `straight-fill:RT:R6>T0:sideB:sparse` → **DERIVED** bitmap `010204183140c4001100440011004400`
+- `straight-fill:RT:R6>T1:sideA:sparse` → **DERIVED** bitmap `12044810204080000000000000000000`
+- `straight-fill:RT:R6>T1:sideB:sparse` → **DERIVED** bitmap `03040c103140c4001100440011004400`
+- `straight-fill:RT:R6>T2:sideA:sparse` → **DERIVED** bitmap `14085010204080000000000000000000`
+- `straight-fill:RT:R6>T2:sideB:sparse` → **DERIVED** bitmap `050814103140c4001100440011004400`
+- `straight-fill:RT:R6>T3:sideA:sparse` → **DERIVED** bitmap `18105020404080000000000000000000`
+- `straight-fill:RT:R6>T3:sideB:sparse` → **DERIVED** bitmap `091014205140c4001100440011004400`
+- `straight-fill:RT:R6>T4:sideA:sparse` → **DERIVED** bitmap `10106020404080000000000000000000`
+- `straight-fill:RT:R6>T4:sideB:sparse` → **DERIVED** bitmap `111024205140c4001100440011004400`
+- `straight-fill:RT:R6>T5:sideA:sparse` → **EXACT** `U+00E23E` / glyph 574 / bitmap `20204040408080000000000000000000`
+- `straight-fill:RT:R6>T5:sideB:sparse` → **DERIVED** bitmap `312044405180c4001100440011004400`
+- `straight-fill:RT:R6>T6:sideA:sparse` → **EXACT** `U+00E23F` / glyph 575 / bitmap `40404040808080000000000000000000`
+- `straight-fill:RT:R6>T6:sideB:sparse` → **DERIVED** bitmap `514044409180c4001100440011004400`
+- `straight-fill:RT:R6>T7:sideA:sparse` → **EXACT** `U+00E240` / glyph 576 / bitmap `80808080808080000000000000000000`
+- `straight-fill:RT:R6>T7:sideB:sparse` → **DERIVED** bitmap `9180c4809180c4001100440011004400`
+- `straight-fill:RT:R7>T0:sideA:sparse` → **DERIVED** bitmap `11024408102040800000000000000000`
+- `straight-fill:RT:R7>T0:sideB:sparse` → **DERIVED** bitmap `01020408112044801100440011004400`
+- `straight-fill:RT:R7>T1:sideA:sparse` → **DERIVED** bitmap `12044810102040800000000000000000`
+- `straight-fill:RT:R7>T1:sideB:sparse` → **DERIVED** bitmap `03040c10112044801100440011004400`
+- `straight-fill:RT:R7>T2:sideA:sparse` → **DERIVED** bitmap `14084810204040800000000000000000`
+- `straight-fill:RT:R7>T2:sideB:sparse` → **DERIVED** bitmap `05080c10314044801100440011004400`
+- `straight-fill:RT:R7>T3:sideA:sparse` → **DERIVED** bitmap `18105020204040800000000000000000`
+- `straight-fill:RT:R7>T3:sideB:sparse` → **DERIVED** bitmap `09101420314044801100440011004400`
+- `straight-fill:RT:R7>T4:sideA:sparse` → **DERIVED** bitmap `10106020404080800000000000000000`
+- `straight-fill:RT:R7>T4:sideB:sparse` → **DERIVED** bitmap `111024205140c4801100440011004400`
+- `straight-fill:RT:R7>T5:sideA:sparse` → **EXACT** `U+00E245` / glyph 581 / bitmap `20204040404080800000000000000000`
+- `straight-fill:RT:R7>T5:sideB:sparse` → **DERIVED** bitmap `312044405140c4801100440011004400`
+- `straight-fill:RT:R7>T6:sideA:sparse` → **EXACT** `U+00E246` / glyph 582 / bitmap `40404040808080800000000000000000`
+- `straight-fill:RT:R7>T6:sideB:sparse` → **DERIVED** bitmap `514044409180c4801100440011004400`
+- `straight-fill:RT:R7>T7:sideA:sparse` → **EXACT** `U+00E247` / glyph 583 / bitmap `80808080808080800000000000000000`
+- `straight-fill:RT:R7>T7:sideB:sparse` → **DERIVED** bitmap `9180c4809180c4801100440011004400`
+- `straight-fill:RT:R8>T0:sideA:sparse` → **DERIVED** bitmap `11024408181060408000000000000000`
+- `straight-fill:RT:R8>T0:sideB:sparse` → **DERIVED** bitmap `01020408091024409100440011004400`
+- `straight-fill:RT:R8>T1:sideA:sparse` → **DERIVED** bitmap `12044408102060408000000000000000`
+- `straight-fill:RT:R8>T1:sideB:sparse` → **DERIVED** bitmap `03040408112024409100440011004400`
+- `straight-fill:RT:R8>T2:sideA:sparse` → **DERIVED** bitmap `14084810102040408000000000000000`
+- `straight-fill:RT:R8>T2:sideB:sparse` → **DERIVED** bitmap `05080c10112044409100440011004400`
+- `straight-fill:RT:R8>T3:sideA:sparse` → **DERIVED** bitmap `18085010202040408000000000000000`
+- `straight-fill:RT:R8>T3:sideB:sparse` → **DERIVED** bitmap `09081410312044409100440011004400`
+- `straight-fill:RT:R8>T4:sideA:sparse` → **DERIVED** bitmap `10106020204040808000000000000000`
+- `straight-fill:RT:R8>T4:sideB:sparse` → **DERIVED** bitmap `11102420314044809100440011004400`
+- `straight-fill:RT:R8>T5:sideA:sparse` → **DERIVED** bitmap `20206040404040808000000000000000`
+- `straight-fill:RT:R8>T5:sideB:sparse` → **DERIVED** bitmap `31202440514044809100440011004400`
+- `straight-fill:RT:R8>T6:sideA:sparse` → **EXACT** `U+00E24E` / glyph 590 / bitmap `40404040408080808000000000000000`
+- `straight-fill:RT:R8>T6:sideB:sparse` → **DERIVED** bitmap `514044405180c4809100440011004400`
+- `straight-fill:RT:R8>T7:sideA:sparse` → **EXACT** `U+00E24F` / glyph 591 / bitmap `80808080808080808000000000000000`
+- `straight-fill:RT:R8>T7:sideB:sparse` → **DERIVED** bitmap `9180c4809180c4809100440011004400`
+- `straight-fill:RT:R9>T0:sideA:sparse` → **DERIVED** bitmap `11024404181060204080000000000000`
+- `straight-fill:RT:R9>T0:sideB:sparse` → **DERIVED** bitmap `01020404091024205180440011004400`
+- `straight-fill:RT:R9>T1:sideA:sparse` → **DERIVED** bitmap `12044408101060404080000000000000`
+- `straight-fill:RT:R9>T1:sideB:sparse` → **DERIVED** bitmap `03040408111024405180440011004400`
+- `straight-fill:RT:R9>T2:sideA:sparse` → **DERIVED** bitmap `14084810102060404080000000000000`
+- `straight-fill:RT:R9>T2:sideB:sparse` → **DERIVED** bitmap `05080c10112024405180440011004400`
+- `straight-fill:RT:R9>T3:sideA:sparse` → **DERIVED** bitmap `18085010202040408080000000000000`
+- `straight-fill:RT:R9>T3:sideB:sparse` → **DERIVED** bitmap `09081410312044409180440011004400`
+- `straight-fill:RT:R9>T4:sideA:sparse` → **DERIVED** bitmap `10106020204040408080000000000000`
+- `straight-fill:RT:R9>T4:sideB:sparse` → **DERIVED** bitmap `11102420314044409180440011004400`
+- `straight-fill:RT:R9>T5:sideA:sparse` → **DERIVED** bitmap `20206040404040808080000000000000`
+- `straight-fill:RT:R9>T5:sideB:sparse` → **DERIVED** bitmap `31202440514044809180440011004400`
+- `straight-fill:RT:R9>T6:sideA:sparse` → **EXACT** `U+00E255` / glyph 597 / bitmap `40404040408080808080000000000000`
+- `straight-fill:RT:R9>T6:sideB:sparse` → **DERIVED** bitmap `514044405180c4809180440011004400`
+- `straight-fill:RT:R9>T7:sideA:sparse` → **EXACT** `U+00E256` / glyph 598 / bitmap `80808080808080808080000000000000`
+- `straight-fill:RT:R9>T7:sideB:sparse` → **DERIVED** bitmap `9180c4809180c4809180440011004400`
+- `straight-fill:TB:T0>B0:sideA:sparse` → **EXACT** `U+00E100` / glyph 256 / bitmap `01010101010101010101010101010101`
+- `straight-fill:TB:T0>B0:sideB:sparse` → **DERIVED** bitmap `11014501110145011101450111014501`
+- `straight-fill:TB:T0>B1:sideA:sparse` → **DERIVED** bitmap `01010101010101010302020203020202`
+- `straight-fill:TB:T0>B1:sideB:sparse` → **DERIVED** bitmap `11014501110145011202460212024602`
+- `straight-fill:TB:T0>B2:sideA:sparse` → **DERIVED** bitmap `01010101030202020302020205040404`
+- `straight-fill:TB:T0>B2:sideB:sparse` → **DERIVED** bitmap `11014501120246021202460214044404`
+- `straight-fill:TB:T0>B3:sideA:sparse` → **DERIVED** bitmap `01010102030202020504040405080c08`
+- `straight-fill:TB:T0>B3:sideB:sparse` → **DERIVED** bitmap `11014502120246021404440414084808`
+- `straight-fill:TB:T0>B4:sideA:sparse` → **DERIVED** bitmap `010102020302040405040c0809081410`
+- `straight-fill:TB:T0>B4:sideB:sparse` → **DERIVED** bitmap `11014602120244041404480818085010`
+- `straight-fill:TB:T0>B5:sideA:sparse` → **DERIVED** bitmap `010102020304040409080c1011102420`
+- `straight-fill:TB:T0>B5:sideB:sparse` → **DERIVED** bitmap `11014602120444041808481010106020`
+- `straight-fill:TB:T0>B6:sideA:sparse` → **DERIVED** bitmap `01010202050404080910141031204440`
+- `straight-fill:TB:T0>B6:sideB:sparse` → **DERIVED** bitmap `11014602140444081810501020204040`
+- `straight-fill:TB:T0>B7:sideA:sparse` → **DERIVED** bitmap `0101020205040c08111024205140c480`
+- `straight-fill:TB:T0>B7:sideB:sparse` → **DERIVED** bitmap `11014602140448081010602040408080`
+- `straight-fill:TB:T1>B0:sideA:sparse` → **DERIVED** bitmap `03020202030202020101010101010101`
+- `straight-fill:TB:T1>B0:sideB:sparse` → **DERIVED** bitmap `12024602120246021101450111014501`
+- `straight-fill:TB:T1>B1:sideA:sparse` → **DERIVED** bitmap `03020202030202020302020203020202`
+- `straight-fill:TB:T1>B1:sideB:sparse` → **DERIVED** bitmap `12024602120246021202460212024602`
+- `straight-fill:TB:T1>B2:sideA:sparse` → **DERIVED** bitmap `03020202030202020504040405040404`
+- `straight-fill:TB:T1>B2:sideB:sparse` → **DERIVED** bitmap `12024602120246021404440414044404`
+- `straight-fill:TB:T1>B3:sideA:sparse` → **DERIVED** bitmap `03020202050404040504040409080c08`
+- `straight-fill:TB:T1>B3:sideB:sparse` → **DERIVED** bitmap `12024602140444041404440418084808`
+- `straight-fill:TB:T1>B4:sideA:sparse` → **DERIVED** bitmap `030202040504040409080c0809101410`
+- `straight-fill:TB:T1>B4:sideB:sparse` → **DERIVED** bitmap `12024604140444041808480818105010`
+- `straight-fill:TB:T1>B5:sideA:sparse` → **DERIVED** bitmap `0302040405040c080908141011102420`
+- `straight-fill:TB:T1>B5:sideB:sparse` → **DERIVED** bitmap `12024404140448081808501010106020`
+- `straight-fill:TB:T1>B6:sideA:sparse` → **DERIVED** bitmap `0302040405080c081110142031204440`
+- `straight-fill:TB:T1>B6:sideB:sparse` → **DERIVED** bitmap `12024404140848081010502020204040`
+- `straight-fill:TB:T1>B7:sideA:sparse` → **DERIVED** bitmap `0302040409080c10112024205140c480`
+- `straight-fill:TB:T1>B7:sideB:sparse` → **DERIVED** bitmap `12024404180848101020602040408080`
+- `straight-fill:TB:T2>B0:sideA:sparse` → **DERIVED** bitmap `05040404030202020302020201010101`
+- `straight-fill:TB:T2>B0:sideB:sparse` → **DERIVED** bitmap `14044404120246021202460211014501`
+- `straight-fill:TB:T2>B1:sideA:sparse` → **DERIVED** bitmap `05040404050404040302020203020202`
+- `straight-fill:TB:T2>B1:sideB:sparse` → **DERIVED** bitmap `14044404140444041202460212024602`
+- `straight-fill:TB:T2>B2:sideA:sparse` → **DERIVED** bitmap `05040404050404040504040405040404`
+- `straight-fill:TB:T2>B2:sideB:sparse` → **DERIVED** bitmap `14044404140444041404440414044404`
+- `straight-fill:TB:T2>B3:sideA:sparse` → **DERIVED** bitmap `050404040504040409080c0809080c08`
+- `straight-fill:TB:T2>B3:sideB:sparse` → **DERIVED** bitmap `14044404140444041808480818084808`
+- `straight-fill:TB:T2>B4:sideA:sparse` → **DERIVED** bitmap `0504040409080c0809080c0811101410`
+- `straight-fill:TB:T2>B4:sideB:sparse` → **DERIVED** bitmap `14044404180848081808480810105010`
+- `straight-fill:TB:T2>B5:sideA:sparse` → **DERIVED** bitmap `0504040809080c081110141011202420`
+- `straight-fill:TB:T2>B5:sideB:sparse` → **DERIVED** bitmap `14044408180848081010501010206020`
+- `straight-fill:TB:T2>B6:sideA:sparse` → **DERIVED** bitmap `05040c08090814101110242031204440`
+- `straight-fill:TB:T2>B6:sideB:sparse` → **DERIVED** bitmap `14044808180850101010602020204040`
+- `straight-fill:TB:T2>B7:sideA:sparse` → **DERIVED** bitmap `05040c0809101410312024405140c480`
+- `straight-fill:TB:T2>B7:sideB:sparse` → **DERIVED** bitmap `14044808181050102020604040408080`
+- `straight-fill:TB:T3>B0:sideA:sparse` → **DERIVED** bitmap `09080c04050404040302020203010101`
+- `straight-fill:TB:T3>B0:sideB:sparse` → **DERIVED** bitmap `18084804140444041202460212014501`
+- `straight-fill:TB:T3>B1:sideA:sparse` → **DERIVED** bitmap `09080c08050404040504040403020202`
+- `straight-fill:TB:T3>B1:sideB:sparse` → **DERIVED** bitmap `18084808140444041404440412024602`
+- `straight-fill:TB:T3>B2:sideA:sparse` → **DERIVED** bitmap `09080c0809080c080504040405040404`
+- `straight-fill:TB:T3>B2:sideB:sparse` → **DERIVED** bitmap `18084808180848081404440414044404`
+- `straight-fill:TB:T3>B3:sideA:sparse` → **DERIVED** bitmap `09080c0809080c0809080c0809080c08`
+- `straight-fill:TB:T3>B3:sideB:sparse` → **DERIVED** bitmap `18084808180848081808480818084808`
+- `straight-fill:TB:T3>B4:sideA:sparse` → **DERIVED** bitmap `09080c0809080c081110141011101410`
+- `straight-fill:TB:T3>B4:sideB:sparse` → **DERIVED** bitmap `18084808180848081010501010105010`
+- `straight-fill:TB:T3>B5:sideA:sparse` → **DERIVED** bitmap `09080c08111014101110141031202420`
+- `straight-fill:TB:T3>B5:sideB:sparse` → **DERIVED** bitmap `18084808101050101010501020206020`
+- `straight-fill:TB:T3>B6:sideA:sparse` → **DERIVED** bitmap `09080c10111014103120242031404440`
+- `straight-fill:TB:T3>B6:sideB:sparse` → **DERIVED** bitmap `18084810101050102020602020404040`
+- `straight-fill:TB:T3>B7:sideA:sparse` → **DERIVED** bitmap `0908141011102420312044405140c480`
+- `straight-fill:TB:T3>B7:sideB:sparse` → **DERIVED** bitmap `18085010101060202020404040408080`
+- `straight-fill:TB:T4>B0:sideA:sparse` → **DERIVED** bitmap `11100c08090804040504020203020101`
+- `straight-fill:TB:T4>B0:sideB:sparse` → **DERIVED** bitmap `10104808180844041404460212024501`
+- `straight-fill:TB:T4>B1:sideA:sparse` → **DERIVED** bitmap `1110140809080c080504040405020202`
+- `straight-fill:TB:T4>B1:sideB:sparse` → **DERIVED** bitmap `10105008180848081404440414024602`
+- `straight-fill:TB:T4>B2:sideA:sparse` → **DERIVED** bitmap `1110141009080c0809080c0805040404`
+- `straight-fill:TB:T4>B2:sideB:sparse` → **DERIVED** bitmap `10105010180848081808480814044404`
+- `straight-fill:TB:T4>B3:sideA:sparse` → **DERIVED** bitmap `111014101110141009080c0809080c08`
+- `straight-fill:TB:T4>B3:sideB:sparse` → **DERIVED** bitmap `10105010101050101808480818084808`
+- `straight-fill:TB:T4>B4:sideA:sparse` → **DERIVED** bitmap `11101410111014101110141011101410`
+- `straight-fill:TB:T4>B4:sideB:sparse` → **DERIVED** bitmap `10105010101050101010501010105010`
+- `straight-fill:TB:T4>B5:sideA:sparse` → **DERIVED** bitmap `11101410111014103120242031202420`
+- `straight-fill:TB:T4>B5:sideB:sparse` → **DERIVED** bitmap `10105010101050102020602020206020`
+- `straight-fill:TB:T4>B6:sideA:sparse` → **DERIVED** bitmap `11101410312024203120242051404440`
+- `straight-fill:TB:T4>B6:sideB:sparse` → **DERIVED** bitmap `10105010202060202020602040404040`
+- `straight-fill:TB:T4>B7:sideA:sparse` → **DERIVED** bitmap `1110142031202420514044405180c480`
+- `straight-fill:TB:T4>B7:sideB:sparse` → **DERIVED** bitmap `10105020202060204040404040808080`
+- `straight-fill:TB:T5>B0:sideA:sparse` → **DERIVED** bitmap `3120141011080c080504040203020101`
+- `straight-fill:TB:T5>B0:sideB:sparse` → **DERIVED** bitmap `20205010100848081404440212024501`
+- `straight-fill:TB:T5>B1:sideA:sparse` → **DERIVED** bitmap `3120141011100c080908040405040202`
+- `straight-fill:TB:T5>B1:sideB:sparse` → **DERIVED** bitmap `20205010101048081808440414044602`
+- `straight-fill:TB:T5>B2:sideA:sparse` → **DERIVED** bitmap `312024101110141009080c0809040404`
+- `straight-fill:TB:T5>B2:sideB:sparse` → **DERIVED** bitmap `20206010101050101808480818044404`
+- `straight-fill:TB:T5>B3:sideA:sparse` → **DERIVED** bitmap `31202420111014101110141009080c08`
+- `straight-fill:TB:T5>B3:sideB:sparse` → **DERIVED** bitmap `20206020101050101010501018084808`
+- `straight-fill:TB:T5>B4:sideA:sparse` → **DERIVED** bitmap `31202420312024201110141011101410`
+- `straight-fill:TB:T5>B4:sideB:sparse` → **DERIVED** bitmap `20206020202060201010501010105010`
+- `straight-fill:TB:T5>B5:sideA:sparse` → **DERIVED** bitmap `31202420312024203120242031202420`
+- `straight-fill:TB:T5>B5:sideB:sparse` → **DERIVED** bitmap `20206020202060202020602020206020`
+- `straight-fill:TB:T5>B6:sideA:sparse` → **DERIVED** bitmap `31202420312024205140444051404440`
+- `straight-fill:TB:T5>B6:sideB:sparse` → **DERIVED** bitmap `20206020202060204040404040404040`
+- `straight-fill:TB:T5>B7:sideA:sparse` → **DERIVED** bitmap `3120242051404440514044409180c480`
+- `straight-fill:TB:T5>B7:sideB:sparse` → **DERIVED** bitmap `20206020404040404040404080808080`
+- `straight-fill:TB:T6>B0:sideA:sparse` → **DERIVED** bitmap `51402420111014080904040403020101`
+- `straight-fill:TB:T6>B0:sideB:sparse` → **DERIVED** bitmap `40406020101050081804440412024501`
+- `straight-fill:TB:T6>B1:sideA:sparse` → **DERIVED** bitmap `514024203110141009080c0405040202`
+- `straight-fill:TB:T6>B1:sideB:sparse` → **DERIVED** bitmap `40406020201050101808480414044602`
+- `straight-fill:TB:T6>B2:sideA:sparse` → **DERIVED** bitmap `514024203120141011100c0809080404`
+- `straight-fill:TB:T6>B2:sideB:sparse` → **DERIVED** bitmap `40406020202050101010480818084404`
+- `straight-fill:TB:T6>B3:sideA:sparse` → **DERIVED** bitmap `51404420312024201110141011080c08`
+- `straight-fill:TB:T6>B3:sideB:sparse` → **DERIVED** bitmap `40404020202060201010501010084808`
+- `straight-fill:TB:T6>B4:sideA:sparse` → **DERIVED** bitmap `51404440312024203120242011101410`
+- `straight-fill:TB:T6>B4:sideB:sparse` → **DERIVED** bitmap `40404040202060202020602010105010`
+- `straight-fill:TB:T6>B5:sideA:sparse` → **DERIVED** bitmap `51404440514044403120242031202420`
+- `straight-fill:TB:T6>B5:sideB:sparse` → **DERIVED** bitmap `40404040404040402020602020206020`
+- `straight-fill:TB:T6>B6:sideA:sparse` → **DERIVED** bitmap `51404440514044405140444051404440`
+- `straight-fill:TB:T6>B6:sideB:sparse` → **EXACT** `U+00E135` / glyph 309 / bitmap `40404040404040404040404040404040`
+- `straight-fill:TB:T6>B7:sideA:sparse` → **DERIVED** bitmap `51404440514044409180c4809180c480`
+- `straight-fill:TB:T6>B7:sideB:sparse` → **EXACT** `U+00E136` / glyph 310 / bitmap `40404040404040408080808080808080`
+- `straight-fill:TB:T7>B0:sideA:sparse` → **DERIVED** bitmap `91804440312014100908040403020101`
+- `straight-fill:TB:T7>B0:sideB:sparse` → **DERIVED** bitmap `80804040202050101808440412024501`
+- `straight-fill:TB:T7>B1:sideA:sparse` → **DERIVED** bitmap `918044403120241011080c0805040202`
+- `straight-fill:TB:T7>B1:sideB:sparse` → **DERIVED** bitmap `80804040202060101008480814044602`
+- `straight-fill:TB:T7>B2:sideA:sparse` → **DERIVED** bitmap `91804440512024201110140809080404`
+- `straight-fill:TB:T7>B2:sideB:sparse` → **DERIVED** bitmap `80804040402060201010500818084404`
+- `straight-fill:TB:T7>B3:sideA:sparse` → **DERIVED** bitmap `91804440514024203120141011100c08`
+- `straight-fill:TB:T7>B3:sideB:sparse` → **DERIVED** bitmap `80804040404060202020501010104808`
+- `straight-fill:TB:T7>B4:sideA:sparse` → **DERIVED** bitmap `9180c440514044403120242031101410`
+- `straight-fill:TB:T7>B4:sideB:sparse` → **DERIVED** bitmap `80808040404040402020602020105010`
+- `straight-fill:TB:T7>B5:sideA:sparse` → **DERIVED** bitmap `9180c480514044405140444031202420`
+- `straight-fill:TB:T7>B5:sideB:sparse` → **DERIVED** bitmap `80808080404040404040404020206020`
+- `straight-fill:TB:T7>B6:sideA:sparse` → **DERIVED** bitmap `9180c4809180c4805140444051404440`
+- `straight-fill:TB:T7>B6:sideB:sparse` → **EXACT** `U+00E13C` / glyph 316 / bitmap `80808080808080804040404040404040`
+- `straight-fill:TB:T7>B7:sideA:sparse` → **DERIVED** bitmap `9180c4809180c4809180c4809180c480`
+- `straight-fill:TB:T7>B7:sideB:sparse` → **EXACT** `U+00E13D` / glyph 317 / bitmap `80808080808080808080808080808080`
+
+# Demoted half 50%
+
+- `straight-fill:LB:L10>B2:sideA:half` → **DERIVED** bitmap `00000000000000000000010103020506`; fallback `U+00F055` / glyph 4181 / Hamming 1
+- `straight-fill:LB:L11>B2:sideA:half` → **DERIVED** bitmap `00000000000000000000000103020506`; fallback `U+00F061` / glyph 4193 / Hamming 1
+- `straight-fill:LB:L12>B2:sideA:half` → **DERIVED** bitmap `00000000000000000000000001020306`; fallback `U+00F06D` / glyph 4205 / Hamming 1
+- `straight-fill:LB:L12>B3:sideA:half` → **DERIVED** bitmap `0000000000000000000000000102050a`; fallback `U+00F06F` / glyph 4207 / Hamming 1
+- `straight-fill:LB:L13>B2:sideA:half` → **DERIVED** bitmap `00000000000000000000000000010306`; fallback `U+00E680` / glyph 1664 / Hamming 1
+- `straight-fill:LB:L13>B3:sideA:half` → **DERIVED** bitmap `0000000000000000000000000001070a`; fallback `U+00F07B` / glyph 4219 / Hamming 1
+- `straight-fill:LB:L13>B4:sideA:half` → **DERIVED** bitmap `0000000000000000000000000001071a`; fallback `U+00F07D` / glyph 4221 / Hamming 1
+- `straight-fill:LB:L14>B3:sideA:half` → **DERIVED** bitmap `0000000000000000000000000000030e`; fallback `U+00E68C` / glyph 1676 / Hamming 1
+- `straight-fill:LB:L14>B4:sideA:half` → **DERIVED** bitmap `0000000000000000000000000000031e`; fallback `U+00E68E` / glyph 1678 / Hamming 1
+- `straight-fill:LB:L14>B5:sideA:half` → **DERIVED** bitmap `0000000000000000000000000000073a`; fallback `U+00E207` / glyph 519 / Hamming 1
+- `straight-fill:LB:L14>B6:sideA:half` → **DERIVED** bitmap `0000000000000000000000000000077a`; fallback `U+00E208` / glyph 520 / Hamming 1
+- `straight-fill:LB:L8>B2:sideA:half` → **DERIVED** bitmap `00000000000000000101030203020506`; fallback `U+00F03D` / glyph 4157 / Hamming 1
+- `straight-fill:LB:L9>B2:sideA:half` → **DERIVED** bitmap `00000000000000000001010203020506`; fallback `U+00F049` / glyph 4169 / Hamming 1
+- `straight-fill:LR:L0>R2:sideB:half` → **DERIVED** bitmap `57bcc000000000000000000000000000`; fallback `U+00E7D9` / glyph 2009 / Hamming 1
+- `straight-fill:LR:L2>R0:sideB:half` → **DERIVED** bitmap `d53e0300000000000000000000000000`; fallback `U+00E813` / glyph 2067 / Hamming 1
+- `straight-fill:LT:L10>T2:sideB:half` → **DERIVED** bitmap `05060502030203020101010000000000`; fallback `U+00EFAC` / glyph 4012 / Hamming 1
+- `straight-fill:LT:L11>T2:sideB:half` → **DERIVED** bitmap `05060502030203020301010100000000`; fallback `U+00EFB9` / glyph 4025 / Hamming 1
+- `straight-fill:LT:L2>T5:sideB:half` → **DERIVED** bitmap `350e0300000000000000000000000000`; fallback `U+00EA57` / glyph 2647 / Hamming 1
+- `straight-fill:LT:L2>T6:sideB:half` → **DERIVED** bitmap `751e0300000000000000000000000000`; fallback `U+00EA59` / glyph 2649 / Hamming 1
+- `straight-fill:LT:L2>T7:sideB:half` → **DERIVED** bitmap `d53e0300000000000000000000000000`; fallback `U+00E813` / glyph 2067 / Hamming 1
+- `straight-fill:LT:L3>T3:sideB:half` → **DERIVED** bitmap `0d060301000000000000000000000000`; fallback `U+00EA5E` / glyph 2654 / Hamming 1
+- `straight-fill:LT:L3>T4:sideB:half` → **DERIVED** bitmap `150e0301000000000000000000000000`; fallback `U+00EA60` / glyph 2656 / Hamming 1
+- `straight-fill:LT:L3>T5:sideB:half` → **DERIVED** bitmap `351a0701000000000000000000000000`; fallback `U+00EF58` / glyph 3928 / Hamming 1
+- `straight-fill:LT:L3>T6:sideB:half` → **DERIVED** bitmap `751a0701000000000000000000000000`; fallback `U+00EF59` / glyph 3929 / Hamming 1
+- `straight-fill:LT:L4>T2:sideB:half` → **DERIVED** bitmap `05060302010000000000000000000000`; fallback `U+00EF5E` / glyph 3934 / Hamming 1
+- `straight-fill:LT:L4>T3:sideB:half` → **DERIVED** bitmap `0d060502010000000000000000000000`; fallback `U+00EF60` / glyph 3936 / Hamming 1
+- `straight-fill:LT:L4>T4:sideB:half` → **DERIVED** bitmap `150a0502010000000000000000000000`; fallback `U+00EF62` / glyph 3938 / Hamming 1
+- `straight-fill:LT:L5>T2:sideB:half` → **DERIVED** bitmap `05060302010100000000000000000000`; fallback `U+00EF6B` / glyph 3947 / Hamming 1
+- `straight-fill:LT:L5>T3:sideB:half` → **DERIVED** bitmap `0d060502030100000000000000000000`; fallback `U+00EF6D` / glyph 3949 / Hamming 1
+- `straight-fill:LT:L6>T2:sideB:half` → **DERIVED** bitmap `05060302030101000000000000000000`; fallback `U+00EF78` / glyph 3960 / Hamming 1
+- `straight-fill:LT:L7>T2:sideB:half` → **DERIVED** bitmap `05060302030201010000000000000000`; fallback `U+00EF85` / glyph 3973 / Hamming 1
+- `straight-fill:LT:L8>T2:sideB:half` → **DERIVED** bitmap `05060502030203010100000000000000`; fallback `U+00EF92` / glyph 3986 / Hamming 1
+- `straight-fill:LT:L9>T2:sideB:half` → **DERIVED** bitmap `05060502030203010101000000000000`; fallback `U+00EF9F` / glyph 3999 / Hamming 1
+- `straight-fill:RB:R10>B5:sideB:half` → **DERIVED** bitmap `00000000000000000000808040c060a0`; fallback `U+00EC9A` / glyph 3226 / Hamming 1
+- `straight-fill:RB:R11>B5:sideB:half` → **DERIVED** bitmap `00000000000000000000008040c060a0`; fallback `U+00ECA7` / glyph 3239 / Hamming 1
+- `straight-fill:RB:R12>B4:sideB:half` → **DERIVED** bitmap `00000000000000000000000080c060b0`; fallback `U+00ECB1` / glyph 3249 / Hamming 1
+- `straight-fill:RB:R12>B5:sideB:half` → **DERIVED** bitmap `00000000000000000000000080c040a0`; fallback `U+00ECB3` / glyph 3251 / Hamming 1
+- `straight-fill:RB:R13>B3:sideB:half` → **DERIVED** bitmap `000000000000000000000000008060b8`; fallback `U+00ECBC` / glyph 3260 / Hamming 1
+- `straight-fill:RB:R13>B4:sideB:half` → **DERIVED** bitmap `000000000000000000000000008060b0`; fallback `U+00ECBD` / glyph 3261 / Hamming 1
+- `straight-fill:RB:R13>B5:sideB:half` → **DERIVED** bitmap `000000000000000000000000008040a0`; fallback `U+00ECBE` / glyph 3262 / Hamming 1
+- `straight-fill:RB:R14>B1:sideB:half` → **DERIVED** bitmap `0000000000000000000000000000e0be`; fallback `U+00E7CC` / glyph 1996 / Hamming 1
+- `straight-fill:RB:R14>B2:sideB:half` → **DERIVED** bitmap `0000000000000000000000000000e0bc`; fallback `U+00E7CD` / glyph 1997 / Hamming 1
+- `straight-fill:RB:R14>B3:sideB:half` → **DERIVED** bitmap `0000000000000000000000000000c0b8`; fallback `U+00E7CE` / glyph 1998 / Hamming 1
+- `straight-fill:RB:R14>B4:sideB:half` → **DERIVED** bitmap `0000000000000000000000000000c0b0`; fallback `U+00E7CF` / glyph 1999 / Hamming 1
+- `straight-fill:RB:R8>B5:sideB:half` → **DERIVED** bitmap `0000000000000000808040c040c060a0`; fallback `U+00EC81` / glyph 3201 / Hamming 1
+- `straight-fill:RB:R9>B5:sideB:half` → **DERIVED** bitmap `0000000000000000008080c040c060a0`; fallback `U+00EC8D` / glyph 3213 / Hamming 1
+- `straight-fill:RT:R10>T5:sideA:half` → **DERIVED** bitmap `60a060c040c040c08080800000000000`; fallback `U+00EBE2` / glyph 3042 / Hamming 1
+- `straight-fill:RT:R11>T5:sideA:half` → **DERIVED** bitmap `60a060c040c040c04080808000000000`; fallback `U+00EBEE` / glyph 3054 / Hamming 1
+- `straight-fill:RT:R2>T0:sideA:half` → **DERIVED** bitmap `57bcc000000000000000000000000000`; fallback `U+00E7D9` / glyph 2009 / Hamming 1
+- `straight-fill:RT:R2>T1:sideA:half` → **DERIVED** bitmap `56b8c000000000000000000000000000`; fallback `U+00EB77` / glyph 2935 / Hamming 1
+- `straight-fill:RT:R2>T2:sideA:half` → **DERIVED** bitmap `5cb0c000000000000000000000000000`; fallback `U+00EB79` / glyph 2937 / Hamming 1
+- `straight-fill:RT:R3>T1:sideA:half` → **DERIVED** bitmap `56b86080000000000000000000000000`; fallback `U+00EB84` / glyph 2948 / Hamming 1
+- `straight-fill:RT:R3>T2:sideA:half` → **DERIVED** bitmap `54b86080000000000000000000000000`; fallback `U+00EB86` / glyph 2950 / Hamming 1
+- `straight-fill:RT:R3>T3:sideA:half` → **DERIVED** bitmap `58b04080000000000000000000000000`; fallback `U+00EB88` / glyph 2952 / Hamming 1
+- `straight-fill:RT:R3>T4:sideA:half` → **DERIVED** bitmap `50a04080000000000000000000000000`; fallback `U+00EB8A` / glyph 2954 / Hamming 1
+- `straight-fill:RT:R4>T3:sideA:half` → **DERIVED** bitmap `58b060c0800000000000000000000000`; fallback `U+00EB94` / glyph 2964 / Hamming 1
+- `straight-fill:RT:R4>T4:sideA:half` → **DERIVED** bitmap `50a060c0800000000000000000000000`; fallback `U+00EB96` / glyph 2966 / Hamming 1
+- `straight-fill:RT:R4>T5:sideA:half` → **DERIVED** bitmap `60a040c0800000000000000000000000`; fallback `U+00EB98` / glyph 2968 / Hamming 1
+- `straight-fill:RT:R5>T4:sideA:half` → **DERIVED** bitmap `50a060c0408000000000000000000000`; fallback `U+00EBA3` / glyph 2979 / Hamming 1
+- `straight-fill:RT:R5>T5:sideA:half` → **DERIVED** bitmap `60a040c0808000000000000000000000`; fallback `U+00EBA5` / glyph 2981 / Hamming 1
+- `straight-fill:RT:R6>T5:sideA:half` → **DERIVED** bitmap `60a040c0408080000000000000000000`; fallback `U+00EBB0` / glyph 2992 / Hamming 1
+- `straight-fill:RT:R7>T5:sideA:half` → **DERIVED** bitmap `60a040c040c080800000000000000000`; fallback `U+00EBBC` / glyph 3004 / Hamming 1
+- `straight-fill:RT:R8>T5:sideA:half` → **DERIVED** bitmap `60a060c040c040808000000000000000`; fallback `U+00EBC9` / glyph 3017 / Hamming 1
+- `straight-fill:RT:R9>T5:sideA:half` → **DERIVED** bitmap `60a060c040c040808080000000000000`; fallback `U+00EBD5` / glyph 3029 / Hamming 1
+

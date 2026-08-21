@@ -1,0 +1,19 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-v1-connector-allocation-stats",
+  "schemaVersion": 1,
+  "status": "5C-provisional-allocation",
+  "baseOwners": 5796,
+  "orthogonalNovelOwners": 544,
+  "diagonalNovelOwners": 57,
+  "connectorOwners": 601,
+  "totalOwners": 6397,
+  "connectorSemanticAliases": 700,
+  "connectorStart": "U+00F6A4",
+  "connectorEnd": "U+00F8FC",
+  "reserveStart": "U+00F8FD",
+  "reserveEnd": "U+00F8FF",
+  "reserveSlots": 3,
+  "straightCodepointsUnchanged": true
+}

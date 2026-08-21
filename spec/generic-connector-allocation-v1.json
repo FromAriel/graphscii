@@ -1,0 +1,24 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-generic-connector-allocation-v1",
+  "schemaVersion": 1,
+  "status": "provisional-allocation",
+  "baseOwnerCount": 5796,
+  "connectorOwnerCount": 601,
+  "totalOwnerCount": 6397,
+  "connectorRange": [
+    "U+00F6A4",
+    "U+00F8FC"
+  ],
+  "finalReserveRange": [
+    "U+00F8FD",
+    "U+00F8FF"
+  ],
+  "finalReserveSlots": 3,
+  "connectorSemanticCount": 700,
+  "allocationOrder": [
+    "orthogonal-semantic-rule-order",
+    "diagonal-selected-semantic-rule-order"
+  ]
+}

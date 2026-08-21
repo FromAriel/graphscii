@@ -1,0 +1,102 @@
+{
+  "schema": "graphscii-publication",
+  "schemaVersion": 2,
+  "publication": "graphscii-graphics-v0",
+  "status": "provisional",
+  "sourceCommit": "415e8a0b31b987f72ffd3677a8537acff3c245b2",
+  "sourceCommitRole": "verified Milestone 4D.5 input baseline",
+  "generator": "cd geometric-glyph-lab && npm run generate",
+  "verification": "cd geometric-glyph-lab && npm run verify",
+  "canonicalCell": "8x16",
+  "bitmapSerialization": "v1:rows-top-to-bottom;one-byte-per-row;x0-is-bit0;lowercase-hex",
+  "encodedGraphics": 5796,
+  "printableAscii": 95,
+  "minimumPhysicalGlyphs": 5891,
+  "semanticAliases": 10816,
+  "canonicalClasses": {
+    "straight": 746,
+    "solid100": 1259,
+    "medium75": 1269,
+    "light25": 1315,
+    "half50": 1207
+  },
+  "allocation": {
+    "unicodeStart": "U+00E000",
+    "unicodeEnd": "U+00F6A3",
+    "straightStart": "U+00E000",
+    "straightEnd": "U+00E2E9",
+    "reserveStart": "U+00F6A4",
+    "reserveEnd": "U+00F8FF",
+    "reserveSlots": 604
+  },
+  "encodedTonalStyles": [
+    "solid-100",
+    "medium-75",
+    "half-50",
+    "light-25"
+  ],
+  "rendererOnlyTonalStyles": [
+    "dense-87.5",
+    "sparse-12.5",
+    "demoted-half-50"
+  ],
+  "rendererOnly": {
+    "semanticAliases": 3392,
+    "exactEncodedReuses": 414,
+    "derivedAliases": 2978,
+    "uniqueDerivedBitmaps": 2555,
+    "encodedCodepointsConsumed": 0,
+    "dense": {
+      "semanticAliases": 1664,
+      "exactEncodedReuses": 207,
+      "derivedAliases": 1457,
+      "uniqueDerivedBitmaps": 1204,
+      "fallbackAliases": 0,
+      "uniqueFallbackDesiredBitmaps": 0
+    },
+    "sparse": {
+      "semanticAliases": 1664,
+      "exactEncodedReuses": 207,
+      "derivedAliases": 1457,
+      "uniqueDerivedBitmaps": 1289,
+      "fallbackAliases": 0,
+      "uniqueFallbackDesiredBitmaps": 0
+    },
+    "demotedHalf": {
+      "semanticAliases": 64,
+      "exactEncodedReuses": 0,
+      "derivedAliases": 64,
+      "uniqueDerivedBitmaps": 62,
+      "fallbackAliases": 64,
+      "uniqueFallbackDesiredBitmaps": 62
+    }
+  },
+  "artifactCounts": {
+    "asciiGlyphs": 5796,
+    "pngGlyphs": 5796,
+    "categorizedAtlasFiles": 126,
+    "masterAtlasFiles": 10,
+    "rendererOnlyResolutionFiles": 5
+  },
+  "artifacts": {
+    "registry": "artifacts/manifest/vocabulary/registry.json",
+    "registryStats": "artifacts/manifest/vocabulary/stats.json",
+    "asciiGlyphDirectory": "artifacts/vocabulary/glyphs/ascii/",
+    "pngGlyphDirectory": "artifacts/vocabulary/glyphs/png/",
+    "categorizedAtlases": "artifacts/vocabulary/atlases/",
+    "masterTextAtlas": "artifacts/vocabulary/atlases/master-text-atlas.md",
+    "masterPageAtlas": "artifacts/vocabulary/atlases/master-page-atlas.md",
+    "masterLayoutMap": "artifacts/vocabulary/atlases/master-layout-map.md",
+    "rendererOnlyIndex": "artifacts/vocabulary/renderer-only/index.json",
+    "rendererOnlyAtlas": "artifacts/vocabulary/renderer-only/renderer-only-atlas.md"
+  },
+  "digests": {
+    "registrySha256": "b15c611663552f47d3f06c00e479b651e6b2182a31d4bbb26058bc5e67484679",
+    "registryStatsSha256": "6ebc04ef60511f9c2d83c24722828f2f9748f69d0a1bf9ea9ab761a7d69d8adf",
+    "rendererOnlyIndexSha256": "df36d6bde741976714b27ac3cec286680d83a5a03dc782c3820ff115c87dcdd1",
+    "atlasStatsSha256": "21fe066ff169f48ee2e5e70b6a0f9dd79cf2b2ab03a9f52c5b7d757fa4a7372f",
+    "masterTextAtlasSha256": "31571fa926178ea68cdaf4d5f6bf466bfb70cc252ba6e362bddd1276a92ac794",
+    "masterPageAtlasSha256": "fcc79963b49081716d44caaa2f9dd89af77b7d1db56c6494d120b98736c9cebe",
+    "masterLayoutMapSha256": "e730450a98284c112092cb0ae265c0267c5d9da7e71da7ae684fd789b189c710"
+  }
+}

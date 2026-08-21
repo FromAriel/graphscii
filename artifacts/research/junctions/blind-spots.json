@@ -1,0 +1,1021 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-demand-blind-spots",
+  "schemaVersion": 1,
+  "status": "5A.1-allocation-free",
+  "theoreticalSemanticCount": 22528,
+  "demandedSemanticCount": 22428,
+  "missingSemanticCount": 100,
+  "coveragePercent": 99.556108,
+  "missingByTopology": {
+    "LRT": 0,
+    "LRB": 0,
+    "LTB": 0,
+    "RTB": 0,
+    "LRTB": 100
+  },
+  "interpretation": "These semantics received zero demand from the measured two-/three-straight selectable-ray composition model. They remain breadth-protection candidates, not rejected junctions.",
+  "missingSemantics": [
+    {
+      "topology": "LRTB",
+      "key": "L0,R0,T1,B3",
+      "ports": [
+        "L0",
+        "R0",
+        "T1",
+        "B3"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L0,R0,T6,B4",
+      "ports": [
+        "L0",
+        "R0",
+        "T6",
+        "B4"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L1,R2,T0,B0",
+      "ports": [
+        "L1",
+        "R2",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L1,R3,T0,B0",
+      "ports": [
+        "L1",
+        "R3",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L1,R4,T0,B0",
+      "ports": [
+        "L1",
+        "R4",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L1,R7,T0,B0",
+      "ports": [
+        "L1",
+        "R7",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L1,R7,T7,B7",
+      "ports": [
+        "L1",
+        "R7",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L1,R11,T0,B0",
+      "ports": [
+        "L1",
+        "R11",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L1,R11,T7,B7",
+      "ports": [
+        "L1",
+        "R11",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L1,R12,T0,B0",
+      "ports": [
+        "L1",
+        "R12",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L1,R13,T0,B0",
+      "ports": [
+        "L1",
+        "R13",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L1,R13,T7,B7",
+      "ports": [
+        "L1",
+        "R13",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L2,R1,T7,B7",
+      "ports": [
+        "L2",
+        "R1",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L2,R2,T0,B0",
+      "ports": [
+        "L2",
+        "R2",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L2,R2,T7,B7",
+      "ports": [
+        "L2",
+        "R2",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L2,R3,T0,B0",
+      "ports": [
+        "L2",
+        "R3",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L2,R8,T7,B7",
+      "ports": [
+        "L2",
+        "R8",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L2,R11,T0,B0",
+      "ports": [
+        "L2",
+        "R11",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L2,R11,T7,B7",
+      "ports": [
+        "L2",
+        "R11",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L2,R12,T0,B0",
+      "ports": [
+        "L2",
+        "R12",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L2,R14,T0,B0",
+      "ports": [
+        "L2",
+        "R14",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L2,R14,T7,B7",
+      "ports": [
+        "L2",
+        "R14",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L3,R1,T7,B7",
+      "ports": [
+        "L3",
+        "R1",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L3,R2,T7,B7",
+      "ports": [
+        "L3",
+        "R2",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L3,R7,T7,B7",
+      "ports": [
+        "L3",
+        "R7",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L3,R8,T7,B7",
+      "ports": [
+        "L3",
+        "R8",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L3,R11,T7,B7",
+      "ports": [
+        "L3",
+        "R11",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L3,R13,T7,B7",
+      "ports": [
+        "L3",
+        "R13",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L3,R14,T7,B7",
+      "ports": [
+        "L3",
+        "R14",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L4,R1,T7,B7",
+      "ports": [
+        "L4",
+        "R1",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L4,R4,T0,B0",
+      "ports": [
+        "L4",
+        "R4",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L4,R4,T7,B7",
+      "ports": [
+        "L4",
+        "R4",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L4,R6,T0,B0",
+      "ports": [
+        "L4",
+        "R6",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L4,R7,T0,B0",
+      "ports": [
+        "L4",
+        "R7",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L4,R7,T7,B7",
+      "ports": [
+        "L4",
+        "R7",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L4,R12,T0,B0",
+      "ports": [
+        "L4",
+        "R12",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L4,R13,T0,B0",
+      "ports": [
+        "L4",
+        "R13",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L4,R13,T7,B7",
+      "ports": [
+        "L4",
+        "R13",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L4,R14,T0,B0",
+      "ports": [
+        "L4",
+        "R14",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L4,R14,T7,B7",
+      "ports": [
+        "L4",
+        "R14",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L6,R4,T7,B7",
+      "ports": [
+        "L6",
+        "R4",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L7,R1,T0,B0",
+      "ports": [
+        "L7",
+        "R1",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L7,R1,T7,B7",
+      "ports": [
+        "L7",
+        "R1",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L7,R3,T0,B0",
+      "ports": [
+        "L7",
+        "R3",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L7,R4,T0,B0",
+      "ports": [
+        "L7",
+        "R4",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L7,R4,T7,B7",
+      "ports": [
+        "L7",
+        "R4",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L7,R7,T0,B0",
+      "ports": [
+        "L7",
+        "R7",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L7,R7,T7,B7",
+      "ports": [
+        "L7",
+        "R7",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L7,R12,T0,B0",
+      "ports": [
+        "L7",
+        "R12",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L7,R13,T0,B0",
+      "ports": [
+        "L7",
+        "R13",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L8,R2,T0,B0",
+      "ports": [
+        "L8",
+        "R2",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L8,R3,T0,B0",
+      "ports": [
+        "L8",
+        "R3",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L8,R8,T0,B0",
+      "ports": [
+        "L8",
+        "R8",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L8,R8,T7,B7",
+      "ports": [
+        "L8",
+        "R8",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L8,R11,T0,B0",
+      "ports": [
+        "L8",
+        "R11",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L8,R11,T7,B7",
+      "ports": [
+        "L8",
+        "R11",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L8,R12,T0,B0",
+      "ports": [
+        "L8",
+        "R12",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L8,R14,T0,B0",
+      "ports": [
+        "L8",
+        "R14",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L8,R14,T7,B7",
+      "ports": [
+        "L8",
+        "R14",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L9,R11,T7,B7",
+      "ports": [
+        "L9",
+        "R11",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L11,R1,T0,B0",
+      "ports": [
+        "L11",
+        "R1",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L11,R1,T7,B7",
+      "ports": [
+        "L11",
+        "R1",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L11,R2,T0,B0",
+      "ports": [
+        "L11",
+        "R2",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L11,R2,T7,B7",
+      "ports": [
+        "L11",
+        "R2",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L11,R3,T0,B0",
+      "ports": [
+        "L11",
+        "R3",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L11,R8,T0,B0",
+      "ports": [
+        "L11",
+        "R8",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L11,R8,T7,B7",
+      "ports": [
+        "L11",
+        "R8",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L11,R9,T0,B0",
+      "ports": [
+        "L11",
+        "R9",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L11,R11,T0,B0",
+      "ports": [
+        "L11",
+        "R11",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L11,R11,T7,B7",
+      "ports": [
+        "L11",
+        "R11",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L11,R14,T7,B7",
+      "ports": [
+        "L11",
+        "R14",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L12,R1,T7,B7",
+      "ports": [
+        "L12",
+        "R1",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L12,R2,T7,B7",
+      "ports": [
+        "L12",
+        "R2",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L12,R4,T7,B7",
+      "ports": [
+        "L12",
+        "R4",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L12,R7,T7,B7",
+      "ports": [
+        "L12",
+        "R7",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L12,R8,T7,B7",
+      "ports": [
+        "L12",
+        "R8",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L12,R13,T7,B7",
+      "ports": [
+        "L12",
+        "R13",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L12,R14,T7,B7",
+      "ports": [
+        "L12",
+        "R14",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L13,R1,T0,B0",
+      "ports": [
+        "L13",
+        "R1",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L13,R1,T7,B7",
+      "ports": [
+        "L13",
+        "R1",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L13,R3,T0,B0",
+      "ports": [
+        "L13",
+        "R3",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L13,R4,T0,B0",
+      "ports": [
+        "L13",
+        "R4",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L13,R4,T7,B7",
+      "ports": [
+        "L13",
+        "R4",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L13,R7,T7,B7",
+      "ports": [
+        "L13",
+        "R7",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L13,R12,T0,B0",
+      "ports": [
+        "L13",
+        "R12",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L13,R13,T0,B0",
+      "ports": [
+        "L13",
+        "R13",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L13,R13,T7,B7",
+      "ports": [
+        "L13",
+        "R13",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L13,R14,T7,B7",
+      "ports": [
+        "L13",
+        "R14",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L14,R2,T0,B0",
+      "ports": [
+        "L14",
+        "R2",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L14,R2,T7,B7",
+      "ports": [
+        "L14",
+        "R2",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L14,R3,T0,B0",
+      "ports": [
+        "L14",
+        "R3",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L14,R4,T0,B0",
+      "ports": [
+        "L14",
+        "R4",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L14,R4,T7,B7",
+      "ports": [
+        "L14",
+        "R4",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L14,R8,T0,B0",
+      "ports": [
+        "L14",
+        "R8",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L14,R8,T7,B7",
+      "ports": [
+        "L14",
+        "R8",
+        "T7",
+        "B7"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L14,R11,T0,B0",
+      "ports": [
+        "L14",
+        "R11",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L14,R12,T0,B0",
+      "ports": [
+        "L14",
+        "R12",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L14,R13,T0,B0",
+      "ports": [
+        "L14",
+        "R13",
+        "T0",
+        "B0"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L15,R15,T3,B1",
+      "ports": [
+        "L15",
+        "R15",
+        "T3",
+        "B1"
+      ]
+    },
+    {
+      "topology": "LRTB",
+      "key": "L15,R15,T4,B6",
+      "ports": [
+        "L15",
+        "R15",
+        "T4",
+        "B6"
+      ]
+    }
+  ]
+}

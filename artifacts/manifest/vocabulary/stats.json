@@ -1,0 +1,54 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-graphics-vocabulary-stats",
+  "schemaVersion": 1,
+  "status": "provisional-graphics-v0",
+  "encodedOwners": 5796,
+  "uniqueEncodedBitmapKeys": 5796,
+  "uniqueAllocatedCodepoints": 5796,
+  "firstCodepoint": "U+00E000",
+  "lastAllocatedCodepoint": "U+00F6A3",
+  "reserveStart": "U+00F6A4",
+  "reserveEnd": "U+00F8FF",
+  "reserveSlots": 604,
+  "bmpPrivateUseCapacity": 6400,
+  "straightCodepointsUnchanged": true,
+  "semanticAliases": 10816,
+  "encodedSemanticAliases": 7424,
+  "rendererOnlySemanticAliases": 3392,
+  "rendererOnlyExactReuseAliases": 414,
+  "rendererOnlyDerivedAliases": 2978,
+  "rendererOnlyUniqueDerivedBitmaps": 2555,
+  "boundarySideStyleAliases": 9984,
+  "canonicalClassCounts": {
+    "straight": 746,
+    "solid-100": 1259,
+    "medium-75": 1269,
+    "light-25": 1315,
+    "half-50": 1207
+  },
+  "styleSemanticCounts": {
+    "straight": 832,
+    "solid": 1664,
+    "medium": 1664,
+    "light": 1664,
+    "half": 1664,
+    "dense": 1664,
+    "sparse": 1664
+  },
+  "rendererOnlyByStyle": {
+    "half": {
+      "exactReuse": 0,
+      "derived": 64
+    },
+    "dense": {
+      "exactReuse": 207,
+      "derived": 1457
+    },
+    "sparse": {
+      "exactReuse": 207,
+      "derived": 1457
+    }
+  }
+}

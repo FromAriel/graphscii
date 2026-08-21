@@ -1,0 +1,172 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-geometry-stats",
+  "schemaVersion": 2,
+  "status": "5A.2-allocation-free",
+  "demandedSemantics": 22428,
+  "theoreticalSemantics": 22528,
+  "workingGenericBudget": 600,
+  "protectedReserveSlots": 604,
+  "experimentalSlackSlots": 4,
+  "junctionAllocations": 0,
+  "boundarySafeIngress": true,
+  "balancedQuotas": {
+    "LRT": 120,
+    "LRB": 120,
+    "LTB": 120,
+    "RTB": 120,
+    "LRTB": 120
+  },
+  "proportionalQuotas": {
+    "LRT": 55,
+    "LRB": 55,
+    "LTB": 27,
+    "RTB": 27,
+    "LRTB": 436
+  },
+  "hybridSeedBudget": 300,
+  "hybridSeedQuotas": {
+    "LRT": 27,
+    "LRB": 27,
+    "LTB": 14,
+    "RTB": 14,
+    "LRTB": 218
+  },
+  "modelNames": [
+    "mathematical-demand-hub",
+    "symmetric-half-pixel-center",
+    "central-2x2-kernel",
+    "port-centroid-midpoint"
+  ],
+  "strategyNames": [
+    "demand-top-600",
+    "even-topology-balanced-600",
+    "even-space-proportional-600",
+    "hybrid-even-demand-600"
+  ],
+  "modelSummary": {
+    "mathematical-demand-hub": {
+      "semanticCount": 22428,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21705,
+      "semanticToRasterCompression": 1.03331,
+      "exactGraphicsV0ReuseSemantics": 0,
+      "exactGraphicsV0ReuseUniqueBitmaps": 0,
+      "novelUniqueBitmaps": 21705,
+      "boundaryPortCollisions": 608,
+      "sampleInvalid": []
+    },
+    "symmetric-half-pixel-center": {
+      "semanticCount": 22428,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21399,
+      "semanticToRasterCompression": 1.048086,
+      "exactGraphicsV0ReuseSemantics": 0,
+      "exactGraphicsV0ReuseUniqueBitmaps": 0,
+      "novelUniqueBitmaps": 21399,
+      "boundaryPortCollisions": 608,
+      "sampleInvalid": []
+    },
+    "central-2x2-kernel": {
+      "semanticCount": 22428,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21399,
+      "semanticToRasterCompression": 1.048086,
+      "exactGraphicsV0ReuseSemantics": 0,
+      "exactGraphicsV0ReuseUniqueBitmaps": 0,
+      "novelUniqueBitmaps": 21399,
+      "boundaryPortCollisions": 608,
+      "sampleInvalid": []
+    },
+    "port-centroid-midpoint": {
+      "semanticCount": 22428,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21911,
+      "semanticToRasterCompression": 1.023595,
+      "exactGraphicsV0ReuseSemantics": 0,
+      "exactGraphicsV0ReuseUniqueBitmaps": 0,
+      "novelUniqueBitmaps": 21911,
+      "boundaryPortCollisions": 608,
+      "sampleInvalid": []
+    }
+  },
+  "strategySummary": {
+    "demand-top-600": {
+      "topologyCounts": {
+        "LRT": 164,
+        "LRB": 164,
+        "LTB": 136,
+        "RTB": 134,
+        "LRTB": 2
+      },
+      "exactWeightedDemandCoveragePercent": 21.358223,
+      "uniqueCentroidRasters": 438,
+      "novelCentroidRasterOwners": 438,
+      "invalidCentroidRasters": 0,
+      "theoreticalAverageNearestPortDelta": 0.560884,
+      "theoreticalP95NearestPortDelta": 1,
+      "demandWeightedAverageNearestPortDelta": 0.18192
+    },
+    "even-topology-balanced-600": {
+      "topologyCounts": {
+        "LRT": 120,
+        "LRB": 120,
+        "LTB": 120,
+        "RTB": 120,
+        "LRTB": 120
+      },
+      "exactWeightedDemandCoveragePercent": 15.088953,
+      "uniqueCentroidRasters": 467,
+      "novelCentroidRasterOwners": 467,
+      "invalidCentroidRasters": 0,
+      "theoreticalAverageNearestPortDelta": 0.204765,
+      "theoreticalP95NearestPortDelta": 0.4,
+      "demandWeightedAverageNearestPortDelta": 0.126919
+    },
+    "even-space-proportional-600": {
+      "topologyCounts": {
+        "LRT": 55,
+        "LRB": 55,
+        "LTB": 27,
+        "RTB": 27,
+        "LRTB": 436
+      },
+      "exactWeightedDemandCoveragePercent": 7.981755,
+      "uniqueCentroidRasters": 552,
+      "novelCentroidRasterOwners": 552,
+      "invalidCentroidRasters": 0,
+      "theoreticalAverageNearestPortDelta": 0.163349,
+      "theoreticalP95NearestPortDelta": 0.285714,
+      "demandWeightedAverageNearestPortDelta": 0.174405
+    },
+    "hybrid-even-demand-600": {
+      "topologyCounts": {
+        "LRT": 109,
+        "LRB": 110,
+        "LTB": 82,
+        "RTB": 81,
+        "LRTB": 218
+      },
+      "exactWeightedDemandCoveragePercent": 17.255414,
+      "uniqueCentroidRasters": 484,
+      "novelCentroidRasterOwners": 484,
+      "invalidCentroidRasters": 0,
+      "theoreticalAverageNearestPortDelta": 0.174906,
+      "theoreticalP95NearestPortDelta": 0.285714,
+      "demandWeightedAverageNearestPortDelta": 0.151839
+    }
+  }
+}
