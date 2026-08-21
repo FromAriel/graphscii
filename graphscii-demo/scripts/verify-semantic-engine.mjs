@@ -48,8 +48,8 @@ for (const forbidden of [
 }
 for (const required of [
   "buildGeometryGrid",
-  "normalizeStraightBacktracks",
-  "validateSharedPorts",
+  "fitStrokeGeometry",
+  "validateFittedSharedPorts",
   "resolveStraight",
   "resolveFillForInterior",
   "resolveConnector",
@@ -63,8 +63,8 @@ if (!registrySource.includes("connectorsBySignature") || !registrySource.include
 if (registrySource.includes("Connector signature ${signature} is ambiguous")) {
   throw new Error("Connector registry regressed to rejecting valid cross-family signature aliases at startup.");
 }
-if (!lineNormalizationSource.includes("same-edge pair") || !lineNormalizationSource.includes("oppositePort")) {
-  throw new Error("Line normalization no longer contains the explicit same-edge backtrack rule.");
+for (const required of ["coalesceSharedSeams", "addEndpointCaps", "pruneNonterminalSpurs", "fitStrokeGeometry", "validateFittedSharedPorts"]) {
+  if (!lineNormalizationSource.includes(required)) throw new Error(`Stroke fitter is missing required stage: ${required}.`);
 }
 const fillMethodStart = registrySource.indexOf("resolveFillForInterior(");
 const fillMethodEnd = registrySource.indexOf("resolveFullFill(", fillMethodStart);
@@ -108,8 +108,8 @@ if (normalizationCompiled.includes('from "./geometry-engine"')) {
 }
 const lineNormalization = await import(dataUrl(normalizationCompiled));
 
-const { buildGeometryGrid, validateSharedPorts, maxJunctionArms } = geometry;
-const { normalizeStraightBacktracks } = lineNormalization;
+const { buildGeometryGrid, maxJunctionArms } = geometry;
+const { fitStrokeGeometry, validateFittedSharedPorts } = lineNormalization;
 const { junctionTopology } = connectorTopology;
 
 function expect(condition, message) {
@@ -127,11 +127,11 @@ const forwardLine = { id: "line", type: "line", start: { x: 1.25, y: 5.5 }, end:
 const reverseLine = { ...forwardLine, start: forwardLine.end, end: forwardLine.start };
 const forwardGrid = buildGeometryGrid([forwardLine], 16, 8);
 const reverseGrid = buildGeometryGrid([reverseLine], 16, 8);
-normalizeStraightBacktracks(forwardGrid, [forwardLine], 16, 8);
-normalizeStraightBacktracks(reverseGrid, [reverseLine], 16, 8);
-expect(validateSharedPorts(forwardGrid, 16, 8).length === 0, "Forward line produced an impossible shared seam mismatch.");
-expect(validateSharedPorts(reverseGrid, 16, 8).length === 0, "Reverse line produced an impossible shared seam mismatch.");
-expect(JSON.stringify(cellSignature(forwardGrid)) === JSON.stringify(cellSignature(reverseGrid)), "Reversing one line changed its GraphSCII port semantics.");
+const forwardFit = fitStrokeGeometry(forwardGrid, [forwardLine], 16, 8);
+const reverseFit = fitStrokeGeometry(reverseGrid, [reverseLine], 16, 8);
+expect(validateFittedSharedPorts(forwardGrid, 16, 8, forwardFit.terminalPorts).length === 0, "Forward line produced an impossible fitted shared seam mismatch.");
+expect(validateFittedSharedPorts(reverseGrid, 16, 8, reverseFit.terminalPorts).length === 0, "Reverse line produced an impossible fitted shared seam mismatch.");
+expect(JSON.stringify(cellSignature(forwardGrid)) === JSON.stringify(cellSignature(reverseGrid)), "Reversing one line changed its fitted GraphSCII port semantics.");
 
 const tSegments = [
   { a: { x: 0, y: 8 }, b: { x: 7, y: 8 }, objectId: "a", objectType: "line" },
@@ -152,22 +152,23 @@ expect(fixture.objects[0].points?.length === 379 && fixture.objects[0].width ===
 expect(invalidOutput.length > 1000 && [...invalidOutput].some((character) => character.codePointAt(0) >= 0xe000), "Invalid-output regression fixture is missing its GraphSCII PUA text.");
 
 const fixtureGrid = buildGeometryGrid(fixture.objects, fixture.columns, fixture.rows);
-normalizeStraightBacktracks(fixtureGrid, fixture.objects, fixture.columns, fixture.rows);
-const fixtureSeams = validateSharedPorts(fixtureGrid, fixture.columns, fixture.rows);
-expect(fixtureSeams.length === 0, `Supplied failing drawing still has a constructed seam mismatch: ${fixtureSeams[0] ?? "unknown"}.`);
+const fixtureFit = fitStrokeGeometry(fixtureGrid, fixture.objects, fixture.columns, fixture.rows);
+const fixtureSeams = validateFittedSharedPorts(fixtureGrid, fixture.columns, fixture.rows, fixtureFit.terminalPorts);
+expect(fixtureSeams.length === 0, `Supplied failing drawing still has a fitted seam mismatch: ${fixtureSeams[0] ?? "unknown"}.`);
 let checkedStraightCells = 0;
 for (const cell of fixtureGrid.cells.values()) {
   const ports = [...cell.ports].sort();
   if (maxJunctionArms(cell.segments) >= 3 || ports.length !== 2) continue;
   checkedStraightCells += 1;
   if (!pairIndex.entries?.[`${ports[0]}>${ports[1]}`] && !pairIndex.entries?.[`${ports[1]}>${ports[0]}`]) {
-    throw new Error(`Regression fixture produced a two-port cell outside the published straight table after normalization: ${ports.join(" ↔ ")}.`);
+    throw new Error(`Regression fixture produced a two-port cell outside the published straight table after fitting: ${ports.join(" ↔ ")}.`);
   }
 }
 expect(checkedStraightCells >= 250, `Regression fixture exercised only ${checkedStraightCells} exact two-port cells; expected a substantial straight-path corpus.`);
 
 console.log(
-  `GraphSCII exact semantic engine verified: shared seams are single events; reverse geometry is invariant; `
-  + `same-edge sub-cell backtracks normalize before lookup; T/X classify as orthogonal/diagonal 3/4-arm junctions; `
-  + `failing freehand fixture exercises ${checkedStraightCells} published two-port cells with zero seam mismatches.`,
+  `GraphSCII exact semantic engine verified: shared seams are fitted once; reverse geometry is invariant; `
+  + `multi-pass crossings are coalesced before lookup; endpoint caps and nonterminal spurs are deterministic; `
+  + `T/X classify as orthogonal/diagonal 3/4-arm junctions; failing freehand fixture exercises ${checkedStraightCells} `
+  + `published two-port cells with zero fitted seam mismatches.`,
 );
