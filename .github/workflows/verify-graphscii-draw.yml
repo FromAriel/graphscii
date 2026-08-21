@@ -22,19 +22,26 @@ jobs:
           node-version: 22
       - name: Verify deterministic lookup
         run: node graphscii-demo/verify.mjs
-      - name: Check standalone browser runtime syntax
-        run: node --check graphscii-demo/app-runtime-v2.js
+      - name: Check v3 browser runtime syntax
+        run: |
+          node --check graphscii-demo/draw-core-v3.js
+          node --check graphscii-demo/draw-ui-v3.js
+      - name: Verify topology invariants
+        run: |
+          node -e "global.window=global; require('./graphscii-demo/draw-core-v3.js'); GraphSCIICore.selfTest(); console.log('GraphSCII topology self-test passed.')"
       - name: Reject CSP-hostile browser execution
         shell: bash
         run: |
-          if grep -En "eval[[:space:]]*\\(|new[[:space:]]+Function|createObjectURL|new[[:space:]]+Blob|import[[:space:]]*\\(" graphscii-demo/app-runtime-v2.js; then
+          if grep -En "eval[[:space:]]*\\(|new[[:space:]]+Function|createObjectURL|new[[:space:]]+Blob|import[[:space:]]*\\(" graphscii-demo/draw-core-v3.js graphscii-demo/draw-ui-v3.js; then
             echo "CSP-hostile JavaScript construct found"
             exit 1
           fi
-          if grep -Eq "app\\.mjs|src=\"\\./app\\.js\"" graphscii-demo/index.html; then
+          if grep -Eq "app\\.mjs|app-runtime-v2\\.js|src=\"\\./app\\.js\"" graphscii-demo/index.html; then
             echo "Obsolete browser entrypoint referenced"
             exit 1
           fi
+          grep -q 'draw-core-v3.js' graphscii-demo/index.html
+          grep -q 'draw-ui-v3.js' graphscii-demo/index.html
       - name: Check local server syntax
         run: python -m py_compile graphscii-demo/serve.py
       - name: Verify strict server headers and runtime MIME
@@ -44,7 +51,7 @@ jobs:
           SERVER_PID=$!
           trap 'kill $SERVER_PID' EXIT
           sleep 1
-          curl -fsSI http://127.0.0.1:8765/graphscii-demo/app-runtime-v2.js > /tmp/runtime-headers
+          curl -fsSI http://127.0.0.1:8765/graphscii-demo/draw-core-v3.js > /tmp/runtime-headers
           grep -qi '^Content-Type: text/javascript' /tmp/runtime-headers
           grep -qi '^Cache-Control: .*no-store' /tmp/runtime-headers
           grep -qi "^Content-Security-Policy: .*script-src 'self'" /tmp/runtime-headers
@@ -52,4 +59,5 @@ jobs:
             echo "unsafe-eval must never be enabled"
             exit 1
           fi
-          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'app-runtime-v2.js'
+          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'draw-core-v3.js'
+          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'draw-ui-v3.js'
