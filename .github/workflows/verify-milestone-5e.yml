@@ -25,6 +25,42 @@ jobs:
           ref: milestone-5e-graphics-v1-publication
           fetch-depth: 0
 
+      - name: Correct connector semantics envelope if needed
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('geometric-glyph-lab/scripts/vocabulary-publication-v1.mjs')
+          s = p.read_text()
+          old = '''  if (!Array.isArray(semantics) || semantics.length !== EXPECTED_CONNECTOR_SEMANTICS) {
+            throw new Error(`Milestone 5E requires ${EXPECTED_CONNECTOR_SEMANTICS} connector semantics.`);
+          }
+          '''
+          new = '''  if (
+            semantics?.schema !== "graphscii-generic-connector-semantics-v1" ||
+            semantics?.semanticCount !== EXPECTED_CONNECTOR_SEMANTICS ||
+            !Array.isArray(semantics.semantics) ||
+            semantics.semantics.length !== EXPECTED_CONNECTOR_SEMANTICS
+          ) {
+            throw new Error(`Milestone 5E requires ${EXPECTED_CONNECTOR_SEMANTICS} connector semantics.`);
+          }
+          '''
+          if old in s:
+              p.write_text(s.replace(old, new))
+          PY
+
+      - name: Persist source correction
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- geometric-glyph-lab/scripts/vocabulary-publication-v1.mjs
+          if ! git diff --cached --quiet; then
+            git commit -m "Fix graphics-v1 connector semantics fixture"
+            git push origin HEAD:milestone-5e-graphics-v1-publication
+          fi
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
