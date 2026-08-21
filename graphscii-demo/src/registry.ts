@@ -404,7 +404,7 @@ export class GlyphRegistry {
         for (const side of ["A", "B"] as const) {
           const ruleKey = `${family}:${authoredStart}>${authoredEnd}:side${side}:${style}`;
           const glyphId = this.fillRuleEntries[ruleKey];
-          if (!Number.isInteger(glyphId)) continue;
+          if (glyphId === undefined) continue;
           const glyph = this.byGlyphId.get(glyphId);
           if (!glyph) throw new Error(`GraphSCII fill rule ${ruleKey} resolved to missing glyph ${glyphId}.`);
           results.set(glyph.codepointValue, glyph);
