@@ -8,6 +8,7 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const demoRoot = path.resolve(scriptDir, "..");
 const repoRoot = path.resolve(demoRoot, "..");
 const geometryPath = path.join(demoRoot, "src", "geometry-engine.ts");
+const lineNormalizationPath = path.join(demoRoot, "src", "line-normalization.ts");
 const connectorTopologyPath = path.join(demoRoot, "src", "connector-topology.ts");
 const solverPath = path.join(demoRoot, "src", "solver.ts");
 const registryPath = path.join(demoRoot, "src", "semantic-registry.ts");
@@ -20,8 +21,9 @@ function decodeFixture(encoded) {
   return gunzipSync(Buffer.from(encoded.trim(), "base64")).toString("utf8");
 }
 
-const [geometrySource, connectorTopologySource, solverSource, registrySource, syncSource, fixtureEncoded, invalidOutputEncoded, pairIndex] = await Promise.all([
+const [geometrySource, lineNormalizationSource, connectorTopologySource, solverSource, registrySource, syncSource, fixtureEncoded, invalidOutputEncoded, pairIndex] = await Promise.all([
   readFile(geometryPath, "utf8"),
+  readFile(lineNormalizationPath, "utf8"),
   readFile(connectorTopologyPath, "utf8"),
   readFile(solverPath, "utf8"),
   readFile(registryPath, "utf8"),
@@ -44,7 +46,15 @@ for (const forbidden of [
 ]) {
   if (solverSource.includes(forbidden)) throw new Error(`Exact solver contains forbidden heuristic path: ${forbidden}.`);
 }
-for (const required of ["buildGeometryGrid", "validateSharedPorts", "resolveStraight", "resolveFillForInterior", "resolveConnector", "junctionTopology"]) {
+for (const required of [
+  "buildGeometryGrid",
+  "normalizeStraightBacktracks",
+  "validateSharedPorts",
+  "resolveStraight",
+  "resolveFillForInterior",
+  "resolveConnector",
+  "junctionTopology",
+]) {
   if (!solverSource.includes(required)) throw new Error(`Exact solver is missing required semantic path: ${required}.`);
 }
 if (!registrySource.includes("connectorsBySignature") || !registrySource.includes("rule.family === family")) {
@@ -52,6 +62,9 @@ if (!registrySource.includes("connectorsBySignature") || !registrySource.include
 }
 if (registrySource.includes("Connector signature ${signature} is ambiguous")) {
   throw new Error("Connector registry regressed to rejecting valid cross-family signature aliases at startup.");
+}
+if (!lineNormalizationSource.includes("same-edge pair") || !lineNormalizationSource.includes("oppositePort")) {
+  throw new Error("Line normalization no longer contains the explicit same-edge backtrack rule.");
 }
 const fillMethodStart = registrySource.indexOf("resolveFillForInterior(");
 const fillMethodEnd = registrySource.indexOf("resolveFullFill(", fillMethodStart);
@@ -67,19 +80,36 @@ if (!syncSource.includes("by-boundary-side-style.json") || !syncSource.includes(
   throw new Error("Runtime asset sync is not copying the canonical fill semantic indexes directly.");
 }
 
-function compileModule(sourceText, label) {
-  const compiled = ts.transpileModule(sourceText, {
+function transpile(sourceText) {
+  return ts.transpileModule(sourceText, {
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 },
   }).outputText;
-  if (/from\s+["']\.\/(types|geometry-engine)["']/u.test(compiled)) {
-    throw new Error(`${label} runtime unexpectedly retained a type-only local import.`);
-  }
-  return import(`data:text/javascript;base64,${Buffer.from(compiled, "utf8").toString("base64")}`);
 }
 
-const geometry = await compileModule(geometrySource, "geometry-engine");
-const connectorTopology = await compileModule(connectorTopologySource, "connector-topology");
+function dataUrl(sourceText) {
+  return `data:text/javascript;base64,${Buffer.from(sourceText, "utf8").toString("base64")}`;
+}
+
+const geometryCompiled = transpile(geometrySource);
+if (/from\s+["']\.\/types["']/u.test(geometryCompiled)) throw new Error("geometry-engine runtime unexpectedly retained a type-only import.");
+const geometryUrl = dataUrl(geometryCompiled);
+const geometry = await import(geometryUrl);
+
+const connectorCompiled = transpile(connectorTopologySource);
+if (/from\s+["']\.\/(types|geometry-engine)["']/u.test(connectorCompiled)) {
+  throw new Error("connector-topology runtime unexpectedly retained a type-only local import.");
+}
+const connectorTopology = await import(dataUrl(connectorCompiled));
+
+let normalizationCompiled = transpile(lineNormalizationSource);
+normalizationCompiled = normalizationCompiled.replace('from "./geometry-engine"', `from "${geometryUrl}"`);
+if (normalizationCompiled.includes('from "./geometry-engine"')) {
+  throw new Error("line-normalization runtime dependency was not rebound to the verified geometry engine.");
+}
+const lineNormalization = await import(dataUrl(normalizationCompiled));
+
 const { buildGeometryGrid, validateSharedPorts, maxJunctionArms } = geometry;
+const { normalizeStraightBacktracks } = lineNormalization;
 const { junctionTopology } = connectorTopology;
 
 function expect(condition, message) {
@@ -97,6 +127,8 @@ const forwardLine = { id: "line", type: "line", start: { x: 1.25, y: 5.5 }, end:
 const reverseLine = { ...forwardLine, start: forwardLine.end, end: forwardLine.start };
 const forwardGrid = buildGeometryGrid([forwardLine], 16, 8);
 const reverseGrid = buildGeometryGrid([reverseLine], 16, 8);
+normalizeStraightBacktracks(forwardGrid, [forwardLine], 16, 8);
+normalizeStraightBacktracks(reverseGrid, [reverseLine], 16, 8);
 expect(validateSharedPorts(forwardGrid, 16, 8).length === 0, "Forward line produced an impossible shared seam mismatch.");
 expect(validateSharedPorts(reverseGrid, 16, 8).length === 0, "Reverse line produced an impossible shared seam mismatch.");
 expect(JSON.stringify(cellSignature(forwardGrid)) === JSON.stringify(cellSignature(reverseGrid)), "Reversing one line changed its GraphSCII port semantics.");
@@ -120,6 +152,7 @@ expect(fixture.objects[0].points?.length === 379 && fixture.objects[0].width ===
 expect(invalidOutput.length > 1000 && [...invalidOutput].some((character) => character.codePointAt(0) >= 0xe000), "Invalid-output regression fixture is missing its GraphSCII PUA text.");
 
 const fixtureGrid = buildGeometryGrid(fixture.objects, fixture.columns, fixture.rows);
+normalizeStraightBacktracks(fixtureGrid, fixture.objects, fixture.columns, fixture.rows);
 const fixtureSeams = validateSharedPorts(fixtureGrid, fixture.columns, fixture.rows);
 expect(fixtureSeams.length === 0, `Supplied failing drawing still has a constructed seam mismatch: ${fixtureSeams[0] ?? "unknown"}.`);
 let checkedStraightCells = 0;
@@ -128,13 +161,13 @@ for (const cell of fixtureGrid.cells.values()) {
   if (maxJunctionArms(cell.segments) >= 3 || ports.length !== 2) continue;
   checkedStraightCells += 1;
   if (!pairIndex.entries?.[`${ports[0]}>${ports[1]}`] && !pairIndex.entries?.[`${ports[1]}>${ports[0]}`]) {
-    throw new Error(`Regression fixture produced a two-port cell outside the published straight table: ${ports.join(" ↔ ")}.`);
+    throw new Error(`Regression fixture produced a two-port cell outside the published straight table after normalization: ${ports.join(" ↔ ")}.`);
   }
 }
 expect(checkedStraightCells >= 250, `Regression fixture exercised only ${checkedStraightCells} exact two-port cells; expected a substantial straight-path corpus.`);
 
 console.log(
   `GraphSCII exact semantic engine verified: shared seams are single events; reverse geometry is invariant; `
-  + `T/X classify as orthogonal/diagonal 3/4-arm junctions; failing freehand fixture exercises ${checkedStraightCells} `
-  + `published two-port cells with zero seam mismatches.`,
+  + `same-edge sub-cell backtracks normalize before lookup; T/X classify as orthogonal/diagonal 3/4-arm junctions; `
+  + `failing freehand fixture exercises ${checkedStraightCells} published two-port cells with zero seam mismatches.`,
 );
