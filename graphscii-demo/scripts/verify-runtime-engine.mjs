@@ -90,7 +90,9 @@ for (const [urlPath, filePath] of Object.entries(assetPaths)) {
 
 globalThis.window = { location: { href: "http://graphscii.test/" } };
 globalThis.fetch = async (input) => {
-  const url = new URL(typeof input === "string" ? input : input.url);
+  const url = input instanceof URL
+    ? input
+    : new URL(typeof input === "string" ? input : input.url);
   const document = assetDocuments.get(url.pathname);
   if (!document) {
     return { ok: false, status: 404, json: async () => ({}) };
