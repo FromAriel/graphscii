@@ -33,15 +33,6 @@ function oppositePort(port: PortName): PortName {
   }
 }
 
-function neighborForEdge(column: number, row: number, edge: PortEdge): { column: number; row: number } {
-  switch (edge) {
-    case "T": return { column, row: row - 1 };
-    case "B": return { column, row: row + 1 };
-    case "L": return { column: column - 1, row };
-    case "R": return { column: column + 1, row };
-  }
-}
-
 function cellKey(column: number, row: number, columns: number): number {
   return row * columns + column;
 }
@@ -92,6 +83,12 @@ function representativeIndex(indices: readonly number[], maximum: number): numbe
   return Math.max(0, Math.min(maximum, Math.floor((lower + upper) / 2 + 0.5)));
 }
 
+/**
+ * Fit every shared edge once per authored object. If a high-resolution path
+ * crosses the same seam several times inside one GraphSCII cell neighborhood,
+ * all of those crossings become one deterministic representative port and the
+ * identical port index is written to both neighboring cells.
+ */
 function coalesceSharedSeams(grid: GeometryGrid, columns: number, rows: number): void {
   for (let row = 0; row < rows; row += 1) {
     for (let column = 0; column < columns - 1; column += 1) {
@@ -193,7 +190,9 @@ function matchingTransition(
   else if (dc === 0 && dr === -1) edge = "T";
 
   if (edge) {
-    const candidates = [...fromPorts].filter((port) => portEdge(port) === edge).sort((a, b) => portIndex(a) - portIndex(b));
+    const candidates = [...fromPorts]
+      .filter((port) => portEdge(port) === edge)
+      .sort((a, b) => portIndex(a) - portIndex(b));
     for (const port of candidates) {
       const opposite = oppositePort(port);
       if (toPorts.has(opposite)) return [port, opposite];
@@ -212,70 +211,107 @@ function matchingTransition(
   return null;
 }
 
-function cellForPoint(point: Point, columns: number, rows: number): number | null {
-  const width = columns * CELL_WIDTH;
-  const height = rows * CELL_HEIGHT;
-  if (point.x < -EPSILON || point.y < -EPSILON || point.x > width + EPSILON || point.y > height + EPSILON) return null;
-  const x = Math.max(0, Math.min(width - EPSILON, point.x));
-  const y = Math.max(0, Math.min(height - EPSILON, point.y));
-  const column = Math.max(0, Math.min(columns - 1, Math.floor(x / CELL_WIDTH)));
-  const row = Math.max(0, Math.min(rows - 1, Math.floor(y / CELL_HEIGHT)));
-  return cellKey(column, row, columns);
+function pointAt(a: Point, b: Point, t: number): Point {
+  return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
 }
 
-function sampledCellWalk(path: readonly Point[], columns: number, rows: number): number[] {
-  const walk: number[] = [];
-  const append = (key: number | null): void => {
-    if (key === null || walk[walk.length - 1] === key) return;
-    walk.push(key);
-  };
+function clipSegmentToDocument(
+  a: Point,
+  b: Point,
+  width: number,
+  height: number,
+): { a: Point; b: Point } | null {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  let t0 = 0;
+  let t1 = 1;
+  const tests: Array<[number, number]> = [
+    [-dx, a.x],
+    [dx, width - a.x],
+    [-dy, a.y],
+    [dy, height - a.y],
+  ];
+  for (const [p, q] of tests) {
+    if (Math.abs(p) <= EPSILON) {
+      if (q < 0) return null;
+      continue;
+    }
+    const r = q / p;
+    if (p < 0) t0 = Math.max(t0, r);
+    else t1 = Math.min(t1, r);
+    if (t0 - t1 > EPSILON) return null;
+  }
+  return { a: pointAt(a, b, t0), b: pointAt(a, b, t1) };
+}
 
+function initialCellIndex(value: number, delta: number, size: number, count: number): number {
+  const scaled = value / size;
+  const nearest = Math.round(scaled);
+  let index: number;
+  if (Math.abs(scaled - nearest) <= EPSILON) index = delta < 0 ? nearest - 1 : nearest;
+  else index = Math.floor(scaled);
+  return Math.max(0, Math.min(count - 1, index));
+}
+
+/**
+ * Produce the same ordered cell traversal as geometry-engine.ts::traverseSegment.
+ * This is deliberately DDA-based instead of point sampling: exact boundary and
+ * exact-corner decisions must agree with the ports already emitted by the
+ * geometry engine or a later semantic lookup would be reasoning about a
+ * different path.
+ */
+function walkSegmentCells(sourceA: Point, sourceB: Point, columns: number, rows: number): number[] {
+  const clipped = clipSegmentToDocument(
+    sourceA,
+    sourceB,
+    columns * CELL_WIDTH,
+    rows * CELL_HEIGHT,
+  );
+  if (!clipped) return [];
+  const a = clipped.a;
+  const b = clipped.b;
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  if (Math.hypot(dx, dy) <= EPSILON) return [];
+
+  let column = initialCellIndex(a.x, dx, CELL_WIDTH, columns);
+  let row = initialCellIndex(a.y, dy, CELL_HEIGHT, rows);
+  let t = 0;
+  const cells: number[] = [cellKey(column, row, columns)];
+
+  while (t < 1 - EPSILON) {
+    const boundaryX = dx > 0 ? (column + 1) * CELL_WIDTH : column * CELL_WIDTH;
+    const boundaryY = dy > 0 ? (row + 1) * CELL_HEIGHT : row * CELL_HEIGHT;
+    let tx = Math.abs(dx) <= EPSILON ? Number.POSITIVE_INFINITY : (boundaryX - a.x) / dx;
+    let ty = Math.abs(dy) <= EPSILON ? Number.POSITIVE_INFINITY : (boundaryY - a.y) / dy;
+    if (tx <= t + EPSILON) tx = Number.POSITIVE_INFINITY;
+    if (ty <= t + EPSILON) ty = Number.POSITIVE_INFINITY;
+    const nextT = Math.min(1, tx, ty);
+    if (nextT >= 1 - EPSILON) break;
+
+    const crossX = Math.abs(tx - nextT) <= EPSILON;
+    const crossY = Math.abs(ty - nextT) <= EPSILON;
+    if (crossX) column += dx > 0 ? 1 : -1;
+    if (crossY) row += dy > 0 ? 1 : -1;
+    if (!crossX && !crossY) break;
+    if (column < 0 || row < 0 || column >= columns || row >= rows) break;
+
+    const key = cellKey(column, row, columns);
+    if (cells[cells.length - 1] !== key) cells.push(key);
+    t = nextT;
+  }
+  return cells;
+}
+
+function orderedCellWalk(path: readonly Point[], columns: number, rows: number): number[] {
+  const walk: number[] = [];
   for (let index = 1; index < path.length; index += 1) {
-    const a = path[index - 1]!;
-    const b = path[index]!;
-    const dx = b.x - a.x;
-    const dy = b.y - a.y;
-    const steps = Math.max(1, Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) * 2));
-    for (let step = index === 1 ? 0 : 1; step <= steps; step += 1) {
-      const t = step / steps;
-      append(cellForPoint({ x: a.x + dx * t, y: a.y + dy * t }, columns, rows));
+    const cells = walkSegmentCells(path[index - 1]!, path[index]!, columns, rows);
+    for (const key of cells) {
+      if (walk[walk.length - 1] !== key) walk.push(key);
     }
   }
   return walk;
-}
-
-function expandDiagonalSteps(
-  walk: readonly number[],
-  snapshot: ReadonlyMap<number, ReadonlySet<PortName>>,
-  columns: number,
-  rows: number,
-): number[] {
-  if (walk.length < 2) return [...walk];
-  const expanded = [walk[0]!];
-  for (let index = 1; index < walk.length; index += 1) {
-    const previous = expanded[expanded.length - 1]!;
-    const next = walk[index]!;
-    const dc = keyColumn(next, columns) - keyColumn(previous, columns);
-    const dr = keyRow(next, columns) - keyRow(previous, columns);
-    if (Math.abs(dc) <= 1 && Math.abs(dr) <= 1 && Math.abs(dc) + Math.abs(dr) <= 1) {
-      expanded.push(next);
-      continue;
-    }
-
-    if (Math.abs(dc) === 1 && Math.abs(dr) === 1 && !matchingTransition(previous, next, snapshot, columns)) {
-      const candidates = [
-        { column: keyColumn(next, columns), row: keyRow(previous, columns) },
-        { column: keyColumn(previous, columns), row: keyRow(next, columns) },
-      ].filter((candidate) => candidate.column >= 0 && candidate.row >= 0 && candidate.column < columns && candidate.row < rows);
-      const intermediate = candidates
-        .map((candidate) => cellKey(candidate.column, candidate.row, columns))
-        .find((candidateKey) => matchingTransition(previous, candidateKey, snapshot, columns)
-          && matchingTransition(candidateKey, next, snapshot, columns));
-      if (intermediate !== undefined) expanded.push(intermediate);
-    }
-    expanded.push(next);
-  }
-  return expanded;
 }
 
 function loopEraseWalk(walk: readonly number[]): number[] {
@@ -302,6 +338,10 @@ function addKeptPort(kept: Map<number, Set<PortName>>, key: number, port: PortNa
   kept.set(key, ports);
 }
 
+function portList(snapshot: ReadonlyMap<number, ReadonlySet<PortName>>, key: number): string {
+  return [...(snapshot.get(key) ?? [])].sort().join(",") || "none";
+}
+
 function rewriteOpenObjectWalk(
   grid: GeometryGrid,
   object: DrawingObject,
@@ -316,16 +356,19 @@ function rewriteOpenObjectWalk(
 
   for (const path of paths) {
     if (path.length < 2) continue;
-    const sampled = sampledCellWalk(path, columns, rows);
-    const expanded = expandDiagonalSteps(sampled, snapshot, columns, rows);
-    const walk = loopEraseWalk(expanded);
+    const walk = loopEraseWalk(orderedCellWalk(path, columns, rows));
     for (const key of walk) retained.add(key);
     for (let index = 1; index < walk.length; index += 1) {
       const fromKey = walk[index - 1]!;
       const toKey = walk[index]!;
       const transition = matchingTransition(fromKey, toKey, snapshot, columns);
       if (!transition) {
-        throw new Error(`GraphSCII stroke fitting could not preserve ordered transition ${fromKey} -> ${toKey} for ${object.id}.`);
+        throw new Error(
+          `GraphSCII stroke fitting could not preserve ordered transition ${fromKey} `
+          + `(${keyColumn(fromKey, columns)},${keyRow(fromKey, columns)}; ${portList(snapshot, fromKey)}) -> `
+          + `${toKey} (${keyColumn(toKey, columns)},${keyRow(toKey, columns)}; ${portList(snapshot, toKey)}) `
+          + `for ${object.id}.`,
+        );
       }
       addKeptPort(keptPorts, fromKey, transition[0]);
       addKeptPort(keptPorts, toKey, transition[1]);
@@ -386,7 +429,11 @@ function endpointRayHits(point: Point, adjacent: Point, column: number, row: num
     if (t < -EPSILON) return;
     const y = point.y + t * dy;
     if (y < y0 - EPSILON || y > y1 + EPSILON) return;
-    hits.push({ edge, index: Math.max(0, Math.min(CELL_HEIGHT - 1, Math.floor(y - y0 + 0.5))), distance: Math.max(0, t) * Math.hypot(dx, dy) });
+    hits.push({
+      edge,
+      index: Math.max(0, Math.min(CELL_HEIGHT - 1, Math.floor(y - y0 + 0.5))),
+      distance: Math.max(0, t) * Math.hypot(dx, dy),
+    });
   };
   const addHorizontal = (edge: "T" | "B", y: number): void => {
     if (Math.abs(dy) <= EPSILON) return;
@@ -394,7 +441,11 @@ function endpointRayHits(point: Point, adjacent: Point, column: number, row: num
     if (t < -EPSILON) return;
     const x = point.x + t * dx;
     if (x < x0 - EPSILON || x > x1 + EPSILON) return;
-    hits.push({ edge, index: Math.max(0, Math.min(CELL_WIDTH - 1, Math.floor(x - x0 + 0.5))), distance: Math.max(0, t) * Math.hypot(dx, dy) });
+    hits.push({
+      edge,
+      index: Math.max(0, Math.min(CELL_WIDTH - 1, Math.floor(x - x0 + 0.5))),
+      distance: Math.max(0, t) * Math.hypot(dx, dy),
+    });
   };
 
   addVertical("L", x0);
@@ -417,7 +468,8 @@ function addTerminalPort(
   const key = cellKey(column, row, columns);
   const cell = grid.cells.get(key);
   const objectCell = cell?.byObject.get(objectId);
-  if (!cell || !objectCell) return;
+  if (!cell || !objectCell || objectCell.ports.size >= 2) return;
+
   const existingEdges = new Set([...objectCell.ports].map(portEdge));
   const hits = endpointRayHits(point, adjacent, column, row);
   const preferred = hits.find((hit) => !existingEdges.has(hit.edge)) ?? hits[0];
@@ -445,6 +497,12 @@ function addEndpointCaps(
   }
 }
 
+/**
+ * Fit authored stroke geometry before any glyph is chosen. Shared crossings are
+ * coalesced, then every open path is converted through the same direction-aware
+ * DDA cell traversal used by the geometry engine and loop-erased at character
+ * resolution. This is the only approximation stage for ordinary strokes.
+ */
 export function fitStrokeGeometry(
   grid: GeometryGrid,
   objects: readonly DrawingObject[],
