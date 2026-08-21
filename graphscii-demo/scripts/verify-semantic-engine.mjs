@@ -1,0 +1,112 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import ts from "typescript";
+
+const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+const demoRoot = path.resolve(scriptDir, "..");
+const repoRoot = path.resolve(demoRoot, "..");
+const geometryPath = path.join(demoRoot, "src", "geometry-engine.ts");
+const solverPath = path.join(demoRoot, "src", "solver.ts");
+const registryPath = path.join(demoRoot, "src", "registry.ts");
+const syncPath = path.join(demoRoot, "scripts", "sync-assets.mjs");
+const fixturePath = path.join(demoRoot, "fixtures", "regressions", "failing-freehand.graphscii");
+const pairPath = path.join(repoRoot, "artifacts", "manifest", "indexes", "by-connection-pair.json");
+
+const [geometrySource, solverSource, registrySource, syncSource, fixture, pairIndex] = await Promise.all([
+  readFile(geometryPath, "utf8"),
+  readFile(solverPath, "utf8"),
+  readFile(registryPath, "utf8"),
+  readFile(syncPath, "utf8"),
+  readFile(fixturePath, "utf8").then(JSON.parse),
+  readFile(pairPath, "utf8").then(JSON.parse),
+]);
+
+for (const forbidden of [
+  "scoreCandidates",
+  "straightCandidatesNearPixelCount",
+  "fillCandidatesNearPixelCount",
+  "CONTINUITY_WEIGHT",
+  "boundaryMismatch",
+  "coverageError",
+  "Rasterizer",
+]) {
+  if (solverSource.includes(forbidden)) throw new Error(`Exact solver contains forbidden heuristic path: ${forbidden}.`);
+}
+for (const required of ["buildGeometryGrid", "validateSharedPorts", "resolveStraight", "resolveFillForInterior", "resolveConnector"]) {
+  if (!solverSource.includes(required)) throw new Error(`Exact solver is missing required semantic path: ${required}.`);
+}
+const fillMethodStart = registrySource.indexOf("resolveFillForInterior(");
+const fillMethodEnd = registrySource.indexOf("resolveFullFill(", fillMethodStart);
+if (fillMethodStart < 0 || fillMethodEnd < 0) throw new Error("Registry exact fill resolver is missing.");
+const fillMethod = registrySource.slice(fillMethodStart, fillMethodEnd);
+if (fillMethod.includes("fallbackGlyphId") || fillMethod.includes("fallbackCodepoint")) {
+  throw new Error("Exact fill resolver must not use renderer-only fallback glyphs.");
+}
+if (syncSource.includes("fill-rules.json")) {
+  throw new Error("Runtime asset sync still derives an approximation-bearing fill-rules table.");
+}
+if (!syncSource.includes("by-boundary-side-style.json") || !syncSource.includes("by-alias.json")) {
+  throw new Error("Runtime asset sync is not copying the canonical fill semantic indexes directly.");
+}
+
+const compiled = ts.transpileModule(geometrySource, {
+  compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022 },
+}).outputText;
+if (/from\s+["']\.\/types["']/u.test(compiled)) throw new Error("geometry-engine runtime unexpectedly retained a type-only import.");
+const geometry = await import(`data:text/javascript;base64,${Buffer.from(compiled, "utf8").toString("base64")}`);
+const {
+  buildGeometryGrid,
+  validateSharedPorts,
+  maxJunctionArms,
+} = geometry;
+
+function expect(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function cellSignature(grid) {
+  return [...grid.cells.entries()]
+    .map(([key, cell]) => [key, [...cell.ports].sort().join("|")])
+    .filter(([, ports]) => ports.length > 0)
+    .sort((a, b) => a[0] - b[0]);
+}
+
+const forwardLine = { id: "line", type: "line", start: { x: 1.25, y: 5.5 }, end: { x: 55.75, y: 35.25 }, width: 9, tone: 25 };
+const reverseLine = { ...forwardLine, start: forwardLine.end, end: forwardLine.start };
+const forwardGrid = buildGeometryGrid([forwardLine], 16, 8);
+const reverseGrid = buildGeometryGrid([reverseLine], 16, 8);
+expect(validateSharedPorts(forwardGrid, 16, 8).length === 0, "Forward line produced an impossible shared seam mismatch.");
+expect(validateSharedPorts(reverseGrid, 16, 8).length === 0, "Reverse line produced an impossible shared seam mismatch.");
+expect(JSON.stringify(cellSignature(forwardGrid)) === JSON.stringify(cellSignature(reverseGrid)), "Reversing one line changed its GraphSCII port semantics.");
+
+const tSegments = [
+  { a: { x: 0, y: 8 }, b: { x: 7, y: 8 }, objectId: "a", objectType: "line" },
+  { a: { x: 3, y: 0 }, b: { x: 3, y: 8 }, objectId: "b", objectType: "line" },
+];
+const xSegments = [
+  { a: { x: 0, y: 0 }, b: { x: 7, y: 15 }, objectId: "a", objectType: "line" },
+  { a: { x: 7, y: 0 }, b: { x: 0, y: 15 }, objectId: "b", objectType: "line" },
+];
+expect(maxJunctionArms(tSegments) === 3, "Authored T junction did not classify as three arms.");
+expect(maxJunctionArms(xSegments) === 4, "Authored X junction did not classify as four arms.");
+
+expect(fixture?.format === "GraphSCII-Drawing" && fixture?.objects?.length === 1 && fixture.objects[0]?.type === "freehand", "Regression fixture is not the supplied failing freehand drawing.");
+const fixtureGrid = buildGeometryGrid(fixture.objects, fixture.columns, fixture.rows);
+const fixtureSeams = validateSharedPorts(fixtureGrid, fixture.columns, fixture.rows);
+expect(fixtureSeams.length === 0, `Supplied failing drawing still has a constructed seam mismatch: ${fixtureSeams[0] ?? "unknown"}.`);
+let checkedStraightCells = 0;
+for (const cell of fixtureGrid.cells.values()) {
+  const ports = [...cell.ports].sort();
+  if (maxJunctionArms(cell.segments) >= 3 || ports.length !== 2) continue;
+  checkedStraightCells += 1;
+  if (!pairIndex.entries?.[`${ports[0]}>${ports[1]}`] && !pairIndex.entries?.[`${ports[1]}>${ports[0]}`]) {
+    throw new Error(`Regression fixture produced a two-port cell outside the published straight table: ${ports.join(" ↔ ")}.`);
+  }
+}
+expect(checkedStraightCells >= 250, `Regression fixture exercised only ${checkedStraightCells} exact two-port cells; expected a substantial straight-path corpus.`);
+
+console.log(
+  `GraphSCII exact semantic engine verified: shared seams are single events; reverse geometry is invariant; `
+  + `T/X classify as 3/4 arms; failing freehand fixture exercises ${checkedStraightCells} published two-port cells with zero seam mismatches.`,
+);
