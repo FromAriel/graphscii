@@ -1,0 +1,114 @@
+@font-face {
+  font-family: "GraphSCII";
+  src: url("../artifacts/fonts/GraphSCII-Regular.ttf") format("truetype");
+  font-display: block;
+}
+
+:root {
+  color-scheme: light dark;
+  --page-bg: light-dark(#eef1f4, #11161c);
+  --panel-bg: light-dark(#ffffff, #182028);
+  --panel-2: light-dark(#f6f8fa, #202a34);
+  --text: light-dark(#17202a, #edf2f7);
+  --muted: light-dark(#5d6875, #9eabb8);
+  --border: light-dark(#cfd6dd, #384552);
+  --accent: light-dark(#315f9d, #74a9f2);
+  --accent-text: light-dark(#ffffff, #0f1720);
+  --canvas-bg: light-dark(#ffffff, #f8f8f6);
+  --ink: #111111;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+button, input { font: inherit; }
+button {
+  min-height: 42px;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  color: var(--text);
+  cursor: pointer;
+}
+button:hover:not(:disabled) { border-color: var(--accent); }
+button:focus-visible,
+input:focus-visible,
+#overlay-canvas:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 65%, transparent);
+  outline-offset: 2px;
+}
+button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+button:disabled { cursor: default; opacity: 0.45; }
+.app-shell { width: min(1180px, 100%); margin: 0 auto; padding: 1rem; }
+.topbar {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+h1, h2, p { margin-top: 0; }
+h1 { margin-bottom: 0.2rem; font-size: clamp(1.4rem, 3vw, 2rem); }
+.topbar p, .notes p, .canvas-help { color: var(--muted); }
+.status-stack { display: grid; gap: 0.35rem; justify-items: end; max-width: 36rem; }
+.pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-bg);
+  font-size: 0.82rem;
+}
+.status { font-size: 0.9rem; text-align: right; }
+.toolbar {
+  display: flex;
+  gap: 0.65rem;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.7rem;
+  margin-bottom: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+}
+.tool-group { display: flex; gap: 0.45rem; align-items: center; flex-wrap: wrap; }
+.check { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 42px; padding: 0 0.5rem; }
+.check input { width: 18px; height: 18px; }
+.canvas-panel, .notes { border: 1px solid var(--border); border-radius: 10px; background: var(--panel-bg); }
+.canvas-panel { padding: 0.8rem; }
+.canvas-help { margin-bottom: 0.7rem; font-size: 0.92rem; line-height: 1.45; }
+.canvas-wrap { overflow: auto; padding: 0.5rem; border: 1px solid var(--border); background: var(--panel-2); }
+.canvas-stack {
+  position: relative;
+  width: 576px;
+  height: 576px;
+  margin: 0 auto;
+  background: var(--canvas-bg);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+}
+canvas { position: absolute; inset: 0; width: 576px; height: 576px; display: block; }
+#glyph-canvas { background: var(--canvas-bg); }
+#overlay-canvas { touch-action: none; cursor: crosshair; }
+.notes { margin-top: 0.8rem; padding: 0.9rem 1rem; line-height: 1.5; }
+.notes h2 { margin-bottom: 0.45rem; font-size: 1rem; }
+.notes p:last-child { margin-bottom: 0; }
+@media (max-width: 700px) {
+  .app-shell { padding: 0.65rem; }
+  .status-stack { justify-items: start; }
+  .status { text-align: left; }
+  .canvas-stack { margin: 0; }
+}
