@@ -68,8 +68,9 @@ if (registrySource.includes("Connector signature ${signature} is ambiguous")) {
 }
 for (const required of [
   "coalesceSharedSeams",
-  "sampledCellWalk",
-  "expandDiagonalSteps",
+  "initialCellIndex",
+  "walkSegmentCells",
+  "orderedCellWalk",
   "loopEraseWalk",
   "rewriteOpenStrokeWalks",
   "addEndpointCaps",
@@ -77,6 +78,9 @@ for (const required of [
   "validateFittedSharedPorts",
 ]) {
   if (!lineNormalizationSource.includes(required)) throw new Error(`Stroke fitter is missing required stage: ${required}.`);
+}
+if (lineNormalizationSource.includes("Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) * 2)")) {
+  throw new Error("Stroke fitter regressed to point-sampled cell traversal instead of geometry-engine DDA traversal.");
 }
 const fillMethodStart = registrySource.indexOf("resolveFillForInterior(");
 const fillMethodEnd = registrySource.indexOf("resolveFullFill(", fillMethodStart);
@@ -173,14 +177,14 @@ for (const cell of fixtureGrid.cells.values()) {
   if (ports.length !== 2) continue;
   checkedStraightCells += 1;
   if (!pairIndex.entries?.[`${ports[0]}>${ports[1]}`] && !pairIndex.entries?.[`${ports[1]}>${ports[0]}`]) {
-    throw new Error(`Regression fixture produced a two-port cell outside the published straight table after ordered fitting: ${ports.join(" ↔ ")}.`);
+    throw new Error(`Regression fixture produced a two-port cell outside the published straight table after DDA fitting: ${ports.join(" ↔ ")}.`);
   }
 }
 expect(checkedStraightCells >= 150, `Regression fixture exercised only ${checkedStraightCells} exact fitted two-port cells; expected a representative straight-path corpus.`);
 
 console.log(
   `GraphSCII exact semantic engine verified: shared seams are fitted once; reverse geometry is invariant; `
-  + `open strokes are rewritten as ordered loop-erased cell walks with deterministic endpoint caps; `
+  + `open strokes use geometry-engine-equivalent DDA traversal plus ordered loop erasure and deterministic endpoint caps; `
   + `T/X classify as orthogonal/diagonal 3/4-arm junctions; failing freehand fixture exercises ${checkedStraightCells} `
   + `published two-port cells with zero fitted seam mismatches.`,
 );
