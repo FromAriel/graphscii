@@ -9,6 +9,7 @@ import {
 import type { DrawingObject, Point } from "./types";
 
 const EPSILON = 1e-9;
+const PORT_EDGE_ORDER: readonly PortEdge[] = ["T", "R", "B", "L"];
 
 export interface StrokeFitResult {
   terminalPorts: Set<string>;
@@ -567,6 +568,45 @@ function endpointRayHits(point: Point, adjacent: Point, column: number, row: num
   return hits.sort((a, b) => a.distance - b.distance || a.edge.localeCompare(b.edge) || a.index - b.index);
 }
 
+function localPortPoint(port: PortName): Point {
+  const edge = portEdge(port);
+  const index = portIndex(port);
+  switch (edge) {
+    case "T": return { x: index, y: 0 };
+    case "B": return { x: index, y: CELL_HEIGHT };
+    case "L": return { x: 0, y: index };
+    case "R": return { x: CELL_WIDTH, y: index };
+  }
+}
+
+/**
+ * The published straight grammar encodes pairs on different cell edges. A
+ * sub-cell U-turn can ask a first-visit fragment to terminate on the same edge
+ * it entered (for example R5 -> R8), which has no exact straight owner. Preserve
+ * the cell and move only that terminal to the nearest available different edge.
+ */
+function projectTerminalPort(requested: PortName, existingPorts: ReadonlySet<PortName>): PortName {
+  const occupiedEdges = new Set([...existingPorts].map(portEdge));
+  if (!occupiedEdges.has(portEdge(requested))) return requested;
+
+  const target = localPortPoint(requested);
+  const candidates = PORT_EDGE_ORDER
+    .filter((edge) => !occupiedEdges.has(edge))
+    .map((edge) => {
+      const index = edge === "T" || edge === "B"
+        ? quantize(target.x, CELL_WIDTH - 1)
+        : quantize(target.y, CELL_HEIGHT - 1);
+      const port = `${edge}${index}` as PortName;
+      const point = localPortPoint(port);
+      const distanceSquared = (point.x - target.x) ** 2 + (point.y - target.y) ** 2;
+      return { port, edge, index, distanceSquared };
+    })
+    .sort((a, b) => a.distanceSquared - b.distanceSquared
+      || PORT_EDGE_ORDER.indexOf(a.edge) - PORT_EDGE_ORDER.indexOf(b.edge)
+      || a.index - b.index);
+  return candidates[0]?.port ?? requested;
+}
+
 function addTerminalPort(
   grid: GeometryGrid,
   hint: TerminalHint,
@@ -577,22 +617,19 @@ function addTerminalPort(
   const objectCell = cell?.byObject.get(hint.objectId);
   if (!cell || !objectCell || objectCell.ports.size >= 2) return;
 
-  if (hint.port) {
-    if (!objectCell.ports.has(hint.port)) {
-      objectCell.ports.add(hint.port);
-      terminalPorts.add(terminalKey(hint.key, hint.port));
-    }
-    return;
+  let requested: PortName | null = hint.port ?? null;
+  if (!requested) {
+    if (!hint.point || !hint.adjacent) return;
+    const column = keyColumn(hint.key, columns);
+    const row = keyRow(hint.key, columns);
+    const existingEdges = new Set([...objectCell.ports].map(portEdge));
+    const hits = endpointRayHits(hint.point, hint.adjacent, column, row);
+    const preferred = hits.find((hit) => !existingEdges.has(hit.edge)) ?? hits[0];
+    if (!preferred) return;
+    requested = `${preferred.edge}${preferred.index}` as PortName;
   }
-  if (!hint.point || !hint.adjacent) return;
 
-  const column = keyColumn(hint.key, columns);
-  const row = keyRow(hint.key, columns);
-  const existingEdges = new Set([...objectCell.ports].map(portEdge));
-  const hits = endpointRayHits(hint.point, hint.adjacent, column, row);
-  const preferred = hits.find((hit) => !existingEdges.has(hit.edge)) ?? hits[0];
-  if (!preferred) return;
-  const port = `${preferred.edge}${preferred.index}` as PortName;
+  const port = projectTerminalPort(requested, objectCell.ports);
   if (objectCell.ports.has(port)) return;
   objectCell.ports.add(port);
   terminalPorts.add(terminalKey(hint.key, port));
@@ -627,8 +664,10 @@ function assertOpenStrokeDegreeTwo(grid: GeometryGrid, objects: readonly Drawing
  * exact DDA crossing ports through a deterministic first-visit fragment cover,
  * including seam crossings that occur exactly at flattened-polyline vertices.
  * Revisited cells split straight fragments instead of erasing authored loops or
- * authorizing connectors. Only after fitted topology exists may the solver ask
- * the published GraphSCII tables for a glyph.
+ * authorizing connectors. Unencodable same-edge fragment terminals are projected
+ * to the nearest different edge rather than dropping the authored cell. Only
+ * after fitted topology exists may the solver ask the published GraphSCII tables
+ * for a glyph.
  */
 export function fitStrokeGeometry(
   grid: GeometryGrid,
