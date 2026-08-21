@@ -1,0 +1,32 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-generic-connector-basis-v0-selection",
+  "schemaVersion": 1,
+  "status": "measured-final-selection-unallocated",
+  "orthogonal": {
+    "semanticCount": 640,
+    "exactOwners": 548,
+    "novelOwners": 544
+  },
+  "diagonal": {
+    "candidateSemanticCount": 120,
+    "selectedSemanticCount": 60,
+    "selectedNovelOwners": 57,
+    "threeLegRuleIds": [
+      "DV00",
+      "DV03",
+      "DV06",
+      "DV08",
+      "DV11",
+      "DV14",
+      "DH02",
+      "DH04",
+      "DH06"
+    ]
+  },
+  "finalNovelConnectorOwners": 601,
+  "protectedReserveSlots": 604,
+  "finalReserveRemaining": 3,
+  "allocationState": "unallocated"
+}
