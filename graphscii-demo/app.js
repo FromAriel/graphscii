@@ -1,35 +1,45 @@
-// Browser compatibility entrypoint.
-// Some Windows/Python local servers advertise .mjs as text/plain, which strict
-// ES-module loading rejects. Load the implementation as text, replace its one
-// relative import with the ordinary .js lookup module, then execute it from a
-// correctly typed in-memory module.
-(async () => {
-  const response = await fetch("./app.mjs", { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error(`Could not load GraphSCII Draw implementation (${response.status}).`);
-  }
-
-  let source = await response.text();
-  const lookupUrl = new URL("./straight-lookup.js", window.location.href).href;
-  const importLine = 'import { STRAIGHT_CODEPOINT_BY_PAIR } from "./straight-lookup.mjs";';
-  const replacement = `const { STRAIGHT_CODEPOINT_BY_PAIR } = await import(${JSON.stringify(lookupUrl)});`;
-
-  if (!source.includes(importLine)) {
-    throw new Error("GraphSCII Draw browser entrypoint could not locate its lookup import.");
-  }
-
-  source = source.replace(importLine, replacement);
-  const blobUrl = URL.createObjectURL(
-    new Blob([source], { type: "text/javascript" }),
-  );
-
-  try {
-    await import(blobUrl);
-  } finally {
-    URL.revokeObjectURL(blobUrl);
-  }
-})().catch((error) => {
-  console.error(error);
-  const status = document.querySelector("#status");
-  if (status) status.textContent = `GraphSCII Draw failed to start: ${error.message}`;
-});
+(() => {
+'use strict';
+const C=24,R=12,W=24,H=48,P={L:16,R:16,T:8,B:8},E=['L','R','T','B'];
+const gc=document.querySelector('#glyph-canvas'),oc=document.querySelector('#overlay-canvas'),g=gc.getContext('2d'),o=oc.getContext('2d');
+const status=document.querySelector('#status'),overlap=document.querySelector('#overlap-status'),undo=document.querySelector('#undo'),clear=document.querySelector('#clear'),show=document.querySelector('#show-nodes'),buttons=[...document.querySelectorAll('[data-tool]')];
+gc.width=oc.width=C*W;gc.height=oc.height=R*H;
+let tool='freehand',paths=[],preview=[],hover=null,gesture=null,bez=[];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function count(e){return e==='L'||e==='R'?16:8}
+function pix(e,i){if(e==='L')return[0,i];if(e==='R')return[7,i];if(e==='T')return[i,0];return[i,15]}
+function bmp(a,ai,b,bi){let[x0,y0]=pix(a,ai),[x1,y1]=pix(b,bi),rows=new Uint8Array(16),dx=Math.abs(x1-x0),sx=x0<x1?1:-1,dy=-Math.abs(y1-y0),sy=y0<y1?1:-1,er=dx+dy;for(;;){rows[y0]|=1<<x0;if(x0===x1&&y0===y1)break;let e2=er*2;if(e2>=dy){er+=dy;x0+=sx}if(e2<=dx){er+=dx;y0+=sy}}return[...rows].map(v=>v.toString(16).padStart(2,'0')).join('')}
+function lookup(){const fam=[['L','R'],['T','B'],['L','T'],['L','B'],['R','T'],['R','B']],owners=new Map(),m=Object.create(null);let n=0;for(const[a,b]of fam)for(let i=0;i<count(a);i++)for(let j=0;j<count(b);j++){const k=bmp(a,i,b,j);let id=owners.get(k);if(id===undefined){id=n++;owners.set(k,id)}const cp=0xE000+id;m[`${a}${i}>${b}${j}`]=cp;m[`${b}${j}>${a}${i}`]=cp}if(Object.keys(m).length!==1664||n!==746)throw Error('straight lookup invariant');return m}
+const MAP=lookup();
+function node(axis,boundary,band,index){return{axis,boundary,band,index,key:`${axis}:${boundary}:${band}:${index}`}}
+function pos(n){return n.axis==='V'?{x:n.boundary*W,y:n.band*H+(n.index+.5)*3}:{x:n.band*W+(n.index+.5)*3,y:n.boundary*H}}
+function pnode(x,y,e,i){if(e==='L')return node('V',x,y,i);if(e==='R')return node('V',x+1,y,i);if(e==='T')return node('H',y,x,i);return node('H',y+1,x,i)}
+function incident(n){const a=[];if(n.axis==='V'){if(n.boundary>0)a.push({x:n.boundary-1,y:n.band,p:`R${n.index}`});if(n.boundary<C)a.push({x:n.boundary,y:n.band,p:`L${n.index}`})}else{if(n.boundary>0)a.push({x:n.band,y:n.boundary-1,p:`B${n.index}`});if(n.boundary<R)a.push({x:n.band,y:n.boundary,p:`T${n.index}`})}return a}
+const cache=new Map();
+function legal(n){if(cache.has(n.key))return cache.get(n.key);const a=[];for(const q of incident(n)){const from=q.p[0];for(const e of E){if(e===from)continue;for(let i=0;i<P[e];i++)a.push({node:pnode(q.x,q.y,e,i),seg:{cellX:q.x,cellY:q.y,from:q.p,to:`${e}${i}`}})}}cache.set(n.key,a);return a}
+function nearest(x,y){const vx=clamp(Math.round(x/W),0,C),vy=clamp(Math.floor(y/H),0,R-1),vi=clamp(Math.round(((y-vy*H)/H)*16-.5),0,15),hy=clamp(Math.round(y/H),0,R),hx=clamp(Math.floor(x/W),0,C-1),hi=clamp(Math.round(((x-hx*W)/W)*8-.5),0,7),a=[node('V',vx,vy,vi),node('H',hy,hx,hi)];return a.sort((u,v)=>{const A=pos(u),B=pos(v);return Math.hypot(A.x-x,A.y-y)-Math.hypot(B.x-x,B.y-y)})[0]}
+function stepToward(n,t){const p0=pos(n),d0=Math.hypot(p0.x-t.x,p0.y-t.y);let best=null,bd=d0;for(const c of legal(n)){const p=pos(c.node),d=Math.hypot(p.x-t.x,p.y-t.y);if(d+.001<bd){best=c;bd=d}}return best}
+function pushSeg(a,s){const z=a[a.length-1];if(z&&z.cellX===s.cellX&&z.cellY===s.cellY&&z.from===s.to&&z.to===s.from){a.pop();return}a.push(s)}
+function advance(n,t,a,max=16){for(let i=0;i<max;i++){const s=stepToward(n,t);if(!s)break;pushSeg(a,s.seg);n=s.node;const p=pos(n);if(Math.hypot(p.x-t.x,p.y-t.y)<.001)break}return n}
+function samples(a,b,spacing=3){const d=Math.hypot(b.x-a.x,b.y-a.y),n=Math.max(1,Math.ceil(d/spacing)),r=[];for(let i=1;i<=n;i++){const t=i/n;r.push({x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t})}return r}
+function walk(start,pts,closeIt=false){const segs=[];let cur=start;for(const p of pts)cur=advance(cur,p,segs,8);if(closeIt&&cur.key!==start.key)cur=advance(cur,pos(start),segs,C+R+8);return{segs,cur,closed:cur.key===start.key}}
+function line(a,b){if(a.key===b.key)return[];const w=walk(a,samples(pos(a),pos(b)));if(w.cur.key!==b.key)w.cur=advance(w.cur,pos(b),w.segs,C+R+8);return w.segs}
+function cells(all){const m=new Map();for(const p of all)for(const s of p.segs){const cp=MAP[`${s.from}>${s.to}`];if(cp==null)throw Error(`missing ${s.from}>${s.to}`);const k=`${s.cellX},${s.cellY}`,v=m.get(k)||{x:s.cellX,y:s.cellY,c:[]};v.c.push(cp);m.set(k,v)}return m}
+function background(){const c=getComputedStyle(gc).backgroundColor;return c&&c!=='rgba(0, 0, 0, 0)'?c:'#fff'}
+function render(){g.clearRect(0,0,gc.width,gc.height);g.fillStyle=background();g.fillRect(0,0,gc.width,gc.height);g.strokeStyle='rgba(127,127,127,.16)';g.beginPath();for(let x=0;x<=C;x++){g.moveTo(x*W+.5,0);g.lineTo(x*W+.5,R*H)}for(let y=0;y<=R;y++){g.moveTo(0,y*H+.5);g.lineTo(C*W,y*H+.5)}g.stroke();const all=[...paths];if(preview.length)all.push({segs:preview});const m=cells(all);g.font=`${H}px GraphSCII`;g.textBaseline='top';g.fillStyle='#111';let bad=0;for(const v of m.values()){const u=[...new Set(v.c)];if(u.length>1)bad++;g.fillText(String.fromCodePoint(u[0]),v.x*W,v.y*H)}o.clearRect(0,0,oc.width,oc.height);if(show.checked){o.fillStyle='rgba(80,100,120,.35)';for(let x=0;x<=C;x++)for(let y=0;y<R;y++)for(let i=0;i<16;i++){const p=pos(node('V',x,y,i));o.fillRect(p.x-1,p.y-1,2,2)}for(let y=0;y<=R;y++)for(let x=0;x<C;x++)for(let i=0;i<8;i++){const p=pos(node('H',y,x,i));o.fillRect(p.x-1,p.y-1,2,2)}}o.strokeStyle='rgba(210,50,35,.85)';for(const v of m.values())if(new Set(v.c).size>1)o.strokeRect(v.x*W+2,v.y*H+2,W-4,H-4);if(hover){const p=pos(hover);o.fillStyle='#d43b2f';o.beginPath();o.arc(p.x,p.y,3.5,0,Math.PI*2);o.fill()}if(bez.length){o.strokeStyle='rgba(220,70,45,.55)';o.setLineDash([5,4]);o.beginPath();bez.forEach((n,i)=>{const p=pos(n);i?o.lineTo(p.x,p.y):o.moveTo(p.x,p.y)});o.stroke();o.setLineDash([])}overlap.textContent=bad?`${bad} overlap cell${bad===1?'':'s'} awaiting connector composition`:'Exact node semantics only';undo.disabled=clear.disabled=!paths.length}
+function point(e){const r=oc.getBoundingClientRect();return{x:clamp((e.clientX-r.left)/r.width*oc.width,0,oc.width),y:clamp((e.clientY-r.top)/r.height*oc.height,0,oc.height)}}
+function commit(t,segs,closed=false){if(!segs.length)return false;paths.push({tool:t,closed,segs:segs.map(s=>({...s}))});preview=[];render();return true}
+function cubic(a,b,c,d,t){const q=1-t;return{x:q*q*q*a.x+3*q*q*t*b.x+3*q*t*t*c.x+t*t*t*d.x,y:q*q*q*a.y+3*q*q*t*b.y+3*q*t*t*c.y+t*t*t*d.y}}
+function bezier(ns){const p=ns.map(pos),pts=[];for(let i=1;i<=96;i++)pts.push(cubic(p[0],p[1],p[2],p[3],i/96));return walk(ns[0],pts).segs}
+function ellipse(a,b){a=pos(a);b=pos(b);const cx=(a.x+b.x)/2,cy=(a.y+b.y)/2,rx=Math.abs(b.x-a.x)/2,ry=Math.abs(b.y-a.y)/2;if(rx<W*.75||ry<H*.75)return[];const start=nearest(cx+rx,cy),pts=[],n=clamp(Math.ceil(2*Math.PI*Math.sqrt((rx*rx+ry*ry)/2)/3),96,384);for(let i=1;i<=n;i++){const z=i/n*Math.PI*2;pts.push({x:cx+Math.cos(z)*rx,y:cy+Math.sin(z)*ry})}const w=walk(start,pts,true);return w.closed?w.segs:[]}
+function msg(){return tool==='freehand'?'Freehand: drag across the node lattice.':tool==='line'?'Line: drag from one node to another.':tool==='bezier'?'Bezier: click four nodes — start, control 1, control 2, end.':'Ellipse: drag between two node points.'}
+function choose(t){tool=t;gesture=null;preview=[];bez=[];buttons.forEach(b=>{const a=b.dataset.tool===t;b.classList.toggle('active',a);b.setAttribute('aria-pressed',String(a))});status.textContent=msg();render()}
+buttons.forEach(b=>b.addEventListener('click',()=>choose(b.dataset.tool)));
+oc.addEventListener('pointerdown',e=>{e.preventDefault();oc.focus();const q=point(e),n=nearest(q.x,q.y);hover=n;if(tool==='bezier'){bez.push(n);if(bez.length===4){const s=bezier(bez);status.textContent=commit('bezier',s)?`Bezier committed: ${s.length} exact segments.`:'Bezier could not form a legal node path.';bez=[]}else status.textContent=`Bezier point ${bez.length}/4 selected.`;render();return}oc.setPointerCapture(e.pointerId);gesture=tool==='freehand'?{id:e.pointerId,cur:n,segs:[],last:pos(n)}:{id:e.pointerId,start:n};preview=[];render()});
+oc.addEventListener('pointermove',e=>{const q=point(e);hover=nearest(q.x,q.y);if(!gesture||gesture.id!==e.pointerId){render();return}if(tool==='freehand'){for(const s of samples(gesture.last,q))gesture.cur=advance(gesture.cur,s,gesture.segs,4);gesture.last=q;preview=gesture.segs}else if(tool==='line')preview=line(gesture.start,hover);else if(tool==='ellipse')preview=ellipse(gesture.start,hover);render()});
+function finish(e){if(!gesture||gesture.id!==e.pointerId)return;const s=tool==='freehand'?gesture.segs:preview;const ok=commit(tool,s,tool==='ellipse');status.textContent=ok?`${tool} committed: ${s.length} exact segments.`:`${tool} ended without a legal path.`;preview=[];gesture=null;render()}
+oc.addEventListener('pointerup',finish);oc.addEventListener('pointercancel',e=>{if(gesture?.id===e.pointerId){gesture=null;preview=[];status.textContent='Gesture cancelled.';render()}});oc.addEventListener('pointerleave',()=>{if(!gesture){hover=null;render()}});
+undo.addEventListener('click',()=>{paths.pop();status.textContent='Undid last node path.';render()});clear.addEventListener('click',()=>{paths=[];preview=[];bez=[];gesture=null;status.textContent='Canvas cleared.';render()});show.addEventListener('change',render);
+oc.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();if(paths.length){paths.pop();render()}}if(e.key==='Escape'){gesture=null;preview=[];bez=[];render()}});
+(async()=>{try{await document.fonts.load(`${H}px GraphSCII`);if(!document.fonts.check(`${H}px GraphSCII`))throw Error('font unavailable');status.textContent=msg()}catch(err){console.error(err);status.textContent='GraphSCII font did not load. Serve the repository root so artifacts/fonts is reachable.'}choose(tool)})();
+})();
