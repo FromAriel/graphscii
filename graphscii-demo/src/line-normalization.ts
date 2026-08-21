@@ -688,6 +688,92 @@ export function fitStrokeGeometry(
   return { terminalPorts };
 }
 
+interface DiagonalCornerCounterpart {
+  key: number;
+  port: PortName;
+  point: Point;
+}
+
+function diagonalCornerCounterpart(
+  key: number,
+  port: PortName,
+  columns: number,
+  rows: number,
+): DiagonalCornerCounterpart | null {
+  const column = keyColumn(key, columns);
+  const row = keyRow(key, columns);
+  const edge = portEdge(port);
+  const index = portIndex(port);
+  let nextColumn = column;
+  let nextRow = row;
+  let partner: PortName;
+  let point: Point;
+
+  if (edge === "R" && (index === 0 || index === CELL_HEIGHT - 1)) {
+    nextColumn += 1;
+    nextRow += index === 0 ? -1 : 1;
+    partner = `L${index === 0 ? CELL_HEIGHT - 1 : 0}` as PortName;
+    point = { x: (column + 1) * CELL_WIDTH, y: (row + (index === 0 ? 0 : 1)) * CELL_HEIGHT };
+  } else if (edge === "L" && (index === 0 || index === CELL_HEIGHT - 1)) {
+    nextColumn -= 1;
+    nextRow += index === 0 ? -1 : 1;
+    partner = `R${index === 0 ? CELL_HEIGHT - 1 : 0}` as PortName;
+    point = { x: column * CELL_WIDTH, y: (row + (index === 0 ? 0 : 1)) * CELL_HEIGHT };
+  } else if (edge === "B" && (index === 0 || index === CELL_WIDTH - 1)) {
+    nextRow += 1;
+    nextColumn += index === 0 ? -1 : 1;
+    partner = `T${index === 0 ? CELL_WIDTH - 1 : 0}` as PortName;
+    point = { x: (column + (index === 0 ? 0 : 1)) * CELL_WIDTH, y: (row + 1) * CELL_HEIGHT };
+  } else if (edge === "T" && (index === 0 || index === CELL_WIDTH - 1)) {
+    nextRow -= 1;
+    nextColumn += index === 0 ? -1 : 1;
+    partner = `B${index === 0 ? CELL_WIDTH - 1 : 0}` as PortName;
+    point = { x: (column + (index === 0 ? 0 : 1)) * CELL_WIDTH, y: row * CELL_HEIGHT };
+  } else {
+    return null;
+  }
+
+  if (nextColumn < 0 || nextRow < 0 || nextColumn >= columns || nextRow >= rows) return null;
+  return { key: cellKey(nextColumn, nextRow, columns), port: partner, point };
+}
+
+function segmentTouchesPoint(segment: { a: Point; b: Point }, point: Point): boolean {
+  return Math.hypot(segment.a.x - point.x, segment.a.y - point.y) <= 1e-7
+    || Math.hypot(segment.b.x - point.x, segment.b.y - point.y) <= 1e-7;
+}
+
+/**
+ * Exact cell-corner travel intentionally moves between diagonally touching cells
+ * in the canonical geometry engine. Such a transition has no same-row/column
+ * neighbor on the chosen owning edge, so ordinary seam validation would mistake
+ * it for a gap. Accept it only when the same authored object carries the exact
+ * diagonal counterpart port and both retained source segments meet at that one
+ * physical cell corner.
+ */
+function hasAuthoredDiagonalCornerCounterpart(
+  grid: GeometryGrid,
+  key: number,
+  port: PortName,
+  columns: number,
+  rows: number,
+): boolean {
+  const counterpart = diagonalCornerCounterpart(key, port, columns, rows);
+  if (!counterpart) return false;
+  const cell = grid.cells.get(key);
+  const diagonal = grid.cells.get(counterpart.key);
+  if (!cell || !diagonal) return false;
+
+  for (const [objectId, objectCell] of cell.byObject.entries()) {
+    if (!objectCell.ports.has(port)) continue;
+    const diagonalObject = diagonal.byObject.get(objectId);
+    if (!diagonalObject?.ports.has(counterpart.port)) continue;
+    const sourceTouches = objectCell.segments.some((segment) => segmentTouchesPoint(segment, counterpart.point));
+    const diagonalTouches = diagonalObject.segments.some((segment) => segmentTouchesPoint(segment, counterpart.point));
+    if (sourceTouches && diagonalTouches) return true;
+  }
+  return false;
+}
+
 export function validateFittedSharedPorts(
   grid: GeometryGrid,
   columns: number,
@@ -710,10 +796,17 @@ export function validateFittedSharedPorts(
         const l = left.has(leftPort);
         const r = right.has(rightPort);
         if (l === r) continue;
-        const terminal = l
-          ? terminalPorts.has(terminalKey(leftKey, leftPort))
-          : terminalPorts.has(terminalKey(rightKey, rightPort));
-        if (!terminal) errors.push(`Vertical seam ${column},${row} R${index}/L${index} disagrees.`);
+        const presentKey = l ? leftKey : rightKey;
+        const presentPort = l ? leftPort : rightPort;
+        const terminal = terminalPorts.has(terminalKey(presentKey, presentPort));
+        const diagonalCorner = hasAuthoredDiagonalCornerCounterpart(
+          grid,
+          presentKey,
+          presentPort,
+          columns,
+          rows,
+        );
+        if (!terminal && !diagonalCorner) errors.push(`Vertical seam ${column},${row} R${index}/L${index} disagrees.`);
       }
     }
   }
@@ -730,10 +823,17 @@ export function validateFittedSharedPorts(
         const t = top.has(topPort);
         const b = bottom.has(bottomPort);
         if (t === b) continue;
-        const terminal = t
-          ? terminalPorts.has(terminalKey(topKey, topPort))
-          : terminalPorts.has(terminalKey(bottomKey, bottomPort));
-        if (!terminal) errors.push(`Horizontal seam ${column},${row} B${index}/T${index} disagrees.`);
+        const presentKey = t ? topKey : bottomKey;
+        const presentPort = t ? topPort : bottomPort;
+        const terminal = terminalPorts.has(terminalKey(presentKey, presentPort));
+        const diagonalCorner = hasAuthoredDiagonalCornerCounterpart(
+          grid,
+          presentKey,
+          presentPort,
+          columns,
+          rows,
+        );
+        if (!terminal && !diagonalCorner) errors.push(`Horizontal seam ${column},${row} B${index}/T${index} disagrees.`);
       }
     }
   }
