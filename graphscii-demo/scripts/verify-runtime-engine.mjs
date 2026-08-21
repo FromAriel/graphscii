@@ -157,11 +157,10 @@ for (let row = 0; row < solver.rows; row += 1) {
     }
   }
 }
-const occupancyFloor = Math.max(150, priorOccupied);
-if (emitted < occupancyFloor) {
+if (emitted !== rawTouched) {
   throw new Error(
     `Regression fixture emitted ${emitted} GraphSCII straight cells from ${rawTouched} authored-touched cells; `
-    + `the supplied invalid export occupied ${priorOccupied} cells. Current guard requires at least ${occupancyFloor}.`,
+    + `the supplied invalid export occupied ${priorOccupied} cells. Runtime fidelity requires exact authored-cell occupancy.`,
   );
 }
 
@@ -174,6 +173,6 @@ if (exportedOccupied !== emitted) {
 
 console.log(
   `GraphSCII runtime engine verified end-to-end: actual registry + actual solver resolved the failing 379-point freehand `
-  + `from ${rawTouched} authored-touched cells / ${priorOccupied} occupied invalid-export cells to ${emitted} straight cells `
+  + `from ${rawTouched} authored-touched cells / ${priorOccupied} occupied invalid-export cells to exactly ${emitted} straight cells `
   + `with zero conversion issues, no fill/connector glyphs, and exact text-export occupancy.`,
 );
