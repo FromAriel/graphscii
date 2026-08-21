@@ -1,0 +1,106 @@
+GraphSCII FONT AND STANDARD LICENSE NOTICE
+
+GraphSCII — Graphical Standard for Computer Information Interchange
+Created and designed by Ariel Williams
+Copyright (c) 2026 Ariel Williams. All rights reserved except as expressly licensed below.
+
+1. LICENSED MATERIAL
+
+For purposes of this notice, the “GraphSCII Work” means the original GraphSCII glyph designs, 8x16 bitmap vocabulary, semantic registries and indexes, graphical standard documentation, generated GraphSCII font files, and GraphSCII-specific source/tooling in this repository, except material separately identified as third-party or public-domain material.
+
+The printable ASCII source identified in THIRD-PARTY-NOTICES.md is public-domain material and is not claimed by Ariel Williams as original copyrighted material.
+
+2. NONCOMMERCIAL PUBLIC LICENSE — CC BY-NC-SA 4.0
+
+The GraphSCII Work is licensed to the public for NONCOMMERCIAL use under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License (“CC BY-NC-SA 4.0”).
+
+Canonical license:
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+Legal code:
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.en
+
+The CC BY-NC-SA 4.0 legal code is incorporated into this notice by reference and controls the noncommercial public license. Nothing in this notice is intended to reduce permissions that the CC BY-NC-SA 4.0 license grants.
+
+In practical terms, subject to the full CC license, you may:
+
+- study the GraphSCII Work;
+- use it for noncommercial purposes;
+- draw with it;
+- copy and redistribute it;
+- modify, remix, extend, or fork it; and
+- share modified versions.
+
+If you share the GraphSCII Work or an adaptation, you must comply with the attribution and ShareAlike requirements of CC BY-NC-SA 4.0.
+
+A reasonable attribution is:
+
+  GraphSCII — Graphical Standard for Computer Information Interchange
+  by Ariel Williams
+  Licensed for noncommercial use under CC BY-NC-SA 4.0
+
+You should also identify modifications when required by the CC license and provide a link or reference to the applicable license when reasonably practicable.
+
+3. “KEEP FORKS OPEN”
+
+GraphSCII’s public-use principle is:
+
+  Study it. Draw with it. Modify it. Share it. Keep forks open.
+
+For the CC BY-NC-SA 4.0 public license, “keep forks open” means that adaptations you SHARE remain under the same CC BY-NC-SA license (or a BY-NC-SA-compatible license permitted by the Creative Commons legal code) and are not relicensed downstream under terms that remove those ShareAlike freedoms.
+
+This sentence is explanatory; it does not add a separate source-code-disclosure condition beyond the CC BY-NC-SA 4.0 legal code.
+
+4. COMMERCIAL USE IS NOT GRANTED BY THE PUBLIC LICENSE
+
+The CC BY-NC-SA 4.0 public license does not grant permission for commercial use.
+
+Commercial exploitation of the GraphSCII Work requires separate written permission from Ariel Williams. Commercial permission may be granted under a separately negotiated license and may be free, low-cost, royalty-bearing, flat-fee, or otherwise structured depending on the project.
+
+A separate commercial license is additive and independent. It does not revoke or narrow the CC BY-NC-SA 4.0 rights already granted for qualifying noncommercial uses.
+
+No commercial permission is created merely because:
+
+- you asked for permission;
+- licensing discussions began;
+- a price was proposed;
+- you credited Ariel Williams; or
+- your use is small, experimental, or not yet profitable.
+
+Commercial permission exists only when Ariel Williams gives written permission that identifies the permitted commercial use or when a separate commercial agreement is executed.
+
+See COMMERCIAL-LICENSE.md.
+
+5. INDIE COMMERCIAL USE
+
+Indie developers and small creators are expressly encouraged to ask.
+
+INDIE-LICENSE.md describes the intended indie policy. That document is not an automatic commercial grant. A short written permission from Ariel Williams may serve as the indie commercial license for the project described in that permission.
+
+The intended policy is friendly: many genuinely small indie, hobbyist, game-jam, educational, artistic, or early-stage projects may receive permission for free or at low cost.
+
+6. ATTRIBUTION DOES NOT IMPLY ENDORSEMENT
+
+You may accurately identify material as GraphSCII, GraphSCII-compatible, based on GraphSCII, or derived from GraphSCII when that statement is truthful and your use otherwise complies with the applicable license.
+
+No license granted here authorizes you to falsely imply that Ariel Williams endorses, sponsors, certifies, or is affiliated with your project.
+
+7. TRADEMARKS, PATENTS, AND OTHER RIGHTS
+
+This notice grants copyright and similar-rights permissions only to the extent stated above. It does not grant trademark rights, patent rights, publicity rights, privacy rights, or rights owned by third parties, except where the incorporated CC BY-NC-SA 4.0 license expressly provides otherwise.
+
+8. THIRD-PARTY AND PUBLIC-DOMAIN MATERIAL
+
+Material identified in THIRD-PARTY-NOTICES.md remains subject to its own status or terms. Public-domain material remains public domain. Nothing in this notice attempts to place new copyright restrictions on public-domain material itself.
+
+9. NO WARRANTY
+
+THE GRAPHSCII WORK IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, TO THE MAXIMUM EXTENT PERMITTED BY LAW. THE WARRANTY AND LIABILITY PROVISIONS OF CC BY-NC-SA 4.0 APPLY TO USE UNDER THAT PUBLIC LICENSE.
+
+10. COMMERCIAL LICENSING CONTACT
+
+For commercial or indie permission, contact Ariel Williams using the public contact method listed with the GraphSCII project or Ariel Williams’s public GitHub profile. Include the project name, intended use, distribution model, and whether the project is indie/small-scale.
+
+Commercial licensing information: COMMERCIAL-LICENSE.md
+Indie licensing information: INDIE-LICENSE.md
+Plain-English overview: README.md
