@@ -175,4 +175,3 @@ function setActiveTone(tone: GraphSCIITone, applyToSelection: boolean): void {
     }
     scheduleSolve(dirty);
   }
-  if (!applyToSelection) return;
