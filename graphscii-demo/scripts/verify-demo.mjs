@@ -27,6 +27,26 @@ if (registry.owners[0]?.codepointValue !== 0xe000 || registry.owners.at(-1)?.cod
   throw new Error("GraphSCII demo registry has unexpected v1 PUA boundaries.");
 }
 
+const strokeClasses = new Set(["straight", "connector-orthogonal", "connector-diagonal"]);
+const isStrokeRange = (codepoint) => (
+  (codepoint >= 0xe000 && codepoint <= 0xe2e9)
+  || (codepoint >= 0xf6a4 && codepoint <= 0xf8fc)
+);
+const strokeOwners = registry.owners.filter((owner) => strokeClasses.has(owner.canonicalClass));
+if (strokeOwners.length !== 1347) {
+  throw new Error(`Expected 1,347 straight/connector owners, found ${strokeOwners.length}.`);
+}
+for (const owner of strokeOwners) {
+  if (!isStrokeRange(owner.codepointValue)) {
+    throw new Error(`Stroke owner ${owner.codepoint} escaped the straight/connector allocation ranges.`);
+  }
+}
+for (const owner of registry.owners) {
+  if (owner.codepointValue >= 0xe2ea && owner.codepointValue <= 0xf6a3 && strokeClasses.has(owner.canonicalClass)) {
+    throw new Error(`Fill-range owner ${owner.codepoint} is incorrectly classified as a stroke owner.`);
+  }
+}
+
 const fontManifest = JSON.parse(await readFile(fontManifestPath, "utf8"));
 const fontBytes = await readFile(fontPath);
 const fontInfo = await stat(fontPath);
@@ -37,4 +57,4 @@ if (fontManifest.encodedCharacters !== 6492 || fontManifest.puaCharacters !== 63
   throw new Error("GraphSCII font manifest does not describe the verified v1 reference font.");
 }
 
-console.log(`GraphSCII demo assets verified: ${registry.owners.length} graphics; font ${fontSha256}.`);
+console.log(`GraphSCII demo assets verified: ${registry.owners.length} graphics; ${strokeOwners.length} stroke owners; font ${fontSha256}.`);
