@@ -11,12 +11,27 @@ function graphSciiCount(text) {
 }
 
 async function downloadText(page) {
-  const downloadPromise = page.waitForEvent("download");
+  const downloadPromise = page.waitForEvent("download", { timeout: 5_000 }).catch(() => null);
   await page.getByRole("button", { name: "Export text" }).click();
   const download = await downloadPromise;
+  if (!download) {
+    const message = await page.getByRole("status").textContent();
+    throw new Error(`Text export produced no download. Application status: ${message ?? "(empty)"}`);
+  }
   const filePath = await download.path();
   expect(filePath).toBeTruthy();
   return readFile(filePath, "utf8");
+}
+
+async function saveDrawing(page) {
+  const savePromise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Save" }).click();
+  const saved = await savePromise;
+  const savedPath = await saved.path();
+  expect(savedPath).toBeTruthy();
+  const savedDocument = JSON.parse(await readFile(savedPath, "utf8"));
+  await expect(page.getByRole("status")).toHaveText("Saved editable GraphSCII drawing.");
+  return { savedPath, savedDocument };
 }
 
 async function drawSelfCrossingFreehand(page) {
@@ -55,6 +70,12 @@ test("GraphSCII Draw boots, draws, exports, undoes, redoes, saves, reopens, and 
 
   await drawSelfCrossingFreehand(page);
 
+  const { savedPath, savedDocument } = await saveDrawing(page);
+  expect(savedDocument.format).toBe("GraphSCII-Drawing");
+  expect(savedDocument.objects).toHaveLength(1);
+  expect(savedDocument.objects[0].type).toBe("freehand");
+  expect(savedDocument.objects[0].points.length).toBeGreaterThan(20);
+
   const initialText = await downloadText(page);
   const initialOccupied = graphSciiCount(initialText);
   expect(initialOccupied).toBeGreaterThan(8);
@@ -69,17 +90,6 @@ test("GraphSCII Draw boots, draws, exports, undoes, redoes, saves, reopens, and 
   await expect(page.getByRole("status")).toHaveText("Redo.");
   const redoneText = await downloadText(page);
   expect(graphSciiCount(redoneText)).toBe(initialOccupied);
-
-  const savePromise = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Save" }).click();
-  const saved = await savePromise;
-  const savedPath = await saved.path();
-  expect(savedPath).toBeTruthy();
-  const savedDocument = JSON.parse(await readFile(savedPath, "utf8"));
-  expect(savedDocument.format).toBe("GraphSCII-Drawing");
-  expect(savedDocument.objects).toHaveLength(1);
-  expect(savedDocument.objects[0].type).toBe("freehand");
-  await expect(page.getByRole("status")).toHaveText("Saved editable GraphSCII drawing.");
 
   page.once("dialog", (dialog) => dialog.accept());
   await page.getByRole("button", { name: "New", exact: true }).click();
