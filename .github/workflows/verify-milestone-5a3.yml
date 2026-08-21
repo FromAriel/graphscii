@@ -42,9 +42,26 @@ jobs:
         working-directory: geometric-glyph-lab
         run: npm run generate
 
+      - name: Report Milestone 5A.3 artifact sizes
+        shell: bash
+        run: |
+          wc -c \
+            artifacts/research/junctions/candidates.json \
+            artifacts/research/junctions/unique-rasters.json \
+            artifacts/research/junctions/candidate-stats.json
+
       - name: Verify complete project
         working-directory: geometric-glyph-lab
         run: npm run verify
+
+      - name: Upload measured 5A.3 summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: milestone-5a3-summary
+          path: |
+            artifacts/research/junctions/candidate-stats.json
+            artifacts/research/junctions/candidate-report.md
+            spec/junction-candidate-research-v0.json
 
       - name: Commit deterministic Milestone 5A.3 outputs
         if: github.event_name == 'push'
