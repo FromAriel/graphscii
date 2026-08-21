@@ -87,7 +87,7 @@ spec/
 └── junction-candidate-research-v0.json
 ```
 
-Candidate shards are partitioned by geometry model. Visual-owner shards are partitioned by the first lowercase hexadecimal nibble of the canonical 32-character bitmap key. The verifier regenerates and byte-compares all **4 candidate shards + 16 owner shards + manifests and summary artifacts**.
+Candidate shards are partitioned by geometry model. Visual-owner shards are partitioned by the first lowercase hexadecimal nibble of the canonical 32-character bitmap key. The verifier regenerates and byte-compares all **4 candidate shards + 16 owner shards + manifests and summary artifacts**. The sharded publication layout itself was then rerun through the complete project verification chain before promotion.
 
 ## Verification gate
 
