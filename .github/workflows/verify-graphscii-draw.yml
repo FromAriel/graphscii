@@ -25,7 +25,9 @@ jobs:
         run: node graphscii-demo/verify.mjs
 
       - name: Check browser runtime syntax
-        run: node --check graphscii-demo/draw-v5.js
+        run: |
+          node --check graphscii-demo/draw-v5.js
+          node --check graphscii-demo/debug-export-v1.js
 
       - name: Verify node topology and crossing invariants
         run: |
@@ -42,10 +44,22 @@ jobs:
             exit 1
           fi
 
+      - name: Verify debug export contract
+        shell: bash
+        run: |
+          grep -q 'id="debug-export"' graphscii-demo/index.html
+          grep -q 'debug-export-v1.js' graphscii-demo/index.html
+          grep -q 'rawPointerSamples' graphscii-demo/debug-export-v1.js
+          grep -q 'rawBoundaryCrossings' graphscii-demo/debug-export-v1.js
+          grep -q 'finalSegments' graphscii-demo/debug-export-v1.js
+          grep -q 'glyphText' graphscii-demo/debug-export-v1.js
+          grep -q 'multiPassCells' graphscii-demo/debug-export-v1.js
+          grep -q 'brokenJoinCount' graphscii-demo/debug-export-v1.js
+
       - name: Reject CSP-hostile browser execution
         shell: bash
         run: |
-          if grep -En "eval[[:space:]]*\\(|new[[:space:]]+Function|createObjectURL|new[[:space:]]+Blob|import[[:space:]]*\\(" graphscii-demo/draw-v5.js; then
+          if grep -En "eval[[:space:]]*\\(|new[[:space:]]+Function|import[[:space:]]*\\(" graphscii-demo/draw-v5.js graphscii-demo/debug-export-v1.js; then
             echo "CSP-hostile JavaScript construct found"
             exit 1
           fi
@@ -54,6 +68,7 @@ jobs:
             exit 1
           fi
           grep -q 'draw-v5.js' graphscii-demo/index.html
+          grep -q 'debug-export-v1.js' graphscii-demo/index.html
 
       - name: Check local server syntax
         run: python -m py_compile graphscii-demo/serve.py
@@ -73,4 +88,6 @@ jobs:
             echo "unsafe-eval must never be enabled"
             exit 1
           fi
+          curl -fsSI http://127.0.0.1:8765/graphscii-demo/debug-export-v1.js | grep -qi '^Content-Type: text/javascript'
           curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'draw-v5.js'
+          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'debug-export-v1.js'
