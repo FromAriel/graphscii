@@ -12,6 +12,14 @@ const MASK_ROWS_8: Record<GraphSCIITone, readonly number[]> = {
   25: [0x55, 0x00, 0x55, 0x00, 0x55, 0x00, 0x55, 0x00],
 };
 
+export type GlyphCandidatePolicy = "all" | "stroke";
+
+function isStrokeCanonicalClass(canonicalClass: string): boolean {
+  return canonicalClass === "straight"
+    || canonicalClass === "connector-orthogonal"
+    || canonicalClass === "connector-diagonal";
+}
+
 function toneMask(tone: GraphSCIITone): Uint8Array {
   const source = MASK_ROWS_8[tone];
   return Uint8Array.from([...source, ...source]);
@@ -59,18 +67,24 @@ function makeGlyph(owner: RegistryJson["owners"][number]): GraphGlyph {
 
 export class GlyphRegistry {
   readonly glyphs: GraphGlyph[];
+  readonly strokeGlyphs: GraphGlyph[];
   readonly byPixelCount: GraphGlyph[][];
+  readonly strokeByPixelCount: GraphGlyph[][];
   readonly byCodepoint: Map<number, GraphGlyph>;
   readonly toneMasks: Record<GraphSCIITone, Uint8Array>;
 
   private constructor(glyphs: GraphGlyph[]) {
     this.glyphs = glyphs;
+    this.strokeGlyphs = glyphs.filter((glyph) => isStrokeCanonicalClass(glyph.canonicalClass));
     this.byPixelCount = Array.from({ length: 129 }, () => [] as GraphGlyph[]);
+    this.strokeByPixelCount = Array.from({ length: 129 }, () => [] as GraphGlyph[]);
     this.byCodepoint = new Map<number, GraphGlyph>();
     for (const glyph of glyphs) {
       this.byPixelCount[glyph.onCount]!.push(glyph);
+      if (isStrokeCanonicalClass(glyph.canonicalClass)) this.strokeByPixelCount[glyph.onCount]!.push(glyph);
       this.byCodepoint.set(glyph.codepointValue, glyph);
     }
+    if (this.strokeGlyphs.length === 0) throw new Error("GraphSCII registry contains no stroke glyph families.");
     this.toneMasks = {
       100: toneMask(100),
       75: toneMask(75),
@@ -96,18 +110,20 @@ export class GlyphRegistry {
     return new GlyphRegistry(glyphs);
   }
 
-  candidatesNearPixelCount(target: number, initialRadius = 10): GraphGlyph[] {
+  candidatesNearPixelCount(target: number, initialRadius = 10, policy: GlyphCandidatePolicy = "all"): GraphGlyph[] {
     const center = Math.max(0, Math.min(128, Math.round(target)));
+    const buckets = policy === "stroke" ? this.strokeByPixelCount : this.byPixelCount;
+    const fallback = policy === "stroke" ? this.strokeGlyphs : this.glyphs;
     let radius = initialRadius;
     let candidates: GraphGlyph[] = [];
     while (candidates.length < 64 && radius <= 128) {
       candidates = [];
       const low = Math.max(0, center - radius);
       const high = Math.min(128, center + radius);
-      for (let count = low; count <= high; count += 1) candidates.push(...this.byPixelCount[count]!);
+      for (let count = low; count <= high; count += 1) candidates.push(...buckets[count]!);
       radius += 8;
     }
-    return candidates.length > 0 ? candidates : this.glyphs;
+    return candidates.length > 0 ? candidates : fallback;
   }
 }
 
