@@ -1,14 +1,9 @@
   if (!applyToSelection) return;
   const object = selectedObject();
-  if (!object) return;
+  if (!object || object.type !== "ellipse" || !object.fillEnabled) return;
   const before = cloneDocument(documentModel);
   const oldBounds = boundsForObject(object);
-  if (object.type === "ellipse") {
-    object.strokeTone = tone;
-    if (object.fillEnabled) object.fillTone = tone;
-  } else {
-    object.tone = tone;
-  }
+  object.fillTone = tone;
   history.push(before);
   scheduleSolve(oldBounds);
 }
@@ -19,7 +14,7 @@ function cycleTone(direction: 1 | -1, wrap: boolean, applyToSelection = true): v
   const nextIndex = wrap ? (raw + TONE_ORDER.length) % TONE_ORDER.length : Math.max(0, Math.min(TONE_ORDER.length - 1, raw));
   if (nextIndex === index) return;
   setActiveTone(TONE_ORDER[nextIndex]!, applyToSelection);
-  setStatus(`Dither strength ${activeTone}%.`);
+  setStatus(`Fill dither strength ${activeTone}%.`);
 }
 
 function syncControlsFromSelection(): void {
@@ -28,11 +23,10 @@ function syncControlsFromSelection(): void {
   if (object.type === "ellipse") {
     strokeWidth = object.strokeWidth;
     fillEnabled = object.fillEnabled;
-    activeTone = object.fillEnabled ? object.fillTone : object.strokeTone;
+    if (object.fillEnabled) activeTone = object.fillTone;
   } else {
     strokeWidth = object.width;
     fillEnabled = false;
-    activeTone = object.tone;
   }
   widthInput.value = String(strokeWidth);
   fillInput.checked = fillEnabled;
@@ -51,10 +45,10 @@ function setTool(tool: Tool): void {
   }
   const help: Record<Tool, string> = {
     select: "Select: click an object, drag to move. Delete removes the selected object.",
-    freehand: "Freehand: drag to draw. Alt/Option + wheel changes dither strength.",
+    freehand: "Freehand: drag to draw a canonical GraphSCII centerline.",
     line: "Line: drag end-to-end. Hold Shift for 45° angle snapping.",
     bezier: "Bézier: click start, end, first control, then second control.",
-    ellipse: "Ellipse: drag a bounding box. Shift makes a circle; Alt draws from center.",
+    ellipse: "Ellipse: drag a bounding box. Shift makes a circle; Alt draws from center. Tone controls fill only.",
     eraser: "Eraser: click an object to delete it.",
   };
   setStatus(help[tool]);
@@ -121,7 +115,6 @@ function cancelProvisional(): void {
   else renderOverlay();
 }
 
-
 function finishDraft(): void {
   if (!draft || !pointerAction || pointerAction.kind !== "draw") return;
   const object = draft;
@@ -150,6 +143,11 @@ function inspectCell(point: Point): void {
   const row = Math.floor(point.y / 16);
   if (column < 0 || row < 0 || column >= solver.columns || row >= solver.rows) {
     cellInfo.textContent = "";
+    return;
+  }
+  const issue = solver.issueAt(column, row);
+  if (issue) {
+    cellInfo.textContent = `Cell ${column},${row} · unsupported · ${issue.reason}`;
     return;
   }
   const codepoint = solver.codepointAt(column, row);
