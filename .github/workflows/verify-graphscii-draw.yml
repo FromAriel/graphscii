@@ -22,7 +22,11 @@ jobs:
           node-version: 22
       - name: Verify deterministic lookup
         run: node graphscii-demo/verify.mjs
-      - name: Check browser module syntax
+      - name: Check browser entrypoint syntax
+        run: node --check graphscii-demo/app.js
+      - name: Check browser implementation syntax
         run: node --check graphscii-demo/app.mjs
+      - name: Check browser lookup syntax
+        run: node --check graphscii-demo/straight-lookup.js
       - name: Check local server syntax
         run: python -m py_compile graphscii-demo/serve.py
