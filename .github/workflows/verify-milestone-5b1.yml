@@ -43,23 +43,145 @@ jobs:
         working-directory: geometric-glyph-lab
         run: npm run verify
 
-      - name: Print orthogonal connector measurements
-        run: cat artifacts/research/junctions/orthogonal-stats.json
+      - name: Advance Milestone 5 roadmap
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
 
-      - name: Commit deterministic Milestone 5B.1 outputs
+          detailed = Path("docs/milestone-5-junction-coverage-plan.md")
+          text = detailed.read_text()
+          text = text.replace(
+              "Status: **IN PROGRESS — 5A.1 + 5A.2 COMPLETE; 5A.3 NEXT**",
+              "Status: **IN PROGRESS — 5A RESEARCH COMPLETE; 5B.1 ORTHOGONAL BASIS COMPLETE; 5B.2 NEXT**",
+              1,
+          )
+          start = text.index("## 12. Execution slices")
+          end = text.index("## 14. Guiding rule")
+          replacement = '''## 12. Execution slices
+
+```text
+5A.1  straight-composition demand map + coverage taxonomy       COMPLETE
+5A.2  deterministic raster + generic 600-lattice sweep          COMPLETE
+5A.3  exhaustive candidate generation + global exact dedup      COMPLETE
+5A.4  Pareto optimizer                                           SUPERSEDED
+5A.5  optimizer atlases/recommendation                           SUPERSEDED
+
+5B.1  orthogonal generic basis: cross + four halvesies          COMPLETE
+5B.2  curated diagonal/slope connectors within remaining budget NEXT
+5C    junction registry + provisional codepoint allocation
+5D    canonical junction artifacts + master atlas integration
+5E    graphics publication update + reserve accounting
+```
+
+## 13. Current execution state
+
+### 5A research — COMPLETE
+
+5A established that exhaustive junction demand is broad rather than concentrated and that attempting to encode the 22,528-case theoretical universe is unnecessary. The exhaustive 5A.3 raster search remains a research reference, but the later Pareto sweep was deliberately superseded by a simpler curated generic basis.
+
+### 5B.1 — COMPLETE
+
+The orthogonal basis defines five semantic masks at every one of the 128 canonical `(x,y)` intersections:
+
+```text
+NESW  full cross
+ESW   missing north
+NSW   missing east
+NEW   missing south
+NSE   missing west
+```
+
+Measured result:
+
+```text
+raw semantic connectors              640
+unique exact raster owners           548
+semantic duplicates removed           92
+graphics-v0 exact reuse owners         4
+novel PUA owners required             544
+protected reserve                    604
+reserve remaining if allocated        60
+```
+
+Every one of the 640 semantic connectors remains addressable; edge/corner degeneracies alias exact owners instead of consuming another glyph. No allocation occurs in 5B.1.
+
+Completion note: [`docs/milestone-5b1-orthogonal-generic-connectors.md`](docs/milestone-5b1-orthogonal-generic-connectors.md)
+
+### 5B.2 — NEXT
+
+Use the remaining prospective 60 slots for a deliberately small diagonal/slope connector family: perfect diagonal crossings first, followed by a few mirrored shallower/steeper slope classes. Do not reopen the exhaustive 22,528-case optimization problem.
+
+'''
+          detailed.write_text(text[:start] + replacement + text[end:])
+
+          plan = Path("PLAN.md")
+          text = plan.read_text()
+          start = text.index("## 11. Milestone 5")
+          end = text.index("## 12. Current commands")
+          replacement = '''## 11. Milestone 5 — junction coverage and reserve-budget strategy — IN PROGRESS
+
+Detailed plan: [`docs/milestone-5-junction-coverage-plan.md`](docs/milestone-5-junction-coverage-plan.md)
+
+```text
+5A.1  straight-composition demand map + taxonomy                COMPLETE
+5A.2  boundary-safe geometry + generic 600-lattice sweep        COMPLETE
+5A.3  exhaustive candidates + global exact dedup                COMPLETE
+5A.4  broad Pareto optimizer                                     SUPERSEDED
+5A.5  optimizer atlases/recommendation                            SUPERSEDED
+5B.1  orthogonal cross + four halvesies basis                   COMPLETE
+5B.2  curated diagonal/slope connectors                         NEXT
+5C    junction registry + provisional allocation
+5D    canonical junction artifacts + master-atlas integration
+5E    publication update + reserve accounting
+```
+
+The selected generic orthogonal language is deliberately simple: all 128 `(x,y)` full crossings plus four one-arm-removed three-leg variants at every intersection. That is 640 semantic connectors. Exact raster dedup collapses the family to **548 visual owners**; **4** already reuse `graphscii-graphics-v0`, so a later allocation needs only **544 novel PUA glyphs** and would leave **60 of the 604 reserve slots** for a small diagonal/special family.
+
+No junction codepoints are allocated yet. The next research slice is intentionally narrow: identify a compact set of perfect and shallow/steep diagonal crossing variants that fits the prospective 60-slot remainder, then freeze the combined junction registry.
+
+Later milestones remain:
+
+```text
+6   curated curve/arc extension if justified
+7   terminals / specials
+8   vocabulary optimization
+9   font compiler
+10  drawing API / solver
+11  interactive editor
+12  GraphSCII v1 freeze / release
+```
+
+---
+
+'''
+          text = text[:start] + replacement + text[end:]
+          old = "npm run generate:junction-candidates\nnpm run verify:junction-candidates\nnpm run check"
+          new = "npm run generate:junction-candidates\nnpm run verify:junction-candidates\nnpm run generate:orthogonal-connectors\nnpm run verify:orthogonal-connectors\nnpm run check"
+          if old in text:
+              text = text.replace(old, new, 1)
+          elif new not in text:
+              raise SystemExit("Could not update orthogonal connector command list")
+          plan.write_text(text)
+          PY
+
+      - name: Commit verified Milestone 5B.1 completion
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- \
+            PLAN.md \
+            docs/milestone-5-junction-coverage-plan.md \
+            docs/milestone-5b1-orthogonal-generic-connectors.md \
             artifacts/research/junctions/orthogonal-connectors.json \
             artifacts/research/junctions/orthogonal-owners.json \
             artifacts/research/junctions/orthogonal-stats.json \
             artifacts/research/junctions/orthogonal-report.md \
             spec/orthogonal-junction-basis-v0.json
           if ! git diff --cached --quiet; then
-            git commit -m "Generate Milestone 5B.1 orthogonal connector artifacts"
+            git commit -m "Complete Milestone 5B.1 orthogonal connector basis"
             git push origin HEAD:milestone-5-junction-coverage-plan
           else
-            echo "Milestone 5B.1 generated outputs already match."
+            echo "Milestone 5B.1 completion already matches."
           fi
