@@ -20,39 +20,44 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+
       - name: Verify deterministic lookup
         run: node graphscii-demo/verify.mjs
+
       - name: Check browser runtime syntax
+        run: node --check graphscii-demo/draw-v5.js
+
+      - name: Verify node topology and crossing invariants
         run: |
-          node --check graphscii-demo/draw-core-v3.js
-          node --check graphscii-demo/draw-ui-v4.js
-      - name: Verify topology invariants
-        run: |
-          node -e "global.window=global; require('./graphscii-demo/draw-core-v3.js'); GraphSCIICore.selfTest(); console.log('GraphSCII topology self-test passed.')"
-      - name: Verify exact bitmap display contract
+          node -e "require('./graphscii-demo/draw-v5.js'); GraphSCIIDrawV5.selfTest(); console.log('GraphSCII edge-crossing topology self-test passed.')"
+
+      - name: Verify font rendering contract
         shell: bash
         run: |
-          grep -q "function rasterRows" graphscii-demo/draw-ui-v4.js
-          grep -q "glyphCtx.fillRect" graphscii-demo/draw-ui-v4.js
-          if grep -Eq "fillText|textBaseline|document\.fonts\.load" graphscii-demo/draw-ui-v4.js; then
-            echo "Editor display must not depend on font text rasterization"
+          grep -q "fillText" graphscii-demo/draw-v5.js
+          grep -q "document.fonts.load" graphscii-demo/draw-v5.js
+          grep -q "GraphSCII" graphscii-demo/styles.css
+          if grep -q "function rasterRows" graphscii-demo/draw-v5.js; then
+            echo "Runtime must render the published font, not redraw glyph bitmaps itself"
             exit 1
           fi
+
       - name: Reject CSP-hostile browser execution
         shell: bash
         run: |
-          if grep -En "eval[[:space:]]*\\(|new[[:space:]]+Function|createObjectURL|new[[:space:]]+Blob|import[[:space:]]*\\(" graphscii-demo/draw-core-v3.js graphscii-demo/draw-ui-v4.js; then
+          if grep -En "eval[[:space:]]*\\(|new[[:space:]]+Function|createObjectURL|new[[:space:]]+Blob|import[[:space:]]*\\(" graphscii-demo/draw-v5.js; then
             echo "CSP-hostile JavaScript construct found"
             exit 1
           fi
-          if grep -Eq "app\\.mjs|app-runtime-v2\\.js|draw-ui-v3\\.js|src=\"\\./app\\.js\"" graphscii-demo/index.html; then
+          if grep -Eq "draw-core-v3\\.js|draw-ui-v4\\.js|app\\.mjs|src=\"\\./app\\.js\"" graphscii-demo/index.html; then
             echo "Obsolete browser entrypoint referenced"
             exit 1
           fi
-          grep -q 'draw-core-v3.js' graphscii-demo/index.html
-          grep -q 'draw-ui-v4.js' graphscii-demo/index.html
+          grep -q 'draw-v5.js' graphscii-demo/index.html
+
       - name: Check local server syntax
         run: python -m py_compile graphscii-demo/serve.py
+
       - name: Verify strict server headers and runtime MIME
         shell: bash
         run: |
@@ -60,7 +65,7 @@ jobs:
           SERVER_PID=$!
           trap 'kill $SERVER_PID' EXIT
           sleep 1
-          curl -fsSI http://127.0.0.1:8765/graphscii-demo/draw-ui-v4.js > /tmp/runtime-headers
+          curl -fsSI http://127.0.0.1:8765/graphscii-demo/draw-v5.js > /tmp/runtime-headers
           grep -qi '^Content-Type: text/javascript' /tmp/runtime-headers
           grep -qi '^Cache-Control: .*no-store' /tmp/runtime-headers
           grep -qi "^Content-Security-Policy: .*script-src 'self'" /tmp/runtime-headers
@@ -68,5 +73,4 @@ jobs:
             echo "unsafe-eval must never be enabled"
             exit 1
           fi
-          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'draw-core-v3.js'
-          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'draw-ui-v4.js'
+          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'draw-v5.js'
