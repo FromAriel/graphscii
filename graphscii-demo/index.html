@@ -65,11 +65,12 @@
         There is no bitmap matcher, glyph resolver, Hamming score, supersampling pass, or continuity repair.
       </p>
       <p>
-        Multi-segment cells are intentionally marked instead of approximated. Exact connector composition is the next slice.
+        Pointer jitter/backtracking is cancelled at the cell-crossing level before nodes are quantized. Every committed segment walk is checked for exact shared-node continuity.
       </p>
     </section>
   </main>
 
-  <script src="./app-runtime-v2.js?v=20260821-1321"></script>
+  <script src="./draw-core-v3.js?v=20260821-1409"></script>
+  <script src="./draw-ui-v3.js?v=20260821-1409"></script>
 </body>
 </html>
