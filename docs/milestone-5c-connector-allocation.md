@@ -1,10 +1,10 @@
 # Milestone 5C — Connector Allocation and v1 Integration
 
-Status: **IN IMPLEMENTATION — VERIFIED COUNTS EXPECTED**
+Status: **COMPLETE — FULL-CHAIN VERIFIED**
 
 Milestone 5C turns the measured generic connector basis into a provisional addressable extension without rewriting the frozen `graphscii-graphics-v0` publication.
 
-Frozen inputs:
+Verified inputs and allocation:
 
 ```text
 graphics-v0 owners                  5,796
@@ -12,9 +12,10 @@ novel orthogonal connector owners     544
 novel selected diagonal owners         57
 novel connector owners total          601
 selected connector semantics           700
+v1 encoded owners total              6,397
 ```
 
-Provisional v1 allocation:
+Provisional v1 address map:
 
 ```text
 U+E000..U+F6A3    5,796   unchanged graphics-v0 owners
@@ -58,4 +59,6 @@ npm run generate:connector-allocation
 npm run verify:connector-allocation
 ```
 
-The slice is complete only after the full project `check → generate → verify` chain passes from a clean checkout and the generated v1 artifacts are committed deterministically.
+The complete project `check → generate → verify` chain passed before the generated allocation registry, 1,202 per-glyph connector artifacts, and three paged connector atlases were committed.
+
+Milestone 5C therefore freezes the provisional connector allocation at **601 new owners**, with exactly **3 BMP PUA slots remaining**. The next slice is publication/update work: fold the v1 extension into the formal graphics publication and reserve accounting without renumbering any existing owner.
