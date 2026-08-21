@@ -1,5 +1,6 @@
 import { boundsForObject, cellRectToLogical, rectsIntersect } from "./geometry";
 import { GlyphRegistry, popcount16, popcountByte } from "./registry";
+import type { GlyphCandidatePolicy } from "./registry";
 import type { CellRect, DrawingObject, GraphGlyph, GraphSCIITone, Rect } from "./types";
 
 const SUPERSAMPLE = 4;
@@ -181,12 +182,57 @@ function buildRowLookup(coverage: Float32Array): number[][] {
   return lookup;
 }
 
-function solveCell(registry: GlyphRegistry, coverage: Float32Array, neighbors: Neighbors): number {
+function pointInsideFilledEllipse(
+  object: Extract<DrawingObject, { type: "ellipse" }>,
+  x: number,
+  y: number,
+): boolean {
+  if (!object.fillEnabled || object.radiusX <= 0 || object.radiusY <= 0) return false;
+  const cos = Math.cos(-object.rotation);
+  const sin = Math.sin(-object.rotation);
+  const dx = x - object.center.x;
+  const dy = y - object.center.y;
+  const localX = dx * cos - dy * sin;
+  const localY = dx * sin + dy * cos;
+  return (localX * localX) / (object.radiusX * object.radiusX)
+    + (localY * localY) / (object.radiusY * object.radiusY) <= 1;
+}
+
+function candidatePolicyForCell(objects: DrawingObject[], column: number, row: number): GlyphCandidatePolicy {
+  const cellRect: Rect = {
+    x: column * CELL_WIDTH,
+    y: row * CELL_HEIGHT,
+    width: CELL_WIDTH,
+    height: CELL_HEIGHT,
+  };
+
+  for (const object of objects) {
+    if (object.type !== "ellipse" || !object.fillEnabled) continue;
+    if (!rectsIntersect(boundsForObject(object), cellRect)) continue;
+    for (let y = 0; y < CELL_HEIGHT; y += 1) {
+      for (let x = 0; x < CELL_WIDTH; x += 1) {
+        if (pointInsideFilledEllipse(object, cellRect.x + x + 0.5, cellRect.y + y + 0.5)) return "all";
+      }
+    }
+  }
+
+  // Freehand, line, Bézier, and outline-only ellipse cells are stroke geometry.
+  // They must never promote into GraphSCII's solid/dither fill families merely
+  // because a filled-looking glyph has a lower bitmap error.
+  return "stroke";
+}
+
+function solveCell(
+  registry: GlyphRegistry,
+  coverage: Float32Array,
+  neighbors: Neighbors,
+  policy: GlyphCandidatePolicy,
+): number {
   let targetSum = 0;
   for (const value of coverage) targetSum += value;
   if (targetSum < 0.45) return BLANK_CODEPOINT;
 
-  const candidates = registry.candidatesNearPixelCount(targetSum, 10);
+  const candidates = registry.candidatesNearPixelCount(targetSum, 10, policy);
   const rowLookup = buildRowLookup(coverage);
   let best: GraphGlyph | null = null;
   let bestScore = Number.POSITIVE_INFINITY;
@@ -226,6 +272,7 @@ export class GraphSolver {
     const logicalRect = cellRectToLogical(cellRect);
     const target = this.rasterizer.render(objects, logicalRect, this.registry);
     const targetWidth = logicalRect.width;
+    const policies = new Map<number, GlyphCandidatePolicy>();
 
     const extractCoverage = (column: number, row: number): Float32Array => {
       const cell = new Float32Array(CELL_WIDTH * CELL_HEIGHT);
@@ -238,6 +285,15 @@ export class GraphSolver {
       return cell;
     };
 
+    const policyAt = (column: number, row: number): GlyphCandidatePolicy => {
+      const key = row * this.columns + column;
+      const cached = policies.get(key);
+      if (cached) return cached;
+      const policy = candidatePolicyForCell(objects, column, row);
+      policies.set(key, policy);
+      return policy;
+    };
+
     for (let row = cellRect.row; row < cellRect.row + cellRect.rows; row += 1) {
       for (let column = cellRect.column; column < cellRect.column + cellRect.columns; column += 1) {
         const coverage = extractCoverage(column, row);
@@ -245,7 +301,7 @@ export class GraphSolver {
           left: this.glyphAt(column - 1, row),
           top: this.glyphAt(column, row - 1),
         };
-        this.grid[row * this.columns + column] = solveCell(this.registry, coverage, neighbors);
+        this.grid[row * this.columns + column] = solveCell(this.registry, coverage, neighbors, policyAt(column, row));
       }
     }
 
@@ -259,7 +315,7 @@ export class GraphSolver {
           right: this.glyphAt(column + 1, row),
           bottom: this.glyphAt(column, row + 1),
         };
-        this.grid[row * this.columns + column] = solveCell(this.registry, coverage, neighbors);
+        this.grid[row * this.columns + column] = solveCell(this.registry, coverage, neighbors, policyAt(column, row));
       }
     }
   }
