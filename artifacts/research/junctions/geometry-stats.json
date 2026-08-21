@@ -2,7 +2,7 @@
   "format": "graphscii",
   "formatVersion": 1,
   "schema": "graphscii-junction-geometry-stats",
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "status": "5A.2-allocation-free",
   "demandedSemantics": 22428,
   "theoreticalSemantics": 22528,
@@ -10,6 +10,7 @@
   "protectedReserveSlots": 604,
   "experimentalSlackSlots": 4,
   "junctionAllocations": 0,
+  "boundarySafeIngress": true,
   "balancedQuotas": {
     "LRT": 120,
     "LRB": 120,
@@ -47,871 +48,59 @@
   "modelSummary": {
     "mathematical-demand-hub": {
       "semanticCount": 22428,
-      "validSemantics": 12240,
-      "invalidSemantics": 10188,
-      "weightedValidDemand": 510958,
-      "weightedDemandCoveragePercent": 55.045775,
-      "uniqueRasterBitmaps": 12110,
-      "semanticToRasterCompression": 1.010735,
-      "exactGraphicsV0ReuseSemantics": 18,
-      "exactGraphicsV0ReuseUniqueBitmaps": 18,
-      "novelUniqueBitmaps": 12092,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21705,
+      "semanticToRasterCompression": 1.03331,
+      "exactGraphicsV0ReuseSemantics": 0,
+      "exactGraphicsV0ReuseUniqueBitmaps": 0,
+      "novelUniqueBitmaps": 21705,
       "boundaryPortCollisions": 608,
-      "centroidFallbacks": 0,
-      "sampleFailures": [
-        {
-          "key": "L0,R0,B0",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,B1",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B2",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B3",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:0,2"
-          ]
-        },
-        {
-          "key": "L0,R0,B4",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B5",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B6",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B7",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T0",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B1",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B2",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B3",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B4",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:7,2"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B5",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:7,2"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B6",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:7,2",
-            "undeclared-boundary-on:7,3",
-            "undeclared-boundary-on:7,4",
-            "undeclared-boundary-on:7,5",
-            "undeclared-boundary-on:7,6"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B7",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T1",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B1",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:6,0"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B2",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:6,0"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B4",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:7,2"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B5",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:6,0"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B6",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        }
-      ]
+      "sampleInvalid": []
     },
     "symmetric-half-pixel-center": {
       "semanticCount": 22428,
-      "validSemantics": 10834,
-      "invalidSemantics": 11594,
-      "weightedValidDemand": 381464,
-      "weightedDemandCoveragePercent": 41.095318,
-      "uniqueRasterBitmaps": 10834,
-      "semanticToRasterCompression": 1,
-      "exactGraphicsV0ReuseSemantics": 6,
-      "exactGraphicsV0ReuseUniqueBitmaps": 6,
-      "novelUniqueBitmaps": 10828,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21399,
+      "semanticToRasterCompression": 1.048086,
+      "exactGraphicsV0ReuseSemantics": 0,
+      "exactGraphicsV0ReuseUniqueBitmaps": 0,
+      "novelUniqueBitmaps": 21399,
       "boundaryPortCollisions": 608,
-      "centroidFallbacks": 0,
-      "sampleFailures": [
-        {
-          "key": "L0,R0,B0",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,B1",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B2",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B3",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B4",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B5",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B6",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B7",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T0",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B1",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B2",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B3",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B4",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B5",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B6",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B7",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T1",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B1",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B2",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B4",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B5",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B6",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        }
-      ]
+      "sampleInvalid": []
     },
     "central-2x2-kernel": {
       "semanticCount": 22428,
-      "validSemantics": 10834,
-      "invalidSemantics": 11594,
-      "weightedValidDemand": 381464,
-      "weightedDemandCoveragePercent": 41.095318,
-      "uniqueRasterBitmaps": 10834,
-      "semanticToRasterCompression": 1,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21399,
+      "semanticToRasterCompression": 1.048086,
       "exactGraphicsV0ReuseSemantics": 0,
       "exactGraphicsV0ReuseUniqueBitmaps": 0,
-      "novelUniqueBitmaps": 10834,
+      "novelUniqueBitmaps": 21399,
       "boundaryPortCollisions": 608,
-      "centroidFallbacks": 0,
-      "sampleFailures": [
-        {
-          "key": "L0,R0,B0",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,B1",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B2",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B3",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B4",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B5",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B6",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,B7",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T0",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B1",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B2",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B3",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B4",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B5",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B6",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B7",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T1",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B1",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B2",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B4",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B5",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B6",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:7,1"
-          ]
-        }
-      ]
+      "sampleInvalid": []
     },
     "port-centroid-midpoint": {
       "semanticCount": 22428,
-      "validSemantics": 13642,
-      "invalidSemantics": 8786,
-      "weightedValidDemand": 531768,
-      "weightedDemandCoveragePercent": 57.287647,
-      "uniqueRasterBitmaps": 13446,
-      "semanticToRasterCompression": 1.014577,
-      "exactGraphicsV0ReuseSemantics": 28,
-      "exactGraphicsV0ReuseUniqueBitmaps": 28,
-      "novelUniqueBitmaps": 13418,
+      "validSemantics": 22428,
+      "invalidSemantics": 0,
+      "weightedValidDemand": 928242,
+      "weightedDemandCoveragePercent": 100,
+      "uniqueRasterBitmaps": 21911,
+      "semanticToRasterCompression": 1.023595,
+      "exactGraphicsV0ReuseSemantics": 0,
+      "exactGraphicsV0ReuseUniqueBitmaps": 0,
+      "novelUniqueBitmaps": 21911,
       "boundaryPortCollisions": 608,
-      "centroidFallbacks": 0,
-      "sampleFailures": [
-        {
-          "key": "L0,R0,B0",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:0,1",
-            "undeclared-boundary-on:0,13",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,B7",
-          "topology": "LRB",
-          "reasons": [
-            "undeclared-boundary-on:7,1",
-            "undeclared-boundary-on:7,13",
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T0",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:1,0",
-            "undeclared-boundary-on:2,0",
-            "undeclared-boundary-on:3,0",
-            "undeclared-boundary-on:4,0",
-            "undeclared-boundary-on:5,0",
-            "undeclared-boundary-on:6,0"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,13",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T0,B7",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T1",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:2,0",
-            "undeclared-boundary-on:3,0",
-            "undeclared-boundary-on:4,0",
-            "undeclared-boundary-on:5,0",
-            "undeclared-boundary-on:6,0"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,13",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T1,B7",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T2",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:1,0",
-            "undeclared-boundary-on:3,0",
-            "undeclared-boundary-on:4,0",
-            "undeclared-boundary-on:5,0",
-            "undeclared-boundary-on:6,0"
-          ]
-        },
-        {
-          "key": "L0,R0,T2,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,13",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T2,B7",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T3",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:1,0",
-            "undeclared-boundary-on:2,0",
-            "undeclared-boundary-on:4,0",
-            "undeclared-boundary-on:5,0",
-            "undeclared-boundary-on:6,0"
-          ]
-        },
-        {
-          "key": "L0,R0,T3,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,13",
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T3,B7",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T4",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:1,0",
-            "undeclared-boundary-on:2,0",
-            "undeclared-boundary-on:3,0",
-            "undeclared-boundary-on:5,0",
-            "undeclared-boundary-on:6,0"
-          ]
-        },
-        {
-          "key": "L0,R0,T4,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T4,B7",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:7,13",
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T5",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:1,0",
-            "undeclared-boundary-on:2,0",
-            "undeclared-boundary-on:3,0",
-            "undeclared-boundary-on:4,0",
-            "undeclared-boundary-on:6,0"
-          ]
-        },
-        {
-          "key": "L0,R0,T5,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T5,B7",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:7,13",
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T6",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:1,0",
-            "undeclared-boundary-on:2,0",
-            "undeclared-boundary-on:3,0",
-            "undeclared-boundary-on:4,0",
-            "undeclared-boundary-on:5,0"
-          ]
-        },
-        {
-          "key": "L0,R0,T6,B0",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:0,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T6,B7",
-          "topology": "LRTB",
-          "reasons": [
-            "undeclared-boundary-on:7,13",
-            "undeclared-boundary-on:7,14"
-          ]
-        },
-        {
-          "key": "L0,R0,T7",
-          "topology": "LRT",
-          "reasons": [
-            "undeclared-boundary-on:1,0",
-            "undeclared-boundary-on:2,0",
-            "undeclared-boundary-on:3,0",
-            "undeclared-boundary-on:4,0",
-            "undeclared-boundary-on:5,0",
-            "undeclared-boundary-on:6,0"
-          ]
-        }
-      ]
+      "sampleInvalid": []
     }
   },
   "strategySummary": {
@@ -924,8 +113,9 @@
         "LRTB": 2
       },
       "exactWeightedDemandCoveragePercent": 21.358223,
-      "uniqueCentroidRasters": 434,
-      "novelCentroidRasterOwners": 402,
+      "uniqueCentroidRasters": 438,
+      "novelCentroidRasterOwners": 438,
+      "invalidCentroidRasters": 0,
       "theoreticalAverageNearestPortDelta": 0.560884,
       "theoreticalP95NearestPortDelta": 1,
       "demandWeightedAverageNearestPortDelta": 0.18192
@@ -939,8 +129,9 @@
         "LRTB": 120
       },
       "exactWeightedDemandCoveragePercent": 15.088953,
-      "uniqueCentroidRasters": 443,
-      "novelCentroidRasterOwners": 423,
+      "uniqueCentroidRasters": 467,
+      "novelCentroidRasterOwners": 467,
+      "invalidCentroidRasters": 0,
       "theoreticalAverageNearestPortDelta": 0.204765,
       "theoreticalP95NearestPortDelta": 0.4,
       "demandWeightedAverageNearestPortDelta": 0.126919
@@ -954,8 +145,9 @@
         "LRTB": 436
       },
       "exactWeightedDemandCoveragePercent": 7.981755,
-      "uniqueCentroidRasters": 544,
-      "novelCentroidRasterOwners": 534,
+      "uniqueCentroidRasters": 552,
+      "novelCentroidRasterOwners": 552,
+      "invalidCentroidRasters": 0,
       "theoreticalAverageNearestPortDelta": 0.163349,
       "theoreticalP95NearestPortDelta": 0.285714,
       "demandWeightedAverageNearestPortDelta": 0.174405
@@ -969,8 +161,9 @@
         "LRTB": 218
       },
       "exactWeightedDemandCoveragePercent": 17.255414,
-      "uniqueCentroidRasters": 476,
-      "novelCentroidRasterOwners": 444,
+      "uniqueCentroidRasters": 484,
+      "novelCentroidRasterOwners": 484,
+      "invalidCentroidRasters": 0,
       "theoreticalAverageNearestPortDelta": 0.174906,
       "theoreticalP95NearestPortDelta": 0.285714,
       "demandWeightedAverageNearestPortDelta": 0.151839

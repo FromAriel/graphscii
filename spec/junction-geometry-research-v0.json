@@ -2,7 +2,7 @@
   "format": "graphscii",
   "formatVersion": 1,
   "schema": "graphscii-junction-geometry-research",
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "status": "5A.2-geometry-and-generic-lattice",
   "canonicalCell": {
     "width": 8,
@@ -17,6 +17,7 @@
     "protectedReserveSlots": 604,
     "junctionAllocations": 0
   },
+  "boundarySafeIngress": true,
   "geometryModels": [
     "mathematical-demand-hub",
     "symmetric-half-pixel-center",
