@@ -4,7 +4,7 @@ This is the first implementation slice of the deterministic GraphSCII node-graph
 
 ## Rule
 
-The editor does **not** draw into an 8×16 pixel target and does not search for a glyph that looks close.
+The editor does **not** draw into an arbitrary raster target and does not search for a glyph that looks close.
 
 The only committed drawing geometry is:
 
@@ -12,7 +12,7 @@ The only committed drawing geometry is:
 GraphSCII node → GraphSCII node
 ```
 
-Every committed segment stores its cell, from-port, and to-port and directly resolves that exact semantic to the existing GraphSCII straight codepoint.
+Every committed segment stores its cell, from-port, and to-port.
 
 ## Tools in Slice 1
 
@@ -38,9 +38,9 @@ A → B
 B → A
 ```
 
-becomes no movement before either crossing is quantized to a GraphSCII port. This prevents mouse jitter from leaving a stale segment in a cell or re-entering the same cell through a different port.
+becomes no movement before either crossing is quantized to a GraphSCII port.
 
-Only the surviving crossings are quantized. Each crossing therefore becomes one authoritative shared GraphSCII node used by both adjacent cells.
+Only surviving crossings are quantized. Each crossing becomes one authoritative shared GraphSCII node used by both adjacent cells.
 
 Before a path can be committed, the runtime verifies:
 
@@ -48,18 +48,28 @@ Before a path can be committed, the runtime verifies:
 previous.toNode === next.fromNode
 ```
 
-for every consecutive segment. Same-edge segments and broken shared-node continuity are rejected rather than rendered.
+Same-edge segments and broken shared-node continuity are rejected rather than rendered.
+
+## Exact display rendering
+
+The editor does **not** use `CanvasRenderingContext2D.fillText()` to display GraphSCII line cells.
+
+For every stored `fromPort → toPort` semantic, the display renderer executes the canonical GraphSCII 8×16 integer line raster rule directly and paints the resulting 8×16 cell at exactly 3×3 display pixels per GraphSCII pixel.
+
+That means a right-edge endpoint and the adjacent cell's left-edge endpoint physically meet at the same cell boundary. Font baselines, hinting, text metrics, glyph bearings, and browser text rasterization cannot shift a displayed segment.
+
+The font/codepoint mapping remains relevant for eventual text export, but it is no longer trusted as the editor's visual placement mechanism.
 
 ## Browser runtime
 
-The browser runtime is split into two ordinary scripts:
-
 ```text
 graphscii-demo/draw-core-v3.js
-graphscii-demo/draw-ui-v3.js
+graphscii-demo/draw-ui-v4.js
 ```
 
-`draw-core-v3.js` contains the node lattice, deterministic straight lookup, pointer normalization, crossing-walk normalization, and topology validation. `draw-ui-v3.js` contains only browser/canvas interaction.
+`draw-core-v3.js` owns node topology, pointer normalization, crossing-walk normalization, and continuity validation.
+
+`draw-ui-v4.js` owns browser input and exact 8×16 cell bitmap display.
 
 There are no dynamic imports, Blob-module execution, eval, `new Function`, or runtime source-code evaluation.
 
@@ -71,7 +81,7 @@ From the repository root:
 python graphscii-demo/serve.py 8002
 ```
 
-If you are already inside `graphscii-demo`:
+If already inside `graphscii-demo`:
 
 ```powershell
 python serve.py 8002
@@ -90,14 +100,14 @@ From the repository root:
 ```powershell
 node graphscii-demo/verify.mjs
 node --check graphscii-demo/draw-core-v3.js
-node --check graphscii-demo/draw-ui-v3.js
+node --check graphscii-demo/draw-ui-v4.js
 node -e "global.window=global; require('./graphscii-demo/draw-core-v3.js'); GraphSCIICore.selfTest()"
 ```
 
-CI also runs the topology self-test under Node and verifies the strict CSP/no-cache development server.
+CI additionally rejects `fillText`, font loading, CSP-hostile execution, and stale browser runtimes from the editor display path.
 
 ## Deliberately absent
 
 There is no bitmap matching, Hamming distance, supersampling, glyph candidate scoring, visual fallback, neighbor continuity repair, line/fill family guessing, or global route solver.
 
-If a user intentionally produces a real multi-segment cell, Slice 1 still marks it as unresolved until exact connector composition is implemented. Accidental overlap from pointer backtracking is not an accepted state.
+If a user intentionally produces a real multi-segment cell, Slice 1 still marks it as unresolved until exact connector composition is implemented.
