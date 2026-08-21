@@ -502,10 +502,29 @@ The 604-slot reserve remains protected. No later family may consume it without a
 
 ---
 
-## 11. Later milestones
+## 11. Milestone 5 — junction coverage and reserve-budget strategy — IN PROGRESS
+
+Detailed plan: [`docs/milestone-5-junction-coverage-plan.md`](docs/milestone-5-junction-coverage-plan.md)
 
 ```text
-5   junctions / reserve-budget strategy
+5A.1  straight-composition demand map + taxonomy             COMPLETE
+5A.2  boundary-safe geometry + generic 600-lattice sweep     COMPLETE
+5A.3  exhaustive candidate generation + exact dedup          NEXT
+5A.4  demand/breadth/Pareto optimization, K=0..604
+5A.5  research atlases + measured recommendation
+5B    junction budget/allocation decision
+5C    junction registry + provisional allocation
+5D    canonical junction artifacts + master-atlas integration
+5E    publication update + reserve accounting
+```
+
+Measured 5A.1 demand covers **22,428 / 22,528** theoretical junction semantics with **928,242** weighted demand events. Measured 5A.2 shows that a pure top-600 frequency list has poor geometric breadth, while evenly spaced dyadic port lattices and a hybrid lattice+demand basis cover the connection space far more uniformly. The generic lattice is therefore a permanent optimization input, not a fallback experiment.
+
+The 5A.2 working experiment uses 600 semantic connector slots while allocating **zero** codepoints. The full **604-slot U+F6A4..U+F8FF reserve remains protected**.
+
+Later milestones remain:
+
+```text
 6   curated curve/arc extension if justified
 7   terminals / specials
 8   vocabulary optimization
@@ -514,8 +533,6 @@ The 604-slot reserve remains protected. No later family may consume it without a
 11  interactive editor
 12  GraphSCII v1 freeze / release
 ```
-
-The 604-slot reserve is intentionally protected until later families are measured.
 
 ---
 
@@ -547,10 +564,16 @@ npm run generate:renderer-only-resolution
 npm run verify:renderer-only-resolution
 npm run generate:graphics-publication
 npm run verify:graphics-publication
+npm run generate:junction-demand
+npm run verify:junction-demand
+npm run generate:junction-blind-spots
+npm run verify:junction-blind-spots
+npm run generate:junction-geometry
+npm run verify:junction-geometry
 npm run check
 ```
 
-The published straight allocation remains authoritative. Milestone 4D.5 now persists all 3,392 renderer-only semantic resolutions as dense, sparse, and demoted-half publication artifacts: 414 exact encoded reuses and 2,978 derived aliases across 2,555 unique derived bitmaps, with every demoted-half fallback independently verified at Hamming distance 1. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D is complete. The deterministic `graphscii-graphics-v0` publication now freezes the 5,796-owner encoded vocabulary, renderer-only resolution layer, master atlases, SHA-256 integrity digests, and the untouched 604-slot reserve after a byte-stable delete-and-regenerate verification gate. Milestone 5 junction research is next.
+The published straight allocation remains authoritative. Milestone 4D.5 now persists all 3,392 renderer-only semantic resolutions as dense, sparse, and demoted-half publication artifacts: 414 exact encoded reuses and 2,978 derived aliases across 2,555 unique derived bitmaps, with every demoted-half fallback independently verified at Hamming distance 1. The 604-slot U+F6A4..U+F8FF reserve remains untouched. Milestone 4D is complete. The deterministic `graphscii-graphics-v0` publication now freezes the 5,796-owner encoded vocabulary, renderer-only resolution layer, master atlases, SHA-256 integrity digests, and the untouched 604-slot reserve after a byte-stable delete-and-regenerate verification gate. Milestone 5A.1 and 5A.2 are complete; exhaustive boundary-safe junction candidate generation and global exact dedup in Milestone 5A.3 is next.
 
 ---
 

@@ -1,6 +1,6 @@
 # Milestone 5 — Junction Coverage and Reserve-Budget Strategy
 
-Status: **PLANNED — 5A.1 NEXT**
+Status: **IN PROGRESS — 5A.1 + 5A.2 COMPLETE; 5A.3 NEXT**
 
 Milestone 5 extends `graphscii-graphics-v0` with junction capability without treating the remaining 604 BMP PUA slots as free space to fill. The primary objective is **widest useful junction coverage per encoded codepoint**.
 
@@ -361,9 +361,9 @@ The report must make it visually obvious **where junction demand is concentrated
 ## 12. Execution slices
 
 ```text
-5A.1  straight-composition demand map + coverage taxonomy       NEXT
-5A.2  deterministic junction raster/hub model sweep
-5A.3  exhaustive candidate generation + global exact dedup
+5A.1  straight-composition demand map + coverage taxonomy       COMPLETE
+5A.2  deterministic raster + generic 600-lattice sweep           COMPLETE
+5A.3  exhaustive candidate generation + global exact dedup       NEXT
 5A.4  demand/breadth/Pareto budget optimization, K=0..604
 5A.5  research atlases + measured recommendation
 
@@ -373,20 +373,33 @@ The report must make it visually obvious **where junction demand is concentrated
 5E    graphics publication update + reserve accounting
 ```
 
-## 13. 5A.1 definition of done
+## 13. Current execution state
 
-The immediate next implementation slice is **5A.1**, and it remains allocation-free.
+### 5A.1 — COMPLETE
 
-It is complete when the project can reproducibly answer:
+The straight-composition demand map measured 22,428 of 22,528 theoretical one-port-per-edge junction semantics (99.556108%) with 928,242 weighted demand events. All 6,144 three-port semantics occur; the 100 zero-demand blind spots are four-port LRTB breadth-protection cases.
+
+### 5A.2 — COMPLETE
+
+Boundary-safe inward ingress removes accidental neighboring edge activation. All 22,428 demanded semantics pass every validity gate under all four tested raster models.
+
+The 600-entry generic theory is now a first-class optimization input:
 
 ```text
-How many straight-segment compositions create valid 3/4-port junction demand?
-Where inside the 8x16 cell do those intersections occur?
-Which ports, edge combinations, and angle regions carry the most demand?
-Which important regions are rare but structurally necessary for broad coverage?
+strategy                      exact demand   avg breadth Δ   p95 breadth Δ
+pure demand-top                 21.358223%       0.560884        1.000000
+even topology-balanced          15.088953%       0.204765        0.400000
+even space-proportional          7.981755%       0.163349        0.285714
+hybrid even + demand            17.255414%       0.174906        0.285714
 ```
 
-It must emit a deterministic machine-readable demand map and coverage taxonomy that later candidate rasterization and budget optimization can consume.
+The pure frequency list leaves severe four-port coverage holes. The even lattice dramatically improves geometric breadth, and the hybrid retains much of that breadth while recovering substantial measured demand. The next optimizer therefore carries both empirical demand and generic evenly spaced coverage.
+
+Completion note: [`docs/milestone-5a2-generic-lattice.md`](docs/milestone-5a2-generic-lattice.md)
+
+### 5A.3 — NEXT
+
+Exhaustively materialize boundary-safe junction candidates from the measured semantic universe and geometry models, globally exact-deduplicate them against `graphscii-graphics-v0` and one another, attach both demand and generic-lattice coverage sets to every visual owner, and produce the owner population that 5A.4 will optimize across budgets 0..604.
 
 ## 14. Guiding rule
 
