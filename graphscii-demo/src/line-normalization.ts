@@ -1,7 +1,6 @@
 import {
   CELL_HEIGHT,
   CELL_WIDTH,
-  portPoint,
   type GeometryGrid,
   type ObjectCellGeometry,
   type PortEdge,
@@ -47,6 +46,14 @@ function cellKey(column: number, row: number, columns: number): number {
   return row * columns + column;
 }
 
+function keyColumn(key: number, columns: number): number {
+  return key % columns;
+}
+
+function keyRow(key: number, columns: number): number {
+  return Math.floor(key / columns);
+}
+
 function terminalKey(key: number, port: PortName): string {
   return `${key}:${port}`;
 }
@@ -85,12 +92,6 @@ function representativeIndex(indices: readonly number[], maximum: number): numbe
   return Math.max(0, Math.min(maximum, Math.floor((lower + upper) / 2 + 0.5)));
 }
 
-/**
- * Every physical shared seam gets at most one fitted crossing per authored object.
- * Multiple nearby passes are merged before semantic lookup, and the identical
- * fitted index is written to both adjacent cells. Glyph selection never repairs
- * or re-rounds this decision later.
- */
 function coalesceSharedSeams(grid: GeometryGrid, columns: number, rows: number): void {
   for (let row = 0; row < rows; row += 1) {
     for (let column = 0; column < columns - 1; column += 1) {
@@ -161,6 +162,197 @@ function coalesceOuterEdges(grid: GeometryGrid, columns: number, rows: number): 
   }
 }
 
+function snapshotObjectPorts(grid: GeometryGrid, objectId: string): Map<number, Set<PortName>> {
+  const snapshot = new Map<number, Set<PortName>>();
+  for (const [key, cell] of grid.cells.entries()) {
+    const objectCell = cell.byObject.get(objectId);
+    if (objectCell) snapshot.set(key, new Set(objectCell.ports));
+  }
+  return snapshot;
+}
+
+function matchingTransition(
+  fromKey: number,
+  toKey: number,
+  snapshot: ReadonlyMap<number, ReadonlySet<PortName>>,
+  columns: number,
+): [PortName, PortName] | null {
+  const fromColumn = keyColumn(fromKey, columns);
+  const fromRow = keyRow(fromKey, columns);
+  const toColumn = keyColumn(toKey, columns);
+  const toRow = keyRow(toKey, columns);
+  const dc = toColumn - fromColumn;
+  const dr = toRow - fromRow;
+  const fromPorts = snapshot.get(fromKey) ?? new Set<PortName>();
+  const toPorts = snapshot.get(toKey) ?? new Set<PortName>();
+
+  let edge: PortEdge | null = null;
+  if (dc === 1 && dr === 0) edge = "R";
+  else if (dc === -1 && dr === 0) edge = "L";
+  else if (dc === 0 && dr === 1) edge = "B";
+  else if (dc === 0 && dr === -1) edge = "T";
+
+  if (edge) {
+    const candidates = [...fromPorts].filter((port) => portEdge(port) === edge).sort((a, b) => portIndex(a) - portIndex(b));
+    for (const port of candidates) {
+      const opposite = oppositePort(port);
+      if (toPorts.has(opposite)) return [port, opposite];
+    }
+    return null;
+  }
+
+  const diagonalCandidates: Array<[PortName, PortName]> = [];
+  if (dc === 1 && dr === 1) diagonalCandidates.push(["R15", "L0"], ["B7", "T0"]);
+  else if (dc === 1 && dr === -1) diagonalCandidates.push(["R0", "L15"], ["T7", "B0"]);
+  else if (dc === -1 && dr === 1) diagonalCandidates.push(["L15", "R0"], ["B0", "T7"]);
+  else if (dc === -1 && dr === -1) diagonalCandidates.push(["L0", "R15"], ["T0", "B7"]);
+  for (const pair of diagonalCandidates) {
+    if (fromPorts.has(pair[0]) && toPorts.has(pair[1])) return pair;
+  }
+  return null;
+}
+
+function cellForPoint(point: Point, columns: number, rows: number): number | null {
+  const width = columns * CELL_WIDTH;
+  const height = rows * CELL_HEIGHT;
+  if (point.x < -EPSILON || point.y < -EPSILON || point.x > width + EPSILON || point.y > height + EPSILON) return null;
+  const x = Math.max(0, Math.min(width - EPSILON, point.x));
+  const y = Math.max(0, Math.min(height - EPSILON, point.y));
+  const column = Math.max(0, Math.min(columns - 1, Math.floor(x / CELL_WIDTH)));
+  const row = Math.max(0, Math.min(rows - 1, Math.floor(y / CELL_HEIGHT)));
+  return cellKey(column, row, columns);
+}
+
+function sampledCellWalk(path: readonly Point[], columns: number, rows: number): number[] {
+  const walk: number[] = [];
+  const append = (key: number | null): void => {
+    if (key === null || walk[walk.length - 1] === key) return;
+    walk.push(key);
+  };
+
+  for (let index = 1; index < path.length; index += 1) {
+    const a = path[index - 1]!;
+    const b = path[index]!;
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const steps = Math.max(1, Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) * 2));
+    for (let step = index === 1 ? 0 : 1; step <= steps; step += 1) {
+      const t = step / steps;
+      append(cellForPoint({ x: a.x + dx * t, y: a.y + dy * t }, columns, rows));
+    }
+  }
+  return walk;
+}
+
+function expandDiagonalSteps(
+  walk: readonly number[],
+  snapshot: ReadonlyMap<number, ReadonlySet<PortName>>,
+  columns: number,
+  rows: number,
+): number[] {
+  if (walk.length < 2) return [...walk];
+  const expanded = [walk[0]!];
+  for (let index = 1; index < walk.length; index += 1) {
+    const previous = expanded[expanded.length - 1]!;
+    const next = walk[index]!;
+    const dc = keyColumn(next, columns) - keyColumn(previous, columns);
+    const dr = keyRow(next, columns) - keyRow(previous, columns);
+    if (Math.abs(dc) <= 1 && Math.abs(dr) <= 1 && Math.abs(dc) + Math.abs(dr) <= 1) {
+      expanded.push(next);
+      continue;
+    }
+
+    if (Math.abs(dc) === 1 && Math.abs(dr) === 1 && !matchingTransition(previous, next, snapshot, columns)) {
+      const candidates = [
+        { column: keyColumn(next, columns), row: keyRow(previous, columns) },
+        { column: keyColumn(previous, columns), row: keyRow(next, columns) },
+      ].filter((candidate) => candidate.column >= 0 && candidate.row >= 0 && candidate.column < columns && candidate.row < rows);
+      const intermediate = candidates
+        .map((candidate) => cellKey(candidate.column, candidate.row, columns))
+        .find((candidateKey) => matchingTransition(previous, candidateKey, snapshot, columns)
+          && matchingTransition(candidateKey, next, snapshot, columns));
+      if (intermediate !== undefined) expanded.push(intermediate);
+    }
+    expanded.push(next);
+  }
+  return expanded;
+}
+
+function loopEraseWalk(walk: readonly number[]): number[] {
+  const result: number[] = [];
+  const positions = new Map<number, number>();
+  for (const key of walk) {
+    const existing = positions.get(key);
+    if (existing === undefined) {
+      positions.set(key, result.length);
+      result.push(key);
+      continue;
+    }
+    while (result.length > existing + 1) {
+      const removed = result.pop()!;
+      positions.delete(removed);
+    }
+  }
+  return result;
+}
+
+function addKeptPort(kept: Map<number, Set<PortName>>, key: number, port: PortName): void {
+  const ports = kept.get(key) ?? new Set<PortName>();
+  ports.add(port);
+  kept.set(key, ports);
+}
+
+function rewriteOpenObjectWalk(
+  grid: GeometryGrid,
+  object: DrawingObject,
+  columns: number,
+  rows: number,
+): void {
+  if (object.type === "ellipse") return;
+  const paths = grid.pathsByObject.get(object.id) ?? [];
+  const snapshot = snapshotObjectPorts(grid, object.id);
+  const retained = new Set<number>();
+  const keptPorts = new Map<number, Set<PortName>>();
+
+  for (const path of paths) {
+    if (path.length < 2) continue;
+    const sampled = sampledCellWalk(path, columns, rows);
+    const expanded = expandDiagonalSteps(sampled, snapshot, columns, rows);
+    const walk = loopEraseWalk(expanded);
+    for (const key of walk) retained.add(key);
+    for (let index = 1; index < walk.length; index += 1) {
+      const fromKey = walk[index - 1]!;
+      const toKey = walk[index]!;
+      const transition = matchingTransition(fromKey, toKey, snapshot, columns);
+      if (!transition) {
+        throw new Error(`GraphSCII stroke fitting could not preserve ordered transition ${fromKey} -> ${toKey} for ${object.id}.`);
+      }
+      addKeptPort(keptPorts, fromKey, transition[0]);
+      addKeptPort(keptPorts, toKey, transition[1]);
+    }
+  }
+
+  for (const [key, cell] of [...grid.cells.entries()]) {
+    const objectCell = cell.byObject.get(object.id);
+    if (!objectCell) continue;
+    if (!retained.has(key)) {
+      cell.byObject.delete(object.id);
+      continue;
+    }
+    objectCell.ports = new Set(keptPorts.get(key) ?? []);
+  }
+  rebuildCellPorts(grid);
+}
+
+function rewriteOpenStrokeWalks(
+  grid: GeometryGrid,
+  objects: readonly DrawingObject[],
+  columns: number,
+  rows: number,
+): void {
+  for (const object of objects) rewriteOpenObjectWalk(grid, object, columns, rows);
+}
+
 interface RayHit {
   edge: PortEdge;
   index: number;
@@ -178,12 +370,7 @@ function endpointCell(point: Point, columns: number, rows: number): { column: nu
   };
 }
 
-function endpointRayHits(
-  point: Point,
-  adjacent: Point,
-  column: number,
-  row: number,
-): RayHit[] {
+function endpointRayHits(point: Point, adjacent: Point, column: number, row: number): RayHit[] {
   const dx = point.x - adjacent.x;
   const dy = point.y - adjacent.y;
   if (Math.hypot(dx, dy) <= EPSILON) return [];
@@ -199,11 +386,7 @@ function endpointRayHits(
     if (t < -EPSILON) return;
     const y = point.y + t * dy;
     if (y < y0 - EPSILON || y > y1 + EPSILON) return;
-    hits.push({
-      edge,
-      index: Math.max(0, Math.min(CELL_HEIGHT - 1, Math.floor(y - y0 + 0.5))),
-      distance: Math.max(0, t) * Math.hypot(dx, dy),
-    });
+    hits.push({ edge, index: Math.max(0, Math.min(CELL_HEIGHT - 1, Math.floor(y - y0 + 0.5))), distance: Math.max(0, t) * Math.hypot(dx, dy) });
   };
   const addHorizontal = (edge: "T" | "B", y: number): void => {
     if (Math.abs(dy) <= EPSILON) return;
@@ -211,11 +394,7 @@ function endpointRayHits(
     if (t < -EPSILON) return;
     const x = point.x + t * dx;
     if (x < x0 - EPSILON || x > x1 + EPSILON) return;
-    hits.push({
-      edge,
-      index: Math.max(0, Math.min(CELL_WIDTH - 1, Math.floor(x - x0 + 0.5))),
-      distance: Math.max(0, t) * Math.hypot(dx, dy),
-    });
+    hits.push({ edge, index: Math.max(0, Math.min(CELL_WIDTH - 1, Math.floor(x - x0 + 0.5))), distance: Math.max(0, t) * Math.hypot(dx, dy) });
   };
 
   addVertical("L", x0);
@@ -239,7 +418,6 @@ function addTerminalPort(
   const cell = grid.cells.get(key);
   const objectCell = cell?.byObject.get(objectId);
   if (!cell || !objectCell) return;
-
   const existingEdges = new Set([...objectCell.ports].map(portEdge));
   const hits = endpointRayHits(point, adjacent, column, row);
   const preferred = hits.find((hit) => !existingEdges.has(hit.edge)) ?? hits[0];
@@ -256,167 +434,17 @@ function addEndpointCaps(
   rows: number,
   terminalPorts: Set<string>,
 ): void {
-  const objectsById = new Map(objects.map((object) => [object.id, object]));
-  for (const [objectId, paths] of grid.pathsByObject.entries()) {
-    const object = objectsById.get(objectId);
-    if (!object) continue;
+  for (const object of objects) {
     if (object.type === "ellipse") continue;
+    const paths = grid.pathsByObject.get(object.id) ?? [];
     for (const path of paths) {
       if (path.length < 2) continue;
-      addTerminalPort(grid, objectId, path[0]!, path[1]!, columns, rows, terminalPorts);
-      addTerminalPort(grid, objectId, path[path.length - 1]!, path[path.length - 2]!, columns, rows, terminalPorts);
+      addTerminalPort(grid, object.id, path[0]!, path[1]!, columns, rows, terminalPorts);
+      addTerminalPort(grid, object.id, path[path.length - 1]!, path[path.length - 2]!, columns, rows, terminalPorts);
     }
   }
 }
 
-function removeMatchingNeighborPort(
-  grid: GeometryGrid,
-  objectId: string,
-  column: number,
-  row: number,
-  port: PortName,
-  columns: number,
-  rows: number,
-): void {
-  const neighbor = neighborForEdge(column, row, portEdge(port));
-  if (neighbor.column < 0 || neighbor.row < 0 || neighbor.column >= columns || neighbor.row >= rows) return;
-  const neighborCell = grid.cells.get(cellKey(neighbor.column, neighbor.row, columns));
-  neighborCell?.byObject.get(objectId)?.ports.delete(oppositePort(port));
-}
-
-function squaredDistanceToLine(point: Point, a: Point, b: Point): number {
-  const dx = b.x - a.x;
-  const dy = b.y - a.y;
-  const denominator = dx * dx + dy * dy;
-  if (denominator <= EPSILON) return Number.POSITIVE_INFINITY;
-  const cross = dx * (a.y - point.y) - (a.x - point.x) * dy;
-  return (cross * cross) / denominator;
-}
-
-function pairFitScore(
-  first: PortName,
-  second: PortName,
-  objectCell: ObjectCellGeometry,
-  column: number,
-  row: number,
-): number {
-  const a = portPoint(first);
-  const b = portPoint(second);
-  let score = 0;
-  let sampleCount = 0;
-  for (const segment of objectCell.segments) {
-    const samples = [
-      segment.a,
-      { x: (segment.a.x + segment.b.x) / 2, y: (segment.a.y + segment.b.y) / 2 },
-      segment.b,
-    ];
-    for (const sample of samples) {
-      const local = {
-        x: sample.x - column * CELL_WIDTH,
-        y: sample.y - row * CELL_HEIGHT,
-      };
-      score += squaredDistanceToLine(local, a, b);
-      sampleCount += 1;
-    }
-  }
-  return sampleCount > 0 ? score / sampleCount : Number.POSITIVE_INFINITY;
-}
-
-function fitSingleObjectMultiPortCells(
-  grid: GeometryGrid,
-  objects: readonly DrawingObject[],
-  columns: number,
-  rows: number,
-  terminalPorts: ReadonlySet<string>,
-): boolean {
-  const objectsById = new Map(objects.map((object) => [object.id, object]));
-  let changed = false;
-
-  for (const [key, cell] of [...grid.cells.entries()]) {
-    if (cell.byObject.size !== 1) continue;
-    const column = key % columns;
-    const row = Math.floor(key / columns);
-    const [entry] = [...cell.byObject.entries()];
-    if (!entry) continue;
-    const [objectId, objectCell] = entry;
-    const object = objectsById.get(objectId);
-    if (!object || (object.type === "ellipse" && object.fillEnabled)) continue;
-
-    const ports = [...objectCell.ports];
-    if (ports.length <= 2) continue;
-    const required = ports.filter((port) => terminalPorts.has(terminalKey(key, port)));
-    let best: { first: PortName; second: PortName; score: number; key: string } | null = null;
-
-    for (let firstIndex = 0; firstIndex < ports.length; firstIndex += 1) {
-      for (let secondIndex = firstIndex + 1; secondIndex < ports.length; secondIndex += 1) {
-        const first = ports[firstIndex]!;
-        const second = ports[secondIndex]!;
-        if (portEdge(first) === portEdge(second)) continue;
-        if (required.some((port) => port !== first && port !== second)) continue;
-        const pairKey = [first, second].sort().join(">");
-        const score = pairFitScore(first, second, objectCell, column, row);
-        if (!best || score < best.score - 1e-12 || (Math.abs(score - best.score) <= 1e-12 && pairKey < best.key)) {
-          best = { first, second, score, key: pairKey };
-        }
-      }
-    }
-
-    if (!best) continue;
-    const keep = new Set<PortName>([best.first, best.second]);
-    for (const port of [...objectCell.ports]) {
-      if (keep.has(port)) continue;
-      removeMatchingNeighborPort(grid, objectId, column, row, port, columns, rows);
-      objectCell.ports.delete(port);
-      changed = true;
-    }
-  }
-
-  return changed;
-}
-
-function pruneNonterminalSpurs(
-  grid: GeometryGrid,
-  objects: readonly DrawingObject[],
-  columns: number,
-  rows: number,
-  terminalPorts: Set<string>,
-): boolean {
-  const objectsById = new Map(objects.map((object) => [object.id, object]));
-  let changedAny = false;
-  const maximumPasses = Math.max(1, columns * rows * 2);
-
-  for (let pass = 0; pass < maximumPasses; pass += 1) {
-    let changed = false;
-    for (const [key, cell] of [...grid.cells.entries()]) {
-      if (cell.byObject.size !== 1) continue;
-      const column = key % columns;
-      const row = Math.floor(key / columns);
-      for (const [objectId, objectCell] of [...cell.byObject.entries()]) {
-        const object = objectsById.get(objectId);
-        if (!object || (object.type === "ellipse" && object.fillEnabled)) continue;
-        if (objectCell.ports.size !== 1) continue;
-        const port = [...objectCell.ports][0]!;
-        if (terminalPorts.has(terminalKey(key, port))) continue;
-
-        removeMatchingNeighborPort(grid, objectId, column, row, port, columns, rows);
-        cell.byObject.delete(objectId);
-        changed = true;
-        changedAny = true;
-      }
-    }
-    if (!changed) break;
-    rebuildCellPorts(grid);
-  }
-  return changedAny;
-}
-
-/**
- * Fit authored centerlines to GraphSCII's one-port-per-edge cell language before
- * any glyph is chosen. This is the only approximation stage for stroke geometry:
- * crossings are merged as shared seam facts, endpoint caps are projected along
- * the authored tangent, single-object revisits are fitted to one straight cell
- * traversal, and nonterminal one-port spurs are removed.
- */
 export function fitStrokeGeometry(
   grid: GeometryGrid,
   objects: readonly DrawingObject[],
@@ -426,20 +454,12 @@ export function fitStrokeGeometry(
   coalesceSharedSeams(grid, columns, rows);
   coalesceOuterEdges(grid, columns, rows);
   rebuildCellPorts(grid);
+  rewriteOpenStrokeWalks(grid, objects, columns, rows);
+  rebuildCellPorts(grid);
 
   const terminalPorts = new Set<string>();
   addEndpointCaps(grid, objects, columns, rows, terminalPorts);
   rebuildCellPorts(grid);
-
-  const maximumPasses = Math.max(1, columns * rows * 2);
-  for (let pass = 0; pass < maximumPasses; pass += 1) {
-    const fitChanged = fitSingleObjectMultiPortCells(grid, objects, columns, rows, terminalPorts);
-    rebuildCellPorts(grid);
-    const pruneChanged = pruneNonterminalSpurs(grid, objects, columns, rows, terminalPorts);
-    rebuildCellPorts(grid);
-    if (!fitChanged && !pruneChanged) break;
-  }
-
   return { terminalPorts };
 }
 
@@ -495,8 +515,6 @@ export function validateFittedSharedPorts(
   return errors;
 }
 
-// Kept as a compatibility alias for older callers; the implementation is the
-// complete pre-semantic stroke fitter above, not the removed backtrack patch.
 export function normalizeStraightBacktracks(
   grid: GeometryGrid,
   objects: readonly DrawingObject[],
