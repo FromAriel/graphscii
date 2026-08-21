@@ -24,3 +24,5 @@ jobs:
         run: node graphscii-demo/verify.mjs
       - name: Check browser module syntax
         run: node --check graphscii-demo/app.mjs
+      - name: Check local server syntax
+        run: python -m py_compile graphscii-demo/serve.py
