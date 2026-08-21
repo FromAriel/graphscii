@@ -1,7 +1,7 @@
 import { boundsForObject, cellRectToLogical, rectsIntersect } from "./geometry";
 import { GlyphRegistry, popcount16, popcountByte } from "./registry";
 import type { BoundaryPoint } from "./registry";
-import type { CellRect, DrawingObject, GraphGlyph, GraphSCIITone, Rect } from "./types";
+import type { CellRect, DrawingObject, GraphGlyph, GraphSCIITone, Point, Rect } from "./types";
 
 const SUPERSAMPLE = 4;
 const CELL_WIDTH = 8;
@@ -9,7 +9,6 @@ const CELL_HEIGHT = 16;
 const CONTINUITY_WEIGHT = 0.075;
 const BLANK_CODEPOINT = 0x20;
 const TOPOLOGY_THRESHOLD = 0.08;
-const JUNCTION_THRESHOLD = 0.35;
 const TOPOLOGY_LINE_WIDTH = 1;
 const TONES: GraphSCIITone[] = [100, 75, 50, 25];
 
@@ -402,37 +401,208 @@ function boundaryPointsFromTopology(topology: Float32Array): BoundaryPoint[] {
   return [...unique.values()].sort((a, b) => a.y - b.y || a.x - b.x);
 }
 
-const JUNCTION_RING: ReadonlyArray<readonly [number, number]> = [
-  [0, -1],
-  [1, -1],
-  [1, 0],
-  [1, 1],
-  [0, 1],
-  [-1, 1],
-  [-1, 0],
-  [-1, -1],
-];
+interface CenterlineSegment {
+  a: Point;
+  b: Point;
+}
 
-function topologyHasJunction(topology: Float32Array): boolean {
-  const active = (x: number, y: number): boolean => (
-    x >= 0 && x < CELL_WIDTH && y >= 0 && y < CELL_HEIGHT
-      ? topology[y * CELL_WIDTH + x]! >= JUNCTION_THRESHOLD
-      : false
-  );
+function appendSegment(segments: CenterlineSegment[], a: Point, b: Point): void {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  if (dx * dx + dy * dy <= 1e-12) return;
+  segments.push({ a: { ...a }, b: { ...b } });
+}
 
-  for (let y = 0; y < CELL_HEIGHT; y += 1) {
-    for (let x = 0; x < CELL_WIDTH; x += 1) {
-      if (!active(x, y)) continue;
-      const ring = JUNCTION_RING.map(([dx, dy]) => active(x + dx, y + dy));
-      let armGroups = 0;
-      for (let index = 0; index < ring.length; index += 1) {
-        const previous = ring[(index + ring.length - 1) % ring.length]!;
-        if (!previous && ring[index]) armGroups += 1;
+function sampleQuadratic(segments: CenterlineSegment[], p0: Point, p1: Point, p2: Point, steps = 8): void {
+  let previous = p0;
+  for (let step = 1; step <= steps; step += 1) {
+    const t = step / steps;
+    const u = 1 - t;
+    const next = {
+      x: u * u * p0.x + 2 * u * t * p1.x + t * t * p2.x,
+      y: u * u * p0.y + 2 * u * t * p1.y + t * t * p2.y,
+    };
+    appendSegment(segments, previous, next);
+    previous = next;
+  }
+}
+
+function sampleCubic(segments: CenterlineSegment[], p0: Point, p1: Point, p2: Point, p3: Point, steps = 24): void {
+  let previous = p0;
+  for (let step = 1; step <= steps; step += 1) {
+    const t = step / steps;
+    const u = 1 - t;
+    const next = {
+      x: u * u * u * p0.x + 3 * u * u * t * p1.x + 3 * u * t * t * p2.x + t * t * t * p3.x,
+      y: u * u * u * p0.y + 3 * u * u * t * p1.y + 3 * u * t * t * p2.y + t * t * t * p3.y,
+    };
+    appendSegment(segments, previous, next);
+    previous = next;
+  }
+}
+
+function centerlineSegmentsForObject(object: DrawingObject): CenterlineSegment[] {
+  const segments: CenterlineSegment[] = [];
+  switch (object.type) {
+    case "line":
+      appendSegment(segments, object.start, object.end);
+      return segments;
+    case "freehand": {
+      const points = object.points;
+      if (points.length < 2) return segments;
+      if (points.length === 2) {
+        appendSegment(segments, points[0]!, points[1]!);
+        return segments;
       }
-      if (armGroups >= 3) return true;
+      let current = points[0]!;
+      for (let index = 1; index < points.length - 1; index += 1) {
+        const control = points[index]!;
+        const next = points[index + 1]!;
+        const end = { x: (control.x + next.x) / 2, y: (control.y + next.y) / 2 };
+        sampleQuadratic(segments, current, control, end);
+        current = end;
+      }
+      const beforeLast = points[points.length - 2]!;
+      const last = points[points.length - 1]!;
+      sampleQuadratic(segments, current, beforeLast, last);
+      return segments;
+    }
+    case "bezier":
+      sampleCubic(segments, object.p0, object.p1, object.p2, object.p3);
+      return segments;
+    case "ellipse": {
+      if (object.strokeWidth <= 0 && !object.fillEnabled) return segments;
+      const steps = 64;
+      const cosRotation = Math.cos(object.rotation);
+      const sinRotation = Math.sin(object.rotation);
+      const pointAt = (angle: number): Point => {
+        const localX = object.radiusX * Math.cos(angle);
+        const localY = object.radiusY * Math.sin(angle);
+        return {
+          x: object.center.x + localX * cosRotation - localY * sinRotation,
+          y: object.center.y + localX * sinRotation + localY * cosRotation,
+        };
+      };
+      let previous = pointAt(0);
+      for (let step = 1; step <= steps; step += 1) {
+        const next = pointAt((step / steps) * Math.PI * 2);
+        appendSegment(segments, previous, next);
+        previous = next;
+      }
+      return segments;
     }
   }
-  return false;
+}
+
+function junctionArmCountAtPoint(hub: Point, segments: readonly CenterlineSegment[]): number {
+  const pointTolerance = 1e-4;
+  const angularCosineTolerance = Math.cos(3 * Math.PI / 180);
+  const directions: Array<{ x: number; y: number }> = [];
+
+  const addDirection = (dx: number, dy: number): void => {
+    const length = Math.hypot(dx, dy);
+    if (length <= pointTolerance) return;
+    const unit = { x: dx / length, y: dy / length };
+    if (directions.some((existing) => existing.x * unit.x + existing.y * unit.y >= angularCosineTolerance)) return;
+    directions.push(unit);
+  };
+
+  for (const segment of segments) {
+    const abX = segment.b.x - segment.a.x;
+    const abY = segment.b.y - segment.a.y;
+    const lengthSquared = abX * abX + abY * abY;
+    if (lengthSquared <= pointTolerance * pointTolerance) continue;
+    const ahX = hub.x - segment.a.x;
+    const ahY = hub.y - segment.a.y;
+    const cross = Math.abs(abX * ahY - abY * ahX);
+    if (cross > pointTolerance * Math.max(1, Math.sqrt(lengthSquared))) continue;
+    const dot = ahX * abX + ahY * abY;
+    if (dot < -pointTolerance || dot > lengthSquared + pointTolerance) continue;
+
+    addDirection(segment.a.x - hub.x, segment.a.y - hub.y);
+    addDirection(segment.b.x - hub.x, segment.b.y - hub.y);
+  }
+
+  return directions.length;
+}
+
+function segmentIntersectionPoint(first: CenterlineSegment, second: CenterlineSegment): Point | null {
+  const rX = first.b.x - first.a.x;
+  const rY = first.b.y - first.a.y;
+  const sX = second.b.x - second.a.x;
+  const sY = second.b.y - second.a.y;
+  const denominator = rX * sY - rY * sX;
+  if (Math.abs(denominator) <= 1e-9) return null;
+
+  const qX = second.a.x - first.a.x;
+  const qY = second.a.y - first.a.y;
+  const t = (qX * sY - qY * sX) / denominator;
+  const u = (qX * rY - qY * rX) / denominator;
+  const epsilon = 1e-7;
+  if (t < -epsilon || t > 1 + epsilon || u < -epsilon || u > 1 + epsilon) return null;
+  return { x: first.a.x + t * rX, y: first.a.y + t * rY };
+}
+
+function semanticJunctionCells(objects: DrawingObject[], cellRect: CellRect, totalColumns: number): Set<number> {
+  const buckets = new Map<number, CenterlineSegment[]>();
+  const epsilon = 1e-6;
+  const maxColumn = cellRect.column + cellRect.columns - 1;
+  const maxRow = cellRect.row + cellRect.rows - 1;
+
+  for (const object of objects) {
+    for (const segment of centerlineSegmentsForObject(object)) {
+      const minColumn = Math.max(cellRect.column, Math.floor((Math.min(segment.a.x, segment.b.x) - epsilon) / CELL_WIDTH));
+      const maxSegmentColumn = Math.min(maxColumn, Math.floor((Math.max(segment.a.x, segment.b.x) + epsilon) / CELL_WIDTH));
+      const minRow = Math.max(cellRect.row, Math.floor((Math.min(segment.a.y, segment.b.y) - epsilon) / CELL_HEIGHT));
+      const maxSegmentRow = Math.min(maxRow, Math.floor((Math.max(segment.a.y, segment.b.y) + epsilon) / CELL_HEIGHT));
+      if (minColumn > maxSegmentColumn || minRow > maxSegmentRow) continue;
+      for (let row = minRow; row <= maxSegmentRow; row += 1) {
+        for (let column = minColumn; column <= maxSegmentColumn; column += 1) {
+          const key = row * totalColumns + column;
+          const list = buckets.get(key) ?? [];
+          list.push(segment);
+          buckets.set(key, list);
+        }
+      }
+    }
+  }
+
+  const junctions = new Set<number>();
+  for (const [key, segments] of buckets) {
+    if (segments.length < 2) continue;
+    const column = key % totalColumns;
+    const row = Math.floor(key / totalColumns);
+    const x0 = column * CELL_WIDTH;
+    const y0 = row * CELL_HEIGHT;
+    const x1 = x0 + CELL_WIDTH;
+    const y1 = y0 + CELL_HEIGHT;
+    const hubs = new Map<string, Point>();
+    const addHub = (point: Point): void => {
+      if (point.x < x0 - epsilon || point.x > x1 + epsilon || point.y < y0 - epsilon || point.y > y1 + epsilon) return;
+      const hubKey = `${Math.round(point.x * 100000)},${Math.round(point.y * 100000)}`;
+      hubs.set(hubKey, point);
+    };
+
+    for (const segment of segments) {
+      addHub(segment.a);
+      addHub(segment.b);
+    }
+    for (let firstIndex = 0; firstIndex < segments.length; firstIndex += 1) {
+      for (let secondIndex = firstIndex + 1; secondIndex < segments.length; secondIndex += 1) {
+        const intersection = segmentIntersectionPoint(segments[firstIndex]!, segments[secondIndex]!);
+        if (intersection) addHub(intersection);
+      }
+    }
+
+    for (const hub of hubs.values()) {
+      if (junctionArmCountAtPoint(hub, segments) >= 3) {
+        junctions.add(key);
+        break;
+      }
+    }
+  }
+
+  return junctions;
 }
 
 function targetSum(coverage: Float32Array): number {
@@ -455,6 +625,7 @@ function solveCell(
   topology: Float32Array,
   neighbors: Neighbors,
   fillTones: readonly GraphSCIITone[],
+  semanticJunction: boolean,
 ): number {
   const sum = targetSum(coverage);
   if (sum < 0.45) return BLANK_CODEPOINT;
@@ -488,11 +659,10 @@ function solveCell(
     if (straight) return straight.codepointValue;
   }
 
-  // Connector glyphs require two independent facts:
-  //   1. the centerline actually contains a 3+ arm branch point, and
-  //   2. the detected endpoints exactly match a published connector semantic.
-  // Merely touching three cell edges is not enough.
-  if (boundaryPoints.length >= 3 && topologyHasJunction(topology)) {
+  // Connectors require an authored centerline junction with 3+ real outgoing arms,
+  // plus an exact published connector boundary signature. Raster edge count alone
+  // never grants connector eligibility.
+  if (boundaryPoints.length >= 3 && semanticJunction) {
     const connectorCandidates = registry.connectorCandidatesForBoundaryPoints(boundaryPoints);
     const connector = scoreCandidates(connectorCandidates, coverage, neighbors);
     if (connector) return connector.codepointValue;
@@ -528,6 +698,7 @@ export class GraphSolver {
     const topologyTarget = this.rasterizer.renderStrokeTopology(objects, logicalRect);
     const targetWidth = logicalRect.width;
     const fillToneCache = new Map<number, GraphSCIITone[]>();
+    const junctionCells = semanticJunctionCells(objects, cellRect, this.columns);
 
     const extractCell = (source: Float32Array, column: number, row: number): Float32Array => {
       const cell = new Float32Array(CELL_WIDTH * CELL_HEIGHT);
@@ -553,16 +724,18 @@ export class GraphSolver {
       for (let column = cellRect.column; column < cellRect.column + cellRect.columns; column += 1) {
         const coverage = extractCell(target, column, row);
         const topology = extractCell(topologyTarget, column, row);
+        const key = row * this.columns + column;
         const neighbors: Neighbors = {
           left: this.glyphAt(column - 1, row),
           top: this.glyphAt(column, row - 1),
         };
-        this.grid[row * this.columns + column] = solveCell(
+        this.grid[key] = solveCell(
           this.registry,
           coverage,
           topology,
           neighbors,
           fillTonesAt(column, row),
+          junctionCells.has(key),
         );
       }
     }
@@ -573,18 +746,20 @@ export class GraphSolver {
       for (let column = cellRect.column + cellRect.columns - 1; column >= cellRect.column; column -= 1) {
         const coverage = extractCell(target, column, row);
         const topology = extractCell(topologyTarget, column, row);
+        const key = row * this.columns + column;
         const neighbors: Neighbors = {
           left: this.glyphAt(column - 1, row),
           top: this.glyphAt(column, row - 1),
           right: this.glyphAt(column + 1, row),
           bottom: this.glyphAt(column, row + 1),
         };
-        this.grid[row * this.columns + column] = solveCell(
+        this.grid[key] = solveCell(
           this.registry,
           coverage,
           topology,
           neighbors,
           fillTonesAt(column, row),
+          junctionCells.has(key),
         );
       }
     }
