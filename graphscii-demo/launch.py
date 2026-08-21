@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import functools
+import hashlib
 import http.server
 import os
 from pathlib import Path
@@ -65,6 +66,20 @@ def build(npm: str) -> bool:
         return False
 
 
+def dist_fingerprint() -> str:
+    if not DIST.is_dir():
+        return "missing"
+    digest = hashlib.sha256()
+    for path in sorted((candidate for candidate in DIST.rglob("*") if candidate.is_file()), key=lambda item: item.as_posix()):
+        digest.update(path.relative_to(DIST).as_posix().encode("utf-8"))
+        digest.update(b"\0")
+        with path.open("rb") as source:
+            while chunk := source.read(1024 * 1024):
+                digest.update(chunk)
+        digest.update(b"\0")
+    return digest.hexdigest()[:12]
+
+
 def snapshot() -> dict[Path, tuple[int, int]]:
     result: dict[Path, tuple[int, int]] = {}
 
@@ -96,19 +111,30 @@ def watch(npm: str, stop: threading.Event) -> None:
         print("\nChange detected. Rebuilding...", flush=True)
         if build(npm):
             previous = snapshot()
-            print("Rebuild complete. Refresh the browser.", flush=True)
+            print(f"Rebuild complete. Build {dist_fingerprint()}. Refresh the browser.", flush=True)
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
+    build_id = "unknown"
+
+    def end_headers(self) -> None:
+        # This is a development/self-host launcher. Never let the browser keep an
+        # old hashed bundle after a rebuild while diagnosing rendering behavior.
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
+        self.send_header("X-GraphSCII-Build", self.build_id)
+        super().end_headers()
+
     def log_message(self, format: str, *values: object) -> None:
         print(f"[http] {self.address_string()} - {format % values}", flush=True)
 
 
-def browser_url(host: str, port: int) -> str:
+def browser_url(host: str, port: int, build_id: str) -> str:
     display = "127.0.0.1" if host in {"0.0.0.0", "::", ""} else host
     if ":" in display and not display.startswith("["):
         display = f"[{display}]"
-    return f"http://{display}:{port}/"
+    return f"http://{display}:{port}/?build={build_id}"
 
 
 def main() -> int:
@@ -125,10 +151,12 @@ def main() -> int:
     elif not DIST.is_dir():
         raise SystemExit("dist/ does not exist. Run once without --no-build first.")
 
+    build_id = dist_fingerprint()
+    Handler.build_id = build_id
     handler = functools.partial(Handler, directory=str(DIST))
     server = http.server.ThreadingHTTPServer((options.host, options.port), handler)
     server.daemon_threads = True
-    url = browser_url(options.host, options.port)
+    url = browser_url(options.host, options.port, build_id)
     stop = threading.Event()
     watcher: threading.Thread | None = None
 
@@ -136,7 +164,9 @@ def main() -> int:
         watcher = threading.Thread(target=watch, args=(npm, stop), daemon=True)
         watcher.start()
 
-    print(f"\nGraphSCII Draw: {url}")
+    print(f"\nGraphSCII Draw build: {build_id}")
+    print(f"GraphSCII Draw: {url}")
+    print("Responses are served with cache disabled.")
     print("Press Ctrl+C to stop.\n")
 
     if not options.no_open:
