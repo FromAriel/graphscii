@@ -29,8 +29,9 @@ interface CellWalk {
 interface TerminalHint {
   objectId: string;
   key: number;
-  point: Point;
-  adjacent: Point;
+  point?: Point;
+  adjacent?: Point;
+  port?: PortName;
 }
 
 function portEdge(port: PortName): PortEdge {
@@ -424,40 +425,20 @@ function orderedCellWalk(path: readonly Point[], columns: number, rows: number):
   return result;
 }
 
-function loopEraseWalk(walk: CellWalk): CellWalk {
-  if (walk.nodes.length === 0) return { nodes: [], edges: [] };
-  const nodes: number[] = [walk.nodes[0]!];
-  const edges: CellTransition[] = [];
-  const positions = new Map<number, number>([[walk.nodes[0]!, 0]]);
-
-  for (const edge of walk.edges) {
-    const current = nodes[nodes.length - 1]!;
-    if (edge.fromKey !== current) {
-      throw new Error(`GraphSCII loop erasure expected ${current} but transition starts at ${edge.fromKey}.`);
-    }
-    const existing = positions.get(edge.toKey);
-    if (existing === undefined) {
-      edges.push(edge);
-      positions.set(edge.toKey, nodes.length);
-      nodes.push(edge.toKey);
-      continue;
-    }
-
-    while (nodes.length > existing + 1) {
-      const removed = nodes.pop()!;
-      positions.delete(removed);
-    }
-    edges.length = Math.max(0, nodes.length - 1);
-  }
-  return { nodes, edges };
-}
-
 function addKeptPort(kept: Map<number, Set<PortName>>, key: number, port: PortName): void {
   const ports = kept.get(key) ?? new Set<PortName>();
   ports.add(port);
   kept.set(key, ports);
 }
 
+/**
+ * Preserve every cell on its first authored visit. A revisited cell is a branch
+ * decision at character resolution, not permission to erase the loop or emit a
+ * connector for one authored stroke. Consecutive first-visit cells remain
+ * connected; transitions into already-owned cells terminate the current
+ * straight fragment at that boundary, and transitions back out start a new
+ * fragment on the newly visited side.
+ */
 function rewriteOpenObjectWalk(
   grid: GeometryGrid,
   object: DrawingObject,
@@ -472,20 +453,46 @@ function rewriteOpenObjectWalk(
 
   for (const path of paths) {
     if (path.length < 2) continue;
-    const walk = loopEraseWalk(orderedCellWalk(path, columns, rows));
+    const walk = orderedCellWalk(path, columns, rows);
     if (walk.nodes.length === 0) continue;
-    for (const key of walk.nodes) retained.add(key);
-    for (const edge of walk.edges) {
-      addKeptPort(keptPorts, edge.fromKey, edge.fromPort);
-      addKeptPort(keptPorts, edge.toKey, edge.toPort);
+
+    let currentKey = walk.nodes[0]!;
+    let active = !retained.has(currentKey);
+    if (active) {
+      retained.add(currentKey);
+      terminals.push({ objectId: object.id, key: currentKey, point: path[0]!, adjacent: path[1]! });
     }
-    terminals.push({ objectId: object.id, key: walk.nodes[0]!, point: path[0]!, adjacent: path[1]! });
-    terminals.push({
-      objectId: object.id,
-      key: walk.nodes[walk.nodes.length - 1]!,
-      point: path[path.length - 1]!,
-      adjacent: path[path.length - 2]!,
-    });
+
+    for (const edge of walk.edges) {
+      if (edge.fromKey !== currentKey) {
+        throw new Error(`GraphSCII first-visit cover expected ${currentKey} but transition starts at ${edge.fromKey}.`);
+      }
+
+      const destinationIsNew = !retained.has(edge.toKey);
+      if (active && destinationIsNew) {
+        addKeptPort(keptPorts, edge.fromKey, edge.fromPort);
+        addKeptPort(keptPorts, edge.toKey, edge.toPort);
+        retained.add(edge.toKey);
+        active = true;
+      } else if (active) {
+        terminals.push({ objectId: object.id, key: edge.fromKey, port: edge.fromPort });
+        active = false;
+      } else if (destinationIsNew) {
+        retained.add(edge.toKey);
+        terminals.push({ objectId: object.id, key: edge.toKey, port: edge.toPort });
+        active = true;
+      }
+      currentKey = edge.toKey;
+    }
+
+    if (active) {
+      terminals.push({
+        objectId: object.id,
+        key: currentKey,
+        point: path[path.length - 1]!,
+        adjacent: path[path.length - 2]!,
+      });
+    }
   }
 
   for (const [key, cell] of [...grid.cells.entries()]) {
@@ -570,6 +577,15 @@ function addTerminalPort(
   const objectCell = cell?.byObject.get(hint.objectId);
   if (!cell || !objectCell || objectCell.ports.size >= 2) return;
 
+  if (hint.port) {
+    if (!objectCell.ports.has(hint.port)) {
+      objectCell.ports.add(hint.port);
+      terminalPorts.add(terminalKey(hint.key, hint.port));
+    }
+    return;
+  }
+  if (!hint.point || !hint.adjacent) return;
+
   const column = keyColumn(hint.key, columns);
   const row = keyRow(hint.key, columns);
   const existingEdges = new Set([...objectCell.ports].map(portEdge));
@@ -577,6 +593,7 @@ function addTerminalPort(
   const preferred = hits.find((hit) => !existingEdges.has(hit.edge)) ?? hits[0];
   if (!preferred) return;
   const port = `${preferred.edge}${preferred.index}` as PortName;
+  if (objectCell.ports.has(port)) return;
   objectCell.ports.add(port);
   terminalPorts.add(terminalKey(hint.key, port));
 }
@@ -590,12 +607,28 @@ function addEndpointCaps(
   for (const hint of terminals) addTerminalPort(grid, hint, columns, terminalPorts);
 }
 
+function assertOpenStrokeDegreeTwo(grid: GeometryGrid, objects: readonly DrawingObject[]): void {
+  const openObjectIds = new Set(objects.filter((object) => object.type !== "ellipse").map((object) => object.id));
+  for (const [key, cell] of grid.cells.entries()) {
+    for (const [objectId, objectCell] of cell.byObject.entries()) {
+      if (!openObjectIds.has(objectId)) continue;
+      if (objectCell.ports.size !== 2) {
+        throw new Error(
+          `GraphSCII fitted open stroke ${objectId} has ${objectCell.ports.size} boundary ports in cell ${key}: `
+          + `${[...objectCell.ports].sort().join(",") || "none"}.`,
+        );
+      }
+    }
+  }
+}
+
 /**
  * Fit authored stroke geometry before any glyph is chosen. Open paths carry
- * exact DDA crossing ports through chronological loop erasure, including seam
- * crossings that occur exactly at flattened-polyline vertices. Only after that
- * fitted topology exists may the solver ask the published GraphSCII tables for
- * a glyph.
+ * exact DDA crossing ports through a deterministic first-visit fragment cover,
+ * including seam crossings that occur exactly at flattened-polyline vertices.
+ * Revisited cells split straight fragments instead of erasing authored loops or
+ * authorizing connectors. Only after fitted topology exists may the solver ask
+ * the published GraphSCII tables for a glyph.
  */
 export function fitStrokeGeometry(
   grid: GeometryGrid,
@@ -612,6 +645,7 @@ export function fitStrokeGeometry(
   const terminalPorts = new Set<string>();
   addEndpointCaps(grid, terminals, columns, terminalPorts);
   rebuildCellPorts(grid);
+  assertOpenStrokeDegreeTwo(grid, objects);
   return { terminalPorts };
 }
 
