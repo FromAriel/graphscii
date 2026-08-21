@@ -71,13 +71,17 @@ for (const required of [
   "initialCellIndex",
   "walkSegmentCells",
   "orderedCellWalk",
-  "loopEraseWalk",
+  "destinationIsNew",
   "rewriteOpenStrokeWalks",
   "addEndpointCaps",
+  "assertOpenStrokeDegreeTwo",
   "fitStrokeGeometry",
   "validateFittedSharedPorts",
 ]) {
   if (!lineNormalizationSource.includes(required)) throw new Error(`Stroke fitter is missing required stage: ${required}.`);
+}
+if (lineNormalizationSource.includes("loopEraseWalk")) {
+  throw new Error("Stroke fitter regressed to destructive global loop erasure.");
 }
 if (lineNormalizationSource.includes("Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) * 2)")) {
   throw new Error("Stroke fitter regressed to point-sampled cell traversal instead of geometry-engine DDA traversal.");
@@ -167,6 +171,10 @@ expect(fixture.columns === 64 && fixture.rows === 32, "Regression fixture dimens
 expect(fixture.objects[0].points?.length === 379 && fixture.objects[0].width === 2 && fixture.objects[0].tone === 100, "Regression fixture source geometry changed.");
 expect(invalidOutput.length > 1000 && [...invalidOutput].some((character) => character.codePointAt(0) >= 0xe000), "Invalid-output regression fixture is missing its GraphSCII PUA text.");
 
+const rawFixtureGrid = buildGeometryGrid(fixture.objects, fixture.columns, fixture.rows);
+const rawTouchedCells = rawFixtureGrid.cells.size;
+expect(rawTouchedCells >= 350, `Regression fixture unexpectedly touches only ${rawTouchedCells} authored cells.`);
+
 const fixtureGrid = buildGeometryGrid(fixture.objects, fixture.columns, fixture.rows);
 const fixtureFit = fitStrokeGeometry(fixtureGrid, fixture.objects, fixture.columns, fixture.rows);
 const fixtureSeams = validateFittedSharedPorts(fixtureGrid, fixture.columns, fixture.rows, fixtureFit.terminalPorts);
@@ -180,11 +188,14 @@ for (const cell of fixtureGrid.cells.values()) {
     throw new Error(`Regression fixture produced a two-port cell outside the published straight table after DDA fitting: ${ports.join(" ↔ ")}.`);
   }
 }
-expect(checkedStraightCells >= 150, `Regression fixture exercised only ${checkedStraightCells} exact fitted two-port cells; expected a representative straight-path corpus.`);
+expect(
+  checkedStraightCells === rawTouchedCells,
+  `First-visit fragment cover retained ${checkedStraightCells} straight cells from ${rawTouchedCells} authored-touched cells.`,
+);
 
 console.log(
   `GraphSCII exact semantic engine verified: shared seams are fitted once; reverse geometry is invariant; `
-  + `open strokes use geometry-engine-equivalent DDA traversal plus ordered loop erasure and deterministic endpoint caps; `
-  + `T/X classify as orthogonal/diagonal 3/4-arm junctions; failing freehand fixture exercises ${checkedStraightCells} `
-  + `published two-port cells with zero fitted seam mismatches.`,
+  + `open strokes use geometry-engine-equivalent DDA traversal plus a first-visit fragment cover and deterministic terminal caps; `
+  + `T/X classify as orthogonal/diagonal 3/4-arm junctions; failing freehand fixture retains all ${checkedStraightCells} `
+  + `authored-touched cells as published two-port straights with zero fitted seam mismatches.`,
 );
