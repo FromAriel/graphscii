@@ -115,6 +115,7 @@ export class CanvasRenderer {
   }
 
   exportExactPng(solver: GraphSolver): Promise<Blob> {
+    solver.assertExact();
     const canvas = document.createElement("canvas");
     canvas.width = solver.columns * 8;
     canvas.height = solver.rows * 16;
