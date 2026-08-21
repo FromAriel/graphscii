@@ -107,8 +107,6 @@ export class GraphSolver {
   }
 
   solve(objects: DrawingObject[], _cellRect: CellRect): void {
-    // Semantic correctness is authoritative. Rebuild from the complete editable
-    // geometry so stale dirty-region glyphs cannot survive a geometry change.
     this.clear();
     if (objects.length === 0) return;
 
@@ -208,7 +206,7 @@ export class GraphSolver {
         if (!cell) continue;
         const ports = sortedPorts(cell.ports);
         const objectIds = [...cell.byObject.keys()].sort();
-        const junction = junctionTopology(cell.segments);
+        const junction = objectIds.length >= 2 ? junctionTopology(cell.segments) : null;
 
         if (junction && junction.arms >= 3) {
           if (ports.length < 3 || ports.length > 4) {
