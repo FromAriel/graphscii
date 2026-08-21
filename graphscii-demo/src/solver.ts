@@ -9,17 +9,23 @@ const CELL_HEIGHT = 16;
 const CONTINUITY_WEIGHT = 0.075;
 const BLANK_CODEPOINT = 0x20;
 const TOPOLOGY_THRESHOLD = 0.08;
+const TOPOLOGY_LINE_WIDTH = 1;
 const TONES: GraphSCIITone[] = [100, 75, 50, 25];
 
-function traceFreehand(ctx: CanvasRenderingContext2D, object: Extract<DrawingObject, { type: "freehand" }>): void {
+function traceFreehand(
+  ctx: CanvasRenderingContext2D,
+  object: Extract<DrawingObject, { type: "freehand" }>,
+  width = object.width,
+): void {
   const points = object.points;
   if (points.length === 0) return;
   if (points.length === 1) {
     ctx.beginPath();
-    ctx.arc(points[0]!.x, points[0]!.y, object.width / 2, 0, Math.PI * 2);
+    ctx.arc(points[0]!.x, points[0]!.y, width / 2, 0, Math.PI * 2);
     ctx.fill();
     return;
   }
+  ctx.lineWidth = width;
   ctx.beginPath();
   ctx.moveTo(points[0]!.x, points[0]!.y);
   if (points.length === 2) {
@@ -47,8 +53,7 @@ function drawObjectForTone(ctx: CanvasRenderingContext2D, object: DrawingObject,
   switch (object.type) {
     case "freehand":
       if (object.tone !== tone) return;
-      ctx.lineWidth = object.width;
-      traceFreehand(ctx, object);
+      traceFreehand(ctx, object, object.width);
       return;
     case "line":
       if (object.tone !== tone) return;
@@ -89,18 +94,17 @@ function drawStrokeTopology(ctx: CanvasRenderingContext2D, object: DrawingObject
   ctx.lineJoin = "round";
   switch (object.type) {
     case "freehand":
-      ctx.lineWidth = object.width;
-      traceFreehand(ctx, object);
+      traceFreehand(ctx, object, TOPOLOGY_LINE_WIDTH);
       return;
     case "line":
-      ctx.lineWidth = object.width;
+      ctx.lineWidth = TOPOLOGY_LINE_WIDTH;
       ctx.beginPath();
       ctx.moveTo(object.start.x, object.start.y);
       ctx.lineTo(object.end.x, object.end.y);
       ctx.stroke();
       return;
     case "bezier":
-      ctx.lineWidth = object.width;
+      ctx.lineWidth = TOPOLOGY_LINE_WIDTH;
       ctx.beginPath();
       ctx.moveTo(object.p0.x, object.p0.y);
       ctx.bezierCurveTo(object.p1.x, object.p1.y, object.p2.x, object.p2.y, object.p3.x, object.p3.y);
@@ -108,7 +112,7 @@ function drawStrokeTopology(ctx: CanvasRenderingContext2D, object: DrawingObject
       return;
     case "ellipse":
       if (object.strokeWidth <= 0) return;
-      ctx.lineWidth = object.strokeWidth;
+      ctx.lineWidth = TOPOLOGY_LINE_WIDTH;
       ctx.beginPath();
       ctx.ellipse(object.center.x, object.center.y, object.radiusX, object.radiusY, object.rotation, 0, Math.PI * 2);
       ctx.stroke();
