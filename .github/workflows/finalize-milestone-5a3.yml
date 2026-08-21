@@ -1,0 +1,177 @@
+name: Finalize Milestone 5A.3 roadmap
+
+on:
+  push:
+    branches:
+      - milestone-5-junction-coverage-plan
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: milestone-5-junction-coverage-plan
+          fetch-depth: 0
+
+      - name: Advance roadmap to Milestone 5A.4
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          detailed = Path("docs/milestone-5-junction-coverage-plan.md")
+          text = detailed.read_text()
+          text = text.replace(
+              "Status: **IN PROGRESS — 5A.1 + 5A.2 COMPLETE; 5A.3 NEXT**",
+              "Status: **IN PROGRESS — 5A.1 THROUGH 5A.3 COMPLETE; 5A.4 NEXT**",
+              1,
+          )
+          start = text.index("## 12. Execution slices")
+          end = text.index("## 14. Guiding rule")
+          replacement = '''## 12. Execution slices
+
+```text
+5A.1  straight-composition demand map + coverage taxonomy       COMPLETE
+5A.2  deterministic raster + generic 600-lattice sweep          COMPLETE
+5A.3  exhaustive candidate generation + global exact dedup      COMPLETE
+5A.4  demand/breadth/Pareto owner optimization, K=0..604        NEXT
+5A.5  research atlases + measured recommendation
+
+5B    selected junction budget/allocation decision
+5C    junction registry + provisional codepoint allocation
+5D    canonical junction artifacts + master atlas integration
+5E    graphics publication update + reserve accounting
+```
+
+## 13. Current execution state
+
+### 5A.1 — COMPLETE
+
+The straight-composition demand map measured 22,428 of 22,528 theoretical one-port-per-edge junction semantics (99.556108%) with 928,242 weighted demand events. All 6,144 three-port semantics occur; the 100 zero-demand blind spots are four-port LRTB breadth-protection cases.
+
+### 5A.2 — COMPLETE
+
+Boundary-safe inward ingress removes accidental neighboring edge activation. All 22,428 demanded semantics pass every validity gate under all four tested raster models.
+
+The 600-entry generic theory is now a first-class optimization input:
+
+```text
+strategy                      exact demand   avg breadth Δ   p95 breadth Δ
+pure demand-top                 21.358223%       0.560884        1.000000
+even topology-balanced          15.088953%       0.204765        0.400000
+even space-proportional          7.981755%       0.163349        0.285714
+hybrid even + demand            17.255414%       0.174906        0.285714
+```
+
+Completion note: [`docs/milestone-5a2-generic-lattice.md`](docs/milestone-5a2-generic-lattice.md)
+
+### 5A.3 — COMPLETE
+
+The complete 22,528-semantic universe was rasterized under all four boundary-safe geometry models, including all 100 empirical blind spots:
+
+```text
+semantic-model candidates         90,112
+valid candidates                   90,112
+unique exact raster owners         82,377
+graphics-v0 exact reuses                0
+novel junction owners              82,377
+multi-semantic owners               1,773
+multi-model owners                  4,187
+max semantic aliases / owner            7
+max candidate aliases / owner          14
+```
+
+The exhaustive data is persisted as four model candidate shards plus sixteen bitmap-prefix owner shards. The allocation variable is now explicitly the **visual owner**, not the semantic tuple: the four 600-semantic 5A.2 baselines touch 1,552–1,813 visual owners when every geometry alternative is retained.
+
+Completion note: [`docs/milestone-5a3-exhaustive-candidates.md`](docs/milestone-5a3-exhaustive-candidates.md)
+
+### 5A.4 — NEXT
+
+Optimize the 82,377-owner search space across every budget `K=0..604`. A semantic's empirical demand may be counted at most once even when several selected owners can represent it. The objective must combine unique demand coverage, evenly spaced generic-lattice breadth, topology/port coverage, the 100 blind-spot breadth-protection semantics, and marginal gain per additional owner.
+
+'''
+          detailed.write_text(text[:start] + replacement + text[end:])
+
+          plan = Path("PLAN.md")
+          text = plan.read_text()
+          start = text.index("## 11. Milestone 5")
+          end = text.index("## 12. Current commands")
+          replacement = '''## 11. Milestone 5 — junction coverage and reserve-budget strategy — IN PROGRESS
+
+Detailed plan: [`docs/milestone-5-junction-coverage-plan.md`](docs/milestone-5-junction-coverage-plan.md)
+
+```text
+5A.1  straight-composition demand map + taxonomy                COMPLETE
+5A.2  boundary-safe geometry + generic 600-lattice sweep        COMPLETE
+5A.3  exhaustive candidates + global exact dedup                COMPLETE
+5A.4  demand/breadth/Pareto owner optimization, K=0..604        NEXT
+5A.5  research atlases + measured recommendation
+5B    junction budget/allocation decision
+5C    junction registry + provisional allocation
+5D    canonical junction artifacts + master-atlas integration
+5E    publication update + reserve accounting
+```
+
+Measured 5A.3 search space:
+
+```text
+semantic universe                22,528
+geometry models                       4
+semantic-model candidates        90,112
+valid candidates                  90,112
+unique visual owners              82,377
+graphics-v0 exact reuse owners         0
+novel junction visual owners      82,377
+protected PUA reserve                604
+junction codepoints allocated          0
+```
+
+The junction problem is therefore an owner-selection problem, not an enumeration problem. The optimizer must choose at most `K` exact visual owners while counting each requested semantic's demand once and preserving the broad evenly spaced connector coverage demonstrated in 5A.2.
+
+The 600-semantic research baselines touch 1,552–1,813 visual owners across all geometry variants. 5A.4 will choose the owner variants that buy the most combined demand and breadth per scarce codepoint.
+
+The full **604-slot U+F6A4..U+F8FF reserve remains protected** throughout 5A research.
+
+Later milestones remain:
+
+```text
+6   curated curve/arc extension if justified
+7   terminals / specials
+8   vocabulary optimization
+9   font compiler
+10  drawing API / solver
+11  interactive editor
+12  GraphSCII v1 freeze / release
+```
+
+---
+
+'''
+          text = text[:start] + replacement + text[end:]
+          old = "npm run generate:junction-geometry\nnpm run verify:junction-geometry\nnpm run check"
+          new = "npm run generate:junction-geometry\nnpm run verify:junction-geometry\nnpm run generate:junction-candidates\nnpm run verify:junction-candidates\nnpm run check"
+          if old in text:
+              text = text.replace(old, new, 1)
+          elif new not in text:
+              raise SystemExit("Could not update Milestone 5A.3 command list")
+          text = text.replace(
+              "Milestone 5A.1 and 5A.2 are complete; exhaustive boundary-safe junction candidate generation and global exact dedup in Milestone 5A.3 is next.",
+              "Milestone 5A.1 through 5A.3 are complete; coverage-aware visual-owner optimization across budgets K=0..604 in Milestone 5A.4 is next.",
+              1,
+          )
+          plan.write_text(text)
+          PY
+
+      - name: Commit roadmap and remove one-time workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/finalize-milestone-5a3.yml
+          git add PLAN.md docs/milestone-5-junction-coverage-plan.md
+          git commit -m "Finalize Milestone 5A.3 roadmap"
+          git push origin HEAD:milestone-5-junction-coverage-plan
