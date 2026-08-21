@@ -7,6 +7,7 @@ import {
   type PortName,
 } from "./geometry-engine";
 import { junctionTopology } from "./connector-topology";
+import { normalizeStraightBacktracks } from "./line-normalization";
 import { GlyphRegistry } from "./semantic-registry";
 import type { CellRect, DrawingObject, EllipseObject } from "./types";
 
@@ -113,6 +114,7 @@ export class GraphSolver {
     if (objects.length === 0) return;
 
     const geometry = buildGeometryGrid(objects, this.columns, this.rows);
+    normalizeStraightBacktracks(geometry, objects, this.columns, this.rows);
     const seamErrors = validateSharedPorts(geometry, this.columns, this.rows);
     if (seamErrors.length > 0) {
       throw new Error(`GraphSCII internal seam invariant failed: ${seamErrors[0]}`);
