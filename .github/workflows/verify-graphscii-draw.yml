@@ -26,20 +26,32 @@ jobs:
 
       - name: Check browser runtime syntax
         run: |
-          node --check graphscii-demo/draw-v5.js
-          node --check graphscii-demo/debug-export-v1.js
+          node --check graphscii-demo/draw-v6.js
+          node --check graphscii-demo/debug-export-v2.js
 
-      - name: Verify node topology and crossing invariants
+      - name: Verify exact font-port topology
         run: |
-          node -e "require('./graphscii-demo/draw-v5.js'); GraphSCIIDrawV5.selfTest(); console.log('GraphSCII edge-crossing topology self-test passed.')"
+          node -e "require('./graphscii-demo/draw-v6.js'); GraphSCIIDrawV6.selfTest(); console.log('GraphSCII v6 font-port topology self-test passed.')"
+
+      - name: Verify pixel-slot and corner invariants are explicit
+        shell: bash
+        run: |
+          grep -q 'Math.floor(localY / SLOT_H)' graphscii-demo/draw-v6.js
+          grep -q 'Math.floor(localX / SLOT_W)' graphscii-demo/draw-v6.js
+          grep -q 'Corner ports were incorrectly collapsed' graphscii-demo/draw-v6.js
+          grep -q 'Exact-corner bridge glyph was omitted' graphscii-demo/draw-v6.js
+          if grep -q 'return `K:' graphscii-demo/draw-v6.js; then
+            echo "Perpendicular corner ports must never be collapsed into a synthetic K node"
+            exit 1
+          fi
 
       - name: Verify font rendering contract
         shell: bash
         run: |
-          grep -q "fillText" graphscii-demo/draw-v5.js
-          grep -q "document.fonts.load" graphscii-demo/draw-v5.js
+          grep -q "fillText" graphscii-demo/draw-v6.js
+          grep -q "document.fonts.load" graphscii-demo/draw-v6.js
           grep -q "GraphSCII" graphscii-demo/styles.css
-          if grep -q "function rasterRows" graphscii-demo/draw-v5.js; then
+          if grep -q "function rasterRows" graphscii-demo/draw-v6.js; then
             echo "Runtime must render the published font, not redraw glyph bitmaps itself"
             exit 1
           fi
@@ -48,27 +60,28 @@ jobs:
         shell: bash
         run: |
           grep -q 'id="debug-export"' graphscii-demo/index.html
-          grep -q 'debug-export-v1.js' graphscii-demo/index.html
-          grep -q 'rawPointerSamples' graphscii-demo/debug-export-v1.js
-          grep -q 'rawBoundaryCrossings' graphscii-demo/debug-export-v1.js
-          grep -q 'finalSegments' graphscii-demo/debug-export-v1.js
-          grep -q 'glyphText' graphscii-demo/debug-export-v1.js
-          grep -q 'multiPassCells' graphscii-demo/debug-export-v1.js
-          grep -q 'brokenJoinCount' graphscii-demo/debug-export-v1.js
+          grep -q 'debug-export-v2.js' graphscii-demo/index.html
+          grep -q 'rawPointerSamples' graphscii-demo/debug-export-v2.js
+          grep -q 'rawBoundaryCrossings' graphscii-demo/debug-export-v2.js
+          grep -q 'finalSegments' graphscii-demo/debug-export-v2.js
+          grep -q 'glyphText' graphscii-demo/debug-export-v2.js
+          grep -q 'multiPassCells' graphscii-demo/debug-export-v2.js
+          grep -q 'brokenJoinCount' graphscii-demo/debug-export-v2.js
+          grep -q '16 equal bitmap-row slots' graphscii-demo/debug-export-v2.js
 
       - name: Reject CSP-hostile browser execution
         shell: bash
         run: |
-          if grep -En "eval[[:space:]]*\\(|new[[:space:]]+Function|import[[:space:]]*\\(" graphscii-demo/draw-v5.js graphscii-demo/debug-export-v1.js; then
+          if grep -En "eval[[:space:]]*\\(|new[[:space:]]+Function|import[[:space:]]*\\(" graphscii-demo/draw-v6.js graphscii-demo/debug-export-v2.js; then
             echo "CSP-hostile JavaScript construct found"
             exit 1
           fi
-          if grep -Eq "draw-core-v3\\.js|draw-ui-v4\\.js|app\\.mjs|src=\"\\./app\\.js\"" graphscii-demo/index.html; then
+          if grep -Eq "draw-v5\\.js|debug-export-v1\\.js|draw-core-v3\\.js|draw-ui-v4\\.js|app\\.mjs|src=\"\\./app\\.js\"" graphscii-demo/index.html; then
             echo "Obsolete browser entrypoint referenced"
             exit 1
           fi
-          grep -q 'draw-v5.js' graphscii-demo/index.html
-          grep -q 'debug-export-v1.js' graphscii-demo/index.html
+          grep -q 'draw-v6.js' graphscii-demo/index.html
+          grep -q 'debug-export-v2.js' graphscii-demo/index.html
 
       - name: Check local server syntax
         run: python -m py_compile graphscii-demo/serve.py
@@ -80,7 +93,7 @@ jobs:
           SERVER_PID=$!
           trap 'kill $SERVER_PID' EXIT
           sleep 1
-          curl -fsSI http://127.0.0.1:8765/graphscii-demo/draw-v5.js > /tmp/runtime-headers
+          curl -fsSI http://127.0.0.1:8765/graphscii-demo/draw-v6.js > /tmp/runtime-headers
           grep -qi '^Content-Type: text/javascript' /tmp/runtime-headers
           grep -qi '^Cache-Control: .*no-store' /tmp/runtime-headers
           grep -qi "^Content-Security-Policy: .*script-src 'self'" /tmp/runtime-headers
@@ -88,6 +101,6 @@ jobs:
             echo "unsafe-eval must never be enabled"
             exit 1
           fi
-          curl -fsSI http://127.0.0.1:8765/graphscii-demo/debug-export-v1.js | grep -qi '^Content-Type: text/javascript'
-          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'draw-v5.js'
-          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'debug-export-v1.js'
+          curl -fsSI http://127.0.0.1:8765/graphscii-demo/debug-export-v2.js | grep -qi '^Content-Type: text/javascript'
+          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'draw-v6.js'
+          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'debug-export-v2.js'
