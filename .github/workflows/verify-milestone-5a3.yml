@@ -1,0 +1,68 @@
+name: Verify Milestone 5A.3 junction candidates
+
+on:
+  push:
+    branches:
+      - milestone-5a3-candidate-dedup-stop
+  pull_request:
+    branches:
+      - milestone-5-junction-coverage-plan
+
+permissions:
+  contents: write
+
+concurrency:
+  group: graphscii-milestone-5a3-${{ github.event_name }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out implementation branch
+        uses: actions/checkout@v4
+        with:
+          ref: milestone-5a3-candidate-dedup-stop
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        working-directory: geometric-glyph-lab
+        run: npm install
+
+      - name: Typecheck source
+        working-directory: geometric-glyph-lab
+        run: npm run check
+
+      - name: Generate deterministic project artifacts
+        working-directory: geometric-glyph-lab
+        run: npm run generate
+
+      - name: Verify complete project
+        working-directory: geometric-glyph-lab
+        run: npm run verify
+
+      - name: Commit deterministic Milestone 5A.3 outputs
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- \
+            artifacts/research/junctions/candidate-stats.json \
+            artifacts/research/junctions/candidates.json \
+            artifacts/research/junctions/unique-rasters.json \
+            artifacts/research/junctions/exact-reuse.json \
+            artifacts/research/junctions/classifications.json \
+            artifacts/research/junctions/candidate-report.md \
+            spec/junction-candidate-research-v0.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Generate Milestone 5A.3 junction candidate artifacts"
+            git push origin HEAD:milestone-5a3-candidate-dedup-stop
+          else
+            echo "Milestone 5A.3 generated outputs already match."
+          fi
