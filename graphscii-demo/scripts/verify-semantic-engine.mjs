@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { gunzipSync } from "node:zlib";
 import ts from "typescript";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
@@ -10,17 +11,25 @@ const geometryPath = path.join(demoRoot, "src", "geometry-engine.ts");
 const solverPath = path.join(demoRoot, "src", "solver.ts");
 const registryPath = path.join(demoRoot, "src", "registry.ts");
 const syncPath = path.join(demoRoot, "scripts", "sync-assets.mjs");
-const fixturePath = path.join(demoRoot, "fixtures", "regressions", "failing-freehand.graphscii");
+const fixturePath = path.join(demoRoot, "fixtures", "regressions", "failing-freehand.graphscii.gz.b64");
+const invalidOutputPath = path.join(demoRoot, "fixtures", "regressions", "failing-freehand-invalid-output.txt.gz.b64");
 const pairPath = path.join(repoRoot, "artifacts", "manifest", "indexes", "by-connection-pair.json");
 
-const [geometrySource, solverSource, registrySource, syncSource, fixture, pairIndex] = await Promise.all([
+function decodeFixture(encoded) {
+  return gunzipSync(Buffer.from(encoded.trim(), "base64")).toString("utf8");
+}
+
+const [geometrySource, solverSource, registrySource, syncSource, fixtureEncoded, invalidOutputEncoded, pairIndex] = await Promise.all([
   readFile(geometryPath, "utf8"),
   readFile(solverPath, "utf8"),
   readFile(registryPath, "utf8"),
   readFile(syncPath, "utf8"),
-  readFile(fixturePath, "utf8").then(JSON.parse),
+  readFile(fixturePath, "utf8"),
+  readFile(invalidOutputPath, "utf8"),
   readFile(pairPath, "utf8").then(JSON.parse),
 ]);
+const fixture = JSON.parse(decodeFixture(fixtureEncoded));
+const invalidOutput = decodeFixture(invalidOutputEncoded);
 
 for (const forbidden of [
   "scoreCandidates",
@@ -55,11 +64,7 @@ const compiled = ts.transpileModule(geometrySource, {
 }).outputText;
 if (/from\s+["']\.\/types["']/u.test(compiled)) throw new Error("geometry-engine runtime unexpectedly retained a type-only import.");
 const geometry = await import(`data:text/javascript;base64,${Buffer.from(compiled, "utf8").toString("base64")}`);
-const {
-  buildGeometryGrid,
-  validateSharedPorts,
-  maxJunctionArms,
-} = geometry;
+const { buildGeometryGrid, validateSharedPorts, maxJunctionArms } = geometry;
 
 function expect(condition, message) {
   if (!condition) throw new Error(message);
@@ -92,6 +97,10 @@ expect(maxJunctionArms(tSegments) === 3, "Authored T junction did not classify a
 expect(maxJunctionArms(xSegments) === 4, "Authored X junction did not classify as four arms.");
 
 expect(fixture?.format === "GraphSCII-Drawing" && fixture?.objects?.length === 1 && fixture.objects[0]?.type === "freehand", "Regression fixture is not the supplied failing freehand drawing.");
+expect(fixture.columns === 64 && fixture.rows === 32, "Regression fixture dimensions changed.");
+expect(fixture.objects[0].points?.length === 379 && fixture.objects[0].width === 2 && fixture.objects[0].tone === 100, "Regression fixture source geometry changed.");
+expect(invalidOutput.length > 1000 && [...invalidOutput].some((character) => character.codePointAt(0) >= 0xe000), "Invalid-output regression fixture is missing its GraphSCII PUA text.");
+
 const fixtureGrid = buildGeometryGrid(fixture.objects, fixture.columns, fixture.rows);
 const fixtureSeams = validateSharedPorts(fixtureGrid, fixture.columns, fixture.rows);
 expect(fixtureSeams.length === 0, `Supplied failing drawing still has a constructed seam mismatch: ${fixtureSeams[0] ?? "unknown"}.`);
