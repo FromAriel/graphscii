@@ -1,0 +1,42 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-connector-atlas-index",
+  "schemaVersion": 1,
+  "ownerCount": 601,
+  "pageSize": 256,
+  "pageCount": 3,
+  "rasterSize": "128x256",
+  "pages": [
+    {
+      "page": 0,
+      "firstGlyphId": 5796,
+      "lastGlyphId": 6051,
+      "firstCodepoint": "U+00F6A4",
+      "lastCodepoint": "U+00F7A3",
+      "count": 256,
+      "png": "page-00.png",
+      "text": "page-00.md"
+    },
+    {
+      "page": 1,
+      "firstGlyphId": 6052,
+      "lastGlyphId": 6307,
+      "firstCodepoint": "U+00F7A4",
+      "lastCodepoint": "U+00F8A3",
+      "count": 256,
+      "png": "page-01.png",
+      "text": "page-01.md"
+    },
+    {
+      "page": 2,
+      "firstGlyphId": 6308,
+      "lastGlyphId": 6396,
+      "firstCodepoint": "U+00F8A4",
+      "lastCodepoint": "U+00F8FC",
+      "count": 89,
+      "png": "page-02.png",
+      "text": "page-02.md"
+    }
+  ]
+}
