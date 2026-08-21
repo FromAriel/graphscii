@@ -1,0 +1,80 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-candidate-stats",
+  "schemaVersion": 1,
+  "status": "5A.3-allocation-free",
+  "semanticUniverse": 22528,
+  "demandedSemantics": 22428,
+  "blindSpotSemantics": 100,
+  "totalWeightedDemand": 928242,
+  "modelCount": 4,
+  "models": [
+    "mathematical-demand-hub",
+    "symmetric-half-pixel-center",
+    "central-2x2-kernel",
+    "port-centroid-midpoint"
+  ],
+  "candidateCount": 90112,
+  "validCandidateCount": 90112,
+  "invalidCandidateCount": 0,
+  "uniqueRasterOwners": 82377,
+  "graphicsV0ReuseOwners": 0,
+  "novelJunctionOwners": 82377,
+  "candidateToRasterCompression": 1.093898,
+  "multiSemanticOwnerCount": 1773,
+  "multiModelOwnerCount": 4187,
+  "maximumSemanticAliasesPerOwner": 7,
+  "maximumCandidateAliasesPerOwner": 14,
+  "summedOwnerDemandMultiplicity": 3502010,
+  "byModel": {
+    "mathematical-demand-hub": {
+      "candidates": 22528,
+      "uniqueRasters": 21805,
+      "graphicsV0ReuseOwners": 0
+    },
+    "symmetric-half-pixel-center": {
+      "candidates": 22528,
+      "uniqueRasters": 21499,
+      "graphicsV0ReuseOwners": 0
+    },
+    "central-2x2-kernel": {
+      "candidates": 22528,
+      "uniqueRasters": 21499,
+      "graphicsV0ReuseOwners": 0
+    },
+    "port-centroid-midpoint": {
+      "candidates": 22528,
+      "uniqueRasters": 22011,
+      "graphicsV0ReuseOwners": 0
+    }
+  },
+  "strategyOwnerCoverage": {
+    "demand-top-600": {
+      "selectedSemantics": 600,
+      "visualOwners": 1558,
+      "novelVisualOwners": 1558,
+      "graphicsV0ReuseOwners": 0
+    },
+    "even-topology-balanced-600": {
+      "selectedSemantics": 600,
+      "visualOwners": 1552,
+      "novelVisualOwners": 1552,
+      "graphicsV0ReuseOwners": 0
+    },
+    "even-space-proportional-600": {
+      "selectedSemantics": 600,
+      "visualOwners": 1813,
+      "novelVisualOwners": 1813,
+      "graphicsV0ReuseOwners": 0
+    },
+    "hybrid-even-demand-600": {
+      "selectedSemantics": 600,
+      "visualOwners": 1619,
+      "novelVisualOwners": 1619,
+      "graphicsV0ReuseOwners": 0
+    }
+  },
+  "junctionAllocations": 0,
+  "protectedReserveSlots": 604
+}

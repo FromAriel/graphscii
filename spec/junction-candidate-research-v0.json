@@ -1,0 +1,32 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-junction-candidate-research",
+  "schemaVersion": 1,
+  "status": "5A.3-exhaustive-candidates-global-exact-dedup",
+  "frozenInput": {
+    "semanticUniverse": 22528,
+    "demandedSemantics": 22428,
+    "blindSpotSemantics": 100,
+    "weightedDemand": 928242,
+    "geometryModels": [
+      "mathematical-demand-hub",
+      "symmetric-half-pixel-center",
+      "central-2x2-kernel",
+      "port-centroid-midpoint"
+    ],
+    "graphicsPublication": "graphscii-graphics-v0",
+    "protectedReserveSlots": 604,
+    "junctionAllocations": 0
+  },
+  "candidateIdentity": "geometry model + exact boundary-port semantic tuple",
+  "visualOwnerIdentity": "exact canonical 8x16 bitmap key",
+  "demandAccounting": "sum each unique semantic tuple once per visual owner, never once per geometry-model alias",
+  "coverageSignals": [
+    "demand-top-600",
+    "even-topology-balanced-600",
+    "even-space-proportional-600",
+    "hybrid-even-demand-600"
+  ],
+  "next": "5A.4 demand/breadth/Pareto owner optimization across budgets K=0..604"
+}
