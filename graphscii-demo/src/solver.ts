@@ -9,6 +9,7 @@ const CELL_HEIGHT = 16;
 const CONTINUITY_WEIGHT = 0.075;
 const BLANK_CODEPOINT = 0x20;
 const TOPOLOGY_THRESHOLD = 0.08;
+const JUNCTION_THRESHOLD = 0.35;
 const TOPOLOGY_LINE_WIDTH = 1;
 const TONES: GraphSCIITone[] = [100, 75, 50, 25];
 
@@ -111,7 +112,9 @@ function drawStrokeTopology(ctx: CanvasRenderingContext2D, object: DrawingObject
       ctx.stroke();
       return;
     case "ellipse":
-      if (object.strokeWidth <= 0) return;
+      // A filled ellipse has a semantic boundary even when its visible outline is disabled.
+      // That boundary is what selects GraphSCII side-fill rules.
+      if (object.strokeWidth <= 0 && !object.fillEnabled) return;
       ctx.lineWidth = TOPOLOGY_LINE_WIDTH;
       ctx.beginPath();
       ctx.ellipse(object.center.x, object.center.y, object.radiusX, object.radiusY, object.rotation, 0, Math.PI * 2);
@@ -257,8 +260,8 @@ function buildRowLookup(coverage: Float32Array): number[][] {
 
 function scoreCandidates(candidates: GraphGlyph[], coverage: Float32Array, neighbors: Neighbors): GraphGlyph | null {
   if (candidates.length === 0) return null;
-  let targetSum = 0;
-  for (const value of coverage) targetSum += value;
+  let sum = 0;
+  for (const value of coverage) sum += value;
   const rowLookup = buildRowLookup(coverage);
   let best: GraphGlyph | null = null;
   let bestScore = Number.POSITIVE_INFINITY;
@@ -266,7 +269,7 @@ function scoreCandidates(candidates: GraphGlyph[], coverage: Float32Array, neigh
   for (const glyph of candidates) {
     let coveredOn = 0;
     for (let y = 0; y < CELL_HEIGHT; y += 1) coveredOn += rowLookup[y]![glyph.rows[y]!]!;
-    const pixelError = targetSum + glyph.onCount - 2 * coveredOn;
+    const pixelError = sum + glyph.onCount - 2 * coveredOn;
     const score = pixelError + edgePenalty(glyph, neighbors);
     if (score < bestScore - 1e-9 || (Math.abs(score - bestScore) <= 1e-9 && glyph.glyphId < (best?.glyphId ?? Number.MAX_SAFE_INTEGER))) {
       best = glyph;
@@ -292,18 +295,29 @@ function pointInsideFilledEllipse(
     + (localY * localY) / (object.radiusY * object.radiusY) <= 1;
 }
 
-function cellContainsFill(objects: DrawingObject[], column: number, row: number): boolean {
+function fillTonesForCell(objects: DrawingObject[], column: number, row: number): GraphSCIITone[] {
   const cellRect: Rect = { x: column * CELL_WIDTH, y: row * CELL_HEIGHT, width: CELL_WIDTH, height: CELL_HEIGHT };
+  const tones = new Set<GraphSCIITone>();
+
   for (const object of objects) {
     if (object.type !== "ellipse" || !object.fillEnabled) continue;
     if (!rectsIntersect(boundsForObject(object), cellRect)) continue;
-    for (let y = 0; y < CELL_HEIGHT; y += 1) {
-      for (let x = 0; x < CELL_WIDTH; x += 1) {
-        if (pointInsideFilledEllipse(object, cellRect.x + x + 0.5, cellRect.y + y + 0.5)) return true;
+
+    let found = false;
+    for (let sy = 0; sy < CELL_HEIGHT * SUPERSAMPLE && !found; sy += 1) {
+      const y = cellRect.y + (sy + 0.5) / SUPERSAMPLE;
+      for (let sx = 0; sx < CELL_WIDTH * SUPERSAMPLE; sx += 1) {
+        const x = cellRect.x + (sx + 0.5) / SUPERSAMPLE;
+        if (pointInsideFilledEllipse(object, x, y)) {
+          found = true;
+          break;
+        }
       }
     }
+    if (found) tones.add(object.fillTone);
   }
-  return false;
+
+  return [...tones];
 }
 
 type BoundaryEdge = "T" | "B" | "L" | "R";
@@ -363,7 +377,11 @@ function mergeCornerHits(hits: BoundaryHit[]): BoundaryHit[] {
     const secondHit = result[secondIndex]!;
     const remove = [firstIndex, secondIndex].sort((a, b) => b - a);
     for (const removeIndex of remove) result.splice(removeIndex, 1);
-    result.push({ edge: firstHit.strength >= secondHit.strength ? firstHit.edge : secondHit.edge, point: corner.point, strength: Math.max(firstHit.strength, secondHit.strength) });
+    result.push({
+      edge: firstHit.strength >= secondHit.strength ? firstHit.edge : secondHit.edge,
+      point: corner.point,
+      strength: Math.max(firstHit.strength, secondHit.strength),
+    });
   }
   return result;
 }
@@ -384,10 +402,51 @@ function boundaryPointsFromTopology(topology: Float32Array): BoundaryPoint[] {
   return [...unique.values()].sort((a, b) => a.y - b.y || a.x - b.x);
 }
 
+const JUNCTION_RING: ReadonlyArray<readonly [number, number]> = [
+  [0, -1],
+  [1, -1],
+  [1, 0],
+  [1, 1],
+  [0, 1],
+  [-1, 1],
+  [-1, 0],
+  [-1, -1],
+];
+
+function topologyHasJunction(topology: Float32Array): boolean {
+  const active = (x: number, y: number): boolean => (
+    x >= 0 && x < CELL_WIDTH && y >= 0 && y < CELL_HEIGHT
+      ? topology[y * CELL_WIDTH + x]! >= JUNCTION_THRESHOLD
+      : false
+  );
+
+  for (let y = 0; y < CELL_HEIGHT; y += 1) {
+    for (let x = 0; x < CELL_WIDTH; x += 1) {
+      if (!active(x, y)) continue;
+      const ring = JUNCTION_RING.map(([dx, dy]) => active(x + dx, y + dy));
+      let armGroups = 0;
+      for (let index = 0; index < ring.length; index += 1) {
+        const previous = ring[(index + ring.length - 1) % ring.length]!;
+        if (!previous && ring[index]) armGroups += 1;
+      }
+      if (armGroups >= 3) return true;
+    }
+  }
+  return false;
+}
+
 function targetSum(coverage: Float32Array): number {
   let sum = 0;
   for (const value of coverage) sum += value;
   return sum;
+}
+
+function uniqueCandidates(groups: readonly GraphGlyph[][]): GraphGlyph[] {
+  const unique = new Map<number, GraphGlyph>();
+  for (const group of groups) {
+    for (const glyph of group) unique.set(glyph.codepointValue, glyph);
+  }
+  return [...unique.values()];
 }
 
 function solveCell(
@@ -395,39 +454,52 @@ function solveCell(
   coverage: Float32Array,
   topology: Float32Array,
   neighbors: Neighbors,
-  hasFill: boolean,
+  fillTones: readonly GraphSCIITone[],
 ): number {
   const sum = targetSum(coverage);
   if (sum < 0.45) return BLANK_CODEPOINT;
 
-  if (hasFill) {
-    const fill = scoreCandidates(registry.fillCandidatesNearPixelCount(sum, 10), coverage, neighbors);
-    return fill?.codepointValue ?? BLANK_CODEPOINT;
-  }
-
   const boundaryPoints = boundaryPointsFromTopology(topology);
 
-  // Normative straight rule: a straight candidate connects exactly two boundary
-  // ports. Use the published by-connection-pair table before considering any
-  // visual approximation. Connector glyphs are not legal in this branch.
+  // Filled geometry is semantic fill geometry first. It never falls through to
+  // connector selection. Boundary cells use the published boundary+side+style
+  // table; interior/unsupported boundary cases remain locked to the requested
+  // GraphSCII tonal family.
+  if (fillTones.length > 0) {
+    if (boundaryPoints.length === 2) {
+      const exactFill = uniqueCandidates(
+        fillTones.map((tone) => registry.fillCandidatesForBoundaryPoints(boundaryPoints, tone)),
+      );
+      const exactWinner = scoreCandidates(exactFill, coverage, neighbors);
+      if (exactWinner) return exactWinner.codepointValue;
+    }
+
+    const fillFallback = uniqueCandidates(
+      fillTones.map((tone) => registry.fillCandidatesNearPixelCount(sum, tone, 10)),
+    );
+    const fillWinner = scoreCandidates(fillFallback, coverage, neighbors);
+    return fillWinner?.codepointValue ?? BLANK_CODEPOINT;
+  }
+
+  // A non-junction stroke with exactly two boundary ports is a straight, full stop.
   if (boundaryPoints.length === 2) {
     const exactStraights = registry.straightCandidatesForBoundaryPoints(boundaryPoints);
     const straight = scoreCandidates(exactStraights, coverage, neighbors);
     if (straight) return straight.codepointValue;
   }
 
-  // Normative connector rule: connector semantics represent simultaneous
-  // multi-connection topology. They are eligible only with at least three
-  // distinct boundary connection points and only when the detected point set
-  // exactly matches a published orthogonal/selected-diagonal rule semantic.
-  if (boundaryPoints.length >= 3) {
+  // Connector glyphs require two independent facts:
+  //   1. the centerline actually contains a 3+ arm branch point, and
+  //   2. the detected endpoints exactly match a published connector semantic.
+  // Merely touching three cell edges is not enough.
+  if (boundaryPoints.length >= 3 && topologyHasJunction(topology)) {
     const connectorCandidates = registry.connectorCandidatesForBoundaryPoints(boundaryPoints);
     const connector = scoreCandidates(connectorCandidates, coverage, neighbors);
     if (connector) return connector.codepointValue;
   }
 
-  // End caps, same-edge turns, ambiguous wide strokes, and unsupported topology
-  // degrade only within the straight vocabulary. Never invent a connector.
+  // End caps, same-edge curves, loops, non-branching multi-edge paths, and any
+  // unsupported topology degrade only within the straight vocabulary.
   const fallback = scoreCandidates(registry.straightCandidatesNearPixelCount(sum, 10), coverage, neighbors);
   return fallback?.codepointValue ?? BLANK_CODEPOINT;
 }
@@ -455,7 +527,7 @@ export class GraphSolver {
     const target = this.rasterizer.render(objects, logicalRect, this.registry);
     const topologyTarget = this.rasterizer.renderStrokeTopology(objects, logicalRect);
     const targetWidth = logicalRect.width;
-    const fillCache = new Map<number, boolean>();
+    const fillToneCache = new Map<number, GraphSCIITone[]>();
 
     const extractCell = (source: Float32Array, column: number, row: number): Float32Array => {
       const cell = new Float32Array(CELL_WIDTH * CELL_HEIGHT);
@@ -468,13 +540,13 @@ export class GraphSolver {
       return cell;
     };
 
-    const hasFillAt = (column: number, row: number): boolean => {
+    const fillTonesAt = (column: number, row: number): GraphSCIITone[] => {
       const key = row * this.columns + column;
-      const cached = fillCache.get(key);
-      if (cached !== undefined) return cached;
-      const value = cellContainsFill(objects, column, row);
-      fillCache.set(key, value);
-      return value;
+      const cached = fillToneCache.get(key);
+      if (cached) return cached;
+      const tones = fillTonesForCell(objects, column, row);
+      fillToneCache.set(key, tones);
+      return tones;
     };
 
     for (let row = cellRect.row; row < cellRect.row + cellRect.rows; row += 1) {
@@ -485,12 +557,18 @@ export class GraphSolver {
           left: this.glyphAt(column - 1, row),
           top: this.glyphAt(column, row - 1),
         };
-        this.grid[row * this.columns + column] = solveCell(this.registry, coverage, topology, neighbors, hasFillAt(column, row));
+        this.grid[row * this.columns + column] = solveCell(
+          this.registry,
+          coverage,
+          topology,
+          neighbors,
+          fillTonesAt(column, row),
+        );
       }
     }
 
-    // Reverse relaxation can influence visual tie-breaking, but topology remains
-    // authoritative: the candidate family and rule lookup never change.
+    // Reverse relaxation can change only visual tie-breaking. Semantic family
+    // selection remains fixed by fill/straight/junction topology.
     for (let row = cellRect.row + cellRect.rows - 1; row >= cellRect.row; row -= 1) {
       for (let column = cellRect.column + cellRect.columns - 1; column >= cellRect.column; column -= 1) {
         const coverage = extractCell(target, column, row);
@@ -501,7 +579,13 @@ export class GraphSolver {
           right: this.glyphAt(column + 1, row),
           bottom: this.glyphAt(column, row + 1),
         };
-        this.grid[row * this.columns + column] = solveCell(this.registry, coverage, topology, neighbors, hasFillAt(column, row));
+        this.grid[row * this.columns + column] = solveCell(
+          this.registry,
+          coverage,
+          topology,
+          neighbors,
+          fillTonesAt(column, row),
+        );
       }
     }
   }
