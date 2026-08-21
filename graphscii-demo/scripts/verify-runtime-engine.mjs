@@ -75,10 +75,12 @@ solverCompiled = replaceImport(solverCompiled, "./line-normalization", normaliza
 solverCompiled = replaceImport(solverCompiled, "./semantic-registry", registryUrl);
 const solverUrl = dataUrl(solverCompiled);
 
-const [registryModule, solverModule] = await Promise.all([
+const [geometryModule, registryModule, solverModule] = await Promise.all([
+  import(geometryUrl),
   import(registryUrl),
   import(solverUrl),
 ]);
+const { buildGeometryGrid } = geometryModule;
 const { GlyphRegistry } = registryModule;
 const { GraphSolver } = solverModule;
 
@@ -121,6 +123,15 @@ const invalidOutput = decodeFixture(invalidOutputEncoded);
 const priorOccupied = occupiedGraphSciiCount(invalidOutput);
 if (priorOccupied < 1) throw new Error("Invalid-output regression fixture contains no GraphSCII PUA cells.");
 
+const rawGeometry = buildGeometryGrid(fixture.objects, fixture.columns, fixture.rows);
+const fixtureObjectId = fixture.objects[0]?.id;
+let rawTouched = 0;
+for (const cell of rawGeometry.cells.values()) {
+  const objectCell = fixtureObjectId ? cell.byObject.get(fixtureObjectId) : null;
+  if (objectCell && (objectCell.segments.length > 0 || objectCell.ports.size > 0)) rawTouched += 1;
+}
+if (rawTouched < 1) throw new Error("Regression fixture authored geometry touched no GraphSCII cells.");
+
 const solver = new GraphSolver(registry, fixture.columns, fixture.rows);
 solver.solve(fixture.objects, { column: 0, row: 0, columns: fixture.columns, rows: fixture.rows });
 
@@ -149,8 +160,8 @@ for (let row = 0; row < solver.rows; row += 1) {
 const occupancyFloor = Math.max(150, priorOccupied);
 if (emitted < occupancyFloor) {
   throw new Error(
-    `Regression fixture emitted only ${emitted} GraphSCII straight cells; expected at least ${occupancyFloor} `
-    + `based on the supplied invalid export (${priorOccupied} occupied cells).`,
+    `Regression fixture emitted ${emitted} GraphSCII straight cells from ${rawTouched} authored-touched cells; `
+    + `the supplied invalid export occupied ${priorOccupied} cells. Current guard requires at least ${occupancyFloor}.`,
   );
 }
 
@@ -163,6 +174,6 @@ if (exportedOccupied !== emitted) {
 
 console.log(
   `GraphSCII runtime engine verified end-to-end: actual registry + actual solver resolved the failing 379-point freehand `
-  + `from ${priorOccupied} occupied cells in the supplied invalid export to ${emitted} straight cells with zero conversion issues, `
-  + `no fill/connector glyphs, and exact text-export occupancy.`,
+  + `from ${rawTouched} authored-touched cells / ${priorOccupied} occupied invalid-export cells to ${emitted} straight cells `
+  + `with zero conversion issues, no fill/connector glyphs, and exact text-export occupancy.`,
 );
