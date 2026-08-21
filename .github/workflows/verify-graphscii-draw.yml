@@ -1,0 +1,26 @@
+name: Verify GraphSCII Draw
+
+on:
+  pull_request:
+    paths:
+      - "graphscii-demo/**"
+      - ".github/workflows/verify-graphscii-draw.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "graphscii-demo/**"
+      - ".github/workflows/verify-graphscii-draw.yml"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify deterministic lookup
+        run: node graphscii-demo/verify.mjs
+      - name: Check browser module syntax
+        run: node --check graphscii-demo/app.mjs
