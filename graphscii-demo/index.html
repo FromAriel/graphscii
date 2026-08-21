@@ -36,6 +36,7 @@
           <input id="show-nodes" type="checkbox" checked>
           <span>Show nodes</span>
         </label>
+        <button id="debug-export" type="button">Debug Export</button>
         <button id="undo" type="button" disabled>Undo</button>
         <button id="clear" type="button" disabled>Clear</button>
       </div>
@@ -64,9 +65,14 @@
         Freehand, line, Bezier, and ellipse all use the same crossing compiler. Immediate cell backtracking is erased before glyphs are emitted.
         Every consecutive stored segment is required to share the exact same canonical node with the next segment.
       </p>
+      <p>
+        Debug Export records the exact pointer/coalesced-event path, every raw boundary crossing, every final GraphSCII segment,
+        continuity checks, and the complete glyph panel so a bad stroke can be reproduced and inspected directly.
+      </p>
     </section>
   </main>
 
   <script src="./draw-v5.js?v=20260821-1519"></script>
+  <script src="./debug-export-v1.js?v=20260821-1542"></script>
 </body>
 </html>
