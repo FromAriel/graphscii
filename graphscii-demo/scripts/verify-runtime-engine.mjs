@@ -32,6 +32,15 @@ function decodeFixture(encoded) {
   return gunzipSync(Buffer.from(encoded.trim(), "base64")).toString("utf8");
 }
 
+function occupiedGraphSciiCount(text) {
+  let count = 0;
+  for (const character of text) {
+    const codepoint = character.codePointAt(0);
+    if (codepoint >= 0xe000 && codepoint <= 0xf8fc) count += 1;
+  }
+  return count;
+}
+
 const sourcePaths = {
   geometry: path.join(demoRoot, "src", "geometry-engine.ts"),
   topology: path.join(demoRoot, "src", "connector-topology.ts"),
@@ -103,11 +112,15 @@ globalThis.fetch = async (input) => {
 const registry = await GlyphRegistry.load("http://graphscii.test/assets/registry.json");
 if (registry.glyphs.length !== 6397) throw new Error(`Runtime registry loaded ${registry.glyphs.length} owners instead of 6,397.`);
 
-const fixtureEncoded = await readFile(
-  path.join(demoRoot, "fixtures", "regressions", "failing-freehand.graphscii.gz.b64"),
-  "utf8",
-);
+const [fixtureEncoded, invalidOutputEncoded] = await Promise.all([
+  readFile(path.join(demoRoot, "fixtures", "regressions", "failing-freehand.graphscii.gz.b64"), "utf8"),
+  readFile(path.join(demoRoot, "fixtures", "regressions", "failing-freehand-invalid-output.txt.gz.b64"), "utf8"),
+]);
 const fixture = JSON.parse(decodeFixture(fixtureEncoded));
+const invalidOutput = decodeFixture(invalidOutputEncoded);
+const priorOccupied = occupiedGraphSciiCount(invalidOutput);
+if (priorOccupied < 1) throw new Error("Invalid-output regression fixture contains no GraphSCII PUA cells.");
+
 const solver = new GraphSolver(registry, fixture.columns, fixture.rows);
 solver.solve(fixture.objects, { column: 0, row: 0, columns: fixture.columns, rows: fixture.rows });
 
@@ -133,12 +146,23 @@ for (let row = 0; row < solver.rows; row += 1) {
     }
   }
 }
-if (emitted < 250) throw new Error(`Regression fixture emitted only ${emitted} GraphSCII straight cells; expected a substantial drawing.`);
+const occupancyFloor = Math.max(150, priorOccupied);
+if (emitted < occupancyFloor) {
+  throw new Error(
+    `Regression fixture emitted only ${emitted} GraphSCII straight cells; expected at least ${occupancyFloor} `
+    + `based on the supplied invalid export (${priorOccupied} occupied cells).`,
+  );
+}
 
 const text = solver.toText();
 if (!text.trim()) throw new Error("End-to-end fixture produced empty GraphSCII text.");
+const exportedOccupied = occupiedGraphSciiCount(text);
+if (exportedOccupied !== emitted) {
+  throw new Error(`Text export contains ${exportedOccupied} GraphSCII cells but the solved grid contains ${emitted}.`);
+}
 
 console.log(
   `GraphSCII runtime engine verified end-to-end: actual registry + actual solver resolved the failing 379-point freehand `
-  + `to ${emitted} straight cells with zero conversion issues and no fill/connector glyphs.`,
+  + `from ${priorOccupied} occupied cells in the supplied invalid export to ${emitted} straight cells with zero conversion issues, `
+  + `no fill/connector glyphs, and exact text-export occupancy.`,
 );
