@@ -1,10 +1,21 @@
+  solveCommittedDocumentNow();
   const blob = await renderer.exportExactPng(solver);
   downloadBlob("graphscii-drawing.png", blob);
   setStatus("Exported exact 8×16 GraphSCII raster PNG.");
 }
 
+function solveCommittedDocumentNow(): void {
+  solver.clear();
+  if (documentModel.objects.length > 0) {
+    solver.solve(documentModel.objects, fullCellRect(documentModel.columns, documentModel.rows));
+  }
+  renderer.render(solver);
+  renderOverlay();
+}
+
 function exportText(): void {
   try {
+    solveCommittedDocumentNow();
     const text = solver.toText();
     downloadBlob("graphscii-drawing.txt", new Blob([text], { type: "text/plain;charset=utf-8" }));
     setStatus("Exported GraphSCII Unicode text. View it with GraphSCII-Regular.ttf.");
