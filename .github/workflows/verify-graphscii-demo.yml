@@ -35,6 +35,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Verify Python launcher
+        run: python -m py_compile launch.py
+
       - name: Install demo dependencies
         run: npm install --no-audit --no-fund
 
