@@ -12,7 +12,8 @@
     "check": "tsc --noEmit",
     "preview": "vite preview",
     "verify:assets": "node scripts/verify-demo.mjs",
-    "verify": "npm run verify:assets && npm run check && npm run build"
+    "verify:topology": "node scripts/verify-topology-contract.mjs",
+    "verify": "npm run verify:assets && npm run verify:topology && npm run check && npm run build"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
