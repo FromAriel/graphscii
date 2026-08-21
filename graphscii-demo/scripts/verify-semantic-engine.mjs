@@ -57,13 +57,25 @@ for (const required of [
 ]) {
   if (!solverSource.includes(required)) throw new Error(`Exact solver is missing required semantic path: ${required}.`);
 }
+if (!solverSource.includes("objectIds.length >= 2 ? junctionTopology")) {
+  throw new Error("Connector eligibility is not gated on multiple authored objects.");
+}
 if (!registrySource.includes("connectorsBySignature") || !registrySource.includes("rule.family === family")) {
   throw new Error("Connector registry is not preserving same-port semantic aliases by connector family.");
 }
 if (registrySource.includes("Connector signature ${signature} is ambiguous")) {
   throw new Error("Connector registry regressed to rejecting valid cross-family signature aliases at startup.");
 }
-for (const required of ["coalesceSharedSeams", "addEndpointCaps", "pruneNonterminalSpurs", "fitStrokeGeometry", "validateFittedSharedPorts"]) {
+for (const required of [
+  "coalesceSharedSeams",
+  "sampledCellWalk",
+  "expandDiagonalSteps",
+  "loopEraseWalk",
+  "rewriteOpenStrokeWalks",
+  "addEndpointCaps",
+  "fitStrokeGeometry",
+  "validateFittedSharedPorts",
+]) {
   if (!lineNormalizationSource.includes(required)) throw new Error(`Stroke fitter is missing required stage: ${required}.`);
 }
 const fillMethodStart = registrySource.indexOf("resolveFillForInterior(");
@@ -158,17 +170,17 @@ expect(fixtureSeams.length === 0, `Supplied failing drawing still has a fitted s
 let checkedStraightCells = 0;
 for (const cell of fixtureGrid.cells.values()) {
   const ports = [...cell.ports].sort();
-  if (maxJunctionArms(cell.segments) >= 3 || ports.length !== 2) continue;
+  if (ports.length !== 2) continue;
   checkedStraightCells += 1;
   if (!pairIndex.entries?.[`${ports[0]}>${ports[1]}`] && !pairIndex.entries?.[`${ports[1]}>${ports[0]}`]) {
-    throw new Error(`Regression fixture produced a two-port cell outside the published straight table after fitting: ${ports.join(" ↔ ")}.`);
+    throw new Error(`Regression fixture produced a two-port cell outside the published straight table after ordered fitting: ${ports.join(" ↔ ")}.`);
   }
 }
 expect(checkedStraightCells >= 150, `Regression fixture exercised only ${checkedStraightCells} exact fitted two-port cells; expected a representative straight-path corpus.`);
 
 console.log(
   `GraphSCII exact semantic engine verified: shared seams are fitted once; reverse geometry is invariant; `
-  + `multi-pass crossings are coalesced before lookup; endpoint caps and nonterminal spurs are deterministic; `
+  + `open strokes are rewritten as ordered loop-erased cell walks with deterministic endpoint caps; `
   + `T/X classify as orthogonal/diagonal 3/4-arm junctions; failing freehand fixture exercises ${checkedStraightCells} `
   + `published two-port cells with zero fitted seam mismatches.`,
 );
