@@ -1,0 +1,26 @@
+{
+  "name": "graphscii-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/sync-assets.mjs && node scripts/assemble-main.mjs",
+    "dev": "vite --port 5174",
+    "prebuild": "node scripts/sync-assets.mjs && node scripts/assemble-main.mjs",
+    "build": "tsc --noEmit && vite build --base=./",
+    "precheck": "node scripts/assemble-main.mjs",
+    "check": "tsc --noEmit",
+    "preview": "vite preview",
+    "verify:assets": "node scripts/verify-demo.mjs",
+    "verify:semantic": "node scripts/verify-semantic-engine.mjs",
+    "verify:runtime": "node scripts/verify-runtime-engine.mjs",
+    "verify:launcher": "python scripts/verify-launcher.py",
+    "verify:browser": "playwright test",
+    "verify": "npm run verify:assets && npm run verify:semantic && npm run verify:runtime && npm run check && npm run build && npm run verify:launcher && npm run verify:browser"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.1.3"
+  }
+}

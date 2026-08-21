@@ -1,0 +1,189 @@
+    scheduleSolve(unionRect(previousBounds, action.lastBounds));
+    return;
+  }
+
+  if (!draft) return;
+  const previousBounds = boundsForObject(draft);
+  if (draft.type === "freehand") {
+    const last = draft.points[draft.points.length - 1]!;
+    if (distance(last, point) >= 0.65) draft.points.push(point);
+  } else if (draft.type === "line") {
+    draft.end = event.shiftKey ? snapAngle(action.start, point, 45) : point;
+  } else if (draft.type === "ellipse") {
+    let dx = point.x - action.start.x;
+    let dy = point.y - action.start.y;
+    if (event.shiftKey) {
+      const radius = Math.max(Math.abs(dx), Math.abs(dy));
+      dx = Math.sign(dx || 1) * radius;
+      dy = Math.sign(dy || 1) * radius;
+    }
+    if (event.altKey) {
+      draft.center = { ...action.start };
+      draft.radiusX = Math.abs(dx);
+      draft.radiusY = Math.abs(dy);
+    } else {
+      draft.center = { x: action.start.x + dx / 2, y: action.start.y + dy / 2 };
+      draft.radiusX = Math.abs(dx) / 2;
+      draft.radiusY = Math.abs(dy) / 2;
+    }
+  }
+  scheduleSolve(unionRect(previousBounds, boundsForObject(draft)));
+}
+
+function pointerUp(event: PointerEvent): void {
+  if (!pointerAction || pointerAction.pointerId !== event.pointerId) return;
+  if (overlay.hasPointerCapture(event.pointerId)) overlay.releasePointerCapture(event.pointerId);
+  if (pointerAction.kind === "move") {
+    if (pointerAction.moved) {
+      history.push(pointerAction.before);
+      setStatus("Moved object.");
+    }
+    pointerAction = null;
+    renderOverlay();
+    updateHistoryButtons();
+    return;
+  }
+  finishDraft();
+}
+
+function pointerCancel(event: PointerEvent): void {
+  if (!pointerAction || pointerAction.pointerId !== event.pointerId) return;
+  const action = pointerAction;
+  if (action.kind === "move") {
+    const current = selectedObject();
+    const dirty = unionRect(current ? boundsForObject(current) : null, boundsForObject(action.original));
+    const index = documentModel.objects.findIndex((object) => object.id === action.objectId);
+    if (index >= 0) documentModel.objects[index] = action.original;
+    pointerAction = null;
+    scheduleSolve(dirty);
+  } else {
+    cancelProvisional();
+  }
+}
+
+function keyboardShortcut(event: KeyboardEvent): void {
+  const target = event.target as HTMLElement | null;
+  const editingField = target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement;
+  const command = event.ctrlKey || event.metaKey;
+  if (command && event.key.toLowerCase() === "s") {
+    event.preventDefault();
+    saveDocument();
+    return;
+  }
+  if (command && event.key.toLowerCase() === "z") {
+    event.preventDefault();
+    if (event.shiftKey) redo(); else undo();
+    return;
+  }
+  if (command && event.key.toLowerCase() === "y") {
+    event.preventDefault();
+    redo();
+    return;
+  }
+  if (editingField) return;
+  if (event.key === "Escape") {
+    cancelProvisional();
+    setStatus("Cancelled provisional drawing.");
+    return;
+  }
+  if (event.key === "Delete" || event.key === "Backspace") {
+    if (selectedId) {
+      event.preventDefault();
+      deleteSelected();
+    }
+    return;
+  }
+  const tools: Record<string, Tool> = { v: "select", p: "freehand", l: "line", b: "bezier", e: "ellipse", x: "eraser" };
+  const tool = tools[event.key.toLowerCase()];
+  if (tool) setTool(tool);
+}
+
+function bindUi(): void {
+  for (const button of document.querySelectorAll<HTMLButtonElement>("[data-tool]")) {
+    button.addEventListener("click", () => setTool(button.dataset.tool as Tool));
+  }
+  toneButton.addEventListener("click", () => cycleTone(1, true));
+  widthInput.addEventListener("change", applySelectedWidth);
+  fillInput.addEventListener("change", applySelectedFill);
+  zoomSelect.addEventListener("change", () => {
+    renderer.setZoom(Number(zoomSelect.value));
+    renderer.render(solver);
+    renderOverlay();
+  });
+  cellGridInput.addEventListener("change", () => {
+    renderer.setViewMode(cellGridInput.checked ? "cells" : "art");
+    renderer.render(solver);
+    renderOverlay();
+  });
+  undoButton.addEventListener("click", undo);
+  redoButton.addEventListener("click", redo);
+  element<HTMLButtonElement>("new-document").addEventListener("click", () => {
+    if (documentModel.objects.length > 0 && !window.confirm("Start a new drawing? Unsaved changes will be lost.")) return;
+    const columns = Number(columnsInput.value);
+    const rows = Number(rowsInput.value);
+    replaceDocument(createDocument(columns, rows), true);
+    setStatus("New GraphSCII drawing.");
+  });
+  element<HTMLButtonElement>("save-document").addEventListener("click", saveDocument);
+  element<HTMLButtonElement>("load-document").addEventListener("click", () => loadFileInput.click());
+  loadFileInput.addEventListener("change", async () => {
+    const file = loadFileInput.files?.[0];
+    loadFileInput.value = "";
+    if (!file) return;
+    try {
+      const loaded = parseDocument(await file.text());
+      replaceDocument(loaded, true);
+      setStatus(`Opened ${file.name}.`);
+    } catch (error) {
+      setStatus(error instanceof Error ? `Open failed: ${error.message}` : "Open failed.");
+    }
+  });
+  element<HTMLButtonElement>("export-text").addEventListener("click", exportText);
+  element<HTMLButtonElement>("export-png").addEventListener("click", () => void exportPng().catch((error: unknown) => {
+    setStatus(error instanceof Error ? `PNG export failed: ${error.message}` : "PNG export failed.");
+  }));
+  overlay.addEventListener("pointerdown", pointerDown);
+  overlay.addEventListener("pointermove", pointerMove);
+  overlay.addEventListener("pointerup", pointerUp);
+  overlay.addEventListener("pointercancel", pointerCancel);
+  overlay.addEventListener("wheel", (event) => {
+    if (!event.altKey) return;
+    event.preventDefault();
+    // Up = denser (toward 100), down = lighter (toward 25).
+    cycleTone(event.deltaY < 0 ? -1 : 1, false);
+  }, { passive: false });
+  window.addEventListener("keydown", keyboardShortcut);
+}
+
+async function loadGraphSCIIFont(): Promise<void> {
+  const fontUrl = `${import.meta.env.BASE_URL}assets/GraphSCII-Regular.ttf`;
+  const face = new FontFace("GraphSCII", `url(${fontUrl})`, { style: "normal", weight: "400" });
+  const loaded = await face.load();
+  document.fonts.add(loaded);
+  await document.fonts.load("16px GraphSCII");
+}
+
+async function start(): Promise<void> {
+  try {
+    setStatus("Loading frozen GraphSCII v1 registry and reference font…");
+    const registryUrl = `${import.meta.env.BASE_URL}assets/registry.json`;
+    const [loadedRegistry] = await Promise.all([GlyphRegistry.load(registryUrl), loadGraphSCIIFont()]);
+    registry = loadedRegistry;
+    renderer = new CanvasRenderer(canvas, overlay, registry);
+    renderer.setZoom(Number(zoomSelect.value));
+    solver = new GraphSolver(registry, documentModel.columns, documentModel.rows);
+    bindUi();
+    updateToneUi();
+    setTool("select");
+    solveEverything();
+    app.setAttribute("aria-busy", "false");
+    setStatus(`Ready · ${registry.glyphs.length.toLocaleString()} frozen GraphSCII graphics loaded · Alt/Option + wheel changes dither strength.`);
+  } catch (error) {
+    app.setAttribute("aria-busy", "false");
+    const message = error instanceof Error ? error.message : String(error);
+    setStatus(`GraphSCII Draw could not start: ${message}`);
+    console.error(error);
+  }
+}
+
+void start();

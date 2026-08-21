@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="GraphSCII-native freehand and vector drawing demo." />
+    <title>GraphSCII Draw</title>
+  </head>
+  <body>
+    <div id="app" class="app-shell" aria-busy="true">
+      <header class="topbar">
+        <div class="brand">
+          <strong>GraphSCII Draw</strong>
+          <span>Graphical Standard for Computer Information Interchange</span>
+        </div>
+        <div class="document-controls" aria-label="Document controls">
+          <label>Cols <input id="columns" type="number" min="8" max="240" value="64" /></label>
+          <label>Rows <input id="rows" type="number" min="4" max="120" value="32" /></label>
+          <button id="new-document" type="button">New</button>
+          <button id="save-document" type="button">Save</button>
+          <button id="load-document" type="button">Open</button>
+          <input id="load-file" class="visually-hidden" type="file" accept=".graphscii,.json,application/json" />
+        </div>
+      </header>
+
+      <div class="workspace">
+        <aside class="toolbox" aria-label="Drawing tools">
+          <button class="tool active" data-tool="select" type="button" aria-pressed="true" title="Select (V)">↖<span>Select</span></button>
+          <button class="tool" data-tool="freehand" type="button" aria-pressed="false" title="Freehand (P)">✎<span>Freehand</span></button>
+          <button class="tool" data-tool="line" type="button" aria-pressed="false" title="Line (L)">╱<span>Line</span></button>
+          <button class="tool" data-tool="bezier" type="button" aria-pressed="false" title="Bézier (B)">⌁<span>Bézier</span></button>
+          <button class="tool" data-tool="ellipse" type="button" aria-pressed="false" title="Ellipse (E)">○<span>Ellipse</span></button>
+          <button class="tool" data-tool="eraser" type="button" aria-pressed="false" title="Eraser (X)">⌫<span>Eraser</span></button>
+        </aside>
+
+        <main class="main-area">
+          <div class="propertybar" aria-label="Drawing properties">
+            <label>Width <input id="stroke-width" type="number" min="1" max="24" step="1" value="2" /></label>
+            <button id="tone-button" type="button" class="tone-button" title="Cycle dither strength; Alt/Option + wheel over canvas also changes it">
+              <span class="tone-swatch" aria-hidden="true">####</span>
+              <span id="tone-label">100%</span>
+            </button>
+            <label class="check"><input id="fill-enabled" type="checkbox" /> Fill closed shapes</label>
+            <span class="separator" aria-hidden="true"></span>
+            <button id="undo" type="button" disabled title="Undo (Ctrl/Cmd+Z)">Undo</button>
+            <button id="redo" type="button" disabled title="Redo (Ctrl/Cmd+Shift+Z)">Redo</button>
+            <span class="separator" aria-hidden="true"></span>
+            <label>Zoom
+              <select id="zoom">
+                <option value="1">100%</option>
+                <option value="2" selected>200%</option>
+                <option value="3">300%</option>
+                <option value="4">400%</option>
+                <option value="6">600%</option>
+                <option value="8">800%</option>
+              </select>
+            </label>
+            <label class="check"><input id="cell-grid" type="checkbox" /> Cells</label>
+            <span class="separator" aria-hidden="true"></span>
+            <button id="export-text" type="button">Export text</button>
+            <button id="export-png" type="button">Export PNG</button>
+          </div>
+
+          <section class="canvas-panel" aria-label="GraphSCII drawing canvas">
+            <div id="canvas-scroll" class="canvas-scroll">
+              <div id="canvas-stage" class="canvas-stage">
+                <canvas id="graphscii-canvas" aria-hidden="true"></canvas>
+                <canvas id="overlay-canvas" tabindex="0" aria-label="GraphSCII drawing surface. Use drawing tools, pointer input, and keyboard shortcuts."></canvas>
+              </div>
+            </div>
+          </section>
+
+          <footer class="statusbar">
+            <span id="status" role="status" aria-live="polite">Loading GraphSCII…</span>
+            <span id="cell-info" aria-live="polite"></span>
+          </footer>
+        </main>
+      </div>
+    </div>
+    <script type="module" src="/src/main.generated.ts"></script>
+  </body>
+</html>

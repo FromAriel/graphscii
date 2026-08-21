@@ -1,0 +1,178 @@
+  if (!applyToSelection) return;
+  const object = selectedObject();
+  if (!object || object.type !== "ellipse" || !object.fillEnabled) return;
+  const before = cloneDocument(documentModel);
+  const oldBounds = boundsForObject(object);
+  object.fillTone = tone;
+  history.push(before);
+  scheduleSolve(oldBounds);
+}
+
+function cycleTone(direction: 1 | -1, wrap: boolean, applyToSelection = true): void {
+  const index = TONE_ORDER.indexOf(activeTone);
+  const raw = index + direction;
+  const nextIndex = wrap ? (raw + TONE_ORDER.length) % TONE_ORDER.length : Math.max(0, Math.min(TONE_ORDER.length - 1, raw));
+  if (nextIndex === index) return;
+  setActiveTone(TONE_ORDER[nextIndex]!, applyToSelection);
+  setStatus(`Fill dither strength ${activeTone}%.`);
+}
+
+function syncControlsFromSelection(): void {
+  const object = selectedObject();
+  if (!object) return;
+  if (object.type === "ellipse") {
+    strokeWidth = object.strokeWidth;
+    fillEnabled = object.fillEnabled;
+    if (object.fillEnabled) activeTone = object.fillTone;
+  } else {
+    strokeWidth = object.width;
+    fillEnabled = false;
+  }
+  widthInput.value = String(strokeWidth);
+  fillInput.checked = fillEnabled;
+  updateToneUi();
+}
+
+function setTool(tool: Tool): void {
+  if (tool !== activeTool) cancelProvisional();
+  activeTool = tool;
+  if (tool !== "select") selectedId = null;
+  overlay.dataset.tool = tool;
+  for (const button of document.querySelectorAll<HTMLButtonElement>("[data-tool]")) {
+    const active = button.dataset.tool === tool;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  }
+  const help: Record<Tool, string> = {
+    select: "Select: click an object, drag to move. Delete removes the selected object.",
+    freehand: "Freehand: drag to draw a canonical GraphSCII centerline.",
+    line: "Line: drag end-to-end. Hold Shift for 45° angle snapping.",
+    bezier: "Bézier: click start, end, first control, then second control.",
+    ellipse: "Ellipse: drag a bounding box. Shift makes a circle; Alt draws from center. Tone controls fill only.",
+    eraser: "Eraser: click an object to delete it.",
+  };
+  setStatus(help[tool]);
+}
+
+function topObjectAt(point: Point): DrawingObject | null {
+  for (let index = documentModel.objects.length - 1; index >= 0; index -= 1) {
+    const object = documentModel.objects[index]!;
+    if (hitTestObject(object, point, 5)) return object;
+  }
+  return null;
+}
+
+function currentBezierGuide(): BezierObject | null {
+  if (activeTool !== "bezier" || bezierPoints.length === 0 || !bezierHover) return null;
+  const p0 = bezierPoints[0]!;
+  if (bezierPoints.length === 1) {
+    const p3 = bezierHover;
+    return {
+      id: "bezier-guide",
+      type: "bezier",
+      p0,
+      p1: { x: p0.x + (p3.x - p0.x) / 3, y: p0.y + (p3.y - p0.y) / 3 },
+      p2: { x: p0.x + (p3.x - p0.x) * 2 / 3, y: p0.y + (p3.y - p0.y) * 2 / 3 },
+      p3,
+      width: strokeWidth,
+      tone: activeTone,
+    };
+  }
+  const p3 = bezierPoints[1]!;
+  const p1 = bezierPoints.length >= 3 ? bezierPoints[2]! : bezierHover;
+  const p2 = bezierPoints.length >= 3 ? bezierHover : p3;
+  return { id: "bezier-guide", type: "bezier", p0, p1, p2, p3, width: strokeWidth, tone: activeTone };
+}
+
+function updateBezierPreview(): void {
+  const previous = draft;
+  const guide = currentBezierGuide();
+  draft = guide;
+  const dirty = unionRect(previous ? boundsForObject(previous) : null, guide ? boundsForObject(guide) : null);
+  scheduleSolve(dirty);
+}
+
+function cancelProvisional(): void {
+  let dirty: Rect | null = draft ? boundsForObject(draft) : null;
+  if (pointerAction?.kind === "move") {
+    const action = pointerAction;
+    const index = documentModel.objects.findIndex((object) => object.id === action.objectId);
+    if (index >= 0) {
+      dirty = unionRect(dirty, boundsForObject(documentModel.objects[index]!));
+      documentModel.objects[index] = action.original;
+      dirty = unionRect(dirty, boundsForObject(action.original));
+    }
+    if (overlay.hasPointerCapture(action.pointerId)) overlay.releasePointerCapture(action.pointerId);
+  } else if (pointerAction?.kind === "draw" && overlay.hasPointerCapture(pointerAction.pointerId)) {
+    overlay.releasePointerCapture(pointerAction.pointerId);
+  }
+  draft = null;
+  bezierPoints = [];
+  bezierHover = null;
+  bezierBefore = null;
+  pointerAction = null;
+  if (dirty) scheduleSolve(dirty);
+  else renderOverlay();
+}
+
+function finishDraft(): void {
+  if (!draft || !pointerAction || pointerAction.kind !== "draw") return;
+  const object = draft;
+  let valid = true;
+  if (object.type === "line") valid = distance(object.start, object.end) >= 0.5;
+  if (object.type === "ellipse") valid = object.radiusX >= 0.5 && object.radiusY >= 0.5;
+  if (object.type === "freehand") valid = object.points.length >= 1;
+  const oldBounds = boundsForObject(object);
+  draft = null;
+  if (valid) {
+    documentModel.objects.push(object);
+    history.push(pointerAction.before);
+    selectedId = object.id;
+    syncControlsFromSelection();
+    setStatus(`Added ${object.type}.`);
+  } else {
+    scheduleSolve(oldBounds);
+  }
+  pointerAction = null;
+  renderOverlay();
+  updateHistoryButtons();
+}
+
+function inspectCell(point: Point): void {
+  const column = Math.floor(point.x / 8);
+  const row = Math.floor(point.y / 16);
+  if (column < 0 || row < 0 || column >= solver.columns || row >= solver.rows) {
+    cellInfo.textContent = "";
+    return;
+  }
+  const issue = solver.issueAt(column, row);
+  if (issue) {
+    cellInfo.textContent = `Cell ${column},${row} · unsupported · ${issue.reason}`;
+    return;
+  }
+  const codepoint = solver.codepointAt(column, row);
+  if (codepoint === 0x20) {
+    cellInfo.textContent = `Cell ${column},${row} · space`;
+    return;
+  }
+  const glyph = registry.byCodepoint.get(codepoint);
+  const cp = `U+${codepoint.toString(16).toUpperCase().padStart(4, "0")}`;
+  cellInfo.textContent = glyph ? `Cell ${column},${row} · ${cp} · ${glyph.canonicalClass} · ${glyph.label}` : `Cell ${column},${row} · ${cp}`;
+}
+
+function downloadBlob(filename: string, blob: Blob): void {
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  setTimeout(() => URL.revokeObjectURL(url), 0);
+}
+
+function saveDocument(): void {
+  const json = `${JSON.stringify(documentModel, null, 2)}\n`;
+  downloadBlob("drawing.graphscii", new Blob([json], { type: "application/json;charset=utf-8" }));
+  setStatus("Saved editable GraphSCII drawing.");
+}
+
+async function exportPng(): Promise<void> {

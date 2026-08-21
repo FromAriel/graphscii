@@ -1,0 +1,196 @@
+  solveCommittedDocumentNow();
+  const blob = await renderer.exportExactPng(solver);
+  downloadBlob("graphscii-drawing.png", blob);
+  setStatus("Exported exact 8×16 GraphSCII raster PNG.");
+}
+
+function solveCommittedDocumentNow(): void {
+  solver.clear();
+  if (documentModel.objects.length > 0) {
+    solver.solve(documentModel.objects, fullCellRect(documentModel.columns, documentModel.rows));
+  }
+  renderer.render(solver);
+  renderOverlay();
+}
+
+function exportText(): void {
+  try {
+    solveCommittedDocumentNow();
+    const text = solver.toText();
+    downloadBlob("graphscii-drawing.txt", new Blob([text], { type: "text/plain;charset=utf-8" }));
+    setStatus("Exported GraphSCII Unicode text. View it with GraphSCII-Regular.ttf.");
+  } catch (error) {
+    setStatus(error instanceof Error ? `Text export failed: ${error.message}` : "Text export failed.");
+  }
+}
+
+function applySelectedWidth(): void {
+  const next = Math.max(1, Math.min(24, Number(widthInput.value) || 1));
+  strokeWidth = next;
+  widthInput.value = String(next);
+  const object = selectedObject();
+  if (!object) return;
+  const before = cloneDocument(documentModel);
+  const oldBounds = boundsForObject(object);
+  if (object.type === "ellipse") object.strokeWidth = next;
+  else object.width = next;
+  history.push(before);
+  scheduleSolve(unionRect(oldBounds, boundsForObject(object)));
+}
+
+function applySelectedFill(): void {
+  fillEnabled = fillInput.checked;
+  const object = selectedObject();
+  if (!object || object.type !== "ellipse") return;
+  const before = cloneDocument(documentModel);
+  const oldBounds = boundsForObject(object);
+  object.fillEnabled = fillEnabled;
+  if (fillEnabled) object.fillTone = activeTone;
+  history.push(before);
+  scheduleSolve(oldBounds);
+}
+
+function deleteSelected(): void {
+  const object = selectedObject();
+  if (!object) return;
+  const before = cloneDocument(documentModel);
+  const bounds = boundsForObject(object);
+  documentModel.objects = documentModel.objects.filter((candidate) => candidate.id !== object.id);
+  selectedId = null;
+  history.push(before);
+  scheduleSolve(bounds);
+  setStatus("Deleted selected object.");
+}
+
+function undo(): void {
+  cancelProvisional();
+  const previous = history.undo(documentModel);
+  if (!previous) return;
+  replaceDocument(previous, false);
+  setStatus("Undo.");
+}
+
+function redo(): void {
+  cancelProvisional();
+  const next = history.redo(documentModel);
+  if (!next) return;
+  replaceDocument(next, false);
+  setStatus("Redo.");
+}
+
+function beginBezierClick(point: Point): void {
+  if (bezierPoints.length === 0) {
+    selectedId = null;
+    bezierBefore = cloneDocument(documentModel);
+  }
+  if (bezierPoints.length < 3) {
+    bezierPoints.push(point);
+    bezierHover = point;
+    const message = ["Click the end anchor.", "Click the first control point.", "Click the second control point to commit."][bezierPoints.length - 1];
+    setStatus(message ?? "Bézier.");
+    updateBezierPreview();
+    return;
+  }
+  const final: BezierObject = {
+    id: makeId("bezier"),
+    type: "bezier",
+    p0: bezierPoints[0]!,
+    p3: bezierPoints[1]!,
+    p1: bezierPoints[2]!,
+    p2: point,
+    width: strokeWidth,
+    tone: activeTone,
+  };
+  const oldBounds = draft ? boundsForObject(draft) : null;
+  draft = null;
+  documentModel.objects.push(final);
+  if (bezierBefore) history.push(bezierBefore);
+  bezierBefore = null;
+  bezierPoints = [];
+  bezierHover = null;
+  selectedId = final.id;
+  scheduleSolve(unionRect(oldBounds, boundsForObject(final)));
+  setStatus("Added cubic Bézier curve.");
+}
+
+function pointerDown(event: PointerEvent): void {
+  overlay.focus({ preventScroll: true });
+  const point = renderer.logicalPoint(event);
+  inspectCell(point);
+
+  if (activeTool === "bezier") {
+    beginBezierClick(point);
+    return;
+  }
+
+  if (activeTool === "eraser") {
+    const target = topObjectAt(point);
+    if (!target) return;
+    const before = cloneDocument(documentModel);
+    const bounds = boundsForObject(target);
+    documentModel.objects = documentModel.objects.filter((object) => object.id !== target.id);
+    if (selectedId === target.id) selectedId = null;
+    history.push(before);
+    scheduleSolve(bounds);
+    setStatus("Erased object.");
+    return;
+  }
+
+  if (activeTool === "select") {
+    const target = topObjectAt(point);
+    selectedId = target?.id ?? null;
+    if (target) {
+      syncControlsFromSelection();
+      pointerAction = {
+        kind: "move",
+        pointerId: event.pointerId,
+        start: point,
+        objectId: target.id,
+        original: structuredClone(target),
+        before: cloneDocument(documentModel),
+        lastBounds: boundsForObject(target),
+        moved: false,
+      };
+      overlay.setPointerCapture(event.pointerId);
+    }
+    renderOverlay();
+    return;
+  }
+
+  selectedId = null;
+  pointerAction = { kind: "draw", pointerId: event.pointerId, start: point, before: cloneDocument(documentModel) };
+  overlay.setPointerCapture(event.pointerId);
+  if (activeTool === "freehand") {
+    draft = { id: makeId("freehand"), type: "freehand", points: [point], width: strokeWidth, tone: activeTone } satisfies FreehandStroke;
+  } else if (activeTool === "line") {
+    draft = { id: makeId("line"), type: "line", start: point, end: point, width: strokeWidth, tone: activeTone } satisfies LineObject;
+  } else if (activeTool === "ellipse") {
+    draft = {
+      id: makeId("ellipse"), type: "ellipse", center: point, radiusX: 0, radiusY: 0, rotation: 0,
+      strokeWidth, strokeTone: activeTone, fillEnabled, fillTone: activeTone,
+    } satisfies EllipseObject;
+  }
+  if (draft) scheduleSolve(boundsForObject(draft));
+}
+
+function pointerMove(event: PointerEvent): void {
+  const point = renderer.logicalPoint(event);
+  inspectCell(point);
+
+  if (activeTool === "bezier" && bezierPoints.length > 0) {
+    bezierHover = point;
+    updateBezierPreview();
+  }
+
+  if (!pointerAction || pointerAction.pointerId !== event.pointerId) return;
+  const action = pointerAction;
+  if (action.kind === "move") {
+    const dx = point.x - action.start.x;
+    const dy = point.y - action.start.y;
+    if (Math.hypot(dx, dy) > 0.1) action.moved = true;
+    const index = documentModel.objects.findIndex((object) => object.id === action.objectId);
+    if (index < 0) return;
+    const moved = translateObject(action.original, dx, dy);
+    const previousBounds = action.lastBounds;
+    documentModel.objects[index] = moved;
+    action.lastBounds = boundsForObject(moved);

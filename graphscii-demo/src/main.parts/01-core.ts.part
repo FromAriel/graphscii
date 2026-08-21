@@ -1,0 +1,177 @@
+import "./style.css";
+import { cloneDocument, createDocument, DocumentHistory, parseDocument } from "./document";
+import {
+  boundsForObject,
+  distance,
+  fullCellRect,
+  hitTestObject,
+  logicalRectToCells,
+  makeId,
+  snapAngle,
+  translateObject,
+  unionRect,
+} from "./geometry";
+import { CanvasRenderer } from "./renderer";
+import { GlyphRegistry } from "./registry";
+import { GraphSolver } from "./solver";
+import type {
+  BezierObject,
+  DrawingObject,
+  EllipseObject,
+  FreehandStroke,
+  GraphSCIIDocument,
+  GraphSCIITone,
+  LineObject,
+  Point,
+  Rect,
+  Tool,
+} from "./types";
+
+function element<T extends HTMLElement>(id: string): T {
+  const value = document.getElementById(id);
+  if (!value) throw new Error(`Missing required UI element #${id}.`);
+  return value as T;
+}
+
+const app = element<HTMLDivElement>("app");
+const canvas = element<HTMLCanvasElement>("graphscii-canvas");
+const overlay = element<HTMLCanvasElement>("overlay-canvas");
+const status = element<HTMLSpanElement>("status");
+const cellInfo = element<HTMLSpanElement>("cell-info");
+const columnsInput = element<HTMLInputElement>("columns");
+const rowsInput = element<HTMLInputElement>("rows");
+const widthInput = element<HTMLInputElement>("stroke-width");
+const fillInput = element<HTMLInputElement>("fill-enabled");
+const toneButton = element<HTMLButtonElement>("tone-button");
+const toneLabel = element<HTMLSpanElement>("tone-label");
+const toneSwatch = toneButton.querySelector<HTMLElement>(".tone-swatch");
+const zoomSelect = element<HTMLSelectElement>("zoom");
+const cellGridInput = element<HTMLInputElement>("cell-grid");
+const undoButton = element<HTMLButtonElement>("undo");
+const redoButton = element<HTMLButtonElement>("redo");
+const loadFileInput = element<HTMLInputElement>("load-file");
+
+const TONE_ORDER: GraphSCIITone[] = [100, 75, 50, 25];
+const TONE_SWATCH: Record<GraphSCIITone, string> = { 100: "####", 75: "###.", 50: "#.#.", 25: "#..." };
+
+let registry: GlyphRegistry;
+let documentModel: GraphSCIIDocument = createDocument();
+let solver: GraphSolver;
+let renderer: CanvasRenderer;
+let history = new DocumentHistory();
+let activeTool: Tool = "select";
+let activeTone: GraphSCIITone = 100;
+let strokeWidth = 2;
+let fillEnabled = false;
+let selectedId: string | null = null;
+let draft: DrawingObject | null = null;
+let bezierPoints: Point[] = [];
+let bezierHover: Point | null = null;
+let bezierBefore: GraphSCIIDocument | null = null;
+let pendingDirty: Rect | null = null;
+let solveScheduled = false;
+
+interface DrawPointerAction {
+  kind: "draw";
+  pointerId: number;
+  start: Point;
+  before: GraphSCIIDocument;
+}
+
+interface MovePointerAction {
+  kind: "move";
+  pointerId: number;
+  start: Point;
+  objectId: string;
+  original: DrawingObject;
+  before: GraphSCIIDocument;
+  lastBounds: Rect;
+  moved: boolean;
+}
+
+type PointerAction = DrawPointerAction | MovePointerAction;
+let pointerAction: PointerAction | null = null;
+
+function setStatus(message: string): void {
+  status.textContent = message;
+}
+
+function selectedObject(): DrawingObject | null {
+  if (!selectedId) return null;
+  return documentModel.objects.find((object) => object.id === selectedId) ?? null;
+}
+
+function sceneObjects(): DrawingObject[] {
+  return draft ? [...documentModel.objects, draft] : documentModel.objects;
+}
+
+function renderOverlay(): void {
+  renderer.renderOverlay(selectedObject(), draft, currentBezierGuide());
+}
+
+function updateHistoryButtons(): void {
+  undoButton.disabled = !history.canUndo;
+  redoButton.disabled = !history.canRedo;
+}
+
+function scheduleSolve(rect: Rect | null): void {
+  if (rect) pendingDirty = unionRect(pendingDirty, rect);
+  if (solveScheduled) {
+    renderOverlay();
+    return;
+  }
+  solveScheduled = true;
+  requestAnimationFrame(() => {
+    solveScheduled = false;
+    const dirty = pendingDirty;
+    pendingDirty = null;
+    if (dirty) {
+      const cells = logicalRectToCells(dirty, documentModel.columns, documentModel.rows, 1);
+      solver.solve(sceneObjects(), cells);
+      renderer.render(solver);
+    }
+    renderOverlay();
+    updateHistoryButtons();
+  });
+}
+
+function solveEverything(): void {
+  solver.clear();
+  if (documentModel.objects.length > 0) solver.solve(documentModel.objects, fullCellRect(documentModel.columns, documentModel.rows));
+  renderer.render(solver);
+  renderOverlay();
+  updateHistoryButtons();
+}
+
+function replaceDocument(next: GraphSCIIDocument, clearHistory = false): void {
+  documentModel = next;
+  selectedId = null;
+  draft = null;
+  pointerAction = null;
+  bezierPoints = [];
+  bezierHover = null;
+  bezierBefore = null;
+  pendingDirty = null;
+  if (clearHistory) history.clear();
+  columnsInput.value = String(next.columns);
+  rowsInput.value = String(next.rows);
+  solver = new GraphSolver(registry, next.columns, next.rows);
+  solveEverything();
+}
+
+function updateToneUi(): void {
+  toneLabel.textContent = `${activeTone}%`;
+  if (toneSwatch) toneSwatch.textContent = TONE_SWATCH[activeTone];
+  toneButton.setAttribute("aria-label", `Fill dither strength ${activeTone} percent. Activate to cycle.`);
+}
+
+function setActiveTone(tone: GraphSCIITone, applyToSelection: boolean): void {
+  activeTone = tone;
+  updateToneUi();
+  if (draft) {
+    const dirty = boundsForObject(draft);
+    if (draft.type === "ellipse") {
+      if (draft.fillEnabled) draft.fillTone = tone;
+    }
+    scheduleSolve(dirty);
+  }
