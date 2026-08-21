@@ -23,7 +23,33 @@ This demo is intentionally a GraphSCII-native editor rather than a vector editor
 - Exact canonical-pixel PNG export
 - Cell-grid viewing mode and zoom
 
-## Run locally
+## One-command launch
+
+From `graphscii-demo/`:
+
+```powershell
+python launch.py
+```
+
+The launcher uses only Python's standard library. It installs the npm dependencies when `node_modules/` is missing, runs the production build, self-hosts `dist/` at `http://127.0.0.1:5174/`, opens the browser, and stays running until Ctrl+C.
+
+For a simple rebuild loop while editing:
+
+```powershell
+python launch.py --watch
+```
+
+Useful options:
+
+```text
+--host 0.0.0.0    expose the local server on the LAN
+--port 8080        use another port
+--no-open          do not open a browser automatically
+--no-build         serve the existing dist/ without rebuilding
+--install          force npm install before building
+```
+
+## Run with npm directly
 
 From `graphscii-demo/`:
 
