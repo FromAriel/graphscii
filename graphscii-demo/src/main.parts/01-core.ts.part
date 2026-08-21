@@ -13,7 +13,7 @@ import {
 } from "./geometry";
 import { CanvasRenderer } from "./renderer";
 import { GlyphRegistry } from "./registry";
-import { BridgeGraphSolver as GraphSolver } from "./bridge-solver";
+import { GraphSolver } from "./solver";
 import type {
   BezierObject,
   DrawingObject,
@@ -162,7 +162,7 @@ function replaceDocument(next: GraphSCIIDocument, clearHistory = false): void {
 function updateToneUi(): void {
   toneLabel.textContent = `${activeTone}%`;
   if (toneSwatch) toneSwatch.textContent = TONE_SWATCH[activeTone];
-  toneButton.setAttribute("aria-label", `Dither strength ${activeTone} percent. Activate to cycle.`);
+  toneButton.setAttribute("aria-label", `Fill dither strength ${activeTone} percent. Activate to cycle.`);
 }
 
 function setActiveTone(tone: GraphSCIITone, applyToSelection: boolean): void {
@@ -171,10 +171,8 @@ function setActiveTone(tone: GraphSCIITone, applyToSelection: boolean): void {
   if (draft) {
     const dirty = boundsForObject(draft);
     if (draft.type === "ellipse") {
-      draft.strokeTone = tone;
       if (draft.fillEnabled) draft.fillTone = tone;
-    } else {
-      draft.tone = tone;
     }
     scheduleSolve(dirty);
   }
+  if (!applyToSelection) return;
