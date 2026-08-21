@@ -23,6 +23,33 @@ jobs:
       - name: Verify deterministic lookup
         run: node graphscii-demo/verify.mjs
       - name: Check standalone browser runtime syntax
-        run: node --check graphscii-demo/app.js
+        run: node --check graphscii-demo/app-runtime-v2.js
+      - name: Reject CSP-hostile browser execution
+        shell: bash
+        run: |
+          if grep -En "eval[[:space:]]*\\(|new[[:space:]]+Function|createObjectURL|new[[:space:]]+Blob|import[[:space:]]*\\(" graphscii-demo/app-runtime-v2.js; then
+            echo "CSP-hostile JavaScript construct found"
+            exit 1
+          fi
+          if grep -Eq "app\\.mjs|src=\"\\./app\\.js\"" graphscii-demo/index.html; then
+            echo "Obsolete browser entrypoint referenced"
+            exit 1
+          fi
       - name: Check local server syntax
         run: python -m py_compile graphscii-demo/serve.py
+      - name: Verify strict server headers and runtime MIME
+        shell: bash
+        run: |
+          python graphscii-demo/serve.py 8765 >/tmp/graphscii-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID' EXIT
+          sleep 1
+          curl -fsSI http://127.0.0.1:8765/graphscii-demo/app-runtime-v2.js > /tmp/runtime-headers
+          grep -qi '^Content-Type: text/javascript' /tmp/runtime-headers
+          grep -qi '^Cache-Control: .*no-store' /tmp/runtime-headers
+          grep -qi "^Content-Security-Policy: .*script-src 'self'" /tmp/runtime-headers
+          if grep -qi 'unsafe-eval' /tmp/runtime-headers; then
+            echo "unsafe-eval must never be enabled"
+            exit 1
+          fi
+          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'app-runtime-v2.js'
