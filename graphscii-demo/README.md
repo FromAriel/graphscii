@@ -14,6 +14,7 @@ This demo is intentionally a GraphSCII-native editor rather than a vector editor
 - GraphSCII-native 100%, 75%, 50%, and 25% phase-locked dither strengths
 - Toolbar dither control plus **Alt/Option + mouse wheel** density adjustment
 - Optional ellipse fill
+- Stroke-only cells are fail-closed to the straight/connector allocation ranges; fill/dither PUA ranges are not eligible for freehand, line, Bézier, or outline-only ellipse cells
 - Dirty-region glyph solving with 4× supersampling
 - Canonical-registry glyph matching plus neighbor continuity scoring
 - Undo/redo
@@ -32,6 +33,8 @@ python launch.py
 ```
 
 The launcher uses only Python's standard library. It installs the npm dependencies when `node_modules/` is missing, runs the production build, self-hosts `dist/` at `http://127.0.0.1:5174/`, opens the browser, and stays running until Ctrl+C.
+
+The self-host server deliberately sends `Cache-Control: no-store` and opens a build-fingerprinted URL such as `?build=abc123...`. This prevents Chrome from silently reusing an older JavaScript bundle after a solver rebuild.
 
 For a simple rebuild loop while editing:
 
@@ -73,7 +76,7 @@ The demo does not maintain a second copy of the font or registry.
 npm run verify
 ```
 
-That verifies the frozen GraphSCII assets, type-checks the application, and produces a static build in `dist/`.
+That verifies the frozen GraphSCII assets, validates the straight/connector allocation boundaries, type-checks the application, and produces a static build in `dist/`.
 
 ## Rendering model
 
@@ -86,7 +89,7 @@ phase-locked GraphSCII dither mask
       ↓
 8×16 target cell
       ↓
-canonical 6,397-glyph registry match
+canonical GraphSCII candidate policy
       ↓
 neighbor continuity relaxation
       ↓
