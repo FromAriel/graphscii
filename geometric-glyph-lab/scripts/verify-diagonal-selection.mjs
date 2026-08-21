@@ -8,9 +8,13 @@ const repoRoot = path.resolve(scriptDir, "..", "..");
 const selection = await verifyDiagonalSelectionArtifacts(repoRoot);
 
 assert.equal(selection.selectedSemanticCount, 60);
+assert.equal(selection.selectedRasterOwnerCount, 59);
+assert.equal(selection.selectedGraphicsV0ReuseOwners, 2);
+assert.equal(selection.selectedIncrementalNovelOwners, 57);
 assert.equal(selection.orthogonalNovelOwners, 544);
-assert.ok(selection.selectedIncrementalNovelOwners <= 60);
-assert.ok(selection.finalReserveRemaining >= 0);
+assert.equal(selection.finalNovelConnectorOwners, 601);
+assert.equal(selection.protectedReserveSlots, 604);
+assert.equal(selection.finalReserveRemaining, 3);
 
 console.log("GraphSCII final deterministic diagonal connector selection verified.");
 console.log(JSON.stringify(selection, null, 2));
