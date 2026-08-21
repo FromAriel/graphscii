@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "verify:assets": "node scripts/verify-demo.mjs",
     "verify:semantic": "node scripts/verify-semantic-engine.mjs",
-    "verify": "npm run verify:assets && npm run verify:semantic && npm run check && npm run build"
+    "verify:runtime": "node scripts/verify-runtime-engine.mjs",
+    "verify": "npm run verify:assets && npm run verify:semantic && npm run verify:runtime && npm run check && npm run build"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
