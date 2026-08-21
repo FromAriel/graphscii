@@ -12,9 +12,8 @@
     "check": "tsc --noEmit",
     "preview": "vite preview",
     "verify:assets": "node scripts/verify-demo.mjs",
-    "verify:topology": "node scripts/verify-topology-contract.mjs",
-    "verify:bridge": "node scripts/verify-bridge-contract.mjs",
-    "verify": "npm run verify:assets && npm run verify:topology && npm run verify:bridge && npm run check && npm run build"
+    "verify:semantic": "node scripts/verify-semantic-engine.mjs",
+    "verify": "npm run verify:assets && npm run verify:semantic && npm run check && npm run build"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
