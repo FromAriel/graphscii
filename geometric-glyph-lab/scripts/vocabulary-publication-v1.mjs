@@ -136,9 +136,14 @@ async function loadState(repoRoot) {
   ) {
     throw new Error("Milestone 5E v1 allocation fixture mismatch.");
   }
-  if (!Array.isArray(semantics) || semantics.length !== EXPECTED_CONNECTOR_SEMANTICS) {
-    throw new Error(`Milestone 5E requires ${EXPECTED_CONNECTOR_SEMANTICS} connector semantics.`);
-  }
+  if (
+  semantics?.schema !== "graphscii-generic-connector-semantics-v1" ||
+  semantics?.semanticCount !== EXPECTED_CONNECTOR_SEMANTICS ||
+  !Array.isArray(semantics.semantics) ||
+  semantics.semantics.length !== EXPECTED_CONNECTOR_SEMANTICS
+) {
+  throw new Error(`Milestone 5E requires ${EXPECTED_CONNECTOR_SEMANTICS} connector semantics.`);
+}
   if (connectorAlias.entryCount !== EXPECTED_CONNECTOR_SEMANTICS) {
     throw new Error("Milestone 5E connector alias index cardinality mismatch.");
   }
