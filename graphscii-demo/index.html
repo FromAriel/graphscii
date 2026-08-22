@@ -63,7 +63,7 @@
       </p>
       <p>
         Perpendicular corner ports are not collapsed. A corner traversal such as L15→B0 is a real GraphSCII semantic and emits its required one-pixel corner glyph.
-        Multi-pass cells first use a published straight/connector glyph when their exact bitmap union already exists in the vocabulary. Otherwise the exact straight glyphs are layered at the same cell origin, preserving every pixel and every port without nearest matching, fill substitution, or geometry changes.
+        Multi-pass cells use an exact published connector glyph when that precise bitmap exists. Otherwise the already-solved straight GraphSCII glyphs are overstruck at the identical cell origin, preserving the exact union without moving ports or substituting a fill/approximation.
         Freehand, line, Bezier, and ellipse all use the same crossing compiler.
       </p>
       <p>
@@ -75,6 +75,6 @@
 
   <script src="./draw-v6.js?v=20260821-1618"></script>
   <script src="./debug-export-v2.js?v=20260821-1618"></script>
-  <script src="./crossover-compositor-v1.js?v=20260821-1816"></script>
+  <script src="./crossover-compositor-v1.js?v=20260821-1826"></script>
 </body>
 </html>
