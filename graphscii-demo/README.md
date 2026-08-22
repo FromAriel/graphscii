@@ -72,17 +72,38 @@ The editor renders the actual published GraphSCII font. Each stored `fromPort �
 
 There is no bitmap matcher, Hamming score, candidate ranking, visual fallback, or raster approximation step.
 
-## Runtime
+## Crossovers
 
-The browser has one runtime:
+When two strokes occupy one cell, the compositor resolves the cell to **exactly one published glyph** using the offline crossover-resolution table:
 
 ```text
-graphscii-demo/draw-v5.js
+artifacts/manifest/vocabulary-v1/crossover-resolution.tsv
 ```
 
-The obsolete split core/UI runtimes were removed.
+That table was generated offline over all 345,696 two-segment cell states with declared topology costs (`W_MISS=100`, `W_EXTRA=10`, `ε=1/128` Hamming tie-break). Tier 0 entries are exact published matches; Tier 1 entries are typed best-fit selections among straight and connector owners only. Fill-class owners are excluded by construction.
 
-The runtime contains no dynamic import, Blob-module execution, `eval`, or `new Function`.
+Rules:
+
+- every multi-segment cell emits exactly one codepoint — layered overstrike does not exist;
+- segment keys are canonicalized into the six family directions before lookup, so reverse-drawn strokes resolve identically;
+- three or more distinct segments in one cell are explicitly unsupported and stay red-boxed until pair data justifies extending enumeration;
+- if the resolution table fails to load, crossover cells remain honestly unresolved rather than silently approximating.
+
+Every crossover cell records provenance — tier, glyph ID, missed/extra ports, scaled cost, mated ports, and lost mates — visible in the status line and in the Debug Export.
+
+## Runtime
+
+The browser runtime is:
+
+```text
+graphscii-demo/draw-v6.js               node-graph stroke compiler and renderer
+graphscii-demo/debug-export-v2.js       pointer/segment/provenance debug export
+graphscii-demo/crossover-compositor-v3.js  single-glyph crossover resolution
+```
+
+All logic above each file's DOM guard is Node-testable; CI runs the self-tests headlessly.
+
+The runtimes contain no dynamic import, Blob-module execution, `eval`, or `new Function`.
 
 ## Run
 
@@ -110,11 +131,12 @@ From the repository root:
 
 ```powershell
 node graphscii-demo/verify.mjs
-node --check graphscii-demo/draw-v5.js
-node -e "require('./graphscii-demo/draw-v5.js'); GraphSCIIDrawV5.selfTest()"
+node --check graphscii-demo/draw-v6.js
+node -e "require('./graphscii-demo/draw-v6.js'); GraphSCIIDrawV6.selfTest()"
+node -e "require('./graphscii-demo/crossover-compositor-v3.js'); GraphSCIICrossoversV3.selfTest()"
 ```
 
-The executable self-test verifies:
+The draw self-test verifies:
 
 - every internal `Rk ↔ Lk` mate has identical canonical node identity;
 - every internal `Bk ↔ Tk` mate has identical canonical node identity;
@@ -124,10 +146,22 @@ The executable self-test verifies:
 - every emitted semantic belongs to the frozen straight lookup;
 - every consecutive emitted segment shares the exact same canonical node.
 
-CI also verifies font rendering, strict CSP compatibility, stable JavaScript MIME type, and `Cache-Control: no-store`.
+The crossover self-test additionally verifies reverse-alias canonicalization
+(`R8>L0 ≡ L0>R8`), sorted and deduplicated state keys, the boundary-attachment
+model, cross-cell mate computation, and all resolution kinds (single /
+resolved / unresolved / unsupported).
+
+The lab chain verifies the resolution table itself byte-for-byte:
+
+```powershell
+cd geometric-glyph-lab
+npm run verify:crossover-resolution
+```
+
+CI also verifies font rendering, strict CSP compatibility, stable JavaScript MIME type, `Cache-Control: no-store`, the crossover table's line count, and zero fill-class winners.
 
 ## Deliberately absent
 
 There is no bitmap matching, Hamming distance, supersampling target, glyph candidate scoring, continuity repair, or global route solver.
 
-Intentional self-intersections that require connector glyph composition remain a later slice. Ordinary non-self-crossing strokes must not produce unresolved overlap cells.
+Crossovers never layer glyphs: every cell carries exactly one codepoint. States with three or more distinct segments are marked unresolved rather than approximated; fill-side and tone composition remain future work.

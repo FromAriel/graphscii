@@ -28,7 +28,7 @@ jobs:
         run: |
           node --check graphscii-demo/draw-v6.js
           node --check graphscii-demo/debug-export-v2.js
-          node --check graphscii-demo/crossover-compositor-v2.js
+          node --check graphscii-demo/crossover-compositor-v3.js
 
       - name: Verify exact font-port topology
         run: |
@@ -46,7 +46,7 @@ jobs:
             exit 1
           fi
 
-      - name: Verify crossover v2 exact rules
+      - name: Verify crossover v3 single-glyph contract
         shell: bash
         run: |
           node <<'NODE'
@@ -62,22 +62,40 @@ jobs:
           const cross = rows.join('');
           if (index.entries[cross] !== 5796) throw new Error(`L0>R0 + T0>B0 must resolve to glyphId 5796/U+F6A4; got ${index.entries[cross]}`);
           if (index.entries[horizontal] !== 0) throw new Error('L0>R0 straight owner changed unexpectedly');
-          const uploadedCross = '02020404080890502020504884840201';
-          if (index.entries[uploadedCross] != null) throw new Error('Uploaded arbitrary crossing unexpectedly became a published single glyph');
-          console.log('Published connector and layered crossover registry regressions passed.');
+          console.log('Published connector and crossover registry regressions passed.');
           NODE
 
-          grep -q "CANONICAL_FAMILIES = new Set(\['LR', 'TB', 'LT', 'LB', 'RT', 'RB'\])" graphscii-demo/crossover-compositor-v2.js
-          grep -q 'function canonicalizeStraightPair' graphscii-demo/crossover-compositor-v2.js
-          grep -q "straightBitmapKey('R8', 'L0') !== straightBitmapKey('L0', 'R8')" graphscii-demo/crossover-compositor-v2.js
-          grep -q 'const pair = canonicalizeStraightPair(fromText, toText)' graphscii-demo/crossover-compositor-v2.js
-          grep -q "family: 'exact-layered-straights'" graphscii-demo/crossover-compositor-v2.js
-          grep -q 'for (const codepoint of resolution.codepoints)' graphscii-demo/crossover-compositor-v2.js
-          grep -q 'MutationObserver' graphscii-demo/crossover-compositor-v2.js
-          grep -q 'true multi-pass cell' graphscii-demo/crossover-compositor-v2.js
-          grep -q 'Exact layered rendering remains fully functional without the index' graphscii-demo/crossover-compositor-v2.js
-          if grep -q 'G.compileRawPath' graphscii-demo/crossover-compositor-v2.js; then
+          node -e "require('./graphscii-demo/crossover-compositor-v3.js'); GraphSCIICrossoversV3.selfTest(); console.log('GraphSCII v3 crossover core self-test passed.')"
+
+          grep -q "CANONICAL_FAMILIES = new Set(\['LR', 'TB', 'LT', 'LB', 'RT', 'RB'\])" graphscii-demo/crossover-compositor-v3.js
+          grep -q 'function canonicalizeSegmentKey' graphscii-demo/crossover-compositor-v3.js
+          grep -q "canonicalizeSegmentKey('R8>L0')" graphscii-demo/crossover-compositor-v3.js
+          grep -q 'function buildStateKey' graphscii-demo/crossover-compositor-v3.js
+          grep -q 'crossover-resolution.tsv' graphscii-demo/crossover-compositor-v3.js
+          grep -q 'String.fromCodePoint(0xE000 + decision.entry.glyphId)' graphscii-demo/crossover-compositor-v3.js
+          grep -q 'MutationObserver' graphscii-demo/crossover-compositor-v3.js
+          grep -q 'true multi-pass cell' graphscii-demo/crossover-compositor-v3.js
+          grep -q 'lostMates' graphscii-demo/crossover-compositor-v3.js
+          if grep -Eq 'exact-layered-straights|resolution\.codepoints|unionBitmapKey' graphscii-demo/crossover-compositor-v3.js; then
+            echo "Layered overstrike must never return to the crossover runtime"
+            exit 1
+          fi
+          if grep -q 'G.compileRawPath' graphscii-demo/crossover-compositor-v3.js; then
             echo "Crossover compositor must never compile geometry"
+            exit 1
+          fi
+
+      - name: Verify resolution table is loadable and pinned
+        shell: bash
+        run: |
+          lines=$(wc -l < artifacts/manifest/vocabulary-v1/crossover-resolution.tsv)
+          if [ "$lines" -ne 345697 ]; then
+            echo "Resolution table must carry header plus 345696 states; found $lines lines"
+            exit 1
+          fi
+          fills=$(tail -n +2 artifacts/manifest/vocabulary-v1/crossover-resolution.tsv | awk -F'\t' '$3 > 745 && $3 < 5796' | wc -l)
+          if [ "$fills" -ne 0 ]; then
+            echo "Resolution table contains $fills fill-class winners"
             exit 1
           fi
 
@@ -85,10 +103,10 @@ jobs:
         shell: bash
         run: |
           grep -q 'fillText' graphscii-demo/draw-v6.js
-          grep -q 'fillText' graphscii-demo/crossover-compositor-v2.js
+          grep -q 'fillText' graphscii-demo/crossover-compositor-v3.js
           grep -q 'document.fonts.load' graphscii-demo/draw-v6.js
           grep -q 'GraphSCII' graphscii-demo/styles.css
-          if grep -q 'function rasterRows' graphscii-demo/draw-v6.js graphscii-demo/crossover-compositor-v2.js; then
+          if grep -q 'function rasterRows' graphscii-demo/draw-v6.js graphscii-demo/crossover-compositor-v3.js; then
             echo "Runtime must render the published font, not redraw glyph bitmaps itself"
             exit 1
           fi
@@ -108,17 +126,17 @@ jobs:
       - name: Reject CSP-hostile or obsolete browser execution
         shell: bash
         run: |
-          if grep -En "eval[[:space:]]*\\(|new[[:space:]]+Function|import[[:space:]]*\\(" graphscii-demo/draw-v6.js graphscii-demo/debug-export-v2.js graphscii-demo/crossover-compositor-v2.js; then
+          if grep -En "eval[[:space:]]*\\(|new[[:space:]]+Function|import[[:space:]]*\\(" graphscii-demo/draw-v6.js graphscii-demo/debug-export-v2.js graphscii-demo/crossover-compositor-v3.js; then
             echo "CSP-hostile JavaScript construct found"
             exit 1
           fi
-          if grep -Eq 'crossover-compositor-v1\.js|draw-v5\.js|debug-export-v1\.js|draw-core-v3\.js|draw-ui-v4\.js|app\.mjs' graphscii-demo/index.html; then
+          if grep -Eq 'crossover-compositor-v1\.js|crossover-compositor-v2\.js|draw-v5\.js|debug-export-v1\.js|draw-core-v3\.js|draw-ui-v4\.js|app\.mjs' graphscii-demo/index.html; then
             echo "Obsolete browser entrypoint referenced"
             exit 1
           fi
           grep -q 'draw-v6.js' graphscii-demo/index.html
           grep -q 'debug-export-v2.js' graphscii-demo/index.html
-          grep -q 'crossover-compositor-v2.js' graphscii-demo/index.html
+          grep -q 'crossover-compositor-v3.js' graphscii-demo/index.html
 
       - name: Check local server syntax
         run: python -m py_compile graphscii-demo/serve.py
@@ -139,6 +157,7 @@ jobs:
             exit 1
           fi
           curl -fsSI http://127.0.0.1:8765/graphscii-demo/debug-export-v2.js | grep -qi '^Content-Type: text/javascript'
-          curl -fsSI http://127.0.0.1:8765/graphscii-demo/crossover-compositor-v2.js | grep -qi '^Content-Type: text/javascript'
+          curl -fsSI http://127.0.0.1:8765/graphscii-demo/crossover-compositor-v3.js | grep -qi '^Content-Type: text/javascript'
           curl -fsSI http://127.0.0.1:8765/artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json | grep -qi '^Content-Type: application/json'
-          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'crossover-compositor-v2.js'
+          curl -fsSI http://127.0.0.1:8765/artifacts/manifest/vocabulary-v1/crossover-resolution.tsv | grep -qi '^Content-Type: text/plain'
+          curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'crossover-compositor-v3.js'

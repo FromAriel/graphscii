@@ -14,6 +14,7 @@ class GraphSCIIRequestHandler(SimpleHTTPRequestHandler):
         ".css": "text/css; charset=utf-8",
         ".json": "application/json; charset=utf-8",
         ".ttf": "font/ttf",
+        ".tsv": "text/plain; charset=utf-8",
     }
 
     def end_headers(self) -> None:

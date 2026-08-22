@@ -138,6 +138,7 @@
       }
     }
 
+    const crossoverByCell = globalThis.GraphSCIICrossoversV3?.state?.lastProvenanceByCell ?? null;
     const glyphRows = Array.from({ length: G.ROWS }, () => Array(G.COLS).fill(' '));
     const codepointRows = Array.from({ length: G.ROWS }, () => Array(G.COLS).fill(null));
     const semanticRows = Array.from({ length: G.ROWS }, () => Array(G.COLS).fill(null));
@@ -145,21 +146,41 @@
     const multiPassCells = [];
 
     for (const entry of cells.values()) {
+      const resolution = crossoverByCell?.get(`${entry.x},${entry.y}`) ?? null;
       const displayed = entry.passes[0];
-      const glyph = displayed.glyph ?? String.fromCodePoint(displayed.codepoint);
-      const codepointHex = displayed.codepointHex ?? `U+${displayed.codepoint.toString(16).toUpperCase().padStart(4, '0')}`;
+      let glyph = displayed.glyph ?? String.fromCodePoint(displayed.codepoint);
+      let codepointHex = displayed.codepointHex ?? `U+${displayed.codepoint.toString(16).toUpperCase().padStart(4, '0')}`;
+      let semantic = `${displayed.from}>${displayed.to}`;
+      if (resolution) {
+        // The compositor's single-glyph crossover decision supersedes the
+        // base frame's first-segment paint.
+        glyph = String.fromCodePoint(0xE000 + resolution.glyphId);
+        codepointHex = resolution.codepointHex;
+        semantic = `crossover:${resolution.tier === 0 ? 'exact' : 'best-fit'}:${resolution.stateKey}`;
+      }
       glyphRows[entry.y][entry.x] = glyph;
       codepointRows[entry.y][entry.x] = codepointHex;
-      semanticRows[entry.y][entry.x] = `${displayed.from}>${displayed.to}`;
+      semanticRows[entry.y][entry.x] = semantic;
       const record = {
         x: entry.x,
         y: entry.y,
         displayedGlyph: glyph,
         displayedCodepoint: codepointHex,
-        displayedSemantic: `${displayed.from}>${displayed.to}`,
+        displayedSemantic: semantic,
         passCount: entry.passes.length,
         passes: entry.passes,
       };
+      if (resolution) {
+        record.crossover = {
+          tier: resolution.tier,
+          glyphId: resolution.glyphId,
+          missedPorts: resolution.missedPorts,
+          extraPorts: resolution.extraPorts,
+          costScaled: resolution.costScaled,
+          matedPorts: resolution.matedPorts ?? null,
+          lostMates: resolution.lostMates ?? null,
+        };
+      }
       cellList.push(record);
       if (entry.passes.length > 1) multiPassCells.push(record);
     }
@@ -206,6 +227,15 @@
       strokeCount: state.strokes.length,
       strokes: state.strokes,
       pendingBezierClicks: state.bezierClicks.map((sample) => ({ ...sample })),
+      crossovers: globalThis.GraphSCIICrossoversV3
+        ? {
+            runtime: 'crossover-compositor-v3.js',
+            summary: globalThis.GraphSCIICrossoversV3.state.lastSummary,
+            tableReady: globalThis.GraphSCIICrossoversV3.state.tableReady,
+            indexReady: globalThis.GraphSCIICrossoversV3.state.indexReady,
+            cells: [...(globalThis.GraphSCIICrossoversV3.state.lastProvenanceByCell?.values() ?? [])],
+          }
+        : null,
       panel: panelSnapshot(),
     };
   }

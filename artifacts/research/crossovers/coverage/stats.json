@@ -1,0 +1,303 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-crossover-coverage-stats",
+  "schemaVersion": 1,
+  "status": "10A.0-measurement-allocation-free",
+  "inputs": {
+    "straightDefinitions": 832,
+    "straightVisualOwners": 746,
+    "publishedByBitmapSha256": "3466bbcaa18184c552d6cdfed353b461f63bb0bcf5e7e678fdb26013577bd06c",
+    "publishedOwners": 6397
+  },
+  "measuredPairStates": 345696,
+  "tier0ExactOwnerStates": 2177,
+  "tier0StraightOwnerStates": 1700,
+  "tier0ConnectorOwnerStates": 477,
+  "fillClassCollisionStates": 642,
+  "unresolvedPairStates": 342877,
+  "tier0CoveragePercent": 0.629744,
+  "subsetUnionPairs": 1348,
+  "distinctUnresolvedBitmaps": 267771,
+  "distinctFillCollisionBitmaps": 119,
+  "allocations": 0,
+  "protectedReserveSlots": 3,
+  "byFamilyClass": [
+    {
+      "key": "axis+axis",
+      "pairStates": 51040,
+      "straightOwnerHits": 14,
+      "connectorOwnerHits": 150,
+      "fillClassCollisions": 16,
+      "unresolved": 50860
+    },
+    {
+      "key": "axis+diagonal",
+      "pairStates": 163840,
+      "straightOwnerHits": 394,
+      "connectorOwnerHits": 290,
+      "fillClassCollisions": 92,
+      "unresolved": 163064
+    },
+    {
+      "key": "diagonal+diagonal",
+      "pairStates": 130816,
+      "straightOwnerHits": 1292,
+      "connectorOwnerHits": 37,
+      "fillClassCollisions": 534,
+      "unresolved": 128953
+    }
+  ],
+  "byDesiredEdges": [
+    {
+      "key": "LB",
+      "pairStates": 8128,
+      "straightOwnerHits": 169,
+      "connectorOwnerHits": 1,
+      "fillClassCollisions": 121,
+      "unresolved": 7837
+    },
+    {
+      "key": "LR",
+      "pairStates": 32640,
+      "straightOwnerHits": 8,
+      "connectorOwnerHits": 12,
+      "fillClassCollisions": 8,
+      "unresolved": 32612
+    },
+    {
+      "key": "LRB",
+      "pairStates": 81920,
+      "straightOwnerHits": 188,
+      "connectorOwnerHits": 101,
+      "fillClassCollisions": 21,
+      "unresolved": 81610
+    },
+    {
+      "key": "LRT",
+      "pairStates": 81920,
+      "straightOwnerHits": 188,
+      "connectorOwnerHits": 101,
+      "fillClassCollisions": 21,
+      "unresolved": 81610
+    },
+    {
+      "key": "LRTB",
+      "pairStates": 49152,
+      "straightOwnerHits": 14,
+      "connectorOwnerHits": 142,
+      "fillClassCollisions": 0,
+      "unresolved": 48996
+    },
+    {
+      "key": "LT",
+      "pairStates": 8128,
+      "straightOwnerHits": 169,
+      "connectorOwnerHits": 1,
+      "fillClassCollisions": 130,
+      "unresolved": 7828
+    },
+    {
+      "key": "LTB",
+      "pairStates": 32768,
+      "straightOwnerHits": 313,
+      "connectorOwnerHits": 56,
+      "fillClassCollisions": 33,
+      "unresolved": 32366
+    },
+    {
+      "key": "RB",
+      "pairStates": 8128,
+      "straightOwnerHits": 169,
+      "connectorOwnerHits": 1,
+      "fillClassCollisions": 130,
+      "unresolved": 7828
+    },
+    {
+      "key": "RT",
+      "pairStates": 8128,
+      "straightOwnerHits": 169,
+      "connectorOwnerHits": 1,
+      "fillClassCollisions": 137,
+      "unresolved": 7821
+    },
+    {
+      "key": "RTB",
+      "pairStates": 32768,
+      "straightOwnerHits": 313,
+      "connectorOwnerHits": 53,
+      "fillClassCollisions": 33,
+      "unresolved": 32369
+    },
+    {
+      "key": "TB",
+      "pairStates": 2016,
+      "straightOwnerHits": 0,
+      "connectorOwnerHits": 8,
+      "fillClassCollisions": 8,
+      "unresolved": 2000
+    }
+  ],
+  "byDesiredPortCount": [
+    {
+      "key": "2",
+      "pairStates": 0,
+      "straightOwnerHits": 0,
+      "connectorOwnerHits": 0,
+      "fillClassCollisions": 0,
+      "unresolved": 0
+    },
+    {
+      "key": "3",
+      "pairStates": 9920,
+      "straightOwnerHits": 682,
+      "connectorOwnerHits": 0,
+      "fillClassCollisions": 130,
+      "unresolved": 9108
+    },
+    {
+      "key": "4",
+      "pairStates": 335776,
+      "straightOwnerHits": 1018,
+      "connectorOwnerHits": 477,
+      "fillClassCollisions": 512,
+      "unresolved": 333769
+    }
+  ],
+  "unresolvedSamples": [
+    {
+      "stateKey": "L0>B0+L0>B2",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 3,
+      "unionBitmapKey": "01010101030303030303030305050505"
+    },
+    {
+      "stateKey": "L0>B0+L0>B3",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 3,
+      "unionBitmapKey": "01010103030303030505050505090909"
+    },
+    {
+      "stateKey": "L0>B0+L0>B4",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 3,
+      "unionBitmapKey": "01010303030305050505090909091111"
+    },
+    {
+      "stateKey": "L0>B0+L0>B5",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 3,
+      "unionBitmapKey": "01010303030505050909091111112121"
+    },
+    {
+      "stateKey": "L0>B0+L0>B6",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 3,
+      "unionBitmapKey": "01010303050505090911111121214141"
+    },
+    {
+      "stateKey": "L0>B0+L0>B7",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 3,
+      "unionBitmapKey": "01010303050509091111212141418181"
+    },
+    {
+      "stateKey": "L0>B0+L1>B2",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 4,
+      "unionBitmapKey": "01010101010303030303030305050505"
+    },
+    {
+      "stateKey": "L0>B0+L1>B3",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 4,
+      "unionBitmapKey": "01010101030303030505050505090909"
+    },
+    {
+      "stateKey": "L0>B0+L1>B4",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 4,
+      "unionBitmapKey": "01010103030303050505090909091111"
+    },
+    {
+      "stateKey": "L0>B0+L1>B5",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 4,
+      "unionBitmapKey": "01010103030305050909091111112121"
+    },
+    {
+      "stateKey": "L0>B0+L1>B6",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 4,
+      "unionBitmapKey": "01010103030505090909111121214141"
+    },
+    {
+      "stateKey": "L0>B0+L1>B7",
+      "familyPair": "diagonal+diagonal",
+      "desiredEdges": "LB",
+      "desiredPortCount": 4,
+      "unionBitmapKey": "01010303050509091111212141418181"
+    }
+  ],
+  "fillCollisionSamples": [
+    {
+      "stateKey": "L0>B0+L0>B1",
+      "unionBitmapKey": "01010101010101010303030303030303"
+    },
+    {
+      "stateKey": "L0>B0+L1>B1",
+      "unionBitmapKey": "01010101010101010303030303030303"
+    },
+    {
+      "stateKey": "L0>B1+L1>B0",
+      "unionBitmapKey": "01010101010101010303030303030303"
+    },
+    {
+      "stateKey": "L0>B1+L2>B0",
+      "unionBitmapKey": "01010101010101010303030303030303"
+    },
+    {
+      "stateKey": "L0>B1+L3>B0",
+      "unionBitmapKey": "01010101010101010303030303030303"
+    },
+    {
+      "stateKey": "L0>B1+L4>B0",
+      "unionBitmapKey": "01010101010101010303030303030303"
+    },
+    {
+      "stateKey": "L0>B1+L5>B0",
+      "unionBitmapKey": "01010101010101010303030303030303"
+    },
+    {
+      "stateKey": "L0>B1+L6>B0",
+      "unionBitmapKey": "01010101010101010303030303030303"
+    },
+    {
+      "stateKey": "L0>B1+L7>B0",
+      "unionBitmapKey": "01010101010101010303030303030303"
+    },
+    {
+      "stateKey": "L0>B1+L8>B0",
+      "unionBitmapKey": "01010101010101010303030303030303"
+    },
+    {
+      "stateKey": "L0>R0+L0>R1",
+      "unionBitmapKey": "fff00000000000000000000000000000"
+    },
+    {
+      "stateKey": "L0>R0+L1>R0",
+      "unionBitmapKey": "ff0f0000000000000000000000000000"
+    }
+  ]
+}

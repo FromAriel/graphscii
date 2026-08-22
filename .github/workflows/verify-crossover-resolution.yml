@@ -1,0 +1,56 @@
+name: Verify Crossover Resolution
+
+on:
+  pull_request:
+    paths:
+      - "geometric-glyph-lab/scripts/crossover-coverage.mjs"
+      - "geometric-glyph-lab/scripts/crossover-resolution.mjs"
+      - "geometric-glyph-lab/scripts/generate-crossover-coverage.mjs"
+      - "geometric-glyph-lab/scripts/generate-crossover-resolution.mjs"
+      - "geometric-glyph-lab/scripts/verify-crossover-coverage.mjs"
+      - "geometric-glyph-lab/scripts/verify-crossover-resolution.mjs"
+      - "geometric-glyph-lab/package.json"
+      - "artifacts/manifest/vocabulary-v1/registry.json"
+      - "artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json"
+      - "artifacts/manifest/vocabulary-v1/crossover-resolution.tsv"
+      - "artifacts/research/crossovers/**"
+      - ".github/workflows/verify-crossover-resolution.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "geometric-glyph-lab/scripts/crossover-coverage.mjs"
+      - "geometric-glyph-lab/scripts/crossover-resolution.mjs"
+      - "geometric-glyph-lab/scripts/generate-crossover-coverage.mjs"
+      - "geometric-glyph-lab/scripts/generate-crossover-resolution.mjs"
+      - "geometric-glyph-lab/scripts/verify-crossover-coverage.mjs"
+      - "geometric-glyph-lab/scripts/verify-crossover-resolution.mjs"
+      - "geometric-glyph-lab/package.json"
+      - "artifacts/manifest/vocabulary-v1/registry.json"
+      - "artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json"
+      - "artifacts/manifest/vocabulary-v1/crossover-resolution.tsv"
+      - "artifacts/research/crossovers/**"
+      - ".github/workflows/verify-crossover-resolution.yml"
+
+jobs:
+  verify-crossover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify crossover coverage measurement
+        working-directory: geometric-glyph-lab
+        run: npm run verify:crossover-coverage
+
+      - name: Verify single-glyph crossover resolution table
+        working-directory: geometric-glyph-lab
+        run: npm run verify:crossover-resolution
+
+      - name: Require never-empty and fill-exclusion gates in the generator
+        shell: bash
+        run: |
+          grep -q 'Never-empty invariant violated' geometric-glyph-lab/scripts/crossover-resolution.mjs
+          grep -q 'outside the typed candidate set' geometric-glyph-lab/scripts/crossover-resolution.mjs

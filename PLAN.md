@@ -450,6 +450,8 @@ Next, validate the reference TTF with independent font tooling and representativ
 12  GraphSCII v1 font/release freeze
 ```
 
+Milestone 10 sub-plan: [`docs/milestone-10a-crossover-resolution-plan.md`](docs/milestone-10a-crossover-resolution-plan.md) — single-glyph crossover resolution for GraphSCII Draw (proposed).
+
 ---
 
 ## 12. Guiding rule

@@ -409,29 +409,28 @@ outside cell                   → empty
 
 A cell normally contains one legal straight segment.
 
-If multiple paths occupy the same cell, their combined semantic state may be represented only when GraphSCII already contains an exact published connector semantic for that state.
-
-The runtime should use a direct connector lookup table.
-
-Conceptual rule:
+If multiple strokes occupy one cell, their combined state resolves to **exactly one published glyph** through the frozen offline crossover-resolution table:
 
 ```text
-exact supported multi-segment state
-        → exact connector semantic
-
-unsupported multi-segment state
-        → illegal edit
+exact published union state      → tier 0: that owner's codepoint
+no exact owner                   → tier 1: typed best-fit among straight +
+                                           connector owners (declared offline
+                                           costs, never runtime search)
+three or more distinct segments  → explicitly unresolved (marked cell)
 ```
 
-Do not approximate an unsupported junction.
+Normative rules:
 
-Do not search the 6,397 glyphs.
+- **Never-empty invariant:** an approximate published glyph always beats an empty or unresolved cell; a two-segment state always emits exactly one codepoint.
+- **Never layered:** overstriking multiple glyphs in one cell is forbidden. It existed only as a historical fallback (`crossover-compositor-v2`) and is now removed and rejected by CI.
+- **Fill exclusion:** a stroke cell can never resolve into fill-class owners (glyph IDs 746..5795).
+- **Mate-loss provenance:** dropped legs are reported per cell (status line + Debug Export) under the `ACCEPT_LEAST_DAMAGE` policy; stroke re-routing remains deferred research.
 
-Do not choose the closest-looking connector.
+The table lives at
+[`artifacts/manifest/vocabulary-v1/crossover-resolution.tsv`](../artifacts/manifest/vocabulary-v1/crossover-resolution.tsv)
+and is specified by [`docs/milestone-10a-crossover-resolution-plan.md`](../docs/milestone-10a-crossover-resolution-plan.md).
 
-If a second stroke would create an unsupported cell state, the UI should refuse that insertion or keep the new stroke uncommitted until the user chooses another legal node route.
-
-This keeps the drawing language exact.
+This keeps the drawing language exact at one glyph per cell while still giving every crossing a deterministic, serializable answer.
 
 ---
 
@@ -620,8 +619,9 @@ Minimum runtime lookups:
 
 ```text
 straight:        fromPort + toPort → semantic owner/codepoint
+crossover:       sorted canonical two-segment state → single glyph/codepoint
+                 (artifacts/manifest/vocabulary-v1/crossover-resolution.tsv)
 fill boundary:   fromPort + toPort + side + tone → semantic owner/codepoint
-connector:       exact supported connector state → semantic owner/codepoint
 full tone:       tone → full-cell codepoint
 ```
 
@@ -677,11 +677,15 @@ The 25% test must fail until the missing full light glyph is intentionally added
 
 ### Illegal-state rejection
 
-Unsupported same-edge segments and unsupported multi-segment junction states must be rejected rather than approximated.
+Unsupported same-edge segments must be rejected rather than approximated. Multi-segment cell states resolve through the crossover-resolution table under the never-empty invariant: two-segment states always emit exactly one glyph; three-plus distinct segments are marked unresolved, never layered.
+
+### Crossover coverage
+
+The runtime table must contain every reachable two-segment state (345,696 rows), zero fill-class winners, and byte-identical regeneration (`npm run verify:crossover-resolution`). The compositor self-test must prove canonicalization, sorted state keys, and all resolution kinds.
 
 ### Round trip
 
-Save a `.graphscii` document, reload it, and reproduce exactly the same node paths and Unicode grid.
+Save a `.graphscii` document, reload it, and reproduce exactly the same node paths and Unicode grid. Because every crossover cell carries exactly one codepoint, the grid serializes as plain text with no overlay conventions.
 
 ---
 

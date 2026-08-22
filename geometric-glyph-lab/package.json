@@ -17,6 +17,8 @@
     "verify:palette": "node scripts/verify-palette-decision.mjs",
     "verify:vocabulary": "node scripts/verify-vocabulary-registry.mjs",
     "verify:vocabulary-artifacts": "node scripts/verify-vocabulary-artifacts.mjs",
+    "verify:crossover-coverage": "node scripts/verify-crossover-coverage.mjs",
+    "verify:crossover-resolution": "node scripts/verify-crossover-resolution.mjs",
     "verify:vocabulary-atlases": "node scripts/verify-vocabulary-atlases.mjs",
     "verify:vocabulary-master-atlas": "node scripts/verify-vocabulary-master-atlas.mjs",
     "verify:renderer-only-resolution": "node scripts/verify-renderer-only-resolution.mjs",
@@ -39,6 +41,8 @@
     "generate:palette": "node scripts/generate-palette-decision.mjs",
     "generate:vocabulary": "node scripts/generate-vocabulary-registry.mjs",
     "generate:vocabulary-artifacts": "node scripts/generate-vocabulary-artifacts.mjs",
+    "generate:crossover-coverage": "node scripts/generate-crossover-coverage.mjs",
+    "generate:crossover-resolution": "node scripts/generate-crossover-resolution.mjs",
     "generate:vocabulary-atlases": "node scripts/generate-vocabulary-atlases.mjs",
     "generate:vocabulary-master-atlas": "node scripts/generate-vocabulary-master-atlas.mjs",
     "generate:renderer-only-resolution": "node scripts/generate-renderer-only-resolution.mjs",
@@ -53,11 +57,11 @@
     "generate:connector-allocation": "node scripts/generate-connector-allocation.mjs",
     "generate:graphics-publication-v1": "node scripts/generate-graphics-publication-v1.mjs",
     "generate:font": "node scripts/generate-graphscii-font.mjs",
-    "generate": "npm run generate:base && npm run generate:semantic && npm run generate:catalog && npm run generate:fills && npm run generate:dithers && npm run generate:palette && npm run generate:vocabulary && npm run generate:vocabulary-artifacts && npm run generate:vocabulary-atlases && npm run generate:vocabulary-master-atlas && npm run generate:renderer-only-resolution && npm run generate:graphics-publication && npm run generate:junction-demand && npm run generate:junction-blind-spots && npm run generate:junction-geometry && npm run generate:junction-candidates && npm run generate:orthogonal-connectors && npm run generate:diagonal-connectors && npm run generate:diagonal-selection && npm run generate:connector-allocation && npm run generate:graphics-publication-v1 && npm run generate:font",
+    "generate": "npm run generate:base && npm run generate:semantic && npm run generate:catalog && npm run generate:fills && npm run generate:dithers && npm run generate:palette && npm run generate:vocabulary && npm run generate:vocabulary-artifacts && npm run generate:crossover-coverage && npm run generate:crossover-resolution && npm run generate:vocabulary-atlases && npm run generate:vocabulary-master-atlas && npm run generate:renderer-only-resolution && npm run generate:graphics-publication && npm run generate:junction-demand && npm run generate:junction-blind-spots && npm run generate:junction-geometry && npm run generate:junction-candidates && npm run generate:orthogonal-connectors && npm run generate:diagonal-connectors && npm run generate:diagonal-selection && npm run generate:connector-allocation && npm run generate:graphics-publication-v1 && npm run generate:font",
     "verify:artifacts": "node scripts/verify-artifacts.mjs",
     "verify:semantic": "node scripts/verify-semantic-registry.mjs",
     "verify:catalog": "node scripts/verify-straight-catalog.mjs",
-    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:fills && npm run verify:dithers && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog && npm run verify:fill-registry && npm run verify:dither-research && npm run verify:palette && npm run verify:vocabulary && npm run verify:vocabulary-artifacts && npm run verify:vocabulary-atlases && npm run verify:vocabulary-master-atlas && npm run verify:renderer-only-resolution && npm run verify:graphics-publication && npm run verify:junction-demand && npm run verify:junction-blind-spots && npm run verify:junction-geometry && npm run verify:junction-candidates && npm run verify:orthogonal-connectors && npm run verify:diagonal-connectors && npm run verify:diagonal-selection && npm run verify:connector-allocation && npm run verify:graphics-publication-v1 && npm run verify:font"
+    "verify": "npm run verify:prebuilt && npm run verify:curves && npm run verify:fills && npm run verify:dithers && npm run verify:artifacts && npm run verify:semantic && npm run verify:catalog && npm run verify:fill-registry && npm run verify:dither-research && npm run verify:palette && npm run verify:vocabulary && npm run verify:vocabulary-artifacts && npm run verify:crossover-coverage && npm run verify:crossover-resolution && npm run verify:vocabulary-atlases && npm run verify:vocabulary-master-atlas && npm run verify:renderer-only-resolution && npm run verify:graphics-publication && npm run verify:junction-demand && npm run verify:junction-blind-spots && npm run verify:junction-geometry && npm run verify:junction-candidates && npm run verify:orthogonal-connectors && npm run verify:diagonal-connectors && npm run verify:diagonal-selection && npm run verify:connector-allocation && npm run verify:graphics-publication-v1 && npm run verify:font"
   },
   "devDependencies": {
     "typescript": "^5.8.3",
