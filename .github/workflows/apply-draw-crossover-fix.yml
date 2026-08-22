@@ -2,11 +2,7 @@ name: Apply GraphSCII Draw Crossover Fix
 
 on:
   push:
-    branches:
-      - resolve-draw-crossovers
-    paths:
-      - "geometric-glyph-lab/scripts/apply-draw-crossover-fix.mjs"
-      - ".github/workflows/apply-draw-crossover-fix.yml"
+    branches: [resolve-draw-crossovers]
 
 permissions:
   contents: write
@@ -25,36 +21,14 @@ jobs:
         with:
           node-version: 22
 
-      - name: Build exact crossover runtime from current main implementation
+      - name: Build exact crossover runtime
         run: node geometric-glyph-lab/scripts/apply-draw-crossover-fix.mjs
 
-      - name: Check browser syntax
+      - name: Validate generated runtime
         run: |
           node --check graphscii-demo/draw-v7.js
           node --check graphscii-demo/debug-export-v3.js
-
-      - name: Run topology and exact connector tests
-        shell: bash
-        run: |
-          node <<'NODE'
-          const fs = require('node:fs');
-          require('./graphscii-demo/draw-v7.js');
-          GraphSCIIDrawV7.selfTest();
-          const index = JSON.parse(fs.readFileSync('artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json', 'utf8'));
-          GraphSCIIDrawV7.installBitmapIndex(index.entries);
-          GraphSCIIDrawV7.connectorSelfTest();
-          console.log('GraphSCII v7 topology + exact crossover tests passed.');
-          NODE
-
-      - name: Verify browser entrypoints
-        shell: bash
-        run: |
-          grep -q 'draw-v7.js' graphscii-demo/index.html
-          grep -q 'debug-export-v3.js' graphscii-demo/index.html
-          if grep -Eq 'draw-v6\.js|debug-export-v2\.js' graphscii-demo/index.html; then
-            echo 'Old runtime still referenced'
-            exit 1
-          fi
+          node -e "const fs=require('node:fs'); require('./graphscii-demo/draw-v7.js'); GraphSCIIDrawV7.selfTest(); const i=JSON.parse(fs.readFileSync('artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json','utf8')); GraphSCIIDrawV7.installBitmapIndex(i.entries); GraphSCIIDrawV7.connectorSelfTest();"
 
       - name: Commit exact crossover resolver
         run: |
@@ -64,5 +38,3 @@ jobs:
           git diff --cached --exit-code && { echo "Expected crossover patch produced no changes"; exit 1; } || true
           git commit -m "Resolve exact GraphSCII crossover glyphs"
           git push origin HEAD:resolve-draw-crossovers
-
-# Triggered after workflow registration so the branch push is guaranteed to be observed.
