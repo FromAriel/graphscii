@@ -15,7 +15,7 @@
   "sourceRegistry": "artifacts/manifest/vocabulary-v1/registry.json",
   "sourceRegistrySha256": "92ce5ff5a2b8d9b3a9e4d6aff26278cb69b23df459ec8406e04477afeb61103f",
   "output": "artifacts/fonts/GraphSCII-Regular.ttf",
-  "fontSha256": "b8d49672468f33b4159fcb45433c8102d604039a66d5409ae51f816f97c2f83a",
+  "fontSha256": "e93df33cde0ca33a1524d16c6a9bd280c7d66d42bba00eb4d5933f82c9203c02",
   "canonicalCell": "8x16",
   "unitsPerPixel": 64,
   "unitsPerEm": 1024,
@@ -43,6 +43,8 @@
     "deterministicRebuild": true,
     "sfntChecksum": "0xB1B0AFBA",
     "allGlyphRasterRoundTrip": true,
+    "horizontalMetricsPositionPreserved": true,
+    "hmtxLeftSideBearingEqualsXMin": true,
     "puaRegistryOrderPreserved": true
   }
 }

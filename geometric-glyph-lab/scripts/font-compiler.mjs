@@ -81,6 +81,15 @@ function bitmapKeyFromRows(rows) {
   return Buffer.from(rows).toString("hex");
 }
 
+function leftSideBearingForRows(rows) {
+  for (let x = 0; x < WIDTH; x += 1) {
+    for (let y = 0; y < HEIGHT; y += 1) {
+      if (((rows[y] ?? 0) & (1 << x)) !== 0) return x * UNITS_PER_PIXEL;
+    }
+  }
+  return 0;
+}
+
 function notdefRows() {
   const rows = new Uint8Array(HEIGHT);
   rows[0] = 0xff;
@@ -111,7 +120,7 @@ function runsForRows(rows) {
 
 function buildSimpleGlyph(rows) {
   const runs = runsForRows(rows);
-  if (runs.length === 0) return { bytes: Buffer.alloc(0), points: 0, contours: 0 };
+  if (runs.length === 0) return { bytes: Buffer.alloc(0), points: 0, contours: 0, xMin: 0, xMax: 0 };
 
   const points = [];
   const endPoints = [];
@@ -162,17 +171,19 @@ function buildSimpleGlyph(rows) {
     previous = point.y;
   }
   if (offset !== buffer.length) throw new Error(`Internal glyf length mismatch ${offset} !== ${buffer.length}.`);
-  return { bytes: buffer, points: points.length, contours: runs.length };
+  return { bytes: buffer, points: points.length, contours: runs.length, xMin, xMax };
 }
 
 function buildGlyfAndLoca(glyphRows) {
   const chunks = [];
   const offsets = [0];
+  const horizontalMetrics = [];
   let cursor = 0;
   let maxPoints = 0;
   let maxContours = 0;
   for (const rows of glyphRows) {
     const glyph = buildSimpleGlyph(rows);
+    horizontalMetrics.push({ advanceWidth: ADVANCE_WIDTH, leftSideBearing: glyph.xMin });
     maxPoints = Math.max(maxPoints, glyph.points);
     maxContours = Math.max(maxContours, glyph.contours);
     const padded = pad4(glyph.bytes);
@@ -183,7 +194,7 @@ function buildGlyfAndLoca(glyphRows) {
   const glyf = Buffer.concat(chunks);
   const loca = Buffer.alloc(offsets.length * 4);
   offsets.forEach((value, index) => loca.writeUInt32BE(value, index * 4));
-  return { glyf, loca, maxPoints, maxContours };
+  return { glyf, loca, horizontalMetrics, maxPoints, maxContours };
 }
 
 function buildHead() {
@@ -253,11 +264,12 @@ function buildMaxp(numGlyphs, maxPoints, maxContours) {
   return buffer;
 }
 
-function buildHmtx(numGlyphs) {
-  const buffer = Buffer.alloc(numGlyphs * 4);
-  for (let i = 0; i < numGlyphs; i += 1) {
-    buffer.writeUInt16BE(ADVANCE_WIDTH, i * 4);
-    buffer.writeInt16BE(0, i * 4 + 2);
+function buildHmtx(horizontalMetrics) {
+  const buffer = Buffer.alloc(horizontalMetrics.length * 4);
+  for (let i = 0; i < horizontalMetrics.length; i += 1) {
+    const metric = horizontalMetrics[i];
+    buffer.writeUInt16BE(metric.advanceWidth, i * 4);
+    buffer.writeInt16BE(metric.leftSideBearing, i * 4 + 2);
   }
   return buffer;
 }
@@ -461,14 +473,14 @@ export function buildGraphSCIITrueType(registry) {
   for (const owner of registry.owners) glyphRows.push(rowsFromBitmapKey(owner.bitmapKey));
   if (glyphRows.length !== EXPECTED_GLYPH_COUNT) throw new Error("Unexpected font glyph count.");
 
-  const { glyf, loca, maxPoints, maxContours } = buildGlyfAndLoca(glyphRows);
+  const { glyf, loca, horizontalMetrics, maxPoints, maxContours } = buildGlyfAndLoca(glyphRows);
   const tables = {
     "OS/2": buildOS2(),
     cmap: buildCmap(),
     glyf,
     head: buildHead(),
     hhea: buildHhea(glyphRows.length),
-    hmtx: buildHmtx(glyphRows.length),
+    hmtx: buildHmtx(horizontalMetrics),
     loca,
     maxp: buildMaxp(glyphRows.length, maxPoints, maxContours),
     name: buildName(),
@@ -586,12 +598,15 @@ export function verifyGraphSCIITrueTypeBytes(fontBytes, registry) {
   const head = tables.get("head");
   const maxp = tables.get("maxp");
   const hhea = tables.get("hhea");
+  const hmtx = tables.get("hmtx");
   const loca = tables.get("loca");
   const glyf = tables.get("glyf");
   if (fontBytes.readUInt16BE(head.offset + 18) !== UNITS_PER_EM) throw new Error("Unexpected unitsPerEm.");
   if (fontBytes.readInt16BE(head.offset + 50) !== 1) throw new Error("Font must use long loca offsets.");
   if (fontBytes.readUInt16BE(maxp.offset + 4) !== EXPECTED_GLYPH_COUNT) throw new Error("Unexpected maxp.numGlyphs.");
   if (fontBytes.readUInt16BE(hhea.offset + 34) !== EXPECTED_GLYPH_COUNT) throw new Error("Unexpected hhea.numberOfHMetrics.");
+  if ((fontBytes.readUInt16BE(head.offset + 16) & 0x0002) === 0) throw new Error("GraphSCII requires head.flags bit 1: left side bearing equals xMin.");
+  if (hmtx.length !== EXPECTED_GLYPH_COUNT * 4) throw new Error("Unexpected hmtx length.");
   if (loca.length !== (EXPECTED_GLYPH_COUNT + 1) * 4) throw new Error("Unexpected loca length.");
 
   const expectedRows = [notdefRows()];
@@ -605,6 +620,25 @@ export function verifyGraphSCIITrueTypeBytes(fontBytes, registry) {
     const expected = expectedRows[glyphIndex];
     if (bitmapKeyFromRows(actual) !== bitmapKeyFromRows(expected)) {
       throw new Error(`Raster round-trip failed for font glyph ${glyphIndex}.`);
+    }
+
+    const metricOffset = hmtx.offset + glyphIndex * 4;
+    const advanceWidth = fontBytes.readUInt16BE(metricOffset);
+    const leftSideBearing = fontBytes.readInt16BE(metricOffset + 2);
+    const expectedLeftSideBearing = leftSideBearingForRows(expected);
+    if (advanceWidth !== ADVANCE_WIDTH) {
+      throw new Error(`Unexpected advance width for font glyph ${glyphIndex}: ${advanceWidth}.`);
+    }
+    if (leftSideBearing !== expectedLeftSideBearing) {
+      throw new Error(`Left side bearing mismatch for font glyph ${glyphIndex}: ${leftSideBearing} !== ${expectedLeftSideBearing}.`);
+    }
+    if (start !== end) {
+      const glyphXMin = fontBytes.readInt16BE(glyf.offset + start + 2);
+      if (leftSideBearing !== glyphXMin) {
+        throw new Error(`hmtx/glyf xMin mismatch for font glyph ${glyphIndex}: ${leftSideBearing} !== ${glyphXMin}.`);
+      }
+    } else if (leftSideBearing !== 0) {
+      throw new Error(`Empty font glyph ${glyphIndex} must have zero left side bearing.`);
     }
   }
 
@@ -678,6 +712,8 @@ export async function buildFontDocuments(repoRoot) {
       deterministicRebuild: true,
       sfntChecksum: "0xB1B0AFBA",
       allGlyphRasterRoundTrip: true,
+      horizontalMetricsPositionPreserved: true,
+      hmtxLeftSideBearingEqualsXMin: true,
       puaRegistryOrderPreserved: true
     }
   };
