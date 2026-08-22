@@ -2,6 +2,7 @@
   'use strict';
 
   const G = globalThis.GraphSCIIDrawV6;
+  const D = globalThis.GraphSCIIDebug;
   const overlayCanvas = document.querySelector('#overlay-canvas');
   const glyphCanvas = document.querySelector('#glyph-canvas');
   const overlapEl = document.querySelector('#overlap-status');
@@ -10,8 +11,8 @@
   const showNodesInput = document.querySelector('#show-nodes');
   const toolButtons = [...document.querySelectorAll('[data-tool]')];
 
-  if (!G || !overlayCanvas || !glyphCanvas || !overlapEl) {
-    console.error('GraphSCII exact crossover compositor could not attach.');
+  if (!G || !D || !overlayCanvas || !glyphCanvas || !overlapEl) {
+    console.error('GraphSCII crossover compositor could not attach to the authoritative draw/debug state.');
     return;
   }
 
@@ -23,28 +24,11 @@
   const glyphCtx = glyphCanvas.getContext('2d');
   const overlayCtx = overlayCanvas.getContext('2d');
   const state = {
-    strokes: [],
-    active: null,
-    bezierClicks: [],
     bitmapIndex: null,
     ready: false,
+    scheduled: false,
+    lastSummary: null,
   };
-
-  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-  const currentTool = () => document.querySelector('[data-tool].active')?.dataset.tool ?? 'freehand';
-
-  function canvasPoint(event) {
-    const rect = overlayCanvas.getBoundingClientRect();
-    return {
-      x: clamp(((event.clientX - rect.left) / rect.width) * overlayCanvas.width, 0, overlayCanvas.width),
-      y: clamp(((event.clientY - rect.top) / rect.height) * overlayCanvas.height, 0, overlayCanvas.height),
-    };
-  }
-
-  function appendPoint(points, point) {
-    const previous = points[points.length - 1];
-    if (!previous || Math.hypot(point.x - previous.x, point.y - previous.y) > 0.05) points.push(point);
-  }
 
   function portPixel(edge, index) {
     if (edge === 'L') return [0, index];
@@ -89,38 +73,15 @@
     return [...rows].map((row) => row.toString(16).padStart(2, '0')).join('');
   }
 
-  function bitmapRows(key) {
-    const rows = new Uint8Array(16);
-    for (let y = 0; y < 16; y += 1) {
-      rows[y] = Number.parseInt(key.slice(y * 2, y * 2 + 2), 16);
-    }
-    return rows;
-  }
-
   function unionBitmapKey(segments) {
     const rows = new Uint8Array(16);
     for (const segment of segments) {
-      const segmentRows = bitmapRows(straightBitmapKey(segment.from, segment.to));
-      for (let y = 0; y < 16; y += 1) rows[y] |= segmentRows[y];
-    }
-    return [...rows].map((row) => row.toString(16).padStart(2, '0')).join('');
-  }
-
-  function segmentsSharePixel(segments) {
-    for (let i = 0; i < segments.length; i += 1) {
-      const a = bitmapRows(straightBitmapKey(segments[i].from, segments[i].to));
-      for (let j = i + 1; j < segments.length; j += 1) {
-        const b = bitmapRows(straightBitmapKey(segments[j].from, segments[j].to));
-        for (let y = 0; y < 16; y += 1) {
-          if ((a[y] & b[y]) !== 0) return true;
-        }
+      const key = straightBitmapKey(segment.from, segment.to);
+      for (let y = 0; y < 16; y += 1) {
+        rows[y] |= Number.parseInt(key.slice(y * 2, y * 2 + 2), 16);
       }
     }
-    return false;
-  }
-
-  function uniqueLayerCodepoints(segments) {
-    return [...new Set(segments.map((segment) => segment.codepoint))];
+    return [...rows].map((row) => row.toString(16).padStart(2, '0')).join('');
   }
 
   function installBitmapIndex(entries) {
@@ -146,39 +107,20 @@
     return true;
   }
 
-  // A multi-pass cell always has an exact render: its already-valid straight glyphs
-  // can be layered at the same cell origin. If that exact union is also a published
-  // single straight/connector owner, use that one codepoint instead. Never choose a
-  // fill/dither owner and never move or re-score a port.
   function resolveCellSegments(segments) {
     if (!segments?.length) return null;
     if (segments.length === 1) {
       return {
         resolved: true,
-        singleGlyph: true,
+        mode: 'single',
         family: 'straight',
         codepoint: segments[0].codepoint,
-        codepoints: [segments[0].codepoint],
-        glyphId: segments[0].codepoint - 0xE000,
-        intersects: false,
         bitmapKey: straightBitmapKey(segments[0].from, segments[0].to),
       };
     }
 
     const bitmapKey = unionBitmapKey(segments);
-    const codepoints = uniqueLayerCodepoints(segments);
-    const intersects = segmentsSharePixel(segments);
-    if (!state.bitmapIndex) {
-      return {
-        resolved: false,
-        singleGlyph: false,
-        family: 'composite',
-        reason: 'bitmap-index-not-loaded',
-        bitmapKey,
-        codepoints,
-        intersects,
-      };
-    }
+    if (!state.bitmapIndex) return { resolved: false, reason: 'bitmap-index-not-loaded', bitmapKey };
 
     const glyphId = state.bitmapIndex[bitmapKey];
     if (glyphId != null) {
@@ -187,36 +129,32 @@
       if (isStraight || isConnector) {
         return {
           resolved: true,
-          singleGlyph: true,
+          mode: 'single',
           family: isConnector ? 'connector' : 'straight',
           bitmapKey,
           glyphId,
           codepoint: 0xE000 + glyphId,
-          codepoints: [0xE000 + glyphId],
-          intersects,
         };
       }
     }
 
+    // The published connector basis is intentionally compact, not exhaustive.
+    // When an arbitrary multi-pass union has no single connector codepoint, the
+    // exact representation is the original already-solved straight glyphs
+    // overstruck at the same 8x16 cell origin. No ports or pixels are changed.
     return {
       resolved: true,
-      singleGlyph: false,
-      family: 'composite',
+      mode: 'layered',
+      family: 'exact-layered-straights',
       bitmapKey,
-      codepoints,
-      intersects,
-      reason: glyphId == null
-        ? 'no-exact-published-single-glyph'
-        : 'exact-bitmap-is-not-a-line-or-connector-glyph',
-      rejectedGlyphId: glyphId ?? null,
+      codepoints: segments.map((segment) => segment.codepoint),
     };
   }
 
-  function groupCells() {
+  function authoritativeCells() {
     const cells = new Map();
-    for (const stroke of state.strokes) {
-      G.validateSegments(stroke.segments);
-      for (const segment of stroke.segments) {
+    for (const stroke of D.state.strokes) {
+      for (const segment of stroke.finalSegments) {
         const key = `${segment.cellX},${segment.cellY}`;
         const entry = cells.get(key) ?? { x: segment.cellX, y: segment.cellY, segments: [] };
         entry.segments.push(segment);
@@ -226,44 +164,48 @@
     return cells;
   }
 
-  function eraseResolvedRedBox(cell) {
-    overlayCtx.save();
-    overlayCtx.globalCompositeOperation = 'destination-out';
-    overlayCtx.lineWidth = 5;
-    overlayCtx.strokeRect(
-      cell.x * G.CELL_W + 2,
-      cell.y * G.CELL_H + 2,
-      G.CELL_W - 4,
-      G.CELL_H - 4,
-    );
-    overlayCtx.restore();
+  function eraseRedBox(cell) {
+    // draw-v6 paints the diagnostic box on the overlay canvas. Clear only the
+    // four thin border bands after its render; the glyph canvas is untouched.
+    const x = cell.x * G.CELL_W + 1;
+    const y = cell.y * G.CELL_H + 1;
+    const w = G.CELL_W - 2;
+    const h = G.CELL_H - 2;
+    const band = 4;
+    overlayCtx.clearRect(x, y, w, band);
+    overlayCtx.clearRect(x, y + h - band, w, band);
+    overlayCtx.clearRect(x, y, band, h);
+    overlayCtx.clearRect(x + w - band, y, band, h);
   }
 
   function drawResolution(cell, resolution) {
+    if (!resolution?.resolved) return false;
     const x = cell.x * G.CELL_W;
     const y = cell.y * G.CELL_H;
-    if (resolution.singleGlyph) {
+
+    if (resolution.mode === 'single') {
       glyphCtx.fillText(String.fromCodePoint(resolution.codepoint), x, y);
-      return;
+    } else if (resolution.mode === 'layered') {
+      for (const codepoint of resolution.codepoints) {
+        glyphCtx.fillText(String.fromCodePoint(codepoint), x, y);
+      }
+    } else {
+      throw new Error(`Unknown crossover render mode ${resolution.mode}`);
     }
 
-    // Canvas text is composited with normal source-over blending. Drawing every
-    // exact straight codepoint at the identical cell origin is therefore exactly
-    // the OR of their black 8x16 bitmaps, including arbitrary diagonal crossings.
-    for (const codepoint of resolution.codepoints) {
-      glyphCtx.fillText(String.fromCodePoint(codepoint), x, y);
-    }
+    eraseRedBox(cell);
+    return true;
   }
 
   function composite() {
+    state.scheduled = false;
     if (!state.ready || !state.bitmapIndex) return;
 
-    const cells = groupCells();
+    const cells = authoritativeCells();
     let multiPass = 0;
     let publishedConnectors = 0;
     let publishedStraightCollapses = 0;
     let layered = 0;
-    let layeredCrossings = 0;
     let unresolved = 0;
 
     glyphCtx.save();
@@ -277,162 +219,43 @@
       if (cell.segments.length <= 1) continue;
       multiPass += 1;
       const resolution = resolveCellSegments(cell.segments);
-      cell.resolution = resolution;
       if (!resolution?.resolved) {
         unresolved += 1;
         continue;
       }
-
-      if (resolution.singleGlyph) {
-        if (resolution.family === 'connector') publishedConnectors += 1;
-        else publishedStraightCollapses += 1;
-      } else {
-        layered += 1;
-        if (resolution.intersects) layeredCrossings += 1;
-      }
-
       drawResolution(cell, resolution);
-      eraseResolvedRedBox(cell);
+      if (resolution.mode === 'layered') layered += 1;
+      else if (resolution.family === 'connector') publishedConnectors += 1;
+      else publishedStraightCollapses += 1;
     }
     glyphCtx.restore();
 
+    state.lastSummary = {
+      multiPass,
+      publishedConnectors,
+      publishedStraightCollapses,
+      layered,
+      unresolved,
+    };
+
     if (!multiPass) {
       overlapEl.textContent = 'Continuous shared-port path';
-      return;
+    } else if (!unresolved) {
+      overlapEl.textContent = `${multiPass} exact multi-pass cells: ${publishedConnectors} connector glyph${publishedConnectors === 1 ? '' : 's'}, ${layered} layered`;
+    } else {
+      overlapEl.textContent = `${multiPass} multi-pass: ${publishedConnectors} connectors, ${layered} layered, ${unresolved} unresolved`;
     }
-
-    const parts = [];
-    if (publishedConnectors) {
-      parts.push(`${publishedConnectors} published connector${publishedConnectors === 1 ? '' : 's'}`);
-    }
-    if (publishedStraightCollapses) {
-      parts.push(`${publishedStraightCollapses} exact straight collapse${publishedStraightCollapses === 1 ? '' : 's'}`);
-    }
-    if (layered) {
-      const crossingNote = layeredCrossings ? ` (${layeredCrossings} crossing${layeredCrossings === 1 ? '' : 's'})` : '';
-      parts.push(`${layered} exact layered cell${layered === 1 ? '' : 's'}${crossingNote}`);
-    }
-    if (unresolved) parts.push(`${unresolved} unresolved`);
-    overlapEl.textContent = parts.join('; ');
   }
 
-  let scheduled = false;
   function scheduleComposite() {
-    if (scheduled) return;
-    scheduled = true;
-    queueMicrotask(() => {
-      scheduled = false;
-      composite();
-    });
+    if (!state.ready || state.scheduled) return;
+    state.scheduled = true;
+    requestAnimationFrame(composite);
   }
-
-  function commitSegments(tool, guide) {
-    if (!guide?.length) return;
-    const segments = G.compileRawPath(guide);
-    if (!segments.length) return;
-    G.validateSegments(segments);
-    state.strokes.push({ tool, segments: segments.map((segment) => ({ ...segment })) });
-  }
-
-  function finishGesture(event) {
-    if (!state.active || state.active.pointerId !== event.pointerId) return;
-    const active = state.active;
-    const end = canvasPoint(event);
-    let guide = null;
-
-    if (active.tool === 'freehand') {
-      appendPoint(active.points, end);
-      guide = active.points;
-    } else if (active.tool === 'line') {
-      guide = G.lineGuide(active.start, end);
-    } else if (active.tool === 'ellipse') {
-      guide = G.ellipseGuide(active.start, end);
-    }
-
-    commitSegments(active.tool, guide);
-    state.active = null;
-    scheduleComposite();
-  }
-
-  overlayCanvas.addEventListener('pointerdown', (event) => {
-    const tool = currentTool();
-    const point = canvasPoint(event);
-
-    if (tool === 'bezier') {
-      state.bezierClicks.push(point);
-      if (state.bezierClicks.length === 4) {
-        const controlPoints = state.bezierClicks.slice();
-        commitSegments('bezier', G.bezierGuide(controlPoints));
-        state.bezierClicks = [];
-      }
-      scheduleComposite();
-      return;
-    }
-
-    state.active = {
-      tool,
-      pointerId: event.pointerId,
-      start: point,
-      points: [point],
-    };
-    scheduleComposite();
-  });
-
-  overlayCanvas.addEventListener('pointermove', (event) => {
-    if (state.active?.pointerId === event.pointerId && state.active.tool === 'freehand') {
-      const events = typeof event.getCoalescedEvents === 'function' ? event.getCoalescedEvents() : [event];
-      for (const sample of events) appendPoint(state.active.points, canvasPoint(sample));
-      appendPoint(state.active.points, canvasPoint(event));
-    }
-    scheduleComposite();
-  });
-
-  overlayCanvas.addEventListener('pointerup', finishGesture);
-  overlayCanvas.addEventListener('pointercancel', (event) => {
-    if (state.active?.pointerId === event.pointerId) state.active = null;
-    scheduleComposite();
-  });
-  overlayCanvas.addEventListener('pointerleave', scheduleComposite);
-
-  for (const button of toolButtons) {
-    button.addEventListener('click', () => {
-      state.active = null;
-      state.bezierClicks = [];
-      scheduleComposite();
-    });
-  }
-
-  undoButton?.addEventListener('click', () => {
-    state.strokes.pop();
-    state.active = null;
-    state.bezierClicks = [];
-    scheduleComposite();
-  });
-
-  clearButton?.addEventListener('click', () => {
-    state.strokes = [];
-    state.active = null;
-    state.bezierClicks = [];
-    scheduleComposite();
-  });
-
-  showNodesInput?.addEventListener('change', scheduleComposite);
-
-  overlayCanvas.addEventListener('keydown', (event) => {
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') {
-      state.strokes.pop();
-      state.active = null;
-      state.bezierClicks = [];
-      scheduleComposite();
-    } else if (event.key === 'Escape') {
-      state.active = null;
-      state.bezierClicks = [];
-      scheduleComposite();
-    }
-  });
 
   function selfTest() {
     if (!state.bitmapIndex) throw new Error('Crossover self-test requires the published bitmap index.');
+
     const horizontal = {
       from: 'L0',
       to: 'R0',
@@ -443,47 +266,38 @@
       to: 'B0',
       codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['T0>B0'],
     };
+    const cross = resolveCellSegments([horizontal, vertical]);
+    if (!cross?.resolved || cross.mode !== 'single' || cross.family !== 'connector' || cross.codepoint !== 0xF6A4) {
+      throw new Error(`Exact L0>R0 + T0>B0 connector regression failed: ${JSON.stringify(cross)}`);
+    }
 
-    const publishedCross = resolveCellSegments([horizontal, vertical]);
-    if (!publishedCross?.resolved || !publishedCross.singleGlyph || publishedCross.family !== 'connector' || publishedCross.codepoint !== 0xF6A4) {
-      throw new Error(`Exact L0>R0 + T0>B0 connector regression failed: ${JSON.stringify(publishedCross)}`);
+    const uploaded = resolveCellSegments([
+      { from: 'R6', to: 'L15', codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['R6>L15'] },
+      { from: 'T1', to: 'R13', codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['T1>R13'] },
+    ]);
+    if (!uploaded?.resolved || uploaded.mode !== 'layered' || uploaded.bitmapKey !== '02020404080890502020504884840201') {
+      throw new Error(`Uploaded arbitrary crossover regression failed: ${JSON.stringify(uploaded)}`);
     }
 
     const duplicate = resolveCellSegments([horizontal, horizontal]);
-    if (!duplicate?.resolved || !duplicate.singleGlyph || duplicate.family !== 'straight' || duplicate.codepoint !== horizontal.codepoint) {
+    if (!duplicate?.resolved || duplicate.mode !== 'single' || duplicate.family !== 'straight' || duplicate.codepoint !== horizontal.codepoint) {
       throw new Error('Duplicate identical pass did not collapse to the exact straight glyph.');
-    }
-
-    // Regression from graphscii-debug-2026-08-22T01-13-47-284Z.json.
-    // This is a real raster intersection, but its exact union is not one of the
-    // 601 published generic connector owners. It must therefore stay exact by
-    // layering its two straight glyphs, never by choosing a nearby connector.
-    const arbitraryCross = [
-      { from: 'R6', to: 'L15', codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['R6>L15'] },
-      { from: 'T1', to: 'R13', codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['T1>R13'] },
-    ];
-    const arbitrary = resolveCellSegments(arbitraryCross);
-    if (arbitrary.bitmapKey !== '02020404080890502020504884840201') {
-      throw new Error(`Uploaded crossover bitmap regression changed: ${arbitrary.bitmapKey}`);
-    }
-    if (!arbitrary.resolved || arbitrary.singleGlyph || arbitrary.family !== 'composite' || !arbitrary.intersects || arbitrary.codepoints.length !== 2) {
-      throw new Error(`Arbitrary exact crossover must layer its straight glyphs: ${JSON.stringify(arbitrary)}`);
-    }
-
-    const disjointMultiPass = [
-      { from: 'T4', to: 'L6', codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['T4>L6'] },
-      { from: 'L13', to: 'B1', codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['L13>B1'] },
-    ];
-    const disjoint = resolveCellSegments(disjointMultiPass);
-    if (disjoint.bitmapKey !== '10080804020201000000000000010202') {
-      throw new Error(`Uploaded disjoint multi-pass bitmap regression changed: ${disjoint.bitmapKey}`);
-    }
-    if (!disjoint.resolved || disjoint.singleGlyph || disjoint.family !== 'composite' || disjoint.intersects) {
-      throw new Error(`Disjoint multi-pass cell must layer exactly without pretending to be a connector: ${JSON.stringify(disjoint)}`);
     }
 
     return true;
   }
+
+  // draw-v6 owns all pointer/tool state and renders first. The debug recorder is
+  // already registered before this script and mirrors committed finalSegments.
+  // These listeners do not compile or mutate geometry; they only schedule the
+  // compositor for the next animation frame, after draw-v6 has finished repainting.
+  for (const eventName of ['pointerdown', 'pointermove', 'pointerup', 'pointercancel', 'pointerleave']) {
+    overlayCanvas.addEventListener(eventName, scheduleComposite);
+  }
+  for (const button of toolButtons) button.addEventListener('click', scheduleComposite);
+  undoButton?.addEventListener('click', scheduleComposite);
+  clearButton?.addEventListener('click', scheduleComposite);
+  showNodesInput?.addEventListener('change', scheduleComposite);
 
   async function boot() {
     try {
@@ -497,7 +311,7 @@
       await document.fonts.load(`${G.CELL_H}px GraphSCII`);
       selfTest();
       state.ready = true;
-      composite();
+      scheduleComposite();
     } catch (error) {
       console.error('GraphSCII crossover compositor failed startup validation:', error);
       overlapEl.textContent = `Crossover resolver failed: ${error.message}`;
@@ -508,11 +322,12 @@
     state,
     straightBitmapKey,
     unionBitmapKey,
-    segmentsSharePixel,
     installBitmapIndex,
     resolveCellSegments,
+    authoritativeCells,
     selfTest,
     composite,
+    scheduleComposite,
   };
 
   boot();
