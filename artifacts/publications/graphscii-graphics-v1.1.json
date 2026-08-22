@@ -1,0 +1,26 @@
+{
+  "format": "graphscii",
+  "schema": "graphscii-graphics-publication",
+  "version": "v1.1",
+  "basePublication": {
+    "name": "graphscii-graphics-v1",
+    "registrySha256": "ad4fd4a6ff0cf2b90721350c6c57a9660d9066a6346d5f108f75072d35ff5fde"
+  },
+  "specials": [
+    {
+      "glyphId": 6397,
+      "codepoint": "U+F8FD",
+      "bitmapKey": "55005500550055005500550055005500",
+      "semanticAlias": "tone-interior:light",
+      "justificationDoc": "docs/specials-light-interior-plan.md"
+    }
+  ],
+  "encodedOwners": 6398,
+  "reserveSlots": 2,
+  "files": {
+    "artifacts/manifest/vocabulary-v1.1/registry.json": "746b0c4c739ed0ead16f9230e13a73124a7955b66e6e01eaab50ae321be9aac6",
+    "artifacts/manifest/vocabulary-v1.1/indexes/by-bitmap.json": "1ebaead7a86c9c4b9b9ade4ab83482d95ffd68b66ba2b52910e3b49ffb29413b",
+    "artifacts/manifest/vocabulary-v1.1/indexes/by-codepoint.json": "c3b1b4b08630451df031cfe2494ce301d0f4fcb1485110e51502299a294e42e1",
+    "artifacts/manifest/vocabulary-v1.1/indexes/by-connector-alias.json": "885fbecfe7541e51d0d24386bccdb5f7f5b8d218116e19a1f8a3d29acc88fcae"
+  }
+}
