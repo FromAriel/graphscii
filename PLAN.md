@@ -269,7 +269,7 @@ Publication manifest:
 artifacts/publications/graphscii-graphics-v1.json
 ```
 
-Final encoded population:
+Final encoded population (graphics-v1; superseded by graphics-v1.1 below):
 
 ```text
 straight                              746
@@ -279,7 +279,7 @@ light 25%                          1,315
 half 50%                           1,207
 orthogonal connectors                544
 diagonal connectors                   57
-                                    -----
+                                     -----
 encoded PUA graphics               6,397
 ```
 
@@ -289,7 +289,7 @@ With printable ASCII:
 6,397 PUA graphics + 95 printable ASCII = 6,492 minimum physical glyphs
 ```
 
-Final BMP PUA address map:
+Final BMP PUA address map (v1):
 
 ```text
 U+E000..U+E2E9      746   straight
@@ -313,6 +313,38 @@ straight codepoints unchanged          YES
 ```
 
 Completion note: [`docs/milestone-5e-graphics-v1-publication.md`](docs/milestone-5e-graphics-v1-publication.md)
+
+---
+
+## 6.1 Specials — light interior tone glyph — COMPLETE
+
+Per [`docs/specials-light-interior-plan.md`](docs/specials-light-interior-plan.md), one
+protected reserve slot was allocated to the canonical full-cell 25% light
+interior tone bitmap. This is the first explicitly justified use of the
+protected reserve (§9 policy).
+
+```text
+publication            graphscii-graphics-v1.1   (v1 plus the special)
+new owner              glyphId 6397 · U+F8FD · tone-interior:light
+bitmap                 55 00 tiled ×8 · 32/128 px · exactly 25% nominal
+class                  light-25: 1,315 → 1,316
+encoded PUA graphics   6,397 → 6,398
+protected reserve      U+F8FE..U+F8FF = 2 slots
+frozen base            graphics-v1 artifacts untouched, SHA-pinned in v1.1 publication
+```
+
+Current address map (v1.1):
+
+```text
+U+E000..U+E2E9      746   straight
+U+E2EA..U+E7D4    1,259   solid 100%
+U+E7D5..U+ECC9    1,269   medium 75%
+U+ECCA..U+F1EC    1,315   light 25% boundary fills
+U+F1ED..U+F6A3    1,207   half 50%
+U+F6A4..U+F8FC      601   generic connectors
+U+F8FD                1   interior tone special
+U+F8FE..U+F8FF        2   protected reserve
+```
 
 Milestone summary: [`docs/milestone-5-complete.md`](docs/milestone-5-complete.md)
 
@@ -383,22 +415,22 @@ The BMP PUA is effectively full:
 
 ```text
 capacity       6,400
-allocated      6,397
-reserve            3
+allocated      6,398
+reserve            2
 ```
 
 Therefore:
 
 1. No new broad enumerated glyph family should be added to the BMP PUA.
-2. The final three slots remain protected unless a tiny exceptional semantic is explicitly justified.
+2. The final slots remain protected unless a tiny exceptional semantic is explicitly justified. The first such justification was exercised by [`docs/specials-light-interior-plan.md`](docs/specials-light-interior-plan.md) (tone-interior:light at U+F8FD); two protected slots remain.
 3. Future appearance or geometry expansions should prefer renderer-derived output, semantic composition, exact reuse, or a separately versioned address-space strategy.
-4. Curves remain research-only unless a very small curated basis justifies consuming the final reserve or another encoding strategy is selected.
+4. Curves remain research-only unless a very small curated basis justifies consuming a remaining reserve slot or another encoding strategy is selected.
 
 ---
 
 ## 10. Milestone 9 — reference font compiler — ACTIVE
 
-GraphSCII now has a deterministic reference TrueType compiler that consumes the frozen `graphscii-graphics-v1` registry directly.
+GraphSCII has a deterministic reference TrueType compiler that consumes the frozen graphics registry directly; it currently compiles against `graphscii-graphics-v1.1`.
 
 ### 9A — GraphSCII Regular reference TTF + public standard — COMPLETE
 
@@ -408,12 +440,13 @@ designer                   Ariel Williams
 font family                GraphSCII
 font                       GraphSCII-Regular.ttf
 printable ASCII            95
-PUA graphics               6,397
-encoded characters         6,492
-sfnt glyphs incl .notdef   6,493
+PUA graphics               6,398   (v1.1)
+encoded characters         6,493
+sfnt glyphs incl .notdef   6,494
 units per em               1,024
 advance width              512
-font SHA-256               b8d49672468f33b4159fcb45433c8102d604039a66d5409ae51f816f97c2f83a
+font SHA-256 (v1.0)        b8d49672468f33b4159fcb45433c8102d604039a66d5409ae51f816f97c2f83a
+font SHA-256 (v1.1)        21b2ec45bd59bc5e9a0b24a8515d269b50eb2598b6175796976597b06ed2abc9
 ```
 
 Milestone 9A also freezes the public documentation/licensing layer:

@@ -17,9 +17,9 @@ const HEIGHT = 16;
 const UNITS_PER_PIXEL = 64;
 const UNITS_PER_EM = HEIGHT * UNITS_PER_PIXEL;
 const ADVANCE_WIDTH = WIDTH * UNITS_PER_PIXEL;
-const EXPECTED_PUA_OWNERS = 6397;
+const EXPECTED_PUA_OWNERS = 6398;
 const EXPECTED_PUA_START = 0xe000;
-const EXPECTED_PUA_END = 0xf8fc;
+const EXPECTED_PUA_END = 0xf8fd;
 const EXPECTED_CHARACTER_COUNT = ASCII_COUNT + EXPECTED_PUA_OWNERS;
 const EXPECTED_GLYPH_COUNT = 1 + EXPECTED_CHARACTER_COUNT;
 const SFNT_CHECKSUM_MAGIC = 0xb1b0afba;
@@ -662,7 +662,7 @@ export function verifyGraphSCIITrueTypeBytes(fontBytes, registry) {
 }
 
 export async function buildFontDocuments(repoRoot) {
-  const registryFilename = path.join(repoRoot, "artifacts", "manifest", "vocabulary-v1", "registry.json");
+  const registryFilename = path.join(repoRoot, "artifacts", "manifest", "vocabulary-v1.1", "registry.json");
   const registryBytes = await readFile(registryFilename);
   const registry = JSON.parse(registryBytes.toString("utf8"));
   const built = buildGraphSCIITrueType(registry);
@@ -680,8 +680,8 @@ export async function buildFontDocuments(repoRoot) {
     fullName: FONT_FULL_NAME,
     postScriptName: FONT_POSTSCRIPT_NAME,
     version: FONT_VERSION,
-    sourcePublication: "graphscii-graphics-v1",
-    sourceRegistry: "artifacts/manifest/vocabulary-v1/registry.json",
+    sourcePublication: "graphscii-graphics-v1.1",
+    sourceRegistry: "artifacts/manifest/vocabulary-v1.1/registry.json",
     sourceRegistrySha256: sha256(registryBytes),
     output: `artifacts/fonts/${FONT_FILENAME}`,
     fontSha256: sha256(built.bytes),

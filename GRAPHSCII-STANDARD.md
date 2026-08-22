@@ -115,26 +115,30 @@ A semantic alias describes a meaning or construction that resolves to a visual o
 
 ---
 
-## 5. GraphSCII graphics-v1 encoded vocabulary
+## 5. GraphSCII graphics-v1.1 encoded vocabulary
 
-The normative GraphSCII v1 graphical publication is:
+The normative GraphSCII graphical publication is:
 
 ```text
-graphscii-graphics-v1
+graphscii-graphics-v1.1
 ```
 
-It contains **6,397 encoded Private Use Area graphical owners**.
+It contains **6,398 encoded Private Use Area graphical owners**: the frozen
+graphics-v1 vocabulary plus one reserved-slot special, the `tone-interior:light`
+full-cell 25% interior glyph at `U+F8FD`
+(see [`docs/specials-light-interior-plan.md`](docs/specials-light-interior-plan.md)).
 
 ```text
 straight visual owners                 746
 solid 100% visual owners             1,259
 medium 75% visual owners             1,269
-light 25% visual owners              1,315
+light 25% visual owners              1,316   (includes the interior special)
 half 50% visual owners               1,207
 orthogonal connector owners            544
 diagonal connector owners               57
-                                      -----
-total encoded PUA graphics            6,397
+interior tone special                    1
+                                       -----
+total encoded PUA graphics            6,398
 ```
 
 The publication also preserves a richer semantic layer. Exact semantic aliases can resolve to an existing owner without consuming another codepoint.
@@ -142,34 +146,35 @@ The publication also preserves a richer semantic layer. Exact semantic aliases c
 The machine-readable source of truth is:
 
 ```text
-artifacts/manifest/vocabulary-v1/registry.json
+artifacts/manifest/vocabulary-v1.1/registry.json
 ```
 
 The publication manifest is:
 
 ```text
-artifacts/publications/graphscii-graphics-v1.json
+artifacts/publications/graphscii-graphics-v1.1.json
 ```
 
 ---
 
 ## 6. Unicode address map
 
-GraphSCII v1 uses the BMP Private Use Area as follows:
+GraphSCII v1.1 uses the BMP Private Use Area as follows:
 
 ```text
 U+E000..U+E2E9      746   straight
 U+E2EA..U+E7D4    1,259   solid 100%
 U+E7D5..U+ECC9    1,269   medium 75%
-U+ECCA..U+F1EC    1,315   light 25%
+U+ECCA..U+F1EC    1,315   light 25% (boundary fills)
 U+F1ED..U+F6A3    1,207   half 50%
 U+F6A4..U+F8FC      601   generic connector owners
-U+F8FD..U+F8FF        3   protected reserve
+U+F8FD                1   interior tone special (tone-interior:light)
+U+F8FE..U+F8FF        2   protected reserve
 ```
 
-The final three BMP PUA slots are not implicitly available for arbitrary additions. They remain reserved unless a later GraphSCII version explicitly allocates them.
+The final two BMP PUA slots are not implicitly available for arbitrary additions. They remain reserved unless a later GraphSCII version explicitly allocates them.
 
-Existing v1 graphical codepoints must not be silently renumbered.
+Existing v1 and v1.1 graphical codepoints must not be silently renumbered.
 
 ---
 
@@ -260,13 +265,13 @@ A reference font contains:
 
 ```text
 95 printable ASCII characters
-6,397 GraphSCII PUA characters
+6,398 GraphSCII PUA characters
 --------------------------------
-6,492 encoded characters
+6,493 encoded characters
 
 + 1 mandatory .notdef glyph
 --------------------------------
-6,493 sfnt glyphs total
+6,494 sfnt glyphs total
 ```
 
 Reference glyph-order mapping is:
@@ -274,7 +279,7 @@ Reference glyph-order mapping is:
 ```text
 sfnt GID 0             .notdef
 sfnt GID 1..95         U+0020..U+007E
-sfnt GID 96..6492      U+E000..U+F8FC
+sfnt GID 96..6493      U+E000..U+F8FD
 ```
 
 For a GraphSCII v1 registry owner:

@@ -17,23 +17,24 @@ The formal graphical contract is in [`GRAPHSCII-STANDARD.md`](GRAPHSCII-STANDARD
 
 ## What is published
 
-The current canonical graphical vocabulary is **`graphscii-graphics-v1`**.
+The current canonical graphical vocabulary is **`graphscii-graphics-v1.1`** (v1 plus one reserved-slot special).
 
 ```text
 straight visual owners                 746
 solid 100% visual owners             1,259
 medium 75% visual owners             1,269
-light 25% visual owners              1,315
+light 25% visual owners              1,316
 half 50% visual owners               1,207
 orthogonal connector owners            544
 diagonal connector owners               57
-                                      -----
-encoded PUA graphics                  6,397
+interior tone special                    1
+                                       -----
+encoded PUA graphics                  6,398
 ```
 
-The GraphSCII reference font also includes the 95 printable ASCII characters at `U+0020..U+007E`, giving **6,492 encoded characters** plus the mandatory `.notdef` font glyph.
+The GraphSCII reference font also includes the 95 printable ASCII characters at `U+0020..U+007E`, giving **6,493 encoded characters** plus the mandatory `.notdef` font glyph.
 
-The final GraphSCII v1 BMP PUA allocation ends at `U+F8FC`; `U+F8FD..U+F8FF` remains a protected three-slot reserve.
+The GraphSCII BMP PUA allocation now ends at `U+F8FD` (the `tone-interior:light` special, per [`docs/specials-light-interior-plan.md`](docs/specials-light-interior-plan.md)); `U+F8FE..U+F8FF` remains a protected two-slot reserve.
 
 ## The important design rule
 
