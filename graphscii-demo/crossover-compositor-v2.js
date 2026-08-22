@@ -19,7 +19,8 @@
   const STRAIGHT_OWNER_MAX = 745;
   const CONNECTOR_OWNER_MIN = 5796;
   const CONNECTOR_OWNER_MAX = 6396;
-  const BITMAP_INDEX_URL = '../artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json?v=20260821-crossovers-v3';
+  const BITMAP_INDEX_URL = '../artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json?v=20260821-crossovers-v4';
+  const CANONICAL_FAMILIES = new Set(['LR', 'TB', 'LT', 'LB', 'RT', 'RB']);
 
   const glyphCtx = glyphCanvas.getContext('2d');
   const overlayCtx = overlayCanvas.getContext('2d');
@@ -44,14 +45,25 @@
   function parsePort(text) {
     const match = /^([LRTB])(\d+)$/.exec(text);
     if (!match) throw new Error(`Invalid GraphSCII port ${text}`);
-    return { edge: match[1], index: Number(match[2]) };
+    return { edge: match[1], index: Number(match[2]), text };
+  }
+
+  // The straight vocabulary is generated only in these six canonical family
+  // directions. Reverse semantic aliases map to the SAME owner/codepoint and
+  // therefore MUST reuse the canonical bitmap rather than re-rasterizing in
+  // reverse (Bresenham tie-breaking can differ by direction).
+  function canonicalizeStraightPair(fromText, toText) {
+    const from = parsePort(fromText);
+    const to = parsePort(toText);
+    if (CANONICAL_FAMILIES.has(`${from.edge}${to.edge}`)) return { from, to };
+    if (CANONICAL_FAMILIES.has(`${to.edge}${from.edge}`)) return { from: to, to: from };
+    throw new Error(`Illegal straight family ${fromText}>${toText}`);
   }
 
   function straightBitmapKey(fromText, toText) {
-    const from = parsePort(fromText);
-    const to = parsePort(toText);
-    let [x0, y0] = portPixel(from.edge, from.index);
-    const [x1, y1] = portPixel(to.edge, to.index);
+    const pair = canonicalizeStraightPair(fromText, toText);
+    let [x0, y0] = portPixel(pair.from.edge, pair.from.index);
+    const [x1, y1] = portPixel(pair.to.edge, pair.to.index);
     const rows = new Uint8Array(16);
     const dx = Math.abs(x1 - x0);
     const sx = x0 < x1 ? 1 : -1;
@@ -97,6 +109,11 @@
       if (glyphId == null || 0xE000 + glyphId !== codepoint) {
         throw new Error(`Published bitmap index disagrees with straight semantic ${semantic}.`);
       }
+    }
+
+    // Explicitly guard the reverse-alias bug that broke compositor v1.
+    if (straightBitmapKey('R8', 'L0') !== straightBitmapKey('L0', 'R8')) {
+      throw new Error('Reverse straight aliases do not share canonical bitmap identity.');
     }
 
     state.bitmapIndex = Object.freeze({ ...entries });
@@ -162,8 +179,6 @@
   }
 
   function eraseRedBox(cell) {
-    // draw-v6 paints only a diagnostic rectangle here. Remove its four narrow
-    // border bands after the exact multi-pass glyphs have been painted.
     const x = cell.x * G.CELL_W;
     const y = cell.y * G.CELL_H;
     const band = 5;
@@ -248,10 +263,8 @@
     requestAnimationFrame(composite);
   }
 
-  // The primary renderer writes "N true multi-pass cells" every time it paints.
+  // draw-v6 writes "N true multi-pass cells" whenever its base frame paints.
   // Observe that write and immediately schedule the exact final-cell compositor.
-  // This makes draw-v6 the sole geometry renderer while guaranteeing that its
-  // diagnostic first-pass view can never remain as the final frame.
   const statusObserver = new MutationObserver(() => {
     if (state.compositing) return;
     if (/true multi-pass cell/.test(overlapEl.textContent || '')) scheduleComposite();
@@ -289,6 +302,7 @@
   globalThis.GraphSCIICrossovers = {
     version: 2,
     state,
+    canonicalizeStraightPair,
     straightBitmapKey,
     unionBitmapKey,
     installBitmapIndex,
@@ -298,8 +312,6 @@
     scheduleComposite,
   };
 
-  // Start immediately in exact layered mode. Never block crossover rendering on
-  // an asynchronous vocabulary fetch.
   scheduleComposite();
   loadPublishedIndex();
 })();
