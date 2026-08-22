@@ -18,7 +18,7 @@
   const STRAIGHT_OWNER_MAX = 745;
   const CONNECTOR_OWNER_MIN = 5796;
   const CONNECTOR_OWNER_MAX = 6396;
-  const BITMAP_INDEX_URL = '../artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json?v=20260821-crossovers-v1';
+  const BITMAP_INDEX_URL = '../artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json?v=20260821-crossovers-v2';
 
   const glyphCtx = glyphCanvas.getContext('2d');
   const overlayCtx = overlayCanvas.getContext('2d');
@@ -89,15 +89,38 @@
     return [...rows].map((row) => row.toString(16).padStart(2, '0')).join('');
   }
 
+  function bitmapRows(key) {
+    const rows = new Uint8Array(16);
+    for (let y = 0; y < 16; y += 1) {
+      rows[y] = Number.parseInt(key.slice(y * 2, y * 2 + 2), 16);
+    }
+    return rows;
+  }
+
   function unionBitmapKey(segments) {
     const rows = new Uint8Array(16);
     for (const segment of segments) {
-      const key = straightBitmapKey(segment.from, segment.to);
-      for (let y = 0; y < 16; y += 1) {
-        rows[y] |= Number.parseInt(key.slice(y * 2, y * 2 + 2), 16);
-      }
+      const segmentRows = bitmapRows(straightBitmapKey(segment.from, segment.to));
+      for (let y = 0; y < 16; y += 1) rows[y] |= segmentRows[y];
     }
     return [...rows].map((row) => row.toString(16).padStart(2, '0')).join('');
+  }
+
+  function segmentsSharePixel(segments) {
+    for (let i = 0; i < segments.length; i += 1) {
+      const a = bitmapRows(straightBitmapKey(segments[i].from, segments[i].to));
+      for (let j = i + 1; j < segments.length; j += 1) {
+        const b = bitmapRows(straightBitmapKey(segments[j].from, segments[j].to));
+        for (let y = 0; y < 16; y += 1) {
+          if ((a[y] & b[y]) !== 0) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function uniqueLayerCodepoints(segments) {
+    return [...new Set(segments.map((segment) => segment.codepoint))];
   }
 
   function installBitmapIndex(entries) {
@@ -123,42 +146,69 @@
     return true;
   }
 
+  // A multi-pass cell always has an exact render: its already-valid straight glyphs
+  // can be layered at the same cell origin. If that exact union is also a published
+  // single straight/connector owner, use that one codepoint instead. Never choose a
+  // fill/dither owner and never move or re-score a port.
   function resolveCellSegments(segments) {
     if (!segments?.length) return null;
     if (segments.length === 1) {
       return {
         resolved: true,
+        singleGlyph: true,
         family: 'straight',
         codepoint: segments[0].codepoint,
+        codepoints: [segments[0].codepoint],
         glyphId: segments[0].codepoint - 0xE000,
+        intersects: false,
         bitmapKey: straightBitmapKey(segments[0].from, segments[0].to),
       };
     }
 
     const bitmapKey = unionBitmapKey(segments);
-    if (!state.bitmapIndex) return { resolved: false, reason: 'bitmap-index-not-loaded', bitmapKey };
-
-    const glyphId = state.bitmapIndex[bitmapKey];
-    if (glyphId == null) return { resolved: false, reason: 'no-exact-published-glyph', bitmapKey };
-
-    const isStraight = glyphId <= STRAIGHT_OWNER_MAX;
-    const isConnector = glyphId >= CONNECTOR_OWNER_MIN && glyphId <= CONNECTOR_OWNER_MAX;
-    if (!isStraight && !isConnector) {
+    const codepoints = uniqueLayerCodepoints(segments);
+    const intersects = segmentsSharePixel(segments);
+    if (!state.bitmapIndex) {
       return {
         resolved: false,
-        reason: 'exact-bitmap-is-not-a-line-or-connector-glyph',
+        singleGlyph: false,
+        family: 'composite',
+        reason: 'bitmap-index-not-loaded',
         bitmapKey,
-        glyphId,
-        codepoint: 0xE000 + glyphId,
+        codepoints,
+        intersects,
       };
+    }
+
+    const glyphId = state.bitmapIndex[bitmapKey];
+    if (glyphId != null) {
+      const isStraight = glyphId <= STRAIGHT_OWNER_MAX;
+      const isConnector = glyphId >= CONNECTOR_OWNER_MIN && glyphId <= CONNECTOR_OWNER_MAX;
+      if (isStraight || isConnector) {
+        return {
+          resolved: true,
+          singleGlyph: true,
+          family: isConnector ? 'connector' : 'straight',
+          bitmapKey,
+          glyphId,
+          codepoint: 0xE000 + glyphId,
+          codepoints: [0xE000 + glyphId],
+          intersects,
+        };
+      }
     }
 
     return {
       resolved: true,
-      family: isConnector ? 'connector' : 'straight',
+      singleGlyph: false,
+      family: 'composite',
       bitmapKey,
-      glyphId,
-      codepoint: 0xE000 + glyphId,
+      codepoints,
+      intersects,
+      reason: glyphId == null
+        ? 'no-exact-published-single-glyph'
+        : 'exact-bitmap-is-not-a-line-or-connector-glyph',
+      rejectedGlyphId: glyphId ?? null,
     };
   }
 
@@ -189,12 +239,31 @@
     overlayCtx.restore();
   }
 
+  function drawResolution(cell, resolution) {
+    const x = cell.x * G.CELL_W;
+    const y = cell.y * G.CELL_H;
+    if (resolution.singleGlyph) {
+      glyphCtx.fillText(String.fromCodePoint(resolution.codepoint), x, y);
+      return;
+    }
+
+    // Canvas text is composited with normal source-over blending. Drawing every
+    // exact straight codepoint at the identical cell origin is therefore exactly
+    // the OR of their black 8x16 bitmaps, including arbitrary diagonal crossings.
+    for (const codepoint of resolution.codepoints) {
+      glyphCtx.fillText(String.fromCodePoint(codepoint), x, y);
+    }
+  }
+
   function composite() {
     if (!state.ready || !state.bitmapIndex) return;
 
     const cells = groupCells();
     let multiPass = 0;
-    let exact = 0;
+    let publishedConnectors = 0;
+    let publishedStraightCollapses = 0;
+    let layered = 0;
+    let layeredCrossings = 0;
     let unresolved = 0;
 
     glyphCtx.save();
@@ -214,22 +283,37 @@
         continue;
       }
 
-      exact += 1;
-      glyphCtx.fillText(
-        String.fromCodePoint(resolution.codepoint),
-        cell.x * G.CELL_W,
-        cell.y * G.CELL_H,
-      );
+      if (resolution.singleGlyph) {
+        if (resolution.family === 'connector') publishedConnectors += 1;
+        else publishedStraightCollapses += 1;
+      } else {
+        layered += 1;
+        if (resolution.intersects) layeredCrossings += 1;
+      }
+
+      drawResolution(cell, resolution);
       eraseResolvedRedBox(cell);
     }
     glyphCtx.restore();
 
-    if (!multiPass) overlapEl.textContent = 'Continuous shared-port path';
-    else if (!unresolved) {
-      overlapEl.textContent = `${exact} exact connector/multi-pass glyph${exact === 1 ? '' : 's'}`;
-    } else {
-      overlapEl.textContent = `${exact} exact multi-pass glyph${exact === 1 ? '' : 's'}; ${unresolved} unresolved`;
+    if (!multiPass) {
+      overlapEl.textContent = 'Continuous shared-port path';
+      return;
     }
+
+    const parts = [];
+    if (publishedConnectors) {
+      parts.push(`${publishedConnectors} published connector${publishedConnectors === 1 ? '' : 's'}`);
+    }
+    if (publishedStraightCollapses) {
+      parts.push(`${publishedStraightCollapses} exact straight collapse${publishedStraightCollapses === 1 ? '' : 's'}`);
+    }
+    if (layered) {
+      const crossingNote = layeredCrossings ? ` (${layeredCrossings} crossing${layeredCrossings === 1 ? '' : 's'})` : '';
+      parts.push(`${layered} exact layered cell${layered === 1 ? '' : 's'}${crossingNote}`);
+    }
+    if (unresolved) parts.push(`${unresolved} unresolved`);
+    overlapEl.textContent = parts.join('; ');
   }
 
   let scheduled = false;
@@ -360,14 +444,42 @@
       codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['T0>B0'],
     };
 
-    const cross = resolveCellSegments([horizontal, vertical]);
-    if (!cross?.resolved || cross.family !== 'connector' || cross.codepoint !== 0xF6A4) {
-      throw new Error(`Exact L0>R0 + T0>B0 connector regression failed: ${JSON.stringify(cross)}`);
+    const publishedCross = resolveCellSegments([horizontal, vertical]);
+    if (!publishedCross?.resolved || !publishedCross.singleGlyph || publishedCross.family !== 'connector' || publishedCross.codepoint !== 0xF6A4) {
+      throw new Error(`Exact L0>R0 + T0>B0 connector regression failed: ${JSON.stringify(publishedCross)}`);
     }
 
     const duplicate = resolveCellSegments([horizontal, horizontal]);
-    if (!duplicate?.resolved || duplicate.family !== 'straight' || duplicate.codepoint !== horizontal.codepoint) {
+    if (!duplicate?.resolved || !duplicate.singleGlyph || duplicate.family !== 'straight' || duplicate.codepoint !== horizontal.codepoint) {
       throw new Error('Duplicate identical pass did not collapse to the exact straight glyph.');
+    }
+
+    // Regression from graphscii-debug-2026-08-22T01-13-47-284Z.json.
+    // This is a real raster intersection, but its exact union is not one of the
+    // 601 published generic connector owners. It must therefore stay exact by
+    // layering its two straight glyphs, never by choosing a nearby connector.
+    const arbitraryCross = [
+      { from: 'R6', to: 'L15', codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['R6>L15'] },
+      { from: 'T1', to: 'R13', codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['T1>R13'] },
+    ];
+    const arbitrary = resolveCellSegments(arbitraryCross);
+    if (arbitrary.bitmapKey !== '02020404080890502020504884840201') {
+      throw new Error(`Uploaded crossover bitmap regression changed: ${arbitrary.bitmapKey}`);
+    }
+    if (!arbitrary.resolved || arbitrary.singleGlyph || arbitrary.family !== 'composite' || !arbitrary.intersects || arbitrary.codepoints.length !== 2) {
+      throw new Error(`Arbitrary exact crossover must layer its straight glyphs: ${JSON.stringify(arbitrary)}`);
+    }
+
+    const disjointMultiPass = [
+      { from: 'T4', to: 'L6', codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['T4>L6'] },
+      { from: 'L13', to: 'B1', codepoint: G.STRAIGHT_CODEPOINT_BY_PAIR['L13>B1'] },
+    ];
+    const disjoint = resolveCellSegments(disjointMultiPass);
+    if (disjoint.bitmapKey !== '10080804020201000000000000010202') {
+      throw new Error(`Uploaded disjoint multi-pass bitmap regression changed: ${disjoint.bitmapKey}`);
+    }
+    if (!disjoint.resolved || disjoint.singleGlyph || disjoint.family !== 'composite' || disjoint.intersects) {
+      throw new Error(`Disjoint multi-pass cell must layer exactly without pretending to be a connector: ${JSON.stringify(disjoint)}`);
     }
 
     return true;
@@ -396,6 +508,7 @@
     state,
     straightBitmapKey,
     unionBitmapKey,
+    segmentsSharePixel,
     installBitmapIndex,
     resolveCellSegments,
     selfTest,
