@@ -256,8 +256,8 @@
     return;
   }
 
-  const RESOLUTION_TABLE_URL = '../artifacts/manifest/vocabulary-v1/crossover-resolution.tsv?v=20260822-xres-v1';
-  const BITMAP_INDEX_URL = '../artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json?v=20260822-xres-v1';
+  const RESOLUTION_TABLE_URL = '../artifacts/manifest/vocabulary-v1.1/crossover-resolution.tsv?v=20260822-specials-v1';
+  const BITMAP_INDEX_URL = '../artifacts/manifest/vocabulary-v1.1/indexes/by-bitmap.json?v=20260822-specials-v1';
 
   const glyphCtx = glyphCanvas.getContext('2d');
   const overlayCtx = overlayCanvas.getContext('2d');
@@ -470,7 +470,7 @@
       const response = await fetch(BITMAP_INDEX_URL, { cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const payload = await response.json();
-      if (payload?.index !== 'by-bitmap' || payload?.entryCount !== 6397) {
+      if (payload?.index !== 'by-bitmap' || payload?.entryCount !== 6398) {
         throw new Error('unexpected by-bitmap index format');
       }
       const reverse = new Map();
@@ -491,3 +491,4 @@
   loadResolutionTable();
   loadBitmapIndex();
 })();
+

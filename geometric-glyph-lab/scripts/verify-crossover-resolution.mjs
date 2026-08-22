@@ -9,7 +9,7 @@ const verified = await verifyCrossoverResolutionArtifacts(repoRoot);
 
 assert.equal(verified.inputs.straightDefinitions, 832);
 assert.equal(verified.inputs.straightVisualOwners, 746);
-assert.equal(verified.inputs.publishedOwners, 6397);
+assert.equal(verified.inputs.publishedOwners, 6398);
 assert.equal(verified.inputs.typedCandidates, 1347);
 assert.equal(verified.inputs.typedStraightOwners, 746);
 assert.equal(verified.inputs.typedConnectorOwners, 601);

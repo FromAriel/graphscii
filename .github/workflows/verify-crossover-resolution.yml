@@ -10,9 +10,9 @@ on:
       - "geometric-glyph-lab/scripts/verify-crossover-coverage.mjs"
       - "geometric-glyph-lab/scripts/verify-crossover-resolution.mjs"
       - "geometric-glyph-lab/package.json"
-      - "artifacts/manifest/vocabulary-v1/registry.json"
-      - "artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json"
-      - "artifacts/manifest/vocabulary-v1/crossover-resolution.tsv"
+      - "artifacts/manifest/vocabulary-v1.1/registry.json"
+      - "artifacts/manifest/vocabulary-v1.1/indexes/by-bitmap.json"
+      - "artifacts/manifest/vocabulary-v1.1/crossover-resolution.tsv"
       - "artifacts/research/crossovers/**"
       - ".github/workflows/verify-crossover-resolution.yml"
   push:
@@ -26,9 +26,9 @@ on:
       - "geometric-glyph-lab/scripts/verify-crossover-coverage.mjs"
       - "geometric-glyph-lab/scripts/verify-crossover-resolution.mjs"
       - "geometric-glyph-lab/package.json"
-      - "artifacts/manifest/vocabulary-v1/registry.json"
-      - "artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json"
-      - "artifacts/manifest/vocabulary-v1/crossover-resolution.tsv"
+      - "artifacts/manifest/vocabulary-v1.1/registry.json"
+      - "artifacts/manifest/vocabulary-v1.1/indexes/by-bitmap.json"
+      - "artifacts/manifest/vocabulary-v1.1/crossover-resolution.tsv"
       - "artifacts/research/crossovers/**"
       - ".github/workflows/verify-crossover-resolution.yml"
 
@@ -54,3 +54,4 @@ jobs:
         run: |
           grep -q 'Never-empty invariant violated' geometric-glyph-lab/scripts/crossover-resolution.mjs
           grep -q 'outside the typed candidate set' geometric-glyph-lab/scripts/crossover-resolution.mjs
+

@@ -5,12 +5,14 @@ on:
     paths:
       - "graphscii-demo/**"
       - ".github/workflows/verify-graphscii-draw.yml"
+      - "artifacts/manifest/vocabulary-v1.1/**"
   push:
     branches:
       - main
     paths:
       - "graphscii-demo/**"
       - ".github/workflows/verify-graphscii-draw.yml"
+      - "artifacts/manifest/vocabulary-v1.1/**"
 
 jobs:
   verify:
@@ -51,8 +53,8 @@ jobs:
         run: |
           node <<'NODE'
           const fs = require('node:fs');
-          const index = JSON.parse(fs.readFileSync('artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json', 'utf8'));
-          if (index.index !== 'by-bitmap' || index.entryCount !== 6397) throw new Error('Unexpected by-bitmap vocabulary index');
+          const index = JSON.parse(fs.readFileSync('artifacts/manifest/vocabulary-v1.1/indexes/by-bitmap.json', 'utf8'));
+          if (index.index !== 'by-bitmap' || index.entryCount !== 6398) throw new Error('Unexpected by-bitmap vocabulary index');
           const horizontal = `ff${'00'.repeat(15)}`;
           const vertical = '01'.repeat(16);
           const rows = [];
@@ -88,12 +90,12 @@ jobs:
       - name: Verify resolution table is loadable and pinned
         shell: bash
         run: |
-          lines=$(wc -l < artifacts/manifest/vocabulary-v1/crossover-resolution.tsv)
+          lines=$(wc -l < artifacts/manifest/vocabulary-v1.1/crossover-resolution.tsv)
           if [ "$lines" -ne 345697 ]; then
             echo "Resolution table must carry header plus 345696 states; found $lines lines"
             exit 1
           fi
-          fills=$(tail -n +2 artifacts/manifest/vocabulary-v1/crossover-resolution.tsv | awk -F'\t' '$3 > 745 && $3 < 5796' | wc -l)
+          fills=$(tail -n +2 artifacts/manifest/vocabulary-v1.1/crossover-resolution.tsv | awk -F'\t' '$3 > 745 && $3 < 5796' | wc -l)
           if [ "$fills" -ne 0 ]; then
             echo "Resolution table contains $fills fill-class winners"
             exit 1
@@ -158,6 +160,9 @@ jobs:
           fi
           curl -fsSI http://127.0.0.1:8765/graphscii-demo/debug-export-v2.js | grep -qi '^Content-Type: text/javascript'
           curl -fsSI http://127.0.0.1:8765/graphscii-demo/crossover-compositor-v3.js | grep -qi '^Content-Type: text/javascript'
-          curl -fsSI http://127.0.0.1:8765/artifacts/manifest/vocabulary-v1/indexes/by-bitmap.json | grep -qi '^Content-Type: application/json'
-          curl -fsSI http://127.0.0.1:8765/artifacts/manifest/vocabulary-v1/crossover-resolution.tsv | grep -qi '^Content-Type: text/plain'
+          curl -fsSI http://127.0.0.1:8765/artifacts/manifest/vocabulary-v1.1/indexes/by-bitmap.json | grep -qi '^Content-Type: application/json'
+          curl -fsSI http://127.0.0.1:8765/artifacts/manifest/vocabulary-v1.1/crossover-resolution.tsv | grep -qi '^Content-Type: text/plain'
           curl -fsS http://127.0.0.1:8765/graphscii-demo/ | grep -q 'crossover-compositor-v3.js'
+
+
+

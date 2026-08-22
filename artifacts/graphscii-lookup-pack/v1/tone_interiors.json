@@ -6,10 +6,10 @@
     "glyphId": 5483
   },
   "light": {
-    "bitmapKey": "00000000000000000000000000010302",
-    "codepoint": 61560,
-    "fallback": true,
-    "glyphId": 4216
+    "bitmapKey": "55005500550055005500550055005500",
+    "codepoint": 63741,
+    "fallback": false,
+    "glyphId": 6397
   },
   "medium": {
     "bitmapKey": "55ff55ff55ff55ff55ff55ff55ff55ff",

@@ -3,6 +3,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const PACK_SCHEMA_VERSION = 1;
+const EXPECTED_PUBLISHED_OWNERS = 6398;
 const EXPECTED_STRAIGHT_PAIRS = 1664;
 const EXPECTED_BOUNDARY_SIDE_STYLES = 6592;
 
@@ -158,7 +159,7 @@ function buildToneInteriors(owners, byBitmapEntries) {
 }
 
 export async function buildGraphsciilLookupPackDocuments(repoRoot) {
-  const manifestDir = path.join(repoRoot, "artifacts", "manifest", "vocabulary-v1");
+  const manifestDir = path.join(repoRoot, "artifacts", "manifest", "vocabulary-v1.1");
   const registryPath = path.join(manifestDir, "registry.json");
   const byBitmapPath = path.join(manifestDir, "indexes", "by-bitmap.json");
   const fontPath = path.join(repoRoot, "artifacts", "fonts", "GraphSCII-Regular.ttf");
@@ -170,10 +171,10 @@ export async function buildGraphsciilLookupPackDocuments(repoRoot) {
   ]);
 
   const owners = registry.json.registry?.owners ?? registry.json.owners;
-  if (owners?.length !== 6397) {
-    throw new Error(`Lookup pack requires the frozen 6397-owner registry; got ${owners?.length}.`);
+  if (owners?.length !== EXPECTED_PUBLISHED_OWNERS) {
+    throw new Error(`Lookup pack requires the frozen ${EXPECTED_PUBLISHED_OWNERS}-owner registry; got ${owners?.length}.`);
   }
-  if (byBitmap.json.index !== "by-bitmap" || byBitmap.json.entryCount !== 6397) {
+  if (byBitmap.json.index !== "by-bitmap" || byBitmap.json.entryCount !== EXPECTED_PUBLISHED_OWNERS) {
     throw new Error("Unexpected by-bitmap index document.");
   }
 
@@ -275,3 +276,4 @@ export async function verifyGraphsciilLookupPackArtifacts(repoRoot, destDir = nu
 
   return built.stats;
 }
+

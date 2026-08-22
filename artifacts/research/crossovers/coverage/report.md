@@ -18,7 +18,7 @@ cell. No codepoints are allocated and no weights are frozen by this document.
   `by-bitmap.json` index; hits are accepted only for straight owners
   (glyph IDs 0..745) or connector owners (5796..6396). Fill-class owners are
   recorded separately because stroke policy forbids them.
-- Published index digest: `3466bbcaa18184c552d6cdfed353b461f63bb0bcf5e7e678fdb26013577bd06c`.
+- Published index digest: `1ebaead7a86c9c4b9b9ade4ab83482d95ffd68b66ba2b52910e3b49ffb29413b`.
 
 ## Headline result
 

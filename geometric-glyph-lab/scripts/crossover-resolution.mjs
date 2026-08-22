@@ -12,7 +12,8 @@ const STRAIGHT_OWNER_MAX = 745;
 const FILL_OWNER_MIN = 746;
 const CONNECTOR_OWNER_MIN = 5796;
 const CONNECTOR_OWNER_MAX = 6396;
-const EXPECTED_PUBLISHED_OWNERS = 6397;
+const SPECIAL_INTERIOR_GLYPH_ID = 6397;
+const EXPECTED_PUBLISHED_OWNERS = 6398;
 const EXPECTED_STRAIGHT_DEFINITIONS = 832;
 const EXPECTED_STRAIGHT_VISUAL_OWNERS = 746;
 const EXPECTED_PAIR_STATES = 345696;
@@ -139,7 +140,7 @@ async function loadPublishedByBitmap(repoRoot) {
     repoRoot,
     "artifacts",
     "manifest",
-    "vocabulary-v1",
+    "vocabulary-v1.1",
     "indexes",
     "by-bitmap.json",
   );
@@ -161,7 +162,14 @@ function classifyOwner(glyphId) {
   if (glyphId <= STRAIGHT_OWNER_MAX) return "straight";
   if (glyphId >= CONNECTOR_OWNER_MIN && glyphId <= CONNECTOR_OWNER_MAX) return "connector";
   if (glyphId >= FILL_OWNER_MIN && glyphId < CONNECTOR_OWNER_MIN) return "fill";
+  if (glyphId === SPECIAL_INTERIOR_GLYPH_ID) return "special-interior";
   throw new Error(`Published owner ${glyphId} is outside every known allocation class.`);
+}
+
+// Stroke cells may only resolve into straight or connector owners. Fill and
+// interior-special classes are category-excluded exactly like fills.
+function isStrokeLegalClass(ownerClass) {
+  return ownerClass === "straight" || ownerClass === "connector";
 }
 
 function buildCandidates(publishedEntries) {
@@ -169,7 +177,7 @@ function buildCandidates(publishedEntries) {
   for (const [key, rawGlyphId] of Object.entries(publishedEntries)) {
     const glyphId = Number(rawGlyphId);
     const ownerClass = classifyOwner(glyphId);
-    if (ownerClass === "fill") continue;
+    if (!isStrokeLegalClass(ownerClass)) continue;
     const rows = parseRows(key);
     const { low, high } = boundaryMasks(rows);
     const slots = [];
@@ -348,14 +356,14 @@ export async function buildCrossoverResolutionDocuments(repoRoot) {
         first.key < second.key ? `${first.key}+${second.key}` : `${second.key}+${first.key}`;
 
       const exactGlyphId = published.entries[unionKey];
-      if (exactGlyphId != null) {
-        const ownerClass = classifyOwner(exactGlyphId);
-        if (ownerClass !== "fill") {
-          tierCounts.tier0 += 1;
-          winnerClasses[ownerClass === "straight" ? "tier0Straight" : "tier0Connector"] += 1;
-          records.push(`${stateKey}\t0\t${exactGlyphId}\t0\t0\t0`);
-          continue;
-        }
+      if (exactGlyphId != null && isStrokeLegalClass(classifyOwner(exactGlyphId))) {
+        tierCounts.tier0 += 1;
+        winnerClasses.tier0Straight +=
+          classifyOwner(exactGlyphId) === "straight" ? 1 : 0;
+        winnerClasses.tier0Connector +=
+          classifyOwner(exactGlyphId) === "connector" ? 1 : 0;
+        records.push(`${stateKey}\t0\t${exactGlyphId}\t0\t0\t0`);
+        continue;
       }
 
       const desiredSlots = [];
@@ -503,7 +511,7 @@ function reportMarkdown(stats) {
 
 export async function generateCrossoverResolutionArtifacts(repoRoot) {
   const built = await buildCrossoverResolutionDocuments(repoRoot);
-  const manifestRoot = path.join(repoRoot, "artifacts", "manifest", "vocabulary-v1");
+  const manifestRoot = path.join(repoRoot, "artifacts", "manifest", "vocabulary-v1.1");
   await mkdir(manifestRoot, { recursive: true });
   await writeFile(path.join(manifestRoot, "crossover-resolution.tsv"), built.texts["crossover-resolution.tsv"]);
   await writeFile(path.join(manifestRoot, "crossover-resolution-stats.json"), built.texts["stats.json"]);
@@ -513,7 +521,7 @@ export async function generateCrossoverResolutionArtifacts(repoRoot) {
 
 export async function verifyCrossoverResolutionArtifacts(repoRoot) {
   const built = await buildCrossoverResolutionDocuments(repoRoot);
-  const manifestRoot = path.join(repoRoot, "artifacts", "manifest", "vocabulary-v1");
+  const manifestRoot = path.join(repoRoot, "artifacts", "manifest", "vocabulary-v1.1");
   const checks = [
     [path.join(manifestRoot, "crossover-resolution.tsv"), built.texts["crossover-resolution.tsv"]],
     [path.join(manifestRoot, "crossover-resolution-stats.json"), built.texts["stats.json"]],
@@ -534,3 +542,4 @@ export async function verifyCrossoverResolutionArtifacts(repoRoot) {
   }
   return built.stats;
 }
+

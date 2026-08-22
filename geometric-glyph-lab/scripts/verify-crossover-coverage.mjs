@@ -9,8 +9,8 @@ const verified = await verifyCrossoverCoverageArtifacts(repoRoot);
 
 assert.equal(verified.inputs.straightDefinitions, 832);
 assert.equal(verified.inputs.straightVisualOwners, 746);
-assert.equal(verified.inputs.publishedOwners, 6397);
-assert.equal(verified.inputs.publishedByBitmapSha256, "3466bbcaa18184c552d6cdfed353b461f63bb0bcf5e7e678fdb26013577bd06c");
+assert.equal(verified.inputs.publishedOwners, 6398);
+assert.equal(verified.inputs.publishedByBitmapSha256, "1ebaead7a86c9c4b9b9ade4ab83482d95ffd68b66ba2b52910e3b49ffb29413b");
 
 assert.equal(verified.measuredPairStates, 345696);
 assert.equal(verified.tier0ExactOwnerStates, 2177);

@@ -1,0 +1,121 @@
+{
+  "format": "graphscii",
+  "formatVersion": 1,
+  "schema": "graphscii-crossover-resolution-stats",
+  "schemaVersion": 1,
+  "status": "10A.3-wired-and-promoted",
+  "weights": {
+    "W_MISS": 100,
+    "W_EXTRA": 10,
+    "hammingEpsilon": "1/128",
+    "note": "W_MATE is runtime provenance only (plan §7); offline selection uses miss/extra/hamming."
+  },
+  "inputs": {
+    "straightDefinitions": 832,
+    "straightVisualOwners": 746,
+    "publishedByBitmapSha256": "1ebaead7a86c9c4b9b9ade4ab83482d95ffd68b66ba2b52910e3b49ffb29413b",
+    "publishedOwners": 6398,
+    "typedCandidates": 1347,
+    "typedStraightOwners": 746,
+    "typedConnectorOwners": 601
+  },
+  "measuredPairStates": 345696,
+  "tier0ExactStates": 2177,
+  "tier1ApproximateStates": 343519,
+  "winnerClasses": {
+    "tier0Straight": 1700,
+    "tier0Connector": 477,
+    "tier1StraightWinner": 201321,
+    "tier1ConnectorWinner": 142198
+  },
+  "fullLegRetentionStates": 41521,
+  "missedPortHistogram": {
+    "0": 41521,
+    "1": 174349,
+    "2": 127649,
+    "3": 0,
+    "4": 0
+  },
+  "extraPortHistogram": {
+    "0": 190372,
+    "1": 15490,
+    "2": 11954,
+    "3": 17583,
+    "4": 11268,
+    "5": 15522,
+    "6": 22414,
+    "7": 7798,
+    "8": 8784,
+    "9": 10048,
+    "10": 668,
+    "11": 592,
+    "12": 740,
+    "13": 7940,
+    "19": 22346
+  },
+  "averageTier1CostScaled": 20177.857426,
+  "worstCostSamples": [
+    {
+      "stateKey": "L0>B2+R1>B4",
+      "glyphId": 5818,
+      "costScaled": 26914
+    },
+    {
+      "stateKey": "L0>B2+R1>B5",
+      "glyphId": 5818,
+      "costScaled": 26914
+    },
+    {
+      "stateKey": "L0>B2+R2>B4",
+      "glyphId": 2,
+      "costScaled": 26914
+    },
+    {
+      "stateKey": "L0>B2+R2>B5",
+      "glyphId": 2,
+      "costScaled": 26914
+    },
+    {
+      "stateKey": "L0>B2+R2>B7",
+      "glyphId": 2,
+      "costScaled": 26914
+    },
+    {
+      "stateKey": "L0>B3+R1>B5",
+      "glyphId": 5818,
+      "costScaled": 26914
+    },
+    {
+      "stateKey": "L0>B3+R2>B5",
+      "glyphId": 2,
+      "costScaled": 26914
+    },
+    {
+      "stateKey": "L0>B3+R2>B7",
+      "glyphId": 2,
+      "costScaled": 26914
+    },
+    {
+      "stateKey": "L1>B2+R0>B4",
+      "glyphId": 427,
+      "costScaled": 26914
+    },
+    {
+      "stateKey": "L1>B2+R0>B5",
+      "glyphId": 5851,
+      "costScaled": 26914
+    },
+    {
+      "stateKey": "L1>B2+T7>B4",
+      "glyphId": 427,
+      "costScaled": 26914
+    },
+    {
+      "stateKey": "L1>B2+T7>B5",
+      "glyphId": 5851,
+      "costScaled": 26914
+    }
+  ],
+  "allocations": 0,
+  "protectedReserveSlots": 3
+}

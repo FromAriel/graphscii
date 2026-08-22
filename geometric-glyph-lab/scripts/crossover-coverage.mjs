@@ -11,7 +11,8 @@ const STRAIGHT_OWNER_MAX = 745;
 const FILL_OWNER_MIN = 746;
 const CONNECTOR_OWNER_MIN = 5796;
 const CONNECTOR_OWNER_MAX = 6396;
-const EXPECTED_PUBLISHED_OWNERS = 6397;
+const SPECIAL_INTERIOR_GLYPH_ID = 6397;
+const EXPECTED_PUBLISHED_OWNERS = 6398;
 const EXPECTED_STRAIGHT_DEFINITIONS = 832;
 const EXPECTED_STRAIGHT_VISUAL_OWNERS = 746;
 
@@ -70,7 +71,7 @@ async function loadPublishedByBitmap(repoRoot) {
     repoRoot,
     "artifacts",
     "manifest",
-    "vocabulary-v1",
+    "vocabulary-v1.1",
     "indexes",
     "by-bitmap.json",
   );
@@ -90,6 +91,7 @@ function classifyOwner(glyphId) {
   if (glyphId <= STRAIGHT_OWNER_MAX) return "straight";
   if (glyphId >= CONNECTOR_OWNER_MIN && glyphId <= CONNECTOR_OWNER_MAX) return "connector";
   if (glyphId >= FILL_OWNER_MIN && glyphId < CONNECTOR_OWNER_MIN) return "fill";
+  if (glyphId === SPECIAL_INTERIOR_GLYPH_ID) return "special-interior";
   throw new Error(`Published owner ${glyphId} is outside every known allocation class.`);
 }
 
@@ -394,3 +396,4 @@ export async function verifyCrossoverCoverageArtifacts(repoRoot) {
   }
   return built.stats;
 }
+
