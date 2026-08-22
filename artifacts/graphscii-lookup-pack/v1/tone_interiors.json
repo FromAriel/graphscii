@@ -1,0 +1,26 @@
+{
+  "half": {
+    "bitmapKey": "55aa55aa55aa55aa55aa55aa55aa55aa",
+    "codepoint": 62827,
+    "fallback": false,
+    "glyphId": 5483
+  },
+  "light": {
+    "bitmapKey": "00000000000000000000000000010302",
+    "codepoint": 61560,
+    "fallback": true,
+    "glyphId": 4216
+  },
+  "medium": {
+    "bitmapKey": "55ff55ff55ff55ff55ff55ff55ff55ff",
+    "codepoint": 59851,
+    "fallback": false,
+    "glyphId": 2507
+  },
+  "solid": {
+    "bitmapKey": "ffffffffffffffffffffffffffffffff",
+    "codepoint": 58090,
+    "fallback": false,
+    "glyphId": 746
+  }
+}

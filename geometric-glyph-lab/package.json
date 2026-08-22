@@ -57,6 +57,8 @@
     "generate:connector-allocation": "node scripts/generate-connector-allocation.mjs",
     "generate:graphics-publication-v1": "node scripts/generate-graphics-publication-v1.mjs",
     "generate:font": "node scripts/generate-graphscii-font.mjs",
+    "generate:graphscii-lookup-pack": "node scripts/generate-graphscii-lookup-pack.mjs",
+    "verify:graphscii-lookup-pack": "node scripts/verify-graphscii-lookup-pack.mjs",
     "generate": "npm run generate:base && npm run generate:semantic && npm run generate:catalog && npm run generate:fills && npm run generate:dithers && npm run generate:palette && npm run generate:vocabulary && npm run generate:vocabulary-artifacts && npm run generate:crossover-coverage && npm run generate:crossover-resolution && npm run generate:vocabulary-atlases && npm run generate:vocabulary-master-atlas && npm run generate:renderer-only-resolution && npm run generate:graphics-publication && npm run generate:junction-demand && npm run generate:junction-blind-spots && npm run generate:junction-geometry && npm run generate:junction-candidates && npm run generate:orthogonal-connectors && npm run generate:diagonal-connectors && npm run generate:diagonal-selection && npm run generate:connector-allocation && npm run generate:graphics-publication-v1 && npm run generate:font",
     "verify:artifacts": "node scripts/verify-artifacts.mjs",
     "verify:semantic": "node scripts/verify-semantic-registry.mjs",

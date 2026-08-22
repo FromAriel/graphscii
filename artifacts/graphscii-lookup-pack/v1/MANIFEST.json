@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "boundarySideStyles": 6592,
+    "straightPairs": 1664,
+    "toneInteriors": 4
+  },
+  "files": {
+    "GraphSCII-Regular.ttf": "e93df33cde0ca33a1524d16c6a9bd280c7d66d42bba00eb4d5933f82c9203c02",
+    "boundary_side_style.json": "05a625b06aa9ad90875a19af0fb8a5e831b7eaedfdf3247b7de4017fcfc4fd02",
+    "straight_pairs.json": "81569829f7ebca9da2bac062c2df162f32acc0712bb50ec0938f4153885a6c7b",
+    "tone_interiors.json": "758c4e978d929c10397efd48b97911503a07d5baebbe7ca62a507f9921234a9f"
+  },
+  "format": "graphscii",
+  "interiorFallbacks": [
+    "light"
+  ],
+  "schema": "graphscii-lookup-pack",
+  "schemaVersion": 1,
+  "sourcePins": {
+    "indexes/by-bitmap.json": "3466bbcaa18184c552d6cdfed353b461f63bb0bcf5e7e678fdb26013577bd06c",
+    "registry.json": "ad4fd4a6ff0cf2b90721350c6c57a9660d9066a6346d5f108f75072d35ff5fde"
+  }
+}
