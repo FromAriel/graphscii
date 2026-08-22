@@ -3,6 +3,8 @@ name: Apply GraphSCII Draw Crossover Fix
 on:
   push:
     branches: [resolve-draw-crossovers]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
