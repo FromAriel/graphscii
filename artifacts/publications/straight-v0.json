@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "publication": "straight-v0",
   "status": "provisional",
-  "sourceCommit": "0ad690b8d002902bad13942e4ddb794275802af5",
+  "sourceCommit": "8456d91019ec851b146dfd78e20a73743ddcef63",
   "generator": "cd geometric-glyph-lab && npm run generate",
   "verification": "cd geometric-glyph-lab && npm run verify",
   "glyphCount": 746,
