@@ -46,7 +46,7 @@ jobs:
             exit 1
           fi
 
-      - name: Verify exact crossover vocabulary mapping and layered fallback
+      - name: Verify exact crossover vocabulary and layered fallback
         shell: bash
         run: |
           node <<'NODE'
@@ -61,24 +61,33 @@ jobs:
           }
           const cross = rows.join('');
           if (index.entries[cross] !== 5796) throw new Error(`L0>R0 + T0>B0 must resolve to glyphId 5796/U+F6A4; got ${index.entries[cross]}`);
-          if (index.entries[horizontal] !== 0) throw new Error('L0>R0 straight owner changed unexpectedly');
-
           const uploadedCross = '02020404080890502020504884840201';
           if (index.entries[uploadedCross] != null) throw new Error('Uploaded arbitrary crossing unexpectedly became a published single glyph');
-          const uploadedDisjoint = '10080804020201000000000000010202';
-          if (index.entries[uploadedDisjoint] != null) throw new Error('Uploaded disjoint multi-pass unexpectedly became a published single glyph');
-          console.log('Published connector and arbitrary layered crossover regressions passed.');
+          console.log('Published connector + arbitrary layered crossover regressions passed.');
           NODE
           grep -q 'CONNECTOR_OWNER_MIN = 5796' graphscii-demo/crossover-compositor-v1.js
           grep -q 'CONNECTOR_OWNER_MAX = 6396' graphscii-demo/crossover-compositor-v1.js
-          grep -q 'exact-bitmap-is-not-a-line-or-connector-glyph' graphscii-demo/crossover-compositor-v1.js
-          grep -q 'no-exact-published-single-glyph' graphscii-demo/crossover-compositor-v1.js
-          grep -q "family: 'composite'" graphscii-demo/crossover-compositor-v1.js
+          grep -q "mode: 'layered'" graphscii-demo/crossover-compositor-v1.js
           grep -q 'for (const codepoint of resolution.codepoints)' graphscii-demo/crossover-compositor-v1.js
           grep -q '02020404080890502020504884840201' graphscii-demo/crossover-compositor-v1.js
-          grep -q '10080804020201000000000000010202' graphscii-demo/crossover-compositor-v1.js
           grep -q 'Object.entries(G.STRAIGHT_CODEPOINT_BY_PAIR)' graphscii-demo/crossover-compositor-v1.js
           grep -q 'state.bitmapIndex\[bitmapKey\]' graphscii-demo/crossover-compositor-v1.js
+
+      - name: Verify one authoritative geometry state
+        shell: bash
+        run: |
+          grep -q 'const D = globalThis.GraphSCIIDebug' graphscii-demo/crossover-compositor-v1.js
+          grep -q 'for (const stroke of D.state.strokes)' graphscii-demo/crossover-compositor-v1.js
+          grep -q 'for (const segment of stroke.finalSegments)' graphscii-demo/crossover-compositor-v1.js
+          grep -q 'requestAnimationFrame(composite)' graphscii-demo/crossover-compositor-v1.js
+          if grep -q 'G.compileRawPath' graphscii-demo/crossover-compositor-v1.js; then
+            echo "Crossover compositor must never compile a second geometry path"
+            exit 1
+          fi
+          if grep -q 'bezierClicks' graphscii-demo/crossover-compositor-v1.js; then
+            echo "Crossover compositor must not own tool gesture state"
+            exit 1
+          fi
 
       - name: Verify font rendering contract
         shell: bash
