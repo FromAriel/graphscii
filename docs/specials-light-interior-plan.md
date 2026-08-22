@@ -1,6 +1,6 @@
 # Specials — Light Interior Tone Glyph (`graphscii-graphics-v1.1`)
 
-> **Status:** APPROVED — IN PROGRESS
+> **Status:** COMPLETE — ALL SLICES EXECUTED AND VERIFIED
 >
 > **Authority:** amends [`GRAPHSCII_PLAN.md`](GRAPHSCII_PLAN.md) §5.4 behavior;
 > permitted by root `PLAN.md` §9.2 ("final three slots … unless a tiny
