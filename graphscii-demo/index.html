@@ -63,6 +63,7 @@
       </p>
       <p>
         Perpendicular corner ports are not collapsed. A corner traversal such as L15→B0 is a real GraphSCII semantic and emits its required one-pixel corner glyph.
+        Multi-pass cells are composed only by taking the exact union of their already-solved straight bitmaps and looking up that exact bitmap in the published GraphSCII vocabulary. Only straight or connector-family owners are accepted; fills and approximations are never substituted.
         Freehand, line, Bezier, and ellipse all use the same crossing compiler.
       </p>
       <p>
@@ -74,5 +75,6 @@
 
   <script src="./draw-v6.js?v=20260821-1618"></script>
   <script src="./debug-export-v2.js?v=20260821-1618"></script>
+  <script src="./crossover-compositor-v1.js?v=20260821-1808"></script>
 </body>
 </html>
