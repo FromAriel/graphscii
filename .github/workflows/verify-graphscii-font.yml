@@ -1,0 +1,47 @@
+name: Verify GraphSCII Font
+
+on:
+  pull_request:
+    paths:
+      - "geometric-glyph-lab/scripts/font-compiler.mjs"
+      - "geometric-glyph-lab/scripts/font-ascii.mjs"
+      - "geometric-glyph-lab/scripts/generate-graphscii-font.mjs"
+      - "geometric-glyph-lab/scripts/verify-graphscii-font.mjs"
+      - "geometric-glyph-lab/package.json"
+      - "artifacts/manifest/vocabulary-v1/registry.json"
+      - "artifacts/fonts/**"
+      - ".github/workflows/verify-graphscii-font.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "geometric-glyph-lab/scripts/font-compiler.mjs"
+      - "geometric-glyph-lab/scripts/font-ascii.mjs"
+      - "geometric-glyph-lab/scripts/generate-graphscii-font.mjs"
+      - "geometric-glyph-lab/scripts/verify-graphscii-font.mjs"
+      - "geometric-glyph-lab/package.json"
+      - "artifacts/manifest/vocabulary-v1/registry.json"
+      - "artifacts/fonts/**"
+      - ".github/workflows/verify-graphscii-font.yml"
+
+jobs:
+  verify-font:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify deterministic TTF, raster round-trip, and horizontal metrics
+        working-directory: geometric-glyph-lab
+        run: npm run verify:font
+
+      - name: Require permanent horizontal-metrics gates
+        shell: bash
+        run: |
+          grep -q 'hmtx/glyf xMin mismatch' geometric-glyph-lab/scripts/font-compiler.mjs
+          grep -q 'horizontalMetricsPositionPreserved: true' geometric-glyph-lab/scripts/font-compiler.mjs
+          grep -q 'hmtxLeftSideBearingEqualsXMin: true' geometric-glyph-lab/scripts/font-compiler.mjs
+          grep -q '"horizontalMetricsPositionPreserved": true' artifacts/fonts/manifest.json
+          grep -q '"hmtxLeftSideBearingEqualsXMin": true' artifacts/fonts/manifest.json
