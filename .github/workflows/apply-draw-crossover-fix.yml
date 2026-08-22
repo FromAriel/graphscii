@@ -23,6 +23,17 @@ jobs:
         with:
           node-version: 22
 
+      - name: Normalize patch template escapes
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('geometric-glyph-lab/scripts/apply-draw-crossover-fix.mjs')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace(r'\\${', r'\${')
+          p.write_text(s, encoding='utf-8')
+          PY
+
       - name: Build exact crossover runtime
         run: node geometric-glyph-lab/scripts/apply-draw-crossover-fix.mjs
 
